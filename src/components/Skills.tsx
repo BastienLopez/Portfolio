@@ -7,7 +7,7 @@ const Skills = () => {
       title: "Frontend",
       icon: Code2,
       color: "text-primary",
-      skills: ["React", "TypeScript", "Tailwind CSS", "Next.js", "HTML5/CSS3"],
+      skills: ["React", "TypeScript", "Next.js", "HTML5/CSS3", "CMS : Webflow / Lovable", "Doc : Gitbook / Docusaurus"],
     },
     {
       title: "Backend",
@@ -19,7 +19,7 @@ const Skills = () => {
       title: "Database",
       icon: Database,
       color: "text-cta",
-      skills: ["MongoDB", "PostgreSQL", "Redis", "Prisma", "Supabase"],
+      skills: ["MongoDB", "PostgreSQL", "SQL", "MySQL"],
     },
     {
       title: "IA & Machine Learning",
@@ -37,19 +37,19 @@ const Skills = () => {
       title: "DevOps",
       icon: Cloud,
       color: "text-cta",
-      skills: ["Docker", "Kubernetes", "CI/CD", "GitHub Actions", "AWS"],
+      skills: ["Docker", "CI/CD", "GitHub Actions", "Self Hosting"],
     },
     {
       title: "Version Control",
       icon: GitBranch,
       color: "text-primary",
-      skills: ["Git", "GitHub", "GitLab", "Code Review", "Branching"],
+      skills: ["Git", "GitHub", "Code Review", "Branching"],
     },
     {
       title: "Architecture",
       icon: Blocks,
       color: "text-accent",
-      skills: ["Microservices", "Web3", "Clean Code", "Design Patterns", "Testing"],
+      skills: ["Microservices", "Clean Code", "Design Patterns", "TDD Testing", "Web3"],
     },
   ];
 
@@ -100,36 +100,6 @@ const Skills = () => {
                 </ul>
               </Card>
             ))}
-          </div>
-
-          {/* Tools & Technologies badges */}
-          <div className="mt-16 text-center">
-            <h3 className="text-xl font-semibold mb-6 text-muted-foreground">
-              Outils & Frameworks
-            </h3>
-            <div className="flex flex-wrap justify-center gap-3">
-              {[
-                "VS Code",
-                "Postman",
-                "Figma",
-                "Linux",
-                "Nginx",
-                "Jest",
-                "Playwright",
-                "Vite",
-                "Webpack",
-                "ESLint",
-                "Prettier",
-                "npm/yarn",
-              ].map((tool) => (
-                <span
-                  key={tool}
-                  className="px-4 py-2 bg-muted/50 border border-border rounded-full text-sm font-medium hover:border-primary hover:bg-primary/10 transition-all"
-                >
-                  {tool}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </div>

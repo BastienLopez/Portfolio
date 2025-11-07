@@ -26,23 +26,23 @@ const About = () => {
             <div className="space-y-6 animate-slide-in">
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Développeur full stack passionné, je transforme des idées en applications web robustes et élégantes.
-                Avec une expertise approfondie en <span className="text-primary font-semibold">JavaScript</span> et{" "}
-                <span className="text-accent font-semibold">Python</span>, je maîtrise l'ensemble du cycle de développement.
-                Travaillant en <strong>full remote</strong>, je suis <strong>fluent en anglais</strong> et collabore
+                Avec une expertise approfondie en <span className="text-primary font-semibold">Python</span> et{" "}
+                <span className="text-accent font-semibold">JavaScript</span>, je maîtrise l'ensemble du cycle de développement.
+                Travaillant en <strong>full remote</strong>,<strong>bilingue en anglais</strong> et collabore
                 avec des équipes internationales.
               </p>
               
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Mon expérience couvre le développement frontend moderne avec <strong>React</strong>, les architectures backend
-                avec <strong>Node.js</strong> et <strong>FastAPI</strong>, ainsi que le déploiement avec{" "}
-                <strong>Docker</strong> et <strong>Kubernetes</strong>. Adepte des pratiques DevOps et de l'intégration
+                Mon expérience couvre le développement frontend moderne avec <span className="text-primary font-semibold">React</span>, les architectures backend
+                avec <span className="text-accent font-semibold">Node.js</span> et <span className="text-accent font-semibold">FastAPI</span>, ainsi que le déploiement avec{" "}
+                <span className="text-primary font-semibold">Docker</span>. Adepte des pratiques DevOps et de l'intégration
                 continue, je construis des solutions scalables et maintenables.
               </p>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Passionné par l'<strong>IA et le Machine Learning</strong> (TensorFlow, PyTorch, Vector DB), 
-                je développe également des solutions d'<strong>automatisation</strong> avec <strong>n8n</strong> et Python.
-                Curieux des technologies émergentes comme le <strong>Web3</strong>, mon approche combine rigueur technique 
+                Passionné par l'<span className="text-primary font-semibold">IA et le Machine Learning</span> (TensorFlow, PyTorch, Vector DB), 
+                je développe également des solutions d'<strong>automatisation</strong> avec <span className="text-accent font-semibold">n8n</span> et Python.
+                Curieux des technologies émergentes comme le <span className="text-accent font-semibold">Web3</span>, mon approche combine rigueur technique 
                 et créativité pour livrer des produits exceptionnels.
               </p>
 
@@ -55,13 +55,13 @@ const About = () => {
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="border-accent text-accent hover:bg-accent/10">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.linkedin.com/in/bastien-lopez-fullstack/" target="_blank" rel="noopener noreferrer">
                     <Linkedin className="w-4 h-4 mr-2" />
                     LinkedIn
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="border-muted-foreground hover:border-foreground">
-                  <a href="/cv.pdf" download>
+                  <a href="..\public\CV_LOPEZ_BASTIEN_ALTERNANCE_2.pdf" download>
                     <FileText className="w-4 h-4 mr-2" />
                     Télécharger CV
                   </a>

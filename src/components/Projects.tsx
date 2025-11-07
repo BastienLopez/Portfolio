@@ -5,51 +5,56 @@ import { Card } from "@/components/ui/card";
 const Projects = () => {
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "Plateforme complète avec panier, paiements Stripe, gestion des stocks et dashboard admin. Architecture microservices avec cache Redis.",
-      image: "/placeholder.svg",
-      tech: ["React", "Node.js", "MongoDB", "Docker", "Stripe"],
-      github: "https://github.com/BastienLopez",
+      title: "ERP Micro-Crèches",
+      description:
+        "ERP multifonctionnel conçu pour la gestion de plusieurs micro-crèches. Permet la centralisation des données et la supervision de plusieurs établissements depuis une seule interface.",
+      image: "public/img_projects/creche.png",
+      tech: ["React", "Node.js", "JavaScript", "MongoDB", "Docker", "CI/CD", "TDD"],
+      github: "https://github.com/BastienLopez/Creche_Bon_Petit_Bonhomme",
       demo: "#",
     },
     {
-      title: "Task Management App",
-      description: "Application de gestion de tâches collaborative avec real-time updates, authentification JWT et notifications push.",
-      image: "/placeholder.svg",
-      tech: ["TypeScript", "FastAPI", "PostgreSQL", "WebSocket"],
-      github: "https://github.com/BastienLopez",
+      title: "Altme Wallet Platform",
+      description:
+        "Développement et amélioration d’une plateforme back-end pour la gestion de portefeuilles numériques et de credentials vérifiables. Participation au projet **Discover**, intégrant la gestion des NFTs et des cryptomonnaies via l’API Coingecko.",
+      image: "public/img_projects/Altme_Discover.png",
+      tech: ["HTML / CSS", "Python", "Coingecko API"],
+      github: "https://github.com/TalaoDAO/DiscoverV2/tree/main",
+      demo: "https://apps.apple.com/fr/app/altme-wallet/id1633216869",
+    },
+    {
+      title: "Eloi Sport",
+      description:
+        "Site vitrine one-page pour un coach sportif et ostéopathe. Présentation des services de remise en forme, de préparation physique et de programmes personnalisés HYRIX, avec design moderne et responsive.",
+      image: "public/img_projects/eloi_sport.png",
+      tech: ["React", "Tailwind CSS", "Docker"],
+      github: "https://github.com/BastienLopez/Eloi_Coaching",
+      demo: "https://bastienlopez.github.io/Eloi_Coaching/",
+    },
+    {
+      title: "Teams Bot & Mastra Agents",
+      description:
+        "Développement d’un bot Microsoft Teams intégré à Mastra pour agréger des flux RSS, effectuer une synthèse NLP et fournir des insights propulsés par l’IA. Avec un BOT Teams pour suivre votre veille sur votre sujet voulu.",
+      image: "public/img_projects/bot-conversation-ia.png",
+      tech: ["TypeScript", "Azure Bot Framework", "Mastra", "OpenAI API"],
+      github: "https://github.com/BastienLopez/Agent_VEILLE_RSS/tree/main",
+    },
+    {
+      title: "Berserk Universe",
+      description:
+        "Plateforme interactive dédiée à l’univers de *Berserk* de Kentarō Miura. Présente des résumés, analyses de personnages et une carte interactive retraçant les lieux emblématiques du manga.",
+      image: "public/img_projects/berserk.png",
+      tech: ["HTML", "CSS", "JS"],
+      github: "https://github.com/BastienLopez/Berserk",
       demo: "#",
     },
     {
-      title: "AI Content Generator",
-      description: "Générateur de contenu IA utilisant GPT-4 avec interface intuitive, historique des générations et export multi-formats.",
-      image: "/placeholder.svg",
-      tech: ["Next.js", "Python", "OpenAI", "Tailwind"],
-      github: "https://github.com/BastienLopez",
-      demo: "#",
-    },
-    {
-      title: "Web3 NFT Marketplace",
-      description: "Marketplace décentralisée pour NFTs avec smart contracts Solidity, wallet integration et système d'enchères.",
-      image: "/placeholder.svg",
-      tech: ["React", "Solidity", "Ethers.js", "IPFS"],
-      github: "https://github.com/BastienLopez",
-      demo: "#",
-    },
-    {
-      title: "DevOps Dashboard",
-      description: "Tableau de bord de monitoring avec métriques temps réel, alertes automatiques et visualisation de logs distribuées.",
-      image: "/placeholder.svg",
-      tech: ["Vue.js", "Go", "Prometheus", "Grafana"],
-      github: "https://github.com/BastienLopez",
-      demo: "#",
-    },
-    {
-      title: "Social Media Analytics",
-      description: "Outil d'analyse de réseaux sociaux avec scraping éthique, traitement big data et rapports détaillés.",
-      image: "/placeholder.svg",
-      tech: ["Python", "Pandas", "React", "D3.js"],
-      github: "https://github.com/BastienLopez",
+      title: "Pokémon Binder",
+      description:
+        "Application web pour gérer sa collection de cartes Pokémon TCG. Permet d’ajouter, classer et visualiser les cartes dans un classeur virtuel, avec recherche avancée et statistiques de collection.",
+      image: "public/img_projects/pokemon_binder.png",
+      tech: ["React", "JavaScript", "Python", "HTML / CSS"],
+      github: "https://github.com/BastienLopez/Pokemon_binder",
       demo: "#",
     },
   ];
@@ -77,14 +82,14 @@ const Projects = () => {
                 className="group overflow-hidden bg-card border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/20"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                {/* Project Image */}
-                <div className="relative aspect-video overflow-hidden bg-secondary">
+                {/* Project Image: fixed-height box so all cards keep same size; image scaled to fit without cropping */}
+                <div className="relative h-48 md:h-56 lg:h-52 overflow-hidden bg-secondary flex items-center justify-center">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
 
                 {/* Project Info */}
@@ -122,16 +127,19 @@ const Projects = () => {
                         Code
                       </a>
                     </Button>
-                    <Button
-                      asChild
-                      size="sm"
-                      className="flex-1 bg-gradient-to-r from-primary to-accent hover:opacity-90"
-                    >
-                      <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Demo
-                      </a>
-                    </Button>
+
+                    {project.demo ? (
+                      <Button
+                        asChild
+                        size="sm"
+                        className="flex-1 bg-gradient-to-r from-primary to-accent hover:opacity-90"
+                      >
+                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="w-4 h-4 mr-2" />
+                          Demo
+                        </a>
+                      </Button>
+                    ) : null}
                   </div>
                 </div>
               </Card>

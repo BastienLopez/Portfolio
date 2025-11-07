@@ -35,16 +35,6 @@ const Hero = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
-          {/* Avatar/Image placeholder */}
-          <div className="w-32 h-32 mx-auto mb-6 relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent rounded-full animate-glow"></div>
-            <div className="absolute inset-1 bg-background rounded-full flex items-center justify-center">
-              <span className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                BL
-              </span>
-            </div>
-          </div>
-
           {/* Title with typing effect */}
           <div className="space-y-4">
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
@@ -66,7 +56,7 @@ const Hero = () => {
 
           {/* Tech stack badges */}
           <div className="flex flex-wrap justify-center gap-3 py-4">
-            {["JavaScript", "Python", "Docker", "React", "Node.js", "Web3"].map((tech) => (
+            {["Python", "JavaScript", "Docker", "React", "IA", "Web3"].map((tech) => (
               <span
                 key={tech}
                 className="px-4 py-2 bg-card border border-border rounded-full text-sm font-medium hover:border-primary transition-colors"

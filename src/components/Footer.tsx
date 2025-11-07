@@ -12,8 +12,8 @@ const Footer = () => {
 
   const socialLinks = [
     { href: "https://github.com/BastienLopez", icon: Github, label: "GitHub" },
-    { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-    { href: "mailto:contact@bastienlopez.dev", icon: Mail, label: "Email" },
+    { href: "https://www.linkedin.com/in/bastien-lopez-fullstack/", icon: Linkedin, label: "LinkedIn" },
+    { href: "mailto:bastien.lopez40@gmail.com", icon: Mail, label: "Email" },
   ];
 
   return (
@@ -31,24 +31,7 @@ const Footer = () => {
                 Développeur Full Stack passionné par la création d'applications web modernes et performantes.
               </p>
             </div>
-
-            {/* Quick Links */}
-            <div>
-              <h4 className="font-semibold text-foreground mb-4">Navigation</h4>
-              <ul className="space-y-2">
-                {footerLinks.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
+            
             {/* Social */}
             <div>
               <h4 className="font-semibold text-foreground mb-4">Me suivre</h4>
@@ -69,23 +52,6 @@ const Footer = () => {
               <p className="text-sm text-muted-foreground mt-4">
                 Disponible pour de nouvelles opportunités
               </p>
-            </div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="pt-8 border-t border-border">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-sm text-muted-foreground flex items-center gap-2">
-                © {currentYear} Bastien Lopez. Fait avec <Heart className="w-4 h-4 text-primary fill-primary" /> et React
-              </p>
-              <div className="flex gap-6">
-                <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                  Mentions légales
-                </a>
-                <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                  Confidentialité
-                </a>
-              </div>
             </div>
           </div>
         </div>
