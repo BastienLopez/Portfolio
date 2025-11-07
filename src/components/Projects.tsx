@@ -46,7 +46,7 @@ const Projects = () => {
   image: "img_projects/berserk.png",
       tech: ["HTML", "CSS", "JS"],
       github: "https://github.com/BastienLopez/Berserk",
-      demo: "#",
+      demo: "https://bastienlopez.github.io/Berserk/templates/Kentaro_Miura.html",
     },
     {
       title: "Pokémon Binder",
