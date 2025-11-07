@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Dark portfolio theme - Modern developer aesthetic */
+    --background: 220 25% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 20% 12%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 25% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Cyan tech accent */
+    --primary: 188 94% 43%;
+    --primary-foreground: 220 25% 8%;
+
+    /* Darker card variant */
+    --secondary: 220 18% 16%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 15% 20%;
+    --muted-foreground: 215 20% 65%;
+
+    /* Green emerald accent */
+    --accent: 160 84% 39%;
+    --accent-foreground: 220 25% 8%;
+
+    /* Orange CTA */
+    --cta: 25 95% 53%;
+    --cta-foreground: 220 25% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 18%;
+    --ring: 188 94% 43%;
+
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(188 94% 43%), hsl(160 84% 39%));
+    --gradient-hero: linear-gradient(180deg, hsl(220 25% 8% / 0.4), hsl(220 25% 8%));
+    --gradient-card: linear-gradient(135deg, hsl(220 20% 12%), hsl(220 18% 14%));
+    
+    /* Glow effects */
+    --glow-primary: 0 0 30px hsl(188 94% 43% / 0.3);
+    --glow-accent: 0 0 30px hsl(160 84% 39% / 0.3);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+  
+  .glow-primary {
+    box-shadow: var(--glow-primary);
+  }
+  
+  .glow-accent {
+    box-shadow: var(--glow-accent);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+}
