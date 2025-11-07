@@ -8,7 +8,7 @@ const Projects = () => {
       title: "ERP Micro-Crèches",
       description:
         "ERP multifonctionnel conçu pour la gestion de plusieurs micro-crèches. Permet la centralisation des données et la supervision de plusieurs établissements depuis une seule interface.",
-      image: "public/img_projects/creche.png",
+  image: "img_projects/creche.png",
       tech: ["React", "Node.js", "JavaScript", "MongoDB", "Docker", "CI/CD", "TDD"],
       github: "https://github.com/BastienLopez/Creche_Bon_Petit_Bonhomme",
       demo: "#",
@@ -17,7 +17,7 @@ const Projects = () => {
       title: "Altme Wallet Platform",
       description:
         "Développement et amélioration d’une plateforme back-end pour la gestion de portefeuilles numériques et de credentials vérifiables. Participation au projet **Discover**, intégrant la gestion des NFTs et des cryptomonnaies via l’API Coingecko.",
-      image: "public/img_projects/Altme_Discover.png",
+  image: "img_projects/Altme_Discover.png",
       tech: ["HTML / CSS", "Python", "Coingecko API"],
       github: "https://github.com/TalaoDAO/DiscoverV2/tree/main",
       demo: "https://apps.apple.com/fr/app/altme-wallet/id1633216869",
@@ -26,7 +26,7 @@ const Projects = () => {
       title: "Eloi Sport",
       description:
         "Site vitrine one-page pour un coach sportif et ostéopathe. Présentation des services de remise en forme, de préparation physique et de programmes personnalisés HYRIX, avec design moderne et responsive.",
-      image: "public/img_projects/eloi_sport.png",
+  image: "img_projects/eloi_sport.png",
       tech: ["React", "Tailwind CSS", "Docker"],
       github: "https://github.com/BastienLopez/Eloi_Coaching",
       demo: "https://bastienlopez.github.io/Eloi_Coaching/",
@@ -35,7 +35,7 @@ const Projects = () => {
       title: "Teams Bot & Mastra Agents",
       description:
         "Développement d’un bot Microsoft Teams intégré à Mastra pour agréger des flux RSS, effectuer une synthèse NLP et fournir des insights propulsés par l’IA. Avec un BOT Teams pour suivre votre veille sur votre sujet voulu.",
-      image: "public/img_projects/bot-conversation-ia.png",
+  image: "img_projects/bot-conversation-ia.png",
       tech: ["TypeScript", "Azure Bot Framework", "Mastra", "OpenAI API"],
       github: "https://github.com/BastienLopez/Agent_VEILLE_RSS/tree/main",
     },
@@ -43,7 +43,7 @@ const Projects = () => {
       title: "Berserk Universe",
       description:
         "Plateforme interactive dédiée à l’univers de *Berserk* de Kentarō Miura. Présente des résumés, analyses de personnages et une carte interactive retraçant les lieux emblématiques du manga.",
-      image: "public/img_projects/berserk.png",
+  image: "img_projects/berserk.png",
       tech: ["HTML", "CSS", "JS"],
       github: "https://github.com/BastienLopez/Berserk",
       demo: "#",
@@ -52,7 +52,7 @@ const Projects = () => {
       title: "Pokémon Binder",
       description:
         "Application web pour gérer sa collection de cartes Pokémon TCG. Permet d’ajouter, classer et visualiser les cartes dans un classeur virtuel, avec recherche avancée et statistiques de collection.",
-      image: "public/img_projects/pokemon_binder.png",
+  image: "img_projects/pokemon_binder.png",
       tech: ["React", "JavaScript", "Python", "HTML / CSS"],
       github: "https://github.com/BastienLopez/Pokemon_binder",
       demo: "#",
@@ -79,7 +79,7 @@ const Projects = () => {
             {projects.map((project, index) => (
               <Card
                 key={project.title}
-                className="group overflow-hidden bg-card border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/20"
+                className="group overflow-hidden bg-card border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 flex flex-col h-full"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Project Image: fixed-height box so all cards keep same size; image scaled to fit without cropping */}
@@ -93,7 +93,7 @@ const Projects = () => {
                 </div>
 
                 {/* Project Info */}
-                <div className="p-6 space-y-4">
+                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                   <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                     {project.title}
                   </h3>
@@ -128,7 +128,7 @@ const Projects = () => {
                       </a>
                     </Button>
 
-                    {project.demo ? (
+                    {project.demo && project.demo !== "#" ? (
                       <Button
                         asChild
                         size="sm"
@@ -138,6 +138,15 @@ const Projects = () => {
                           <ExternalLink className="w-4 h-4 mr-2" />
                           Demo
                         </a>
+                      </Button>
+                    ) : project.title === "ERP Micro-Crèches" || project.title === "Pokémon Binder" ? (
+                      // Show a disabled/placeholder button for 'A venir' on specific projects
+                      <Button
+                        size="sm"
+                        disabled
+                        className="flex-1 bg-muted/10 text-muted-foreground cursor-not-allowed"
+                      >
+                        A venir
                       </Button>
                     ) : null}
                   </div>
