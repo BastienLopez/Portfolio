@@ -55,7 +55,7 @@ const Projects = () => {
   image: "img_projects/pokemon_binder.png",
       tech: ["React", "JavaScript", "Python", "HTML / CSS"],
       github: "https://github.com/BastienLopez/Pokemon_binder",
-      demo: "#",
+      demo: "https://bastienlopez.github.io/Pokemon_binder",
     },
   ];
 
