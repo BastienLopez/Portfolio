@@ -5,6 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // Ensure correct asset paths on GitHub Pages project site
+  // When deployed at bastienlopez.github.io/Portfolio/, assets must be prefixed with /Portfolio/
+  base: mode === "production" ? "/Portfolio/" : "/",
   server: {
     host: "::",
     port: 8080,
