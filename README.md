@@ -1,58 +1,72 @@
-# Welcome to your Lovable project
+## Portfolio — Développeur freelance
 
-## Project info
+Bienvenue sur mon portfolio de développeur freelance. Ce dépôt contient le site présentant mes compétences, mes réalisations (projets), ainsi que les moyens de me contacter.
 
-**URL**: https://lovable.dev/projects/159d9113-9fc0-40d0-9dcc-7aace1688ceb
+Disponible via : [Portfolio](https://bastienlopez.github.io/Portfolio/)
+## À propos
 
-## How can I edit this code?
+Ce site présente mon travail en tant que développeur web : création d'interfaces modernes avec React et TypeScript, développement d'API, intégration d'outils de CI/CD, et accompagnement technique pour des projets web professionnels.
 
-There are several ways of editing your application.
+## Compétences
 
-**Use Lovable**
+- Frontend : React, TypeScript, HTML5/CSS3, Tailwind CSS
+- Backend : Node.js, Express, FastAPI, Python
+- Bases de données : MongoDB, PostgreSQL, MySQL
+- DevOps / Déploiement : Docker, GitHub Actions, hébergement statique
+- Outils & méthodologies : Git, TDD, CI/CD, architecture propres
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/159d9113-9fc0-40d0-9dcc-7aace1688ceb) and start prompting.
+## Projets
 
-Changes made via Lovable will be committed automatically to this repo.
+Vous trouverez des exemples de projets et captures dans le site lui-même (section Projets). Les images et ressources se trouvent dans `public/img_projects`.
 
-**Use your preferred IDE**
+## Technologies utilisées
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Le site est construit avec : Vite, React, TypeScript, shadcn-ui et Tailwind CSS.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Lancer le site en local
 
-Follow these steps:
+Prérequis : Node.js (version LTS) et npm.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. Installer les dépendances :
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```powershell
+npm install
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+2. Lancer le serveur de développement :
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```powershell
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+3. Construire pour la production :
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```powershell
+npm run build
+```
 
-**Use GitHub Codespaces**
+Si vous aviez des dépendances supprimées du `package.json`, exécutez `npm install` pour mettre à jour le `package-lock.json`.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Déploiement
+
+Vous pouvez déployer le dossier `dist` produit par `npm run build` sur n'importe quel hébergeur de sites statiques (Netlify, Vercel, GitHub Pages, etc.).
+
+## Contact
+
+Pour toute demande de mission freelance, collaboration ou question technique, utilisez la section Contact du site ou contactez-moi via mon profil GitHub.
+
+---
+
+_Remarque : le contenu spécifique à un éditeur tiers a été retiré du README. Le site source et les fichiers de configuration ont été nettoyés en conséquence._
+
+
+Requirements: Node.js and npm
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Start dev server: `npm run dev`
 
 ## What technologies are used for this project?
-
-This project is built with:
 
 - Vite
 - TypeScript
@@ -60,14 +74,8 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/159d9113-9fc0-40d0-9dcc-7aace1688ceb) and click on Share -> Publish.
+Build for production with `npm run build`. Serve the `dist` folder as needed (e.g. static host, GitHub Pages).
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+If you previously used an external editor/integration, any references to that service have been removed from this README.

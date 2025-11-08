@@ -7,7 +7,7 @@ const Skills = () => {
       title: "Frontend",
       icon: Code2,
       color: "text-primary",
-      skills: ["React", "TypeScript", "Next.js", "HTML5/CSS3", "CMS : Webflow / Lovable", "Doc : Gitbook / Docusaurus"],
+  skills: ["React", "TypeScript", "Next.js", "HTML5/CSS3", "CMS : Webflow", "Doc : Gitbook / Docusaurus"],
     },
     {
       title: "Backend",
