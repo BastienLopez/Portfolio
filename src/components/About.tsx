@@ -61,9 +61,9 @@ const About = () => {
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="border-muted-foreground hover:border-foreground">
-                  <a href="/CV_LOPEZ_BASTIEN_FREELANCE.pdf" download>
+                  <a href="https://BastienLopez.github.io/Portfolio/CV_LOPEZ_BASTIEN_FREELANCE.pdf" download>
                     <FileText className="w-4 h-4 mr-2" />
-                    Télécharger CV
+                    Voir mon CV
                   </a>
                 </Button>
               </div>
