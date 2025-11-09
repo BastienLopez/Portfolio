@@ -37,7 +37,7 @@ const Skills = () => {
       title: "DevOps",
       icon: Cloud,
       color: "text-cta",
-      skills: ["Docker", "CI/CD", "GitHub Actions", "Self Hosting"],
+      skills: ["Docker", "CI/CD", "GitHub Actions", "Self Hosting", "Github Pages"],
     },
     {
       title: "Version Control",

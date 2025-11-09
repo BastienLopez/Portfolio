@@ -41,7 +41,7 @@ const About = () => {
 
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Passionné par l'<span className="text-primary font-semibold">IA et le Machine Learning</span> (TensorFlow, PyTorch, Vector DB), 
-                je développe également des solutions d'<strong>automatisation</strong> avec <span className="text-accent font-semibold">n8n</span> et Python.
+                je développe également des solutions d'<strong>automatisation</strong> avec <span className="text-accent font-semibold">n8n</span> et <span className="text-primary font-semibold">Python</span>.
                 Curieux des technologies émergentes comme le <span className="text-accent font-semibold">Web3</span>, mon approche combine rigueur technique 
                 et créativité pour livrer des produits exceptionnels.
               </p>
@@ -61,7 +61,7 @@ const About = () => {
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="border-muted-foreground hover:border-foreground">
-                  <a href="..\public\CV_LOPEZ_BASTIEN_ALTERNANCE_2.pdf" download>
+                  <a href="/CV_LOPEZ_BASTIEN_FREELANCE.pdf" download>
                     <FileText className="w-4 h-4 mr-2" />
                     Télécharger CV
                   </a>
