@@ -99,3 +99,160 @@ All colors MUST be HSL.
     transition: var(--transition-smooth);
   }
 }
+
+/* Project Detail Styling */
+@layer components {
+  /* Container principal */
+  .project-detail {
+    @apply space-y-8;
+  }
+
+  /* Titre principal du projet */
+  .project-title {
+    @apply text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6 pb-2 border-b-2 border-primary/30;
+  }
+
+  /* Sections */
+  .section {
+    @apply space-y-4 p-6 rounded-lg bg-secondary/50 border border-border/50;
+  }
+
+  .section.results {
+    @apply bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/30;
+  }
+
+  .section.info-box {
+    @apply bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-blue-500/30;
+  }
+
+  /* Titres de section */
+  .section-title {
+    @apply text-xl md:text-2xl font-bold text-primary mb-4 flex items-center gap-2;
+  }
+
+  /* Description */
+  .description {
+    @apply text-base md:text-lg leading-relaxed text-muted-foreground;
+  }
+
+  .highlight {
+    @apply text-base md:text-lg leading-relaxed text-foreground font-medium bg-primary/10 p-4 rounded-lg border-l-4 border-primary;
+  }
+
+  /* Tech Grid */
+  .tech-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
+  }
+
+  .tech-item {
+    @apply p-4 rounded-lg bg-card border border-border hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 space-y-2;
+  }
+
+  .tech-icon {
+    @apply text-2xl md:text-3xl;
+  }
+
+  .tech-name {
+    @apply block text-base md:text-lg font-semibold text-foreground;
+  }
+
+  .tech-desc {
+    @apply text-sm text-muted-foreground;
+  }
+
+  /* Features List */
+  .features-list {
+    @apply space-y-3 list-none pl-0;
+  }
+
+  .feature-item {
+    @apply flex items-start gap-3 p-3 rounded-lg bg-card/50 border border-border/50 hover:border-primary/50 transition-colors;
+  }
+
+  .feature-icon {
+    @apply text-xl md:text-2xl flex-shrink-0 mt-0.5;
+  }
+
+  /* Result Box */
+  .result-box {
+    @apply p-6 rounded-lg border-2 space-y-3;
+  }
+
+  .result-box.success {
+    @apply bg-green-500/10 border-green-500/50;
+  }
+
+  .result-text {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+
+  .result-text.highlight-large {
+    @apply text-lg md:text-xl font-semibold;
+  }
+
+  /* Comparison Layout */
+  .comparison {
+    @apply space-y-6;
+  }
+
+  .before-after {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-6;
+  }
+
+  .before, .after {
+    @apply p-6 rounded-lg border-2 space-y-4;
+  }
+
+  .before {
+    @apply bg-red-500/5 border-red-500/30;
+  }
+
+  .after {
+    @apply bg-green-500/5 border-green-500/30;
+  }
+
+  .before h4, .after h4 {
+    @apply text-xl font-bold mb-4;
+  }
+
+  .comparison-list {
+    @apply space-y-3 list-none pl-0;
+  }
+
+  .comparison-list li {
+    @apply flex items-start gap-2 text-sm md:text-base leading-relaxed;
+  }
+
+  .comparison-list.success li {
+    @apply text-foreground;
+  }
+
+  .detail {
+    @apply block text-sm text-muted-foreground mt-1 ml-6;
+  }
+
+  /* Versions Grid */
+  .versions-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+  }
+
+  .version-card {
+    @apply p-6 rounded-lg bg-card border border-border hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 space-y-3;
+  }
+
+  .version-card.featured {
+    @apply border-primary/50 bg-primary/5;
+  }
+
+  .version-card h4 {
+    @apply text-lg md:text-xl font-bold text-foreground;
+  }
+
+  .version-card p {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .doc-link {
+    @apply inline-block mt-2 text-primary hover:text-accent transition-colors font-medium;
+  }
+}
