@@ -23,7 +23,7 @@ const Projects = () => {
       demo: "https://apps.apple.com/fr/app/altme-wallet/id1633216869",
     },
     {
-      title: "Eloi Sport",
+      title: "Eloi CoachStéo - Sport Trainer",
       description:
         "Site vitrine one-page pour un coach sportif et ostéopathe. Présentation des services de remise en forme, de préparation physique et de programmes personnalisés HYRIX, avec design moderne et responsive.",
   image: "img_projects/eloi_sport.png",
