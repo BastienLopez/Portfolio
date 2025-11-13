@@ -1,4 +1,4 @@
-import { FileText, Github, Linkedin, Mail } from "lucide-react";
+import { FileText, Github, Linkedin, Mail, Clock, CheckCircle, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -28,7 +28,7 @@ const About = () => {
                 Développeur full stack passionné, je transforme des idées en applications web robustes et élégantes.
                 Avec une expertise approfondie en <span className="text-primary font-semibold">Python</span> et{" "}
                 <span className="text-accent font-semibold">JavaScript</span>, je maîtrise l'ensemble du cycle de développement.
-                Travaillant en <strong>full remote</strong>,<strong>bilingue en anglais</strong> et collabore
+                Travaillant en <strong>full remote</strong>, <strong>bilingue en anglais</strong> et collabore
                 avec des équipes internationales.
               </p>
               
@@ -85,7 +85,11 @@ const About = () => {
                       </p>
                     </div>
                     <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                      <div className="w-10 h-10 rounded-full bg-primary/20"></div>
+                      <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                        {index === 0 && <Clock className="w-6 h-6 text-primary" />}
+                        {index === 1 && <CheckCircle className="w-6 h-6 text-primary" />}
+                        {index === 2 && <Code className="w-6 h-6 text-primary" />}
+                      </div>
                     </div>
                   </div>
                 </Card>

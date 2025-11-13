@@ -35,7 +35,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="relative flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <a
             href="#hero"
@@ -44,8 +44,8 @@ const Navbar = () => {
             Bastien
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Navigation (centered) */}
+          <div className="hidden md:flex items-center gap-8 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -89,19 +89,19 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border">
-            <div className="flex flex-col gap-4">
+          <div className="md:hidden py-6 border-t border-border bg-background/95 backdrop-blur-lg">
+            <div className="flex flex-col gap-4 px-2">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors text-center py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
                 </a>
               ))}
-              <div className="flex items-center gap-4 pt-4 border-t border-border">
+              <div className="flex items-center justify-center gap-6 pt-4 border-t border-border">
                 {socialLinks.map((social) => (
                   <a
                     key={social.label}
@@ -115,7 +115,7 @@ const Navbar = () => {
                   </a>
                 ))}
               </div>
-              <Button asChild className="bg-cta hover:bg-cta/90 text-cta-foreground w-full">
+              <Button asChild className="bg-cta hover:bg-cta/90 text-cta-foreground w-full mt-4">
                 <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
                   Me contacter
                 </a>

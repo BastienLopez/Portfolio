@@ -56,7 +56,7 @@ const Hero = () => {
 
           {/* Tech stack badges */}
           <div className="flex flex-wrap justify-center gap-3 py-4">
-            {["Python", "JavaScript", "Docker", "React", "IA", "Web3"].map((tech) => (
+            {["Python", "React", "JavaScript", "IA", "Docker", "Web3"].map((tech) => (
               <span
                 key={tech}
                 className="px-4 py-2 bg-card border border-border rounded-full text-sm font-medium hover:border-primary transition-colors"

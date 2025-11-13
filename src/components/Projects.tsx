@@ -13,7 +13,7 @@ const Projects = () => {
   const categoryConfig = {
     emploi: {
       emoji: '💼',
-      title: 'EMPLOI',
+      title: 'EMPLOIS',
       color: 'from-blue-500 to-cyan-500'
     },
     freelance: {
