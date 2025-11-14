@@ -267,4 +267,68 @@ export const freelanceProjects: Project[] = [
     `,
     gallery: ['img_projects/LuxuryAutoDetailling.png']
   }
+  ,
+  {
+    id: 'cledevoute',
+    title: 'CleDeVoute',
+    description: "Site vitrine pour CleDeVoute — présentation de services et portfolio.",
+    category: 'freelance',
+    image: 'img_projects/CleDeVoute.png',
+    tech: ['React', 'Tailwind CSS', 'JavaScript'],
+    demo: 'https://bastienlopez.github.io/CleDeVoute/',
+    detailedContent: `
+      <div class="project-detail">
+        <h2 class="project-title">🔑 CleDeVoute</h2>
+
+        <div class="section">
+          <h3 class="section-title">📋 Contexte du projet</h3>
+          <p class="description">
+            Création d'un <strong>site vitrine</strong> pour CleDeVoute afin de présenter ses services,
+            réalisations et faciliter la prise de contact avec les clients.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">⚙️ Technologies utilisées</h3>
+          <div class="tech-grid">
+            <div class="tech-item">
+              <span class="tech-icon">🌐</span>
+              <span class="tech-name">HTML</span>
+            </div>
+            <div class="tech-item">
+              <span class="tech-icon">🎨</span>
+              <span class="tech-name">CSS</span>
+            </div>
+            <div class="tech-item">
+              <span class="tech-icon">⚡</span>
+              <span class="tech-name">JavaScript</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">✨ Fonctionnalités principales</h3>
+          <ul class="features-list">
+            <li class="feature-item"><strong>Présentation claire</strong> des services et réalisations</li>
+            <li class="feature-item"><strong>Galerie</strong> d'exemples visuels</li>
+            <li class="feature-item"><strong>Contact</strong> simple et accessible</li>
+            <li class="feature-item"><strong>Responsive</strong> et optimisé mobile</li>
+          </ul>
+        </div>
+
+        <div class="section results">
+          <h3 class="section-title">🎯 Résultats</h3>
+          <div class="result-box success">
+            <p class="result-text">✅ Site déployé et accessible publiquement via GitHub Pages.</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">🔗 Démo</h3>
+          <p class="description"><a href="https://bastienlopez.github.io/CleDeVoute/" target="_blank" rel="noopener noreferrer">Voir la démo</a></p>
+        </div>
+      </div>
+    `,
+    gallery: ['img_projects/CleDeVoute.png']
+  }
 ];
