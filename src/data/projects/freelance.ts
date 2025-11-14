@@ -7,7 +7,7 @@ export const freelanceProjects: Project[] = [
     description: "Site vitrine one-page pour un coach sportif et ostéopathe. Présentation des services de remise en forme, de préparation physique et de programmes personnalisés HYRIX.",
     category: 'freelance',
     image: 'img_projects/eloi_sport.png',
-    tech: ['React', 'Tailwind CSS', 'Docker'],
+    tech: ['React', 'Tailwind CSS', 'JavaScript'],
     github: 'https://github.com/BastienLopez/Eloi_Coaching',
     demo: 'https://bastienlopez.github.io/Eloi_Coaching/',
     detailedContent: `
@@ -35,11 +35,6 @@ export const freelanceProjects: Project[] = [
               <span class="tech-icon">🎨</span>
               <span class="tech-name">Tailwind CSS</span>
               <p class="tech-desc">Design responsive et personnalisé</p>
-            </div>
-            <div class="tech-item">
-              <span class="tech-icon">🐳</span>
-              <span class="tech-name">Docker</span>
-              <p class="tech-desc">Déploiement conteneurisé</p>
             </div>
             <div class="tech-item">
               <span class="tech-icon">📄</span>
@@ -202,5 +197,74 @@ export const freelanceProjects: Project[] = [
       </div>
     `,
     gallery: ['img_projects/creche.png']
+  },
+  {
+    id: 'luxury-auto-detailling',
+    title: 'Luxury Auto Detailing',
+    description: "Site vitrine pour prestations de detailing automobile haut de gamme : nettoyage, polissage, protection céramique et remise à neuf esthétique.",
+    category: 'freelance',
+    image: 'img_projects/LuxuryAutoDetailling.png',
+    tech: ['React', 'Tailwind CSS', 'JavaScript'],
+    demo: 'https://bastienlopez.github.io/LuxuryAutoDetailling/',
+    detailedContent: `
+      <div class="project-detail">
+        <h2 class="project-title">🚗 Luxury Auto Detailing</h2>
+        
+        <div class="section">
+          <h3 class="section-title">📋 Contexte du projet</h3>
+          <p class="description">
+            Création d'un <strong>site vitrine</strong> pour un atelier de detailing automobile proposant des prestations haut de gamme : polissage, décontamination, protection céramique et relooking intérieur.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">⚙️ Technologies utilisées</h3>
+          <div class="tech-grid">
+            <div class="tech-item">
+              <span class="tech-icon">⚛️</span>
+              <span class="tech-name">React</span>
+              <p class="tech-desc">Interface réactive et moderne</p>
+            </div>
+            <div class="tech-item">
+              <span class="tech-icon">🎨</span>
+              <span class="tech-name">Tailwind CSS</span>
+              <p class="tech-desc">Design responsive et élégant</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">✨ Fonctionnalités principales</h3>
+          <ul class="features-list">
+            <li class="feature-item">
+              <span class="feature-icon">🧽</span>
+              <strong>Présentation des services</strong> - Polissage, céramique, nettoyage intérieur
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">📸</span>
+              <strong>Galerie avant/après</strong> - Showcase photos haute qualité
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">📅</span>
+              <strong>Prise de rendez-vous</strong> - Formulaire et contact direct
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">💬</span>
+              <strong>Témoignages</strong> - Avis clients et notes
+            </li>
+          </ul>
+        </div>
+
+        <div class="section results">
+          <h3 class="section-title">🎯 Résultats</h3>
+          <div class="result-box success">
+            <p class="result-text">
+              ✅ Site <strong>déployé</strong> et optimisé pour présenter l'ensemble des prestations et convertir les visiteurs en clients.
+            </p>
+          </div>
+        </div>
+      </div>
+    `,
+    gallery: ['img_projects/LuxuryAutoDetailling.png']
   }
 ];
