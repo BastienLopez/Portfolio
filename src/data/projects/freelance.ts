@@ -271,7 +271,7 @@ export const freelanceProjects: Project[] = [
   {
     id: 'cledevoute',
     title: 'CleDeVoute',
-    description: "Site vitrine pour CleDeVoute — présentation de services et portfolio.",
+    description: "Site vitrine pour Cle De Voute Maconnerie — présentation de services et portfolio.",
     category: 'freelance',
     image: 'img_projects/CleDeVoute.png',
     tech: ['React', 'Tailwind CSS', 'JavaScript'],
@@ -283,36 +283,43 @@ export const freelanceProjects: Project[] = [
         <div class="section">
           <h3 class="section-title">📋 Contexte du projet</h3>
           <p class="description">
-            Création d'un <strong>site vitrine</strong> pour CleDeVoute afin de présenter ses services,
-            réalisations et faciliter la prise de contact avec les clients.
+            CleDeVoute souhaitait moderniser sa présence en ligne avec un site vitrine clair et
+            orienté conversion pour présenter ses services, réalisations et faciliter la prise de contact.
           </p>
         </div>
 
         <div class="section">
-          <h3 class="section-title">⚙️ Technologies utilisées</h3>
+          <h3 class="section-title">🧑‍💻 Rôle</h3>
+          <p class="description">Conception et intégration frontend, UI design léger, optimisation performance et déploiement sur GitHub Pages.</p>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">⚙️ Technologies & outils</h3>
           <div class="tech-grid">
-            <div class="tech-item">
-              <span class="tech-icon">🌐</span>
-              <span class="tech-name">HTML</span>
-            </div>
-            <div class="tech-item">
-              <span class="tech-icon">🎨</span>
-              <span class="tech-name">CSS</span>
-            </div>
-            <div class="tech-item">
-              <span class="tech-icon">⚡</span>
-              <span class="tech-name">JavaScript</span>
-            </div>
+            <div class="tech-item"><span class="tech-icon">⚛️</span><span class="tech-name">React</span></div>
+            <div class="tech-item"><span class="tech-icon">🎨</span><span class="tech-name">Tailwind CSS</span></div>
+            <div class="tech-item"><span class="tech-icon">⚡</span><span class="tech-name">JavaScript</span></div>
+            <div class="tech-item"><span class="tech-icon">🚀</span><span class="tech-name">GitHub Pages</span></div>
+            <div class="tech-item"><span class="tech-icon">🛠️</span><span class="tech-name">Vite</span></div>
           </div>
         </div>
 
         <div class="section">
-          <h3 class="section-title">✨ Fonctionnalités principales</h3>
+          <h3 class="section-title">🚧 Défis rencontrés</h3>
           <ul class="features-list">
-            <li class="feature-item"><strong>Présentation claire</strong> des services et réalisations</li>
-            <li class="feature-item"><strong>Galerie</strong> d'exemples visuels</li>
-            <li class="feature-item"><strong>Contact</strong> simple et accessible</li>
-            <li class="feature-item"><strong>Responsive</strong> et optimisé mobile</li>
+            <li class="feature-item">Réduire le temps de chargement tout en gardant des images haute qualité.</li>
+            <li class="feature-item">Assurer une navigation fluide sur mobile et desktop.</li>
+            <li class="feature-item">Simplifier la prise de contact pour augmenter les conversions.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">🔧 Solutions apportées</h3>
+          <ul class="features-list">
+            <li class="feature-item">Optimisation des images (WebP/AVIF) et lazy-loading pour améliorer FCP.</li>
+            <li class="feature-item">Design mobile-first avec composants réutilisables (Tailwind + React).</li>
+            <li class="feature-item">Formulaire de contact simple et mise en évidence des appels à l'action (CTA).</li>
+            <li class="feature-item">Déploiement sur GitHub Pages pour une distribution simple et fiable.</li>
           </ul>
         </div>
 
@@ -320,12 +327,18 @@ export const freelanceProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">✅ Site déployé et accessible publiquement via GitHub Pages.</p>
+            <p class="result-text">✅ Amélioration du rendu initial et réduction du poids des pages grâce aux images optimisées.</p>
+            <p class="result-text">✅ Expérience utilisateur améliorée sur mobile (navigation plus rapide, CTA visibles).</p>
           </div>
         </div>
 
         <div class="section">
-          <h3 class="section-title">🔗 Démo</h3>
-          <p class="description"><a href="https://bastienlopez.github.io/CleDeVoute/" target="_blank" rel="noopener noreferrer">Voir la démo</a></p>
+          <h3 class="section-title">📌 Remarques / Améliorations possibles</h3>
+          <ul class="features-list">
+            <li class="feature-item">Ajouter un suivi RUM (Web Vitals) pour mesurer l'impact réel des optimisations.</li>
+            <li class="feature-item">Intégrer un sitemap et les balises Open Graph pour améliorer le référencement.</li>
+            <li class="feature-item">Ajouter des placeholders LQIP pour un affichage plus agréable lors du lazy-loading.</li>
+          </ul>
         </div>
       </div>
     `,
