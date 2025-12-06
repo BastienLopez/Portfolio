@@ -270,7 +270,7 @@ export const freelanceProjects: Project[] = [
   ,
   {
     id: 'cledevoute',
-    title: 'CleDeVoute',
+    title: 'Cle De Voute - Maçonnerie',
     description: "Site vitrine pour Cle De Voute Maconnerie — présentation de services et portfolio.",
     category: 'freelance',
     image: 'img_projects/CleDeVoute.png',

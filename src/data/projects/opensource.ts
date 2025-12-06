@@ -318,6 +318,143 @@ export const opensourceProjects: Project[] = [
     gallery: ['img_projects/ai_trading.png']
   },
   {
+    id: 'patripro',
+    title: 'PatriPro',
+    description: "Application de gestion de patrimoine financier. Suivi des portefeuilles, comptes bancaires, livrets, emprunts et budget avec analyses et insights en temps réel.",
+    category: 'opensource',
+    image: 'img_projects/PatriPro.png',
+    tech: ['React', 'Tailwind CSS', 'JavaScript', 'Chart.js'],
+    demo: 'https://bastienlopez.github.io/PatriPro/',
+    detailedContent: `
+      <div class="project-detail">
+        <h2 class="project-title">🏛️ PatriPro</h2>
+        
+        <div class="section">
+          <h3 class="section-title">📋 Contexte du projet</h3>
+          <p class="description">
+            Application web complète pour <strong>gérer son patrimoine financier</strong> (placements, comptes, épargne, emprunts). 
+            Permet de centraliser tous ses actifs, suivre leur évolution en temps réel et piloter son budget 
+            avec des <strong>analyses graphiques</strong> et des <strong>recommandations personnalisées</strong>.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">⚙️ Technologies utilisées</h3>
+          <div class="tech-grid">
+            <div class="tech-item">
+              <span class="tech-icon">⚛️</span>
+              <span class="tech-name">React</span>
+              <p class="tech-desc">Interface utilisateur réactive</p>
+            </div>
+            <div class="tech-item">
+              <span class="tech-icon">🎨</span>
+              <span class="tech-name">Tailwind CSS</span>
+              <p class="tech-desc">Design moderne et responsive</p>
+            </div>
+            <div class="tech-item">
+              <span class="tech-icon">📊</span>
+              <span class="tech-name">Chart.js</span>
+              <p class="tech-desc">Graphiques et visualisations</p>
+            </div>
+            <div class="tech-item">
+              <span class="tech-icon">🚀</span>
+              <span class="tech-name">GitHub Pages</span>
+              <p class="tech-desc">Hébergement et déploiement</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">✨ Fonctionnalités principales</h3>
+          <ul class="features-list">
+            <li class="feature-item">
+              <span class="feature-icon">🎯</span>
+              <strong>Dashboard</strong> - Vue d'ensemble du patrimoine avec KPIs (brut, net, rendement)
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">💼</span>
+              <strong>Portefeuilles</strong> - Gestion des placements (PEA, CTO, Crypto, Assurance-vie)
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">🏦</span>
+              <strong>Comptes bancaires</strong> - Suivi des comptes courants et soldes
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">📗</span>
+              <strong>Livrets</strong> - Gestion de l'épargne réglementée (Livret A, LDDS, LEP, PEL)
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">💳</span>
+              <strong>Emprunts</strong> - Suivi des crédits avec tableau d'amortissement
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">💰</span>
+              <strong>Budget</strong> - Pilotage des revenus et dépenses par catégorie
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">📊</span>
+              <strong>Cashflow</strong> - Flux de trésorerie et solde net mensuel
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">📅</span>
+              <strong>Calendrier</strong> - Rappels d'échéances (prélèvements, revenus)
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">👁️</span>
+              <strong>Watchlist</strong> - Surveillance d'actifs financiers (actions, crypto)
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">📈</span>
+              <strong>Insights</strong> - Analyses et recommandations (diversification, risques)
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">🏢</span>
+              <strong>Entreprise</strong> - Profil professionnel et paramètres (micro-entreprise)
+            </li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">📊 Visualisations & graphiques</h3>
+          <ul class="features-list">
+            <li class="feature-item">
+              <span class="feature-icon">📈</span>
+              <strong>Évolution du patrimoine</strong> - Graphique temporel avec filtres (1M, 3M, 1A, YTD, MAX)
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">🥧</span>
+              <strong>Diversification</strong> - Répartition des actifs (Cash, Livrets, PEA, CTO, Crypto, Assurance-vie)
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">📊</span>
+              <strong>Budget visuel</strong> - Dépenses par catégorie avec barres de progression
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">💸</span>
+              <strong>Flux mensuels</strong> - Sources de revenus vs. catégories de dépenses
+            </li>
+          </ul>
+        </div>
+
+        <div class="section results">
+          <h3 class="section-title">🎯 Résultats</h3>
+          <div class="result-box success">
+            <p class="result-text">
+              ✅ Solution <strong>complète</strong> pour centraliser et piloter son patrimoine financier.
+            </p>
+            <p class="result-text">
+              ✅ Interface <strong>intuitive</strong> avec graphiques en temps réel et recommandations.
+            </p>
+            <p class="result-text">
+              ✅ Application <strong>déployée</strong> et accessible publiquement en production.
+            </p>
+          </div>
+        </div>
+      </div>
+    `,
+    gallery: ['img_projects/PatriPro.png']
+  },
+  {
     id: 'novotel-roue-chance',
     title: 'NOVOTEL - Roue de la Chance',
     description: "Site web interactif pour le NOVOTEL Reims Tinqueux permettant aux clients de donner leur avis et de tenter leur chance avec une roue de la fortune pour gagner des récompenses.",
