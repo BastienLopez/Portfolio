@@ -2,7 +2,7 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  category: 'emploi' | 'freelance' | 'opensource' | 'gaming';
+  category: 'emploi' | 'freelance' | 'opensource' | 'gaming' | 'browser';
   image: string;
   tech: string[];
   github?: string;
