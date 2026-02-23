@@ -87,6 +87,11 @@ const Projects = () => {
       title: 'GAMING',
       color: 'from-orange-500 to-red-500'
     },
+    mobile: {
+      emoji: '📱',
+      title: 'JEUX MOBILE',
+      color: 'from-teal-500 to-cyan-500'
+    },
     browser: {
       emoji: '🕹️',
       title: 'JEUX NAVIGATEUR',
@@ -271,20 +276,6 @@ const Projects = () => {
 
                 {/* Action Buttons */}
                 <div className="flex gap-3 mt-8">
-                  {selectedProject.github && (
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="default"
-                      className="flex-1 border-primary text-primary hover:bg-primary/10"
-                    >
-                      <a href={selectedProject.github} target="_blank" rel="noopener noreferrer">
-                        <Github className="w-4 h-4 mr-2" />
-                        Code
-                      </a>
-                    </Button>
-                  )}
-
                   {selectedProject.demo && (
                     <Button
                       asChild
@@ -395,13 +386,13 @@ const Projects = () => {
         ) : (
           <>
             {/* Category Buttons */}
-            <div className="w-full flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 mb-12 px-2">
+            <div className="w-full grid grid-cols-2 sm:grid-cols-3 gap-3 mb-12 px-2 max-w-3xl mx-auto">
               {Object.entries(categoryConfig).map(([key, config]) => (
                 <Button
                   key={key}
                   onClick={() => handleCategoryClick(key as ProjectCategory)}
                   variant={selectedCategory === key ? "default" : "outline"}
-                  className={`w-full sm:w-auto text-sm md:text-base lg:text-lg px-4 md:px-5 lg:px-6 py-4 md:py-4 lg:py-5 transition-all ${
+                  className={`w-full text-xs sm:text-sm md:text-base lg:text-lg px-2 sm:px-4 md:px-5 lg:px-6 py-3 md:py-4 lg:py-5 transition-all ${
                     selectedCategory === key 
                       ? `bg-gradient-to-r ${config.color} text-white shadow-lg` 
                       : 'hover:scale-105'
