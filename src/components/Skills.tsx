@@ -25,7 +25,7 @@ const Skills = () => {
       title: "IA & Machine Learning",
       icon: Brain,
       color: "text-primary",
-      skills: ["Python", "TensorFlow", "PyTorch", "Vector DB", "Mastra Agent Framework"],
+      skills: ["Python", "TensorFlow", "PyTorch", "Vector DB", "Mastra Agent", "CUDA - RL - NLP"],
     },
     {
       title: "Automatisation",

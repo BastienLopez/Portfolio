@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Portfolio Bastien Lopez">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="72" y="84" width="8" height="462" rx="4" fill="url(#line)"/>
+
+  <text x="110" y="190" fill="#f8fafc" font-size="62" font-family="Segoe UI, Arial, sans-serif" font-weight="700">
+    Bastien Lopez
+  </text>
+  <text x="110" y="255" fill="#22d3ee" font-size="38" font-family="Segoe UI, Arial, sans-serif" font-weight="600">
+    Developpeur freelance full-stack
+  </text>
+
+  <text x="110" y="330" fill="#cbd5e1" font-size="30" font-family="Segoe UI, Arial, sans-serif">
+    Sites vitrines • Applications web • API
+  </text>
+  <text x="110" y="378" fill="#cbd5e1" font-size="30" font-family="Segoe UI, Arial, sans-serif">
+    Automatisation • MVP • ERP leger / sur mesure
+  </text>
+
+  <text x="110" y="502" fill="#94a3b8" font-size="24" font-family="Segoe UI, Arial, sans-serif">
+    bastienlopez.github.io/Portfolio
+  </text>
+</svg>

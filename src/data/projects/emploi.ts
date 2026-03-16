@@ -526,7 +526,7 @@ export const emploiProjects: Project[] = [
             </li>
           </ul>
         </div>
-        <img src="img_projects/bot_teams_exemple.png" alt="Bot teams img" />
+        <img src="img_projects/bot_teams_exemple.png" alt="Capture du bot Teams de veille automatisee" />
         <div class="section results">
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">

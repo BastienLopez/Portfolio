@@ -231,6 +231,8 @@ const Projects = () => {
                   <img
                     src={selectedProject.image}
                     alt={selectedProject.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full rounded-[5px] object-contain max-h-96"
                   />
                 </div>
@@ -418,6 +420,8 @@ const Projects = () => {
                       <img
                         src={project.image}
                         alt={project.title}
+                        loading="lazy"
+                        decoding="async"
                         className="max-w-full max-h-full object-contain rounded-[5px] transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

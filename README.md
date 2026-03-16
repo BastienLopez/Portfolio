@@ -51,31 +51,26 @@ Si vous aviez des dépendances supprimées du `package.json`, exécutez `npm ins
 
 Vous pouvez déployer le dossier `dist` produit par `npm run build` sur n'importe quel hébergeur de sites statiques (Netlify, Vercel, GitHub Pages, etc.).
 
+## SEO / GEO (GitHub Pages)
+
+Le SEO principal est géré dans [index.html](index.html):
+- title, meta description, canonical
+- Open Graph / Twitter cards
+- JSON-LD (WebSite, WebPage, Person, ProfessionalService, FAQPage)
+
+Fichiers publics SEO:
+- [public/robots.txt](public/robots.txt)
+- [public/sitemap.xml](public/sitemap.xml)
+- [public/llms.txt](public/llms.txt)
+
+Image sociale Open Graph:
+- [public/og-image.svg](public/og-image.svg)
+- Pour la remplacer: conservez un format 1200x630 et mettez a jour l'URL `og:image` / `twitter:image` dans [index.html](index.html) si le nom change.
+
+Important pour ce repo:
+- Le site est servi sous `/Portfolio/` (GitHub Pages).
+- Les URLs absolues SEO doivent rester sur `https://bastienlopez.github.io/Portfolio/`.
+
 ## Contact
 
 Pour toute demande de mission freelance, collaboration ou question technique, utilisez la section Contact du site ou contactez-moi via mon profil GitHub.
-
----
-
-_Remarque : le contenu spécifique à un éditeur tiers a été retiré du README. Le site source et les fichiers de configuration ont été nettoyés en conséquence._
-
-
-Requirements: Node.js and npm
-
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Start dev server: `npm run dev`
-
-## What technologies are used for this project?
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## Deployment
-
-Build for production with `npm run build`. Serve the `dist` folder as needed (e.g. static host, GitHub Pages).
-
-If you previously used an external editor/integration, any references to that service have been removed from this README.

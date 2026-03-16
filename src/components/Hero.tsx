@@ -50,8 +50,8 @@ const Hero = () => {
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Je conçois des applications web modernes, performantes et scalables.
-            Passionné par le code, l'architecture logicielle et les nouvelles technologies.
+            Je conçois des sites vitrines, applications web et applications metier.
+            J'interviens aussi sur les API, l'automatisation, les MVP et les ERP legers.
           </p>
 
           {/* Tech stack badges */}

@@ -19,13 +19,14 @@ const Navbar = () => {
     { href: "#skills", label: "Compétences" },
     { href: "#projects", label: "Projets" },
     { href: "#devnotes", label: "Dev Notes" },
+    { href: "#freelance", label: "Freelance" },
     { href: "#contact", label: "Contact" },
   ];
 
   const socialLinks = [
     { href: "https://github.com/BastienLopez", icon: Github, label: "GitHub" },
-    { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-    { href: "mailto:contact@bastienlopez.dev", icon: Mail, label: "Email" },
+    { href: "https://www.linkedin.com/in/bastien-lopez-fullstack/", icon: Linkedin, label: "LinkedIn" },
+    { href: "mailto:bastien.lopez40@gmail.com", icon: Mail, label: "Email" },
   ];
 
   return (
@@ -41,7 +42,7 @@ const Navbar = () => {
             href="#hero"
             className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity"
           >
-            Bastien
+            Bastien Lopez
           </a>
 
           {/* Desktop Navigation (centered) */}
