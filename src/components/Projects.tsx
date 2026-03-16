@@ -14,7 +14,7 @@ type BrowserGameId =
   | 'browser-memory'
   | 'browser-breakout'
   | 'browser-tetris';
-type BrowserGameComponent = ComponentType<Record<string, never>>;
+type BrowserGameComponent = ComponentType<object>;
 type BrowserGameLoader = () => Promise<{ default: BrowserGameComponent }>;
 
 const browserGameLoaders: Record<BrowserGameId, BrowserGameLoader> = {
@@ -66,20 +66,56 @@ const Projects = () => {
     ? browserGameGuides[activeGameProject.id as BrowserGameId]
     : null;
 
+  const featuredCaseStudies = [
+    {
+      id: 'erp-micro-creches',
+      title: 'ERP Micro-Creches',
+      context: 'Reseau de micro-creches avec des suivis admin disperses.',
+      need: 'Centraliser les operations et fiabiliser le pilotage multi-etablissements.',
+      solution: 'Application metier complete avec back-office, suivi, droits et tableaux de bord.',
+      stack: 'React, Node.js, MongoDB, Docker, CI/CD',
+      result: 'Process plus lisibles et meilleure maitrise operationnelle au quotidien.',
+      role: 'Conception, developpement full-stack et structuration de la livraison.',
+      link: '/Portfolio/cases/erp-micro-creches.html',
+    },
+    {
+      id: 'wallet-provider',
+      title: 'Altme Wallet Provider',
+      context: "Produit B2B/B2C d'identité numérique conforme eIDAS 2.0.",
+      need: 'Garantir interopérabilité, sécurité et standards européens.',
+      solution: "Participation à une plateforme wallet avec flux vérifiables et API robustes.",
+      stack: 'OIDC4VC, Verifiable Credentials, SSI, APIs',
+      result: 'Solution exploitable dans des contextes réglementés et exigeants.',
+      role: "Contribution technique sur des briques produit et architecture applicative.",
+      link: '/Portfolio/cases/altme-wallet-provider.html',
+    },
+    {
+      id: 'eloi-coachsteo',
+      title: 'Eloi CoachSteo',
+      context: "Indépendant qui devait clarifier son offre et être visible rapidement.",
+      need: "Un site vitrine professionnel, lisible et orienté prise de contact.",
+      solution: "Conception d'une one-page moderne, responsive et orientée conversion.",
+      stack: 'React, Tailwind CSS',
+      result: 'Présence en ligne plus crédible et discours commercial mieux structuré.',
+      role: "Design d'interface, intégration front et mise en ligne.",
+      link: '/Portfolio/cases/eloi-coachsteo.html',
+    },
+  ];
+
   const categoryConfig = {
     emploi: {
       emoji: '💼',
-      title: 'EMPLOIS',
+      title: 'PROJETS CLIENTS',
       color: 'from-blue-500 to-cyan-500'
     },
     freelance: {
       emoji: '🚀',
-      title: 'FREELANCE',
+      title: 'MISSIONS FREELANCE',
       color: 'from-purple-500 to-pink-500'
     },
     opensource: {
       emoji: '🌟',
-      title: 'OPENSOURCE',
+      title: 'OPEN SOURCE',
       color: 'from-green-500 to-emerald-500'
     },
     gaming: {
@@ -89,12 +125,12 @@ const Projects = () => {
     },
     mobile: {
       emoji: '📱',
-      title: 'JEUX MOBILE',
+      title: 'MOBILE',
       color: 'from-teal-500 to-cyan-500'
     },
     browser: {
       emoji: '🕹️',
-      title: 'JEUX NAVIGATEUR',
+      title: 'LAB - BROWSER GAMES',
       color: 'from-amber-500 to-rose-500'
     }
   };
@@ -187,20 +223,45 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" className="py-20 px-4 w-full overflow-x-hidden">
+    <section id="projects" className="py-20 px-4 w-full overflow-x-hidden section-even">
       <div className="container mx-auto max-w-6xl w-full">
         {/* Section Header */}
         <div className="text-center mb-12 w-full">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Projets Réalisés
+            Études de cas et réalisations
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-6"></div>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 px-4">
-            Une sélection de mes réalisations récentes, du frontend au backend
+          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto mb-8 px-4">
+            Projets mis en avant pour illustrer ma façon de résoudre des besoins métier concrets,
+            puis accès à l'ensemble des réalisations et explorations.
           </p>
-          
-
         </div>
+
+        {!selectedProject && !activeGameProject && (
+          <div className="mb-12">
+            <div className="mb-5">
+              <h3 className="text-2xl md:text-3xl font-bold mb-2">3 projets vitrine pour une mission freelance</h3>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Contexte, besoin, solution et valeur produite, sans chiffres inventes.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {featuredCaseStudies.map((item) => (
+                <Card key={item.id} className="p-5 bg-card border-border h-full flex flex-col">
+                  <h4 className="text-lg font-semibold mb-3">{item.title}</h4>
+                  <div className="space-y-2 text-sm text-foreground/80 leading-6 flex-1">
+                    <p><span className="text-foreground font-medium">Contexte:</span> {item.context}</p>
+                    <p><span className="text-foreground font-medium">Besoin:</span> {item.need}</p>
+                    <p><span className="text-foreground font-medium">Solution:</span> {item.solution}</p>
+                    <p><span className="text-foreground font-medium">Stack:</span> {item.stack}</p>
+                    <p><span className="text-foreground font-medium">Résultat:</span> {item.result}</p>
+                    <p><span className="text-foreground font-medium">Mon role:</span> {item.role}</p>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Project Detail View */}
         {selectedProject ? (
@@ -233,6 +294,7 @@ const Projects = () => {
                     alt={selectedProject.title}
                     loading="lazy"
                     decoding="async"
+                    sizes="(max-width: 768px) 100vw, 960px"
                     className="w-full rounded-[5px] object-contain max-h-96"
                   />
                 </div>
@@ -388,6 +450,11 @@ const Projects = () => {
         ) : (
           <>
             {/* Category Buttons */}
+            <div className="mb-4 text-center">
+              <p className="text-sm text-muted-foreground">
+                Une sélection de mes réalisations récentes, du frontend au backend.
+              </p>
+            </div>
             <div className="w-full grid grid-cols-2 sm:grid-cols-3 gap-3 mb-12 px-2 max-w-3xl mx-auto">
               {Object.entries(categoryConfig).map(([key, config]) => (
                 <Button
@@ -422,6 +489,7 @@ const Projects = () => {
                         alt={project.title}
                         loading="lazy"
                         decoding="async"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="max-w-full max-h-full object-contain rounded-[5px] transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

@@ -59,7 +59,7 @@ const DevNotes = () => {
   };
 
   return (
-    <section id="devnotes" className="py-20 px-4 w-full overflow-x-hidden">
+    <section id="devnotes" className="py-20 px-4 w-full overflow-x-hidden section-odd">
       <div className="container mx-auto max-w-6xl w-full">
         <div className="text-center mb-12 w-full">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Dev Notes 📝</h2>

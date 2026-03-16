@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/analytics";
 
 const Hero = () => {
   const [typedText, setTypedText] = useState("");
-  const fullText = "Développeur Full Stack";
+  const fullText = "Développeur Full Stack Freelance\nSites vitrines, applications métier,\nAPI et automatisation";
   
   useEffect(() => {
     let index = 0;
+    const TYPING_INTERVAL = 70;
     const timer = setInterval(() => {
       if (index <= fullText.length) {
         setTypedText(fullText.slice(0, index));
@@ -15,8 +17,8 @@ const Hero = () => {
       } else {
         clearInterval(timer);
       }
-    }, 100);
-    
+    }, TYPING_INTERVAL);
+
     return () => clearInterval(timer);
   }, []);
 
@@ -40,8 +42,8 @@ const Hero = () => {
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               Bastien Lopez
             </h1>
-            <div className="h-12 md:h-16 flex items-center justify-center">
-              <h2 className="text-2xl md:text-4xl font-medium bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite]">
+            <div className="min-h-[96px] md:min-h-[128px] flex items-start justify-center">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl leading-tight font-medium whitespace-pre-line text-primary supports-[background-clip:text]:bg-gradient-to-r supports-[background-clip:text]:from-primary supports-[background-clip:text]:via-accent supports-[background-clip:text]:to-primary supports-[background-clip:text]:bg-clip-text supports-[background-clip:text]:text-transparent bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite]">
                 {typedText}
                 <span className="animate-pulse">|</span>
               </h2>
@@ -49,19 +51,29 @@ const Hero = () => {
           </div>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Je conçois des sites vitrines, applications web et applications metier.
-            J'interviens aussi sur les API, l'automatisation, les MVP et les ERP legers.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            En tant que développeur freelance, je conçois des outils web sur mesure pour aider les PME/TPE à gagner du temps, fiabiliser leurs flux
+            et centraliser leurs opérations métier.
           </p>
 
-          {/* Tech stack badges */}
-          <div className="flex flex-wrap justify-center gap-3 py-4">
-            {["Python", "React", "JavaScript", "IA", "Docker", "Web3"].map((tech) => (
+          <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed">
+            Portails internes, back-offices, API et automatisations. Approche progressive, code maintenable,
+            communication claire.
+          </p>
+
+          {/* Reassurance line */}
+          <div className="flex flex-wrap justify-center gap-3 py-3">
+            {[
+              "Applications métier",
+              "API & automatisation",
+              "MVP / outils internes",
+              "Accompagnement technique",
+            ].map((item) => (
               <span
-                key={tech}
+                key={item}
                 className="px-4 py-2 bg-card border border-border rounded-full text-sm font-medium hover:border-primary transition-colors"
               >
-                {tech}
+                {item}
               </span>
             ))}
           </div>
@@ -73,7 +85,7 @@ const Hero = () => {
               size="lg"
               className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-background font-semibold"
             >
-              <a href="#projects">Voir mes projets</a>
+              <a href="#contact" onClick={() => trackEvent("cta_click", { location: "hero", cta: "contact" })}>Parler de votre projet</a>
             </Button>
             <Button
               asChild
@@ -81,7 +93,7 @@ const Hero = () => {
               variant="outline"
               className="border-primary text-primary hover:bg-primary/10"
             >
-              <a href="#contact">Me contacter</a>
+              <a href="#projects" onClick={() => trackEvent("cta_click", { location: "hero", cta: "projects" })}>Voir mes réalisations</a>
             </Button>
           </div>
         </div>
@@ -89,10 +101,13 @@ const Hero = () => {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-10">
-        <a href="#about" className="text-muted-foreground hover:text-primary transition-colors">
+        <a href="#freelance" className="text-muted-foreground hover:text-primary transition-colors">
           <ChevronDown className="w-8 h-8" />
         </a>
       </div>
+
+      {/* Bottom fade to blend hero into next section */}
+      <div className="hero-grid-fade" />
 
       <style>{`
         @keyframes shimmer {

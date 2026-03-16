@@ -15,11 +15,11 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { href: "#about", label: "À propos" },
-    { href: "#skills", label: "Compétences" },
+    { href: "#freelance", label: "Services" },
     { href: "#projects", label: "Projets" },
-    { href: "#devnotes", label: "Dev Notes" },
-    { href: "#freelance", label: "Freelance" },
+    { href: "#about", label: "À propos" },
+    { href: "#skills", label: "Stack" },
+    { href: "#devnotes", label: "Lab" },
     { href: "#contact", label: "Contact" },
   ];
 

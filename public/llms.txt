@@ -1,25 +1,25 @@
 # Portfolio Bastien Lopez
 
-Ce site présente l'activite freelance de Bastien Lopez, developpeur full-stack.
+Ce site présente l'activité freelance de Bastien Lopez, développeur full-stack.
 
 ## Positionnement
-- Developpement web freelance pour PME et porteurs de projet
-- Focus sur des solutions utiles, maintenables et deployables
+- Développement web freelance pour PME et porteurs de projet
+- Focus sur des solutions utiles, maintenables et déployables
 
 ## Services principaux
 - Sites vitrines
 - Applications web sur mesure
-- Applications metier
-- API & integrations
+- Applications métier
+- API & intégrations
 - Automatisation
 - MVP
-- ERP leger / sur mesure
+- ERP léger / sur mesure
 
 ## Pour qui
 - PME
 - Porteurs de projet
 - Equipes qui veulent remplacer des process manuels
-- Structures qui veulent centraliser leurs donnees metier
+- Structures qui veulent centraliser leurs données métier
 
 ## Sections importantes
 - Hero et proposition de valeur: https://bastienlopez.github.io/Portfolio/
@@ -33,5 +33,5 @@ Ce site présente l'activite freelance de Bastien Lopez, developpeur full-stack.
 - LinkedIn: https://www.linkedin.com/in/bastien-lopez-fullstack/
 
 ## Notes
-- Langue principale: francais
+- Langue principale: français
 - Site heberge sur GitHub Pages sous le sous-chemin /Portfolio/

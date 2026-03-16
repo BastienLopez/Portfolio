@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/analytics";
+import Testimonials from "@/components/Testimonials";
 
 const Freelance = () => {
   const businessTags = [
@@ -167,6 +169,7 @@ const Freelance = () => {
     "Data: PostgreSQL, MongoDB, collecte automatisée de données",
     "DevOps: Docker, GitHub Actions, CI/CD",
     "Architecture: APIs REST, sécurité applicative",
+    "IA: TensorFlow, PyTorch, CUDA, RL, NLP",
   ];
 
   const faqItems = [
@@ -203,12 +206,12 @@ const Freelance = () => {
   ];
 
   return (
-    <section id="freelance" className="py-20 md:py-32 relative bg-secondary/20">
+    <section id="freelance" className="py-20 md:py-32 relative bg-secondary/20 section-odd">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 animate-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Applications métier, API et automatisations pour PME
+              Sites vitrines, applications métier, API et automatisations pour PME/TPE
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-6"></div>
             <p className="text-base md:text-lg text-foreground/85 max-w-3xl mx-auto leading-7 md:leading-relaxed">
@@ -227,13 +230,15 @@ const Freelance = () => {
             </div>
             <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild className="bg-cta hover:bg-cta/90 text-cta-foreground">
-                <a href="#contact">
+                <a href="#contact" onClick={() => trackEvent("cta_click", { location: "freelance", cta: "contact" })}>
                   <PenSquare className="w-4 h-4 mr-2" />
                   Décrire mon besoin
                 </a>
               </Button>
               <Button asChild variant="outline">
-                <a href="#freelance-cases">Voir des exemples de missions</a>
+                <a href="#freelance-cases" onClick={() => trackEvent("cta_click", { location: "freelance", cta: "cases" })}>
+                  Voir des exemples de missions
+                </a>
               </Button>
             </div>
           </div>
@@ -406,6 +411,8 @@ const Freelance = () => {
             </ul>
           </Card>
 
+          <Testimonials />
+
           <Card className="p-5 md:p-6 bg-card border-border mb-12">
             <div className="flex items-center gap-3 mb-5">
               <HelpCircle className="w-5 h-5 text-primary" />
@@ -442,10 +449,14 @@ const Freelance = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild className="bg-cta hover:bg-cta/90 text-cta-foreground">
-                <a href="#contact">Obtenir une estimation initiale</a>
+                <a href="#contact" onClick={() => trackEvent("cta_click", { location: "freelance_bottom", cta: "estimate" })}>
+                  Obtenir une estimation initiale
+                </a>
               </Button>
               <Button asChild variant="outline">
-                <a href="#contact">Décrire mon besoin</a>
+                <a href="#contact" onClick={() => trackEvent("cta_click", { location: "freelance_bottom", cta: "contact" })}>
+                  Décrire mon besoin
+                </a>
               </Button>
             </div>
             <p className="text-xs text-foreground/60 mt-4 flex items-center justify-center gap-2">

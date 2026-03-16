@@ -5,12 +5,19 @@ import { Card } from "@/components/ui/card";
 const About = () => {
   const stats = [
     { label: "Années d'expérience", value: "5+" },
-    { label: "Projets complétés", value: "30+" },
-    { label: "Technologies maîtrisées", value: "15+" },
+    { label: "Projets orientés métier", value: "30+" },
+    { label: "Secteurs et contextes traités", value: "10+" },
+  ];
+
+  const trustPoints = [
+    "Cadrage clair avant de coder",
+    "Livraisons progressives avec priorites metier",
+    "Code lisible, documente et transmissible",
+    "Communication simple avec interlocuteurs techniques et non techniques",
   ];
 
   return (
-    <section id="about" className="py-20 md:py-32 relative">
+    <section id="about" className="py-20 md:py-32 relative section-odd">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
@@ -25,26 +32,31 @@ const About = () => {
             {/* Left: Bio */}
             <div className="space-y-6 animate-slide-in">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Développeur full stack passionné, je transforme des idées en applications web robustes et élégantes.
-                Avec une expertise approfondie en <span className="text-primary font-semibold">Python</span> et{" "}
-                <span className="text-accent font-semibold">JavaScript</span>, je maîtrise l'ensemble du cycle de développement.
-                Travaillant en <strong>full remote</strong>, <strong>bilingue en anglais</strong> et collabore
-                avec des équipes internationales.
+                Je suis développeur full-stack freelance. J'accompagne des PME/TPE qui veulent structurer
+                leurs opérations avec des applications métier, des API et des automatisations utiles.
               </p>
               
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Mon expérience couvre le développement frontend moderne avec <span className="text-primary font-semibold">React</span>, les architectures backend
-                avec <span className="text-accent font-semibold">Node.js</span> et <span className="text-accent font-semibold">FastAPI</span>, ainsi que le déploiement avec{" "}
-                <span className="text-primary font-semibold">Docker</span>. Adepte des pratiques DevOps et de l'intégration
-                continue, je construis des solutions scalables et maintenables.
+                Mon approche est pragmatique : comprendre votre contexte, cibler le périmètre utile,
+                livrer rapidement une première version exploitable, puis améliorer par itérations.
               </p>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Passionné par l'<span className="text-primary font-semibold">IA et le Machine Learning</span> (TensorFlow, PyTorch, Vector DB), 
-                je développe également des solutions d'<strong>automatisation</strong> avec <span className="text-accent font-semibold">n8n</span> et <span className="text-primary font-semibold">Python</span>.
-                Curieux des technologies émergentes comme le <span className="text-accent font-semibold">Web3</span>, mon approche combine rigueur technique 
-                et créativité pour livrer des produits exceptionnels.
+                Je travaille avec React, TypeScript, Node.js, Python, Docker et CI/CD selon vos besoins.
+                L'objectif reste toujours le même : un outil fiable, maintenable, et utile pour l'équipe.
               </p>
+
+              <Card className="p-5 bg-card border-border">
+                <p className="text-sm font-semibold mb-3">Ma façon de travailler</p>
+                <ul className="grid sm:grid-cols-2 gap-2 text-sm text-foreground/80 leading-6">
+                  {trustPoints.map((point) => (
+                    <li key={point} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-primary mt-1" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
 
               {/* Links */}
               <div className="flex flex-wrap gap-4 pt-4">
@@ -103,7 +115,7 @@ const About = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground mb-1">Disponible pour</p>
-                    <p className="text-lg font-semibold text-foreground">Nouveaux projets freelance 🚀</p>
+                    <p className="text-lg font-semibold text-foreground">Nouvelles missions freelance</p>
                   </div>
                 </div>
               </Card>

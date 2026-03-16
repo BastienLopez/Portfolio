@@ -1,4 +1,5 @@
 ﻿import { Article } from './types';
+/* eslint-disable no-useless-escape */
 
 export const architectureArticles: Article[] = [
 // 🧰 Architecture & Bonnes pratiques de code

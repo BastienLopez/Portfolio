@@ -54,7 +54,7 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-20 md:py-32 relative bg-secondary/30">
+    <section id="skills" className="py-20 md:py-32 relative bg-secondary/30 section-even">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}

@@ -34,7 +34,7 @@ const BreakoutGame = () => {
     const paddleSpeed = 6;
     let rightPressed = false;
     let leftPressed = false;
-    let ballRadius = 7;
+    const ballRadius = 7;
     let ballX = CANVAS_WIDTH / 2;
     let ballY = CANVAS_HEIGHT - 40;
     let ballDX = 0;

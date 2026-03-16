@@ -27,7 +27,7 @@ const SnakeGame = () => {
     let accumulator = 0;
     let direction: Point = { x: 1, y: 0 };
     let pendingDirection: Point = { x: 1, y: 0 };
-    let snake: Point[] = [
+    const snake: Point[] = [
       { x: Math.floor(GRID_SIZE / 2), y: Math.floor(GRID_SIZE / 2) },
       { x: Math.floor(GRID_SIZE / 2) - 1, y: Math.floor(GRID_SIZE / 2) },
     ];
