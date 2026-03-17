@@ -7,9 +7,18 @@ import testimonialsData, { Testimonial } from "@/data/testimonials";
 // - respects prefers-reduced-motion
 
 const Avatar = ({ name, image }: { name: string; image?: string | null }) => {
-  if (image) {
-    return <img src={image} alt={name} className="w-20 h-20 rounded-full object-cover" />;
+  const resolveImage = (img?: string | null) => {
+    if (!img) return undefined;
+    if (img.startsWith("http") || img.startsWith("data:")) return img;
+    const normalized = img.replace(/^\/+/, "");
+    return `${import.meta.env.BASE_URL}${normalized}`;
+  };
+
+  const resolved = resolveImage(image ?? undefined);
+  if (resolved) {
+    return <img src={resolved} alt={name} className="w-20 h-20 rounded-full object-cover" />;
   }
+
   const initials = name
     .split(" ")
     .map((n) => n[0])

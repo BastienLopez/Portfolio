@@ -6,6 +6,13 @@ import { allProjects, Project } from '@/data/projects';
 
 const projects = allProjects;
 
+const resolveImage = (img?: string | null) => {
+  if (!img) return "";
+  if (img.startsWith("http") || img.startsWith("data:")) return img;
+  const normalized = img.replace(/^\/+/, "");
+  return `${import.meta.env.BASE_URL}${normalized}`;
+};
+
 type ProjectCategory = Project['category'];
 type BrowserGameId =
   | 'browser-snake'
@@ -290,7 +297,7 @@ const Projects = () => {
                 {/* Project Image */}
                 <div className="mb-6">
                   <img
-                    src={selectedProject.image}
+                    src={resolveImage(selectedProject.image)}
                     alt={selectedProject.title}
                     loading="lazy"
                     decoding="async"
@@ -485,7 +492,7 @@ const Projects = () => {
                     {/* Project Image */}
                     <div className="relative h-48 md:h-56 lg:h-52 overflow-hidden bg-secondary flex items-center justify-center">
                       <img
-                        src={project.image}
+                        src={resolveImage(project.image)}
                         alt={project.title}
                         loading="lazy"
                         decoding="async"
