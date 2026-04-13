@@ -99,7 +99,7 @@ const Game2048 = () => {
           ? 'Bravo ! Continue si tu veux pousser le score.'
           : status === 'over'
             ? 'Plus de mouvements possibles. Lance une nouvelle partie.'
-            : 'Utilise les fleches pour fusionner les cases.'}
+            : 'Utilise les flèches pour fusionner les cases.'}
       </div>
     </div>
   );

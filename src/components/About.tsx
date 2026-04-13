@@ -11,8 +11,8 @@ const About = () => {
 
   const trustPoints = [
     "Cadrage clair avant de coder",
-    "Livraisons progressives avec priorites metier",
-    "Code lisible, documente et transmissible",
+    "Livraisons progressives avec priorités métier",
+    "Code lisible, documenté et transmissible",
     "Communication simple avec interlocuteurs techniques et non techniques",
   ];
 

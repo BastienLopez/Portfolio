@@ -269,6 +269,92 @@ export const freelanceProjects: Project[] = [
   }
   ,
   {
+    id: 'ats-filter-resume',
+    title: 'ATS Filter Resume - Analyse ATS explicable de CV',
+    description: "Application full stack d'analyse ATS de CV avec recommandations explicables et priorisées, avec ou sans offre d'emploi.",
+    category: 'freelance',
+    image: 'img_projects/ATS_FILTER.png',
+    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'Vitest', 'Playwright', 'GitHub Actions', 'Docker'],
+    demo: 'https://bastienlopez.github.io/ATS_FILTER_RESUME/',
+    detailedContent: `
+      <div class="project-detail">
+        <h2 class="project-title">📄 ATS Filter Resume - Analyse ATS explicable de CV</h2>
+
+        <div class="section">
+          <h3 class="section-title">📋 Contexte du projet</h3>
+          <p class="description">
+            Le projet est né d'un besoin concret : de nombreuses candidatures sont filtrées automatiquement
+            avant lecture humaine. L'objectif est de fournir un diagnostic clair, pédagogique et actionnable
+            pour corriger un CV selon des critères ATS réalistes, sans promesse trompeuse d'embauche.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">🎯 Objectif & positionnement</h3>
+          <ul class="features-list">
+            <li class="feature-item">
+              <span class="feature-icon">🧩</span>
+              <strong>Type</strong> - Application web full stack
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">🎯</span>
+              <strong>Objectif</strong> - Évaluer la compatibilité ATS d'un CV avec ou sans offre d'emploi
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">👥</span>
+              <strong>Cible</strong> - Candidats qui veulent augmenter leurs chances de passer les filtres ATS
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">🚀</span>
+              <strong>Statut</strong> - Projet fonctionnel avec pipeline qualité et déploiement GitHub Pages
+            </li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">⚙️ Technologies utilisées</h3>
+          <div class="tech-grid">
+            <div class="tech-item"><span class="tech-icon">🧠</span><span class="tech-name">Frontend</span><p class="tech-desc">Next.js 16, React 19, TypeScript, Tailwind CSS v4</p></div>
+            <div class="tech-item"><span class="tech-icon">🔌</span><span class="tech-name">Backend</span><p class="tech-desc">API Routes Next.js et logique d'analyse ATS maison</p></div>
+            <div class="tech-item"><span class="tech-icon">📄</span><span class="tech-name">Parsing CV</span><p class="tech-desc">pdf-parse, mammoth</p></div>
+            <div class="tech-item"><span class="tech-icon">✅</span><span class="tech-name">Validation</span><p class="tech-desc">Zod, React Hook Form</p></div>
+            <div class="tech-item"><span class="tech-icon">🧪</span><span class="tech-name">Tests</span><p class="tech-desc">Vitest (unit, integration, UI) et Playwright (e2e)</p></div>
+            <div class="tech-item"><span class="tech-icon">🧹</span><span class="tech-name">Qualité</span><p class="tech-desc">ESLint, Prettier, Husky, lint-staged</p></div>
+            <div class="tech-item"><span class="tech-icon">⚡</span><span class="tech-name">CI/CD</span><p class="tech-desc">GitHub Actions (CI unifiée + déploiement GitHub Pages)</p></div>
+            <div class="tech-item"><span class="tech-icon">🐳</span><span class="tech-name">Containerisation</span><p class="tech-desc">Docker, docker compose</p></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">✨ Fonctionnalités principales</h3>
+          <ul class="features-list">
+            <li class="feature-item"><span class="feature-icon">📥</span>Import CV en PDF ou DOCX</li>
+            <li class="feature-item"><span class="feature-icon">🧾</span>Analyse avec ou sans offre d'emploi</li>
+            <li class="feature-item"><span class="feature-icon">🧱</span>Détection des sections critiques du CV</li>
+            <li class="feature-item"><span class="feature-icon">🔎</span>Extraction des mots-clés, outils, langues et pré-requis</li>
+            <li class="feature-item"><span class="feature-icon">📊</span>Scoring détaillé : global, ATS, lisibilité, matching, structure, complétude</li>
+            <li class="feature-item"><span class="feature-icon">🚨</span>Identification des risques de rejet automatisé</li>
+            <li class="feature-item"><span class="feature-icon">🛠️</span>Recommandations priorisées avec impact estimé</li>
+            <li class="feature-item"><span class="feature-icon">🧭</span>Dashboard résultat complet et explicable</li>
+            <li class="feature-item"><span class="feature-icon">📱</span>Parcours testé de bout en bout (desktop et mobile)</li>
+          </ul>
+        </div>
+
+        <div class="section results">
+          <h3 class="section-title">🎯 Résultats</h3>
+          <div class="result-box success">
+            <p class="result-text">✅ Pipeline qualité stable : lint, typecheck, tests unitaires, integration, UI.</p>
+            <p class="result-text">✅ Suite e2e verte sur les parcours principaux.</p>
+            <p class="result-text">✅ Build production valide et workflow CI/CD unifié exécuté au push.</p>
+            <p class="result-text">✅ Build statique GitHub Pages valide pour publication.</p>
+            <p class="result-text">✅ Projet présentable en portfolio avec architecture claire et logique métier explicable.</p>
+          </div>
+        </div>
+      </div>
+    `,
+    gallery: ['img_projects/ATS_FILTER.png']
+  },
+  {
     id: 'cledevoute',
     title: 'Cle De Voute - Maçonnerie',
     description: "Site vitrine pour Cle De Voute Maconnerie — présentation de services et portfolio.",

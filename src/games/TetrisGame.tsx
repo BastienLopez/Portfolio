@@ -237,7 +237,7 @@ const TetrisGame = () => {
           </div>
         </div>
         <div className="rounded-2xl border border-dashed border-primary/30 bg-primary/5 px-4 py-3 text-sm text-muted-foreground">
-          Fleches pour se deplacer, fleche haute pour tourner, barre espace pour drop instant.
+          Flèches pour se déplacer, flèche haute pour tourner, barre espace pour drop instant.
         </div>
       </div>
     </div>

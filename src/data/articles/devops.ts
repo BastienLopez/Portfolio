@@ -1307,7 +1307,7 @@ Plus de "ça marche sur ma machine" : tout le monde utilise le même container.
 
 <h3 class="text-xl font-bold mt-6 mb-3">CI/CD automatisé</h3>
 
-Build une image, teste-la, deploy-la. Même artefact du dev à la prod.
+Build une image, teste-la, déploie-la. Même artefact du dev à la prod.
 
 <h3 class="text-xl font-bold mt-6 mb-3">Isolation de projets</h3>
 

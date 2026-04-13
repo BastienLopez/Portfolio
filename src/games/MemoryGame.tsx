@@ -128,8 +128,8 @@ const MemoryGame = () => {
 
       <div className="rounded-xl border border-dashed border-primary/20 bg-background/80 px-4 py-3 text-sm text-muted-foreground">
         {status === 'won'
-          ? 'Bravo ! Toutes les paires sont trouvees.'
-          : 'Memorise les cartes et retrouve toutes les paires.'}
+          ? 'Bravo ! Toutes les paires sont trouvées.'
+          : 'Mémorise les cartes et retrouve toutes les paires.'}
       </div>
     </div>
   );

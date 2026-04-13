@@ -225,7 +225,7 @@ const FlappyGithubGame = () => {
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         <span>Score : <span className="font-semibold text-foreground">{score}</span></span>
         <span className={status === 'running' ? 'text-emerald-400' : status === 'idle' ? 'text-primary' : 'text-destructive'}>
-          {status === 'idle' ? 'Pret' : status === 'running' ? 'En vol' : 'Perdu'}
+          {status === 'idle' ? 'Prêt' : status === 'running' ? 'En vol' : 'Perdu'}
         </span>
       </div>
       <canvas

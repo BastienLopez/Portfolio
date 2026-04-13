@@ -260,7 +260,7 @@ const BreakoutGame = () => {
         <div className="ml-auto flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
           {status === 'ready' && 'Espace pour lancer'}
           {status === 'running' && 'Game on'}
-          {status === 'cleared' && 'Niveau termine'}
+          {status === 'cleared' && 'Niveau terminé'}
           {status === 'over' && 'Game over'}
         </div>
       </div>
@@ -274,7 +274,7 @@ const BreakoutGame = () => {
 
       <div className="flex items-center justify-between">
         <Button variant="outline" size="sm" onClick={() => setResetKey((prev) => prev + 1)}>
-          Reset niveau
+          Réinitialiser le niveau
         </Button>
         <p className="text-xs uppercase tracking-widest text-muted-foreground">
           Barre espace = go

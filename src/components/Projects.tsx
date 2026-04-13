@@ -6,6 +6,18 @@ import { allProjects, Project } from '@/data/projects';
 
 const projects = allProjects;
 
+const freelanceDisplayOrder = [
+  'eloi-coachsteo',
+  'ats-filter-resume',
+  'luxury-auto-detailling',
+  'erp-micro-creches',
+  'cledevoute',
+];
+
+const freelanceDisplayOrderIndex = new Map(
+  freelanceDisplayOrder.map((id, index) => [id, index])
+);
+
 const resolveImage = (img?: string | null) => {
   if (!img) return "";
   if (img.startsWith("http") || img.startsWith("data:")) return img;
@@ -35,27 +47,27 @@ const browserGameLoaders: Record<BrowserGameId, BrowserGameLoader> = {
 
 const browserGameGuides: Record<BrowserGameId, { controls: string; goal: string }> = {
   'browser-snake': {
-    controls: 'Fleches clavier pour changer la direction. Pause/Rejouer via le bouton sous le canvas.',
+    controls: 'Flèches clavier pour changer la direction. Pause/Rejouer via le bouton sous le canvas.',
     goal: 'Attraper un maximum de pommes sans se mordre ni toucher les murs.',
   },
   'browser-2048': {
-    controls: 'Fleches clavier pour glisser la grille. Un mouvement valide ajoute une nouvelle tuile.',
+    controls: 'Flèches clavier pour glisser la grille. Un mouvement valide ajoute une nouvelle tuile.',
     goal: 'Fusionner les tuiles pour atteindre 2048 et optimiser le score.',
   },
   'browser-flappy': {
     controls: 'Clique gauche ou tap sur le canvas pour faire battre le logo GitHub.',
-    goal: 'Eviter les tuyaux Mario et depasser votre high score.',
+    goal: 'Éviter les tuyaux Mario et dépasser votre high score.',
   },
   'browser-memory': {
-    controls: 'Clique sur deux cartes pour reveler une paire. Continue jusqu a tout memoriser.',
+    controls: 'Clique sur deux cartes pour révéler une paire. Continue jusqu\'à tout mémoriser.',
     goal: 'Terminer la grille en un minimum de coups.',
   },
   'browser-breakout': {
-    controls: 'Utilise les fleches gauche/droite pour deplacer la raquette. Barre espace lance la balle.',
-    goal: 'Detruire toutes les briques sans perdre tes trois vies.',
+    controls: 'Utilise les flèches gauche/droite pour déplacer la raquette. Barre espace lance la balle.',
+    goal: 'Détruire toutes les briques sans perdre tes trois vies.',
   },
   'browser-tetris': {
-    controls: 'Fleches gauche/droite pour bouger, haut pour tourner, bas pour accelerer, espace pour drop.',
+    controls: 'Flèches gauche/droite pour bouger, haut pour tourner, bas pour accélérer, espace pour drop.',
     goal: 'Empile les tetrominos et efface un maximum de lignes.',
   },
 };
@@ -76,13 +88,13 @@ const Projects = () => {
   const featuredCaseStudies = [
     {
       id: 'erp-micro-creches',
-      title: 'ERP Micro-Creches',
-      context: 'Reseau de micro-creches avec des suivis admin disperses.',
-      need: 'Centraliser les operations et fiabiliser le pilotage multi-etablissements.',
-      solution: 'Application metier complete avec back-office, suivi, droits et tableaux de bord.',
+      title: 'ERP Micro-Crèches',
+      context: 'Réseau de micro-crèches avec des suivis admin dispersés.',
+      need: 'Centraliser les opérations et fiabiliser le pilotage multi-établissements.',
+      solution: 'Application métier complète avec back-office, suivi, droits et tableaux de bord.',
       stack: 'React, Node.js, MongoDB, Docker, CI/CD',
-      result: 'Process plus lisibles et meilleure maitrise operationnelle au quotidien.',
-      role: 'Conception, developpement full-stack et structuration de la livraison.',
+      result: 'Process plus lisibles et meilleure maîtrise opérationnelle au quotidien.',
+      role: 'Conception, développement full-stack et structuration de la livraison.',
       link: '/Portfolio/cases/erp-micro-creches.html',
     },
     {
@@ -142,8 +154,18 @@ const Projects = () => {
     }
   };
 
-  const filteredProjects = selectedCategory 
-    ? projects.filter(project => project.category === selectedCategory)
+  const filteredProjects = selectedCategory
+    ? projects
+        .filter(project => project.category === selectedCategory)
+        .sort((a, b) => {
+          if (selectedCategory !== 'freelance') {
+            return 0;
+          }
+
+          const aOrder = freelanceDisplayOrderIndex.get(a.id) ?? Number.MAX_SAFE_INTEGER;
+          const bOrder = freelanceDisplayOrderIndex.get(b.id) ?? Number.MAX_SAFE_INTEGER;
+          return aOrder - bOrder;
+        })
     : [];
 
   const handleCategoryClick = (category: ProjectCategory) => {
@@ -204,7 +226,7 @@ const Projects = () => {
       setHasLaunchedGame(true);
     } catch (err) {
       console.error(err);
-      setGameError('Chargement impossible. Veuillez reessayer.');
+      setGameError('Chargement impossible. Veuillez réessayer.');
     } finally {
       setIsGameLoading(false);
     }
@@ -249,7 +271,7 @@ const Projects = () => {
             <div className="mb-5">
               <h3 className="text-2xl md:text-3xl font-bold mb-2">3 projets vitrine pour une mission freelance</h3>
               <p className="text-sm md:text-base text-muted-foreground">
-                Contexte, besoin, solution et valeur produite, sans chiffres inventes.
+                Contexte, besoin, solution et valeur produite, sans chiffres inventés.
               </p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -262,7 +284,7 @@ const Projects = () => {
                     <p><span className="text-foreground font-medium">Solution:</span> {item.solution}</p>
                     <p><span className="text-foreground font-medium">Stack:</span> {item.stack}</p>
                     <p><span className="text-foreground font-medium">Résultat:</span> {item.result}</p>
-                    <p><span className="text-foreground font-medium">Mon role:</span> {item.role}</p>
+                    <p><span className="text-foreground font-medium">Mon rôle:</span> {item.role}</p>
                   </div>
                 </Card>
               ))}
@@ -404,7 +426,7 @@ const Projects = () => {
                   <div className="mb-6 rounded-lg border border-dashed border-primary/40 bg-primary/5 p-4 text-sm">
                     <p className="font-semibold text-foreground mb-2">Comment jouer</p>
                     <p className="text-muted-foreground mb-1">
-                      <span className="font-medium text-foreground">Controle :</span> {activeGameGuide.controls}
+                      <span className="font-medium text-foreground">Contrôle :</span> {activeGameGuide.controls}
                     </p>
                     <p className="text-muted-foreground">
                       <span className="font-medium text-foreground">Objectif :</span> {activeGameGuide.goal}

@@ -1,6 +1,6 @@
 import { Project } from './types';
 
-const gameAsset = (file: string) => `${import.meta.env.BASE_URL}images/games/${file}`;
+const gameAsset = (file: string) => `images/games/${file}`;
 
 export const browserProjects: Project[] = [
   {

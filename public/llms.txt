@@ -34,4 +34,4 @@ Ce site présente l'activité freelance de Bastien Lopez, développeur full-stac
 
 ## Notes
 - Langue principale: français
-- Site heberge sur GitHub Pages sous le sous-chemin /Portfolio/
+- Site hébergé sur GitHub Pages sous le sous-chemin /Portfolio/
