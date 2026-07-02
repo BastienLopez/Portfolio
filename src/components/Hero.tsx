@@ -5,7 +5,7 @@ import { trackEvent } from "@/lib/analytics";
 
 const Hero = () => {
   const [typedText, setTypedText] = useState("");
-  const fullText = "Développeur Full Stack Freelance\nSites vitrines, applications métier,\nAPI et automatisation";
+  const fullText = "Développeur Full-Stack IA & Automatisation\nSites vitrines, applications métier,\nAPI et automatisation";
   
   useEffect(() => {
     let index = 0;
@@ -60,6 +60,12 @@ const Hero = () => {
             Portails internes, back-offices, API et automatisations. Approche progressive, code maintenable,
             communication claire.
           </p>
+
+          <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed">
+            Ouvert à un CDI remote/full remote et disponible pour missions freelance ciblées.
+          </p>
+
+
 
           {/* Reassurance line */}
           <div className="flex flex-wrap justify-center gap-3 py-3">

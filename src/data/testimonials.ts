@@ -14,7 +14,7 @@ export const testimonials: Testimonial[] = [
     name: "Éloi V.",
     role: "Coach sportif & ostéopathe",
     service: "Site vitrine & optimisation SEO",
-    text: "Un site clair, professionnel et rassurant, parfaitement aligné avec mon activité. Le rendu met mes services en valeur et instaure la confiance dès les premières secondes.",
+    text: "Le site correspond exactement au besoin : clair, professionnel et simple à utiliser. Les échanges ont été fluides, avec des ajustements rapides après retour.",
     image: "/img_clients/eloi.png",
   },
   {
@@ -22,7 +22,7 @@ export const testimonials: Testimonial[] = [
     name: "Luxury Auto",
     role: "Fondateur",
     service: "Site vitrine & optimisation SEO",
-    text: "Le résultat correspond exactement à l’image haut de gamme que je souhaitais transmettre. Le site est élégant, fluide et met en valeur la qualité de nos prestations.",
+    text: "Le résultat donne une image plus professionnelle à l’activité. Le site est moderne, lisible, rapide, et met bien en valeur les prestations proposées.",
     image: "/img_clients/luxury-auto.png",
   },
   {
@@ -30,7 +30,7 @@ export const testimonials: Testimonial[] = [
     name: "José",
     role: "Gérant",
     service: "ERP sur mesure",
-    text: "Solution robuste et évolutive, livrée dans les délais. Accompagnement professionnel pendant toute la durée du projet.",
+    text: "L’outil a permis de mieux centraliser les informations et de simplifier le suivi quotidien. L’interface est claire et adaptée aux besoins terrain.",
     image: "/img_clients/jose.png",
   },
   {
@@ -46,8 +46,16 @@ export const testimonials: Testimonial[] = [
     name: "Marino",
     role: "Clé de Voûte · Gérant",
     service: "Site vitrine & optimisation SEO",
-    text: "Très bon accompagnement du début à la fin. Le site met en avant notre savoir-faire de manière claire et professionnelle, avec une présentation qui correspond tout à fait à notre activité.",
+    text: "Le projet a été bien cadré dès le départ. Le rendu est propre, adapté à notre activité, et les modifications ont été intégrées efficacement.",
     image: "/img_clients/marino.png",
+  },
+  {
+    id: "t-6",
+    name: "Utilisateur ATS",
+    role: "",
+    service: "Site ATS CV",
+    text: "L’application répond bien au besoin initial : analyser rapidement un CV et obtenir un retour lisible. Le fonctionnement est simple, utile et efficace.",
+    image: "/img_clients/user.png",
   },
 
 ];
