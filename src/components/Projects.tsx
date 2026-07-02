@@ -1,15 +1,21 @@
-import { useState, type ComponentType } from 'react';
+import { useState } from 'react';
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { allProjects, Project } from '@/data/projects';
 
-const projects = allProjects;
+type ProjectCategory = Project['category'];
+type DisplayProjectCategory = Exclude<ProjectCategory, 'browser'>;
+type DisplayProject = Project & { category: DisplayProjectCategory };
+
+const projects = allProjects.filter(
+  (project): project is DisplayProject => project.category !== 'browser'
+);
 
 const freelanceDisplayOrder = [
   'eloi-coachsteo',
   'ats-filter-resume',
-  'luxury-auto-detailling',
+  'luxury-auto-detailing',
   'erp-micro-creches',
   'cledevoute',
 ];
@@ -25,66 +31,9 @@ const resolveImage = (img?: string | null) => {
   return `${import.meta.env.BASE_URL}${normalized}`;
 };
 
-type ProjectCategory = Project['category'];
-type BrowserGameId =
-  | 'browser-snake'
-  | 'browser-2048'
-  | 'browser-flappy'
-  | 'browser-memory'
-  | 'browser-breakout'
-  | 'browser-tetris';
-type BrowserGameComponent = ComponentType<object>;
-type BrowserGameLoader = () => Promise<{ default: BrowserGameComponent }>;
-
-const browserGameLoaders: Record<BrowserGameId, BrowserGameLoader> = {
-  'browser-snake': () => import('@/games/SnakeGame'),
-  'browser-2048': () => import('@/games/Game2048'),
-  'browser-flappy': () => import('@/games/FlappyGithubGame'),
-  'browser-memory': () => import('@/games/MemoryGame'),
-  'browser-breakout': () => import('@/games/BreakoutGame'),
-  'browser-tetris': () => import('@/games/TetrisGame'),
-};
-
-const browserGameGuides: Record<BrowserGameId, { controls: string; goal: string }> = {
-  'browser-snake': {
-    controls: 'Flèches clavier pour changer la direction. Pause/Rejouer via le bouton sous le canvas.',
-    goal: 'Attraper un maximum de pommes sans se mordre ni toucher les murs.',
-  },
-  'browser-2048': {
-    controls: 'Flèches clavier pour glisser la grille. Un mouvement valide ajoute une nouvelle tuile.',
-    goal: 'Fusionner les tuiles pour atteindre 2048 et optimiser le score.',
-  },
-  'browser-flappy': {
-    controls: 'Clique gauche ou tap sur le canvas pour faire battre le logo GitHub.',
-    goal: 'Éviter les tuyaux Mario et dépasser votre high score.',
-  },
-  'browser-memory': {
-    controls: 'Clique sur deux cartes pour révéler une paire. Continue jusqu\'à tout mémoriser.',
-    goal: 'Terminer la grille en un minimum de coups.',
-  },
-  'browser-breakout': {
-    controls: 'Utilise les flèches gauche/droite pour déplacer la raquette. Barre espace lance la balle.',
-    goal: 'Détruire toutes les briques sans perdre tes trois vies.',
-  },
-  'browser-tetris': {
-    controls: 'Flèches gauche/droite pour bouger, haut pour tourner, bas pour accélérer, espace pour drop.',
-    goal: 'Empile les tetrominos et efface un maximum de lignes.',
-  },
-};
-
 const Projects = () => {
-  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | null>('emploi');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [activeGameProject, setActiveGameProject] = useState<Project | null>(null);
-  const [GameComponent, setGameComponent] = useState<BrowserGameComponent | null>(null);
-  const [isGameLoading, setIsGameLoading] = useState(false);
-  const [gameError, setGameError] = useState<string | null>(null);
-  const [gameInstance, setGameInstance] = useState(0);
-  const [hasLaunchedGame, setHasLaunchedGame] = useState(false);
-  const activeGameGuide = activeGameProject
-    ? browserGameGuides[activeGameProject.id as BrowserGameId]
-    : null;
-
+  const [selectedCategory, setSelectedCategory] = useState<DisplayProjectCategory | null>('emploi');
+  const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null);
   const featuredCaseStudies = [
     {
       id: 'erp-micro-creches',
@@ -138,19 +87,9 @@ const Projects = () => {
       color: 'from-green-500 to-emerald-500'
     },
     gaming: {
-      emoji: '🎮',
-      title: 'GAMING',
+      emoji: '',
+      title: '📱 MOBILE & GAMING 🎮',
       color: 'from-orange-500 to-red-500'
-    },
-    mobile: {
-      emoji: '📱',
-      title: 'MOBILE',
-      color: 'from-teal-500 to-cyan-500'
-    },
-    browser: {
-      emoji: '🕹️',
-      title: 'LAB - BROWSER GAMES',
-      color: 'from-amber-500 to-rose-500'
     }
   };
 
@@ -168,89 +107,23 @@ const Projects = () => {
         })
     : [];
 
-  const handleCategoryClick = (category: ProjectCategory) => {
+  const handleCategoryClick = (category: DisplayProjectCategory) => {
     if (selectedCategory === category) {
       setSelectedCategory(null);
       setSelectedProject(null);
-      setActiveGameProject(null);
-      setGameComponent(null);
-      setGameError(null);
-      setIsGameLoading(false);
-      setHasLaunchedGame(false);
     } else {
       setSelectedCategory(category);
       setSelectedProject(null);
-      setActiveGameProject(null);
-      setGameComponent(null);
-      setGameError(null);
-      setIsGameLoading(false);
-      setHasLaunchedGame(false);
     }
   };
 
-  const handleProjectClick = (project: Project) => {
-    if (project.category === 'browser') {
-      setActiveGameProject(project);
-      setSelectedProject(null);
-      setGameComponent(null);
-      setGameError(null);
-      setIsGameLoading(false);
-      setHasLaunchedGame(false);
-      setGameInstance((prev) => prev + 1);
-      return;
-    }
-    setActiveGameProject(null);
-    setGameComponent(null);
-    setHasLaunchedGame(false);
+  const handleProjectClick = (project: DisplayProject) => {
     setSelectedProject(project);
-  };
-
-  const loadBrowserGame = async (project: Project) => {
-    setGameError(null);
-    setIsGameLoading(true);
-    setGameComponent(null);
-    setGameInstance((prev) => prev + 1);
-    setHasLaunchedGame(false);
-
-    const loader = browserGameLoaders[project.id as BrowserGameId];
-
-    if (!loader) {
-      setIsGameLoading(false);
-      setGameError('Jeu non disponible pour cette carte.');
-      return;
-    }
-
-    try {
-      const module = await loader();
-      setGameComponent(() => module.default);
-      setHasLaunchedGame(true);
-    } catch (err) {
-      console.error(err);
-      setGameError('Chargement impossible. Veuillez réessayer.');
-    } finally {
-      setIsGameLoading(false);
-    }
-  };
-
-  const handleCloseGame = () => {
-    setActiveGameProject(null);
-    setGameComponent(null);
-    setGameError(null);
-    setIsGameLoading(false);
-    setHasLaunchedGame(false);
   };
 
   const handleBackToList = () => {
     setSelectedProject(null);
   };
-
-  const handleLaunchGame = () => {
-    if (!activeGameProject) {
-      return;
-    }
-    void loadBrowserGame(activeGameProject);
-  };
-
   return (
     <section id="projects" className="py-20 px-4 w-full overflow-x-hidden section-even">
       <div className="container mx-auto max-w-6xl w-full">
@@ -266,7 +139,7 @@ const Projects = () => {
           </p>
         </div>
 
-        {!selectedProject && !activeGameProject && (
+        {!selectedProject && (
           <div className="mb-12">
             <div className="mb-5">
               <h3 className="text-2xl md:text-3xl font-bold mb-2">3 projets vitrine pour une mission freelance</h3>
@@ -385,97 +258,6 @@ const Projects = () => {
               </CardContent>
             </Card>
           </div>
-        ) : activeGameProject ? (
-          <div className="max-w-4xl mx-auto w-full">
-            <Button
-              onClick={handleCloseGame}
-              variant="outline"
-              className="mb-6"
-            >
-              ← Retour aux jeux
-            </Button>
-
-            <Card className="border-2">
-              <CardHeader>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">
-                    {categoryConfig.browser.emoji}
-                  </span>
-                  <span className="text-sm font-medium text-muted-foreground">
-                    {categoryConfig.browser.title}
-                  </span>
-                </div>
-                <CardTitle className="text-xl md:text-2xl">{activeGameProject.title}</CardTitle>
-                <p className="text-sm text-muted-foreground mt-2">
-                  {activeGameProject.description}
-                </p>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {activeGameProject.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {activeGameGuide && (
-                  <div className="mb-6 rounded-lg border border-dashed border-primary/40 bg-primary/5 p-4 text-sm">
-                    <p className="font-semibold text-foreground mb-2">Comment jouer</p>
-                    <p className="text-muted-foreground mb-1">
-                      <span className="font-medium text-foreground">Contrôle :</span> {activeGameGuide.controls}
-                    </p>
-                    <p className="text-muted-foreground">
-                      <span className="font-medium text-foreground">Objectif :</span> {activeGameGuide.goal}
-                    </p>
-                  </div>
-                )}
-
-                <div className="mb-6 flex flex-col gap-3">
-                  <Button
-                    size="sm"
-                    className="bg-gradient-to-r from-primary to-accent text-white w-full py-4 text-base"
-                    onClick={handleLaunchGame}
-                    disabled={isGameLoading || !activeGameProject}
-                  >
-                    {hasLaunchedGame ? 'Relancer le jeu' : 'Lancer le jeu'}
-                  </Button>
-                  {hasLaunchedGame && (
-                    <span className="text-xs uppercase tracking-wider text-emerald-400">
-                      Jeu actif
-                    </span>
-                  )}
-                </div>
-
-                {gameError && (
-                  <div className="mb-4 rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive">
-                    {gameError}
-                  </div>
-                )}
-
-                {isGameLoading && (
-                  <div className="mb-4 text-sm text-muted-foreground">
-                    Chargement du jeu en cours...
-                  </div>
-                )}
-
-                {GameComponent && hasLaunchedGame && !isGameLoading && !gameError && (
-                  <div className="rounded-lg border bg-background p-2 md:p-4">
-                    <GameComponent key={`${activeGameProject.id}-${gameInstance}`} />
-                  </div>
-                )}
-
-                {!hasLaunchedGame && !isGameLoading && !gameError && (
-                  <p className="text-sm text-muted-foreground">
-                    Cliquez sur lancer pour charger le jeu choisi.
-                  </p>
-                )}
-              </CardContent>
-            </Card>
-          </div>
         ) : (
           <>
             {/* Category Buttons */}
@@ -484,11 +266,11 @@ const Projects = () => {
                 Une sélection de mes réalisations récentes, du frontend au backend.
               </p>
             </div>
-            <div className="w-full grid grid-cols-2 sm:grid-cols-3 gap-3 mb-12 px-2 max-w-3xl mx-auto">
+            <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-3 mb-12 px-2 max-w-5xl mx-auto">
               {Object.entries(categoryConfig).map(([key, config]) => (
                 <Button
                   key={key}
-                  onClick={() => handleCategoryClick(key as ProjectCategory)}
+                  onClick={() => handleCategoryClick(key as DisplayProjectCategory)}
                   variant={selectedCategory === key ? "default" : "outline"}
                   className={`w-full text-xs sm:text-sm md:text-base lg:text-lg px-2 sm:px-4 md:px-5 lg:px-6 py-3 md:py-4 lg:py-5 transition-all ${
                     selectedCategory === key 
@@ -557,7 +339,7 @@ const Projects = () => {
                             handleProjectClick(project);
                           }}
                         >
-                          {project.category === 'browser' ? 'Jouer' : 'En savoir plus'}
+                          En savoir plus
                         </Button>
 
                         {project.demo && (

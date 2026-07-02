@@ -199,7 +199,7 @@ export const freelanceProjects: Project[] = [
     gallery: ['img_projects/creche.png']
   },
   {
-    id: 'luxury-auto-detailling',
+    id: 'luxury-auto-Detailing',
     title: 'Luxury Auto Detailing',
     description: "Site vitrine pour prestations de detailing automobile haut de gamme : nettoyage, polissage, protection céramique et remise à neuf esthétique.",
     category: 'freelance',
@@ -357,7 +357,7 @@ export const freelanceProjects: Project[] = [
   {
     id: 'cledevoute',
     title: 'Cle De Voute - Maçonnerie',
-    description: "Site vitrine pour Cle De Voute Maconnerie — présentation de services et portfolio.",
+    description: "Site vitrine pour Cle De Voute Maçonnerie — présentation de services et portfolio.",
     category: 'freelance',
     image: 'img_projects/CleDeVoute.png',
     tech: ['React', 'Tailwind CSS', 'JavaScript'],
@@ -423,7 +423,6 @@ export const freelanceProjects: Project[] = [
           <ul class="features-list">
             <li class="feature-item">Ajouter un suivi RUM (Web Vitals) pour mesurer l'impact réel des optimisations.</li>
             <li class="feature-item">Intégrer un sitemap et les balises Open Graph pour améliorer le référencement.</li>
-            <li class="feature-item">Ajouter des placeholders LQIP pour un affichage plus agréable lors du lazy-loading.</li>
           </ul>
         </div>
       </div>
