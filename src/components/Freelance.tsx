@@ -23,7 +23,15 @@ import { useLanguage } from "@/lib/i18n";
 
 const Freelance = () => {
   const { isEnglish } = useLanguage();
-  const businessTags = [
+  const businessTags = isEnglish ? [
+    "Websites",
+    "Web applications",
+    "Business tools",
+    "APIs & integrations",
+    "Automation",
+    "MVP",
+    "Tailored ERP",
+  ] : [
     "Site vitrine",
     "Application web",
     "App métier",
@@ -244,6 +252,16 @@ const Freelance = () => {
             </div>
           </div>
 
+          {isEnglish ? (
+            <Card className="mb-12 p-6 md:p-8 text-center">
+              <h3 className="text-2xl font-bold">Freelance details currently available in French</h3>
+              <p className="mx-auto mt-3 max-w-2xl leading-7 text-muted-foreground">The service overview, offers, process, anonymised examples and FAQ are being translated. You can already contact me in English to discuss a role or a focused project.</p>
+              <Button asChild className="mt-6 bg-cta hover:bg-cta/90 text-cta-foreground">
+                <a href="#contact">Contact me</a>
+              </Button>
+            </Card>
+          ) : (
+            <>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
             {proofItems.map((item) => (
               <Card key={item.label} className="p-5 md:p-6 bg-card border-border text-center h-full flex flex-col">
@@ -296,7 +314,15 @@ const Freelance = () => {
             </div>
           </Card>
 
-          <div className="grid lg:grid-cols-3 gap-6 mb-12 items-stretch">
+          <details className="group mb-12 rounded-xl border border-border bg-card">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 md:p-6">
+              <span>
+                <span className="block text-2xl font-bold">Déroulement et garanties</span>
+                <span className="mt-1 block text-sm text-foreground/70">Cadrage, suivi, livraison et engagements de collaboration.</span>
+              </span>
+              <ChevronDown className="h-5 w-5 shrink-0 text-primary transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="grid lg:grid-cols-3 gap-6 border-t border-border p-5 md:p-6 items-stretch">
             <Card className="p-5 md:p-6 bg-card border-border lg:col-span-2 h-full">
               <div className="flex items-center gap-3 mb-5">
                 <Layers className="w-5 h-5 text-primary" />
@@ -328,7 +354,8 @@ const Freelance = () => {
                 ))}
               </ul>
             </Card>
-          </div>
+            </div>
+          </details>
 
           <div className="mb-6">
             <h3 className="text-2xl md:text-3xl font-bold mb-2">Offres adaptées à votre niveau de besoin</h3>
@@ -367,12 +394,15 @@ const Freelance = () => {
             ))}
           </div>
 
-          <div id="freelance-cases" className="mb-6">
-            <h3 className="text-2xl md:text-3xl font-bold mb-2">Exemples de missions</h3>
-            <p className="text-foreground/70">Cas génériques anonymisés pour illustrer la démarche et les résultats obtenus.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 items-stretch">
+          <details id="freelance-cases" className="group mb-12 rounded-xl border border-border bg-card">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 md:p-6">
+              <span>
+                <span className="block text-2xl md:text-3xl font-bold">Exemples de missions</span>
+                <span className="mt-1 block text-sm text-foreground/70">Cas génériques anonymisés pour illustrer la démarche et les résultats obtenus.</span>
+              </span>
+              <ChevronDown className="h-5 w-5 shrink-0 text-primary transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 border-t border-border p-5 md:p-6 items-stretch">
             {caseStudies.map((item) => (
               <Card key={item.title} className="p-5 md:p-6 bg-card border-border h-full flex flex-col">
                 <h4 className="text-lg font-semibold leading-snug min-h-[72px] mb-4">{item.title}</h4>
@@ -392,13 +422,18 @@ const Freelance = () => {
                 </div>
               </Card>
             ))}
-          </div>
-
-          <Card className="p-5 md:p-6 bg-card border-border mb-12">
-            <div className="flex items-center gap-3 mb-4">
-              <Cpu className="w-5 h-5 text-accent" />
-              <h3 className="text-xl font-bold">Stack cible</h3>
             </div>
+          </details>
+
+          <details className="group mb-12 rounded-xl border border-border bg-card">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 md:p-6">
+              <span className="flex items-center gap-3">
+              <Cpu className="w-5 h-5 text-accent" />
+                <span className="text-xl font-bold">Stack cible</span>
+              </span>
+              <ChevronDown className="h-5 w-5 shrink-0 text-primary transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="border-t border-border p-5 md:p-6">
             <p className="text-sm text-foreground/70 mb-4">
               Socle technique sélectionné pour la fiabilité, l'évolutivité et la maintenance dans le temps.
             </p>
@@ -410,7 +445,8 @@ const Freelance = () => {
                 </li>
               ))}
             </ul>
-          </Card>
+            </div>
+          </details>
 
           <Testimonials />
 
@@ -435,6 +471,8 @@ const Freelance = () => {
               ))}
             </div>
           </Card>
+            </>
+          )}
 
           <Card className="p-5 md:p-6 bg-card border-primary/40 text-center">
             <div className="flex items-center justify-center gap-2 mb-3">

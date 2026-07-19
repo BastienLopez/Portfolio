@@ -465,8 +465,8 @@ export const emploiProjects: Project[] = [
               ✅ Documentation <strong>complète et professionnelle</strong> facilitant l'intégration pour les développeurs.
             </p>
             <p class="result-text">
-              ✅ La migration vers Docusaurus a permis d'améliorer <strong>significativement l'expérience utilisateur</strong> 
-              avec une navigation plus fluide, des performances optimisées et une meilleure maintenabilité.
+              ✅ Migration vers Docusaurus pour proposer une navigation plus structurée
+              et une base de documentation plus maintenable.
             </p>
           </div>
         </div>
@@ -573,29 +573,32 @@ export const emploiProjects: Project[] = [
   },
   {
     id: 'seo-geo-optimization',
-    title: 'SEO & GEO Optimization',
-    description: "Optimisation SEO et référencement local (GEO) pour différentes entreprises : audit, données structurées, contenu et suivi des performances.",
+    title: 'SEO & référencement local',
+    description: "Optimisation SEO et référencement local pour différentes entreprises : audit, données structurées, contenu et suivi des performances.",
     category: 'emploi',
     image: 'img_projects/seo_geo.png',
     tech: ['SEO', 'Google Analytics', 'Google Search Console', 'Schema.org', 'Local SEO', 'Données structurées'],
     detailedContent: `
       <div class="project-detail">
-        <h2 class="project-title">📈 SEO & GEO Optimization</h2>
+        <h2 class="project-title">📈 SEO & référencement local</h2>
         
         <div class="section">
           <h3 class="section-title">📋 Contexte du projet</h3>
           <p class="description">
-            Optimisation du <strong>référencement naturel (SEO)</strong> et <strong>local (GEO)</strong> pour différentes entreprises. 
-            Travail complet sur l'amélioration de la visibilité en ligne, du positionnement sur les moteurs de recherche 
-            et de la reconnaissance par les intelligences artificielles.
+            Optimisation du <strong>référencement naturel (SEO)</strong> et du
+            <strong>référencement local</strong> pour différentes entreprises : audit, contenu,
+            données structurées et suivi des signaux utiles.
           </p>
         </div>
 
         <div class="section info-box">
-          <h3 class="section-title">💡 À quoi sert le SEO & GEO ?</h3>
+          <h3 class="section-title">💡 SEO, référencement local et GEO : bien les distinguer</h3>
           <p class="description">
-            Le <strong>SEO (Search Engine Optimization)</strong> optimise la visibilité d'un site web dans les résultats Google. 
-            Le <strong>GEO (référencement local)</strong> cible les recherches géolocalisées pour apparaître dans les résultats locaux.
+            Le <strong>SEO (Search Engine Optimization)</strong> travaille la compréhension et la visibilité d'un site dans les moteurs de recherche.
+            Le <strong>référencement local</strong> cible les recherches géolocalisées, notamment via les fiches établissement et les signaux locaux.
+          </p>
+          <p class="description">
+            Le <strong>GEO (Generative Engine Optimization)</strong> désigne un travail éditorial et structurel destiné à rendre les informations plus compréhensibles par les moteurs génératifs. Ce n'est pas un synonyme de référencement local.
           </p>
           <p class="highlight">
             🎯 <strong>Objectif :</strong> Être trouvé par vos clients potentiels au bon moment et être reconnu comme une référence 
@@ -606,7 +609,7 @@ export const emploiProjects: Project[] = [
         <div class="section info-box">
           <h3 class="section-title">👤 Mon rôle</h3>
           <p class="description">
-            Audit, optimisation des balises et contenus, structuration technique et mise en place des éléments de suivi SEO/GEO.
+            Audit, optimisation des balises et contenus, structuration technique et mise en place des éléments de suivi SEO et local.
           </p>
         </div>
 

@@ -26,6 +26,28 @@ const freelanceDisplayOrderIndex = new Map(
   freelanceDisplayOrder.map((id, index) => [id, index])
 );
 
+const englishProjectSummaries: Record<string, Pick<DisplayProject, 'title' | 'description'>> = {
+  'erp-micro-creches': {
+    title: 'Micro-nursery ERP',
+    description: 'A tailored business application for centralising administration, permissions and multi-site follow-up.',
+  },
+  'teams-bot-mastra': {
+    title: 'Teams Bot & Mastra Agents',
+    description: 'A Microsoft Teams bot that centralises technology monitoring with targeted AI-assisted summaries and alerts.',
+  },
+  'wallet-provider': {
+    title: 'Altme Wallet Provider',
+    description: 'Contribution to an enterprise digital-identity wallet product and its technical ecosystem.',
+  },
+};
+
+const featuredProjectConfig: Record<string, { emoji: string; color: string }> = {
+  'erp-micro-creches': { emoji: '💼', color: 'from-blue-500 to-cyan-500' },
+  'teams-bot-mastra': { emoji: '🤖', color: 'from-purple-500 to-pink-500' },
+  'n8n-workflow-automation': { emoji: '⚙️', color: 'from-green-500 to-emerald-500' },
+  'wallet-provider': { emoji: '🌐', color: 'from-orange-500 to-red-500' },
+};
+
 const resolveImage = (img?: string | null) => {
   if (!img) return "";
   if (img.startsWith("http") || img.startsWith("data:")) return img;
@@ -37,21 +59,41 @@ const Projects = () => {
   const { isEnglish } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<DisplayProjectCategory | null>('emploi');
   const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null);
+  const [selectedFeaturedProjectId, setSelectedFeaturedProjectId] = useState('erp-micro-creches');
   const [activeGalleryIndex, setActiveGalleryIndex] = useState<number | null>(null);
   const projectDetailRef = useRef<HTMLDivElement | null>(null);
   const galleryViewerRef = useRef<HTMLDivElement | null>(null);
   const localizeProject = (project: DisplayProject) => (
-    isEnglish && project.translations?.en ? { ...project, ...project.translations.en } : project
+    isEnglish ? { ...project, ...project.translations?.en, ...englishProjectSummaries[project.id] } : project
   );
   const featuredCaseStudies = isEnglish ? [
     {
-      id: 'erp-micro-creches', title: 'Micro-nursery ERP', context: 'A network of micro-nurseries with administration spread across multiple tools.', need: 'Centralise operations and make multi-site management more reliable.', solution: 'A complete business application with back office, tracking, permissions and dashboards.', stack: 'React, Node.js, MongoDB, Docker, CI/CD', result: 'Clearer processes and better day-to-day operational control.', role: 'Full-stack design and development, plus delivery structuring.', link: '/Portfolio/cases/erp-micro-creches.html',
+      id: 'erp-micro-creches', title: 'Micro-nursery ERP', context: 'A network of micro-nurseries with administration spread across multiple tools.', need: 'Centralise operations and make multi-site management more reliable.', solution: 'A complete business application with back office, tracking, permissions and dashboards.', stack: 'React, Node.js, MongoDB, Docker, CI/CD', result: 'Clearer processes and better day-to-day operational control.', role: 'Full-stack design and development, plus delivery structuring.', link: '/Portfolio/cases/erp-micro-creches.html', sections: [
+        { title: 'Functional scope', items: ['Centralised multi-site management from one interface.', 'Records, registrations, attendance, planning and invoicing.', 'Dashboards and granular access rights by role.'] },
+        { title: 'Implementation', items: ['React frontend, Node.js services and MongoDB data model.', 'Business modules and back office designed around operational needs.', 'Docker, CI/CD and TDD included in the delivery approach.'] },
+        { title: 'Project constraints', items: ['Sensitive records and role-based access require careful handling.', 'Functional details remain partly anonymised for confidentiality.'] },
+      ],
     },
     {
-      id: 'teams-bot-mastra', title: 'Teams Bot & Mastra Agents', context: 'Technology monitoring to centralise within the team communication tool.', need: 'Collect sources and make information usable without scattered manual monitoring.', solution: 'RSS workflow → AI/Mastra summaries → Microsoft Teams → targeted alerts.', stack: 'TypeScript, Azure Bot Framework, Mastra, OpenAI API', result: 'Centralised monitoring and faster notifications on tracked topics.', role: 'Workflow design, Teams integration and bot development.',
+      id: 'teams-bot-mastra', title: 'Teams Bot & Mastra Agents', context: 'Technology monitoring to centralise within the team communication tool.', need: 'Collect sources and make information usable without scattered manual monitoring.', solution: 'RSS workflow → AI/Mastra summaries → Microsoft Teams → targeted alerts.', stack: 'TypeScript, Azure Bot Framework, Mastra, OpenAI API', result: 'Centralised monitoring and faster notifications on tracked topics.', role: 'Workflow design, Teams integration and bot development.', sections: [
+        { title: 'Workflow', items: ['Collection of selected RSS sources.', 'AI-assisted summaries and prioritisation with Mastra agents.', 'Delivery into Microsoft Teams with targeted alerts.'] },
+        { title: 'Implementation', items: ['TypeScript bot integrated through Azure Bot Framework.', 'Teams used as the team-facing interface for monitoring.', 'Sources and alerting rules can be adjusted to tracked subjects.'] },
+        { title: 'Value delivered', items: ['Monitoring is consolidated in the team communication channel.', 'Information is prepared before it reaches the people concerned.'] },
+      ],
     },
     {
-      id: 'ats-filter-resume', title: 'ATS Filter Resume', context: 'Applications are filtered by ATS systems before human review.', need: 'Make ATS compatibility recommendations understandable and actionable.', solution: 'A full-stack CV analysis application, with or without a job posting.', stack: 'Next.js, TypeScript, Vitest, Playwright, Docker', result: 'An explainable ATS diagnosis, without promising recruitment outcomes.', role: 'Application design and development, analysis logic and testing.',
+      id: 'n8n-workflow-automation', title: 'n8n Automations', context: 'Recurring reporting, video-preparation and prospecting operations.', need: 'Reduce manual handoffs while keeping workflows traceable and repeatable.', solution: 'n8n workflows for SocialPilot PDF reports, social-video preparation and Google Maps prospect lists.', stack: 'n8n, REST APIs, Webhooks, JSON, PDF', result: 'Centralised workflows and reproducible deliverables.', role: 'Process analysis, workflow design and integrations.', sections: [
+        { title: 'Automated workflows', items: ['SocialPilot data preparation and PDF reporting.', 'Raw-video intake, transcription and preparation for social formats.', 'Google Maps prospect collection and list structuring.'] },
+        { title: 'Workflow design', items: ['Scheduled or on-demand triggers, APIs and webhooks.', 'JSON transformations, conditional branches and suitable outputs.', 'Data checks and error handling integrated into the scenarios.'] },
+        { title: 'Delivery context', items: ['Outputs can be reports, files, notifications or structured lists.', 'Client data and exact configuration remain confidential.'] },
+      ],
+    },
+    {
+      id: 'wallet-provider', title: 'Altme Wallet Provider', context: 'A digital-identity wallet product for organisations and end users.', need: 'Support a clear, maintainable product and documentation ecosystem.', solution: 'Contribution to product documentation and technical building blocks around wallet standards.', stack: 'eIDAS 2.0, Verifiable Credentials, OIDC4VC, EBSI', result: 'A more structured base for product and developer information.', role: 'Contribution to the product team and documentation work.', sections: [
+        { title: 'Product scope', items: ['Digital identity wallet for organisations and individuals.', 'Management, sharing and verification of verifiable credentials.', 'European eIDAS 2.0 and EUDI Wallet interoperability context.'] },
+        { title: 'Standards & ecosystem', items: ['eIDAS 2.0, Verifiable Credentials, OIDC4VC and SSI.', 'Technical ecosystem covering secure digital-identity use cases.', 'Developer documentation maintained through GitBook then Docusaurus.'] },
+        { title: 'My contribution', items: ['Contribution within the product team on wallet-related topics.', 'Documentation content, user paths and migration work.', 'Implementation details are deliberately limited for confidentiality.'] },
+      ],
     },
   ] : [
     {
@@ -64,6 +106,11 @@ const Projects = () => {
       result: 'Process plus lisibles et meilleure maîtrise opérationnelle au quotidien.',
       role: 'Conception, développement full-stack et structuration de la livraison.',
       link: '/Portfolio/cases/erp-micro-creches.html',
+      sections: [
+        { title: 'Périmètre fonctionnel', items: ['Gestion multi-établissements depuis une interface centralisée.', 'Dossiers, inscriptions, présences, planning et facturation.', 'Tableaux de bord et droits d’accès granulaires par rôle.'] },
+        { title: 'Réalisation', items: ['Frontend React, services Node.js et modèle de données MongoDB.', 'Modules métier et back-office conçus autour des besoins opérationnels.', 'Docker, CI/CD et TDD intégrés à l’approche de livraison.'] },
+        { title: 'Contraintes du projet', items: ['Dossiers sensibles et accès par rôle à traiter avec attention.', 'Détails fonctionnels partiellement anonymisés pour préserver la confidentialité.'] },
+      ],
     },
     {
       id: 'teams-bot-mastra',
@@ -74,18 +121,44 @@ const Projects = () => {
       stack: 'TypeScript, Azure Bot Framework, Mastra, OpenAI API',
       result: 'Veille centralisée et notifications plus rapides sur les sujets suivis.',
       role: "Conception du workflow, intégration Teams et développement du bot.",
+      sections: [
+        { title: 'Workflow', items: ['Collecte de sources RSS sélectionnées.', 'Synthèses et priorisation assistées par IA avec agents Mastra.', 'Diffusion dans Microsoft Teams avec alertes ciblées.'] },
+        { title: 'Réalisation', items: ['Bot TypeScript intégré via Azure Bot Framework.', 'Teams utilisé comme interface de veille pour l’équipe.', 'Sources et règles d’alerte ajustables selon les sujets suivis.'] },
+        { title: 'Valeur apportée', items: ['Veille regroupée dans le canal de communication de l’équipe.', 'Information préparée avant d’être transmise aux personnes concernées.'] },
+      ],
     },
     {
-      id: 'ats-filter-resume',
-      title: 'ATS Filter Resume',
-      context: 'Candidatures filtrées par des systèmes ATS avant lecture humaine.',
-      need: 'Rendre les recommandations de compatibilité ATS compréhensibles et actionnables.',
-      solution: "Application full-stack d'analyse de CV, avec ou sans offre d'emploi.",
-      stack: 'Next.js, TypeScript, Vitest, Playwright, Docker',
-      result: 'Diagnostic ATS explicable, sans promesse de résultat de recrutement.',
-      role: "Conception et développement de l'application, de la logique d'analyse et des tests.",
+      id: 'n8n-workflow-automation',
+      title: 'Automatisations n8n',
+      context: 'Opérations récurrentes de reporting, préparation vidéo et prospection.',
+      need: 'Réduire les manipulations manuelles tout en gardant des workflows traçables et reproductibles.',
+      solution: 'Workflows n8n pour rapports PDF SocialPilot, préparation de vidéos sociales et listes de prospects Google Maps.',
+      stack: 'n8n, API REST, Webhooks, JSON, PDF',
+      result: 'Workflows centralisés et livrables reproductibles.',
+      role: 'Analyse des processus, conception des workflows et intégrations.',
+      sections: [
+        { title: 'Workflows automatisés', items: ['Préparation des données SocialPilot et génération de rapports PDF.', 'Réception de vidéos brutes, transcription et préparation pour les formats sociaux.', 'Collecte Google Maps et structuration de listes de prospects.'] },
+        { title: 'Conception des scénarios', items: ['Déclencheurs planifiés ou à la demande, API et webhooks.', 'Transformations JSON, branches conditionnelles et sorties adaptées.', 'Contrôles de données et gestion des erreurs intégrés aux scénarios.'] },
+        { title: 'Cadre de livraison', items: ['Sorties possibles : rapport, fichier, notification ou liste structurée.', 'Données client et paramétrages précis conservés confidentiels.'] },
+      ],
+    },
+    {
+      id: 'wallet-provider',
+      title: 'Altme Wallet Provider',
+      context: 'Produit de portefeuille d’identité numérique pour organisations et utilisateurs.',
+      need: 'Soutenir un écosystème produit et documentaire clair, maintenable.',
+      solution: 'Contribution à la documentation et aux briques techniques autour des standards wallet.',
+      stack: 'React, TypeScript, Docusaurus, Identité numérique',
+      result: 'Base plus structurée pour les informations produit et développeur.',
+      role: 'Contribution à l’équipe produit et aux travaux de documentation.',
+      sections: [
+        { title: 'Périmètre produit', items: ['Wallet d’identité numérique pour organisations et particuliers.', 'Gestion, partage et vérification de données vérifiables.', 'Contexte européen eIDAS 2.0 et interopérabilité EUDI Wallet.'] },
+        { title: 'Standards & écosystème', items: ['eIDAS 2.0, Verifiable Credentials, OIDC4VC et SSI.', 'Écosystème technique dédié à des cas d’usage d’identité numérique sécurisée.', 'Documentation développeur maintenue avec GitBook puis Docusaurus.'] },
+        { title: 'Ma contribution', items: ['Contribution au sein de l’équipe produit sur des sujets wallet.', 'Contenus, parcours de documentation et travaux de migration.', 'Détails d’implémentation volontairement limités pour confidentialité.'] },
+      ],
     },
   ];
+  const selectedFeaturedCaseStudy = featuredCaseStudies.find((item) => item.id === selectedFeaturedProjectId) ?? featuredCaseStudies[0];
 
   const categoryConfig = {
     emploi: {
@@ -145,12 +218,20 @@ const Projects = () => {
     setSelectedProject(project);
   };
 
+  const handleFeaturedProjectClick = (projectId: string) => {
+    const project = projects.find((entry) => entry.id === projectId);
+    if (!project) return;
+    setSelectedCategory(project.category);
+    setSelectedProject(project);
+  };
+
   const handleBackToList = () => {
     setSelectedProject(null);
     setActiveGalleryIndex(null);
   };
 
   const localizedSelectedProject = selectedProject ? localizeProject(selectedProject) : null;
+  const hasEnglishCaseStudy = Boolean(selectedProject?.translations?.en?.detailedContent);
   const galleryImages = localizedSelectedProject?.gallery?.filter((image) => image !== localizedSelectedProject.image) ?? [];
 
   const showPreviousImage = () => {
@@ -221,7 +302,7 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-20 px-4 w-full overflow-x-hidden section-even">
-      <div className="container mx-auto max-w-6xl w-full">
+      <div className="container mx-auto max-w-7xl w-full">
         {/* Section Header */}
         <div className="text-center mb-12 w-full">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -236,26 +317,62 @@ const Projects = () => {
         {!selectedProject && (
           <div className="mb-12">
             <div className="mb-5">
-              <h3 className="text-2xl md:text-3xl font-bold mb-2">{isEnglish ? '3 key projects' : '3 projets clés'}</h3>
+              <h3 className="text-2xl md:text-3xl font-bold mb-2">{isEnglish ? '4 key projects' : '4 projets clés'}</h3>
               <p className="text-sm md:text-base text-muted-foreground">
                 {isEnglish ? 'Context, need, role, solution and value delivered — for a role or a client project.' : 'Contexte, besoin, rôle, solution et valeur produite — pour un recrutement comme pour une mission.'}
               </p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {featuredCaseStudies.map((item) => (
-                <Card key={item.id} className="p-5 bg-card border-border h-full flex flex-col">
-                  <h4 className="text-lg font-semibold mb-3">{item.title}</h4>
-                  <div className="space-y-2 text-sm text-foreground/80 leading-6 flex-1">
-                    <p><span className="text-foreground font-medium">{isEnglish ? 'Context:' : 'Contexte:'}</span> {item.context}</p>
-                    <p><span className="text-foreground font-medium">{isEnglish ? 'Need:' : 'Besoin:'}</span> {item.need}</p>
-                    <p><span className="text-foreground font-medium">{isEnglish ? 'Solution:' : 'Solution:'}</span> {item.solution}</p>
-                    <p><span className="text-foreground font-medium">Stack:</span> {item.stack}</p>
-                    <p><span className="text-foreground font-medium">{isEnglish ? 'Result:' : 'Résultat:'}</span> {item.result}</p>
-                    <p><span className="text-foreground font-medium">{isEnglish ? 'My role:' : 'Mon rôle:'}</span> {item.role}</p>
-                  </div>
-                </Card>
-              ))}
+            <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+              {featuredCaseStudies.map((item) => {
+                const config = featuredProjectConfig[item.id];
+                const isSelected = selectedFeaturedCaseStudy.id === item.id;
+
+                return (
+                  <Button
+                    key={item.id}
+                    type="button"
+                    variant={isSelected ? 'default' : 'outline'}
+                    onClick={() => setSelectedFeaturedProjectId(item.id)}
+                    aria-pressed={isSelected}
+                    className={`h-auto min-h-20 whitespace-normal px-3 py-4 text-center text-xs sm:text-sm md:text-base transition-all ${
+                      isSelected ? `bg-gradient-to-r ${config.color} text-white shadow-lg` : 'border-border hover:border-primary hover:bg-primary/5'
+                    }`}
+                  >
+                    <span className="mr-2 text-lg" aria-hidden="true">{config.emoji}</span>
+                    {item.id === 'teams-bot-mastra' ? (
+                      <span className="leading-5"><span className="block">Teams Bot</span><span className="block">&amp;</span><span className="block">Mastra Agents</span></span>
+                    ) : (
+                      <span>{item.title}</span>
+                    )}
+                  </Button>
+                );
+              })}
             </div>
+
+            <Card className="mx-auto flex w-full max-w-none flex-col border-border bg-card p-6 md:p-8">
+              <h4 className="mb-5 text-2xl font-semibold">{selectedFeaturedCaseStudy.title}</h4>
+              <div className="grid flex-1 gap-x-10 gap-y-4 text-sm leading-7 text-foreground/80 md:grid-cols-2 md:text-base">
+                <p><span className="text-foreground font-medium">{isEnglish ? 'Context:' : 'Contexte:'}</span> {selectedFeaturedCaseStudy.context}</p>
+                <p><span className="text-foreground font-medium">{isEnglish ? 'Need:' : 'Besoin:'}</span> {selectedFeaturedCaseStudy.need}</p>
+                <p><span className="text-foreground font-medium">{isEnglish ? 'Solution:' : 'Solution:'}</span> {selectedFeaturedCaseStudy.solution}</p>
+                <p><span className="text-foreground font-medium">Stack:</span> {selectedFeaturedCaseStudy.stack}</p>
+                <p><span className="text-foreground font-medium">{isEnglish ? 'Result:' : 'Résultat:'}</span> {selectedFeaturedCaseStudy.result}</p>
+                <p><span className="text-foreground font-medium">{isEnglish ? 'My role:' : 'Mon rôle:'}</span> {selectedFeaturedCaseStudy.role}</p>
+              </div>
+              <div className="mt-8 grid gap-4 border-t border-border pt-6 md:grid-cols-3">
+                {selectedFeaturedCaseStudy.sections.map((section) => (
+                  <div key={section.title} className="rounded-lg border border-border bg-secondary/20 p-4">
+                    <h5 className="mb-3 font-semibold text-foreground">{section.title}</h5>
+                    <ul className="space-y-2 text-sm leading-6 text-foreground/75">
+                      {section.items.map((item) => <li key={item} className="flex gap-2"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{item}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <Button variant="link" className="mt-6 h-auto w-fit justify-start px-0 text-primary" onClick={() => handleFeaturedProjectClick(selectedFeaturedCaseStudy.id)}>
+                {isEnglish ? 'View project →' : 'Voir le projet →'}
+              </Button>
+            </Card>
           </div>
         )}
 
@@ -353,7 +470,12 @@ const Projects = () => {
                     prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic
                     [&_ul]:my-3 [&_ul]:space-y-0
                     [&_li]:my-0.5 [&_li]:leading-relaxed">
-                  {localizedSelectedProject.detailedContent ? (
+                  {isEnglish && !hasEnglishCaseStudy ? (
+                    <div className="rounded-lg border border-primary/30 bg-primary/5 p-5 text-foreground">
+                      <h3 className="mt-0 text-lg font-semibold">Detailed case study currently available in French.</h3>
+                      <p className="mb-0 text-muted-foreground">The project summary, role and stack remain available in English. A complete English case study will be added when the source content is translated.</p>
+                    </div>
+                  ) : localizedSelectedProject.detailedContent ? (
                     <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(localizedSelectedProject.detailedContent) }} />
                   ) : (
                     <p className="text-muted-foreground italic">

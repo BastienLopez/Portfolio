@@ -31,18 +31,16 @@ const LanguageSelector = () => {
 
       {isOpen && (
         <div className="absolute right-0 top-full z-[60] mt-2 min-w-full overflow-hidden rounded-xl border border-border bg-card p-1 shadow-xl" role="listbox" aria-label="Langues disponibles">
-          {(['fr', 'en'] as const).map((language) => (
+          {(['fr', 'en'] as const).filter((language) => language !== locale).map((language) => (
             <button
               key={language}
               type="button"
               onClick={() => selectLanguage(language)}
               className={`flex h-9 w-full items-center justify-center rounded-lg px-3 text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                locale === language
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                'text-muted-foreground hover:bg-muted hover:text-foreground'
               }`}
               role="option"
-              aria-selected={locale === language}
+              aria-selected={false}
             >
               {language.toUpperCase()}
             </button>
@@ -71,7 +69,7 @@ const Navbar = () => {
     { href: "#projects", label: isEnglish ? "Projects" : "Projets" },
     { href: "#skills", label: "Stack" },
     { href: "#freelance", label: isEnglish ? "Services" : "Services" },
-    { href: "#devnotes", label: "Lab" },
+    { href: "#devnotes", label: "Dev Notes" },
     { href: "#contact", label: isEnglish ? "Contact" : "Contact" },
   ];
 

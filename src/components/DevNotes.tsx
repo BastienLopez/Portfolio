@@ -15,6 +15,19 @@ const articleLoaders: Record<SelectableCategory, () => Promise<Article[]>> = {
   freelance: async () => (await import('../data/articles/freelance')).freelanceArticles,
 };
 
+const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (character) => ({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#039;',
+})[character] ?? character);
+
+const renderArticleContent = (content: string) => content.replace(
+  /```([\w+-]+)?\r?\n([\s\S]*?)```/g,
+  (_match, language = '', code: string) => `<pre><code${language ? ` class="language-${language}"` : ''}>${escapeHtml(code.trim())}</code></pre>`,
+);
+
 const DevNotes = () => {
   const { isEnglish } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<SelectableCategory | null>(null);
@@ -145,7 +158,7 @@ const DevNotes = () => {
                     [&_ul]:my-3 [&_ul]:space-y-0
                     [&_li]:my-0.5 [&_li]:leading-relaxed">
                   {selectedArticle.content ? (
-                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedArticle.content) }} />
+                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(renderArticleContent(selectedArticle.content)) }} />
                   ) : (
                     <p className="text-muted-foreground italic">
                       {isEnglish ? 'Article content coming soon...' : "Contenu de l'article à venir..."}

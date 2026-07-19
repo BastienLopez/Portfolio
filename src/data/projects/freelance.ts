@@ -74,8 +74,8 @@ export const freelanceProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Site <strong>déployé avec succès</strong> permettant au coach d'<strong>augmenter sa visibilité en ligne</strong> 
-              et d'attirer de nouveaux clients.
+              ✅ Site déployé pour présenter clairement l'offre de coaching,
+              les services et les modalités de contact.
             </p>
             <p class="result-text">
               ✅ Présentation <strong>claire et professionnelle</strong> de son expertise en coaching sportif et ostéopathie.
@@ -202,7 +202,8 @@ export const freelanceProjects: Project[] = [
               de plusieurs micro-crèches.
             </p>
             <p class="result-text">
-              ✅ <strong>Amélioration significative</strong> de la productivité administrative et gain de temps considérable.
+              ✅ Interface centralisée pour la gestion de plusieurs micro-crèches,
+              avec modules métier, suivi et accès par rôle.
             </p>
           </div>
         </div>
@@ -211,7 +212,7 @@ export const freelanceProjects: Project[] = [
     gallery: ['img_projects/creche.png']
   },
   {
-    id: 'luxury-auto-Detailing',
+    id: 'luxury-auto-detailing',
     title: 'Luxury Auto Detailing',
     description: "Site vitrine pour prestations de detailing automobile haut de gamme : nettoyage, polissage, protection céramique et remise à neuf esthétique.",
     category: 'freelance',
