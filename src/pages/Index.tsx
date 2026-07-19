@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
+import { useLanguage } from "@/lib/i18n";
 
 const About = lazy(() => import("@/components/About"));
 const Skills = lazy(() => import("@/components/Skills"));
@@ -11,22 +12,24 @@ const Freelance = lazy(() => import("@/components/Freelance"));
 const Contact = lazy(() => import("@/components/Contact"));
 
 const Index = () => {
+  const { isEnglish } = useLanguage();
+
   return (
     <div className="min-h-screen w-full">
       <a
         href="#main-content"
         className="skip-link"
       >
-        Aller au contenu principal
+        {isEnglish ? 'Skip to main content' : 'Aller au contenu principal'}
       </a>
       <Navbar />
       <main id="main-content">
         <Hero />
-        <Suspense fallback={<div className="container mx-auto px-4 py-12 text-sm text-muted-foreground">Chargement des sections...</div>}>
-          <Freelance />
-          <Projects />
+        <Suspense fallback={<div className="container mx-auto px-4 py-12 text-sm text-muted-foreground">{isEnglish ? 'Loading sections...' : 'Chargement des sections...'}</div>}>
           <About />
+          <Projects />
           <Skills />
+          <Freelance />
           <DevNotes />
           <Contact />
         </Suspense>

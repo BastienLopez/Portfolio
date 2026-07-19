@@ -9,4 +9,5 @@ export interface Project {
   demo?: string;
   detailedContent?: string;
   gallery?: string[];
+  translations?: Partial<Record<'en', Pick<Project, 'title' | 'description' | 'detailedContent'>>>;
 }

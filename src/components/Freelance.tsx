@@ -19,8 +19,10 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
 import Testimonials from "@/components/Testimonials";
+import { useLanguage } from "@/lib/i18n";
 
 const Freelance = () => {
+  const { isEnglish } = useLanguage();
   const businessTags = [
     "Site vitrine",
     "Application web",
@@ -211,15 +213,14 @@ const Freelance = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 animate-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Sites vitrines, applications métier, API et automatisations pour PME/TPE
+              {isEnglish ? 'Websites, business applications, APIs and automation for SMEs' : 'Sites vitrines, applications métier, API et automatisations pour PME/TPE'}
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-6"></div>
             <p className="text-base md:text-lg text-foreground/85 max-w-3xl mx-auto leading-7 md:leading-relaxed">
-              Je conçois des sites vitrines, des applications web et des outils sur mesure pour
-              structurer vos opérations, fiabiliser vos flux et réduire les tâches manuelles.
+              {isEnglish ? 'I build websites, web applications and tailored tools to structure operations, make workflows reliable and reduce manual tasks.' : 'Je conçois des sites vitrines, des applications web et des outils sur mesure pour structurer vos opérations, fiabiliser vos flux et réduire les tâches manuelles.'}
             </p>
             <p className="text-sm text-foreground/75 mt-4 max-w-4xl mx-auto">
-              Cadrage clair, développement itératif, mise en production propre, maintenance possible.
+              {isEnglish ? 'Clear scoping, iterative development, clean production releases and optional maintenance.' : 'Cadrage clair, développement itératif, mise en production propre, maintenance possible.'}
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-2">
               {businessTags.map((tag) => (
@@ -232,12 +233,12 @@ const Freelance = () => {
               <Button asChild className="bg-cta hover:bg-cta/90 text-cta-foreground">
                 <a href="#contact" onClick={() => trackEvent("cta_click", { location: "freelance", cta: "contact" })}>
                   <PenSquare className="w-4 h-4 mr-2" />
-                  Décrire mon besoin
+                  {isEnglish ? 'Describe my need' : 'Décrire mon besoin'}
                 </a>
               </Button>
               <Button asChild variant="outline">
                 <a href="#freelance-cases" onClick={() => trackEvent("cta_click", { location: "freelance", cta: "cases" })}>
-                  Voir des exemples de missions
+                  {isEnglish ? 'View project examples' : 'Voir des exemples de missions'}
                 </a>
               </Button>
             </div>
@@ -442,26 +443,25 @@ const Freelance = () => {
               <MessageSquare className="w-5 h-5 text-primary" />
               <Rocket className="w-5 h-5 text-accent" />
             </div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-3">Parlons de votre projet</h3>
+            <h3 className="text-2xl md:text-3xl font-bold mb-3">{isEnglish ? 'Let’s discuss your project' : 'Parlons de votre projet'}</h3>
             <p className="text-foreground/80 max-w-2xl mx-auto mb-6 leading-7">
-              Décrivez votre besoin en quelques lignes. Vous recevez une estimation initiale,
-              un plan d'action et un mode de collaboration adapté.
+              {isEnglish ? 'Describe your need in a few lines. You will receive an initial estimate, an action plan and a collaboration format tailored to the scope.' : "Décrivez votre besoin en quelques lignes. Vous recevez une estimation initiale, un plan d'action et un mode de collaboration adapté."}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild className="bg-cta hover:bg-cta/90 text-cta-foreground">
                 <a href="#contact" onClick={() => trackEvent("cta_click", { location: "freelance_bottom", cta: "estimate" })}>
-                  Obtenir une estimation initiale
+                  {isEnglish ? 'Get an initial estimate' : 'Obtenir une estimation initiale'}
                 </a>
               </Button>
               <Button asChild variant="outline">
                 <a href="#contact" onClick={() => trackEvent("cta_click", { location: "freelance_bottom", cta: "contact" })}>
-                  Décrire mon besoin
+                  {isEnglish ? 'Describe my need' : 'Décrire mon besoin'}
                 </a>
               </Button>
             </div>
             <p className="text-xs text-foreground/60 mt-4 flex items-center justify-center gap-2">
               <FileCheck2 className="w-3.5 h-3.5" />
-              Premier échange sans engagement.
+              {isEnglish ? 'No-obligation first conversation.' : 'Premier échange sans engagement.'}
             </p>
           </Card>
         </div>

@@ -199,7 +199,7 @@ export const opensourceProjects: Project[] = [
   {
     id: 'ia-trading',
     title: 'AI Stock Trading Bot',
-    description: "Système de trading de cryptomonnaies utilisant l'intelligence artificielle, l'apprentissage par renforcement (RL) et l'analyse de sentiment pour prédire les mouvements de marché.",
+    description: "Projet expérimental de collecte de données, backtesting et analyse de signaux de marché avec IA, sans promesse de performance financière.",
     category: 'opensource',
     image: 'img_projects/ai_trading.png',
     tech: ['Python', 'PyTorch', 'CUDA', 'RL', 'ML', 'NLP', 'HTML / CSS'],
@@ -211,9 +211,17 @@ export const opensourceProjects: Project[] = [
         <div class="section">
           <h3 class="section-title">📋 Contexte du projet</h3>
           <p class="description">
-            Système complet de <strong>trading automatisé</strong> utilisant l'intelligence artificielle avancée. 
+            Projet expérimental de <strong>backtesting et d'analyse de signaux</strong> utilisant l'intelligence artificielle.
             Ce bot combine <strong>apprentissage par renforcement</strong> (Deep Q-Network, SAC, PPO), 
-            analyse de sentiment via LLM et indicateurs techniques pour optimiser les décisions de trading.
+            analyse de sentiment via LLM et indicateurs techniques pour explorer des stratégies de marché.
+          </p>
+        </div>
+
+        <div class="section info-box">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">
+            Conception et développement de l'expérimentation : collecte de données, backtesting,
+            intégration de modèles d'analyse et visualisation des signaux.
           </p>
         </div>
 
@@ -303,13 +311,13 @@ export const opensourceProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Système <strong>complet</strong> combinant état de l'art en IA et finance quantitative.
+              ✅ Exploration technique combinant collecte de données, modèles IA, gestion du risque et backtesting.
             </p>
             <p class="result-text">
-              ✅ Techniques avancées de <strong>deep learning</strong>, gestion des risques et optimisation de portefeuille.
+              ✅ Expérimentation autour du deep learning, de l'analyse de sentiment et des indicateurs techniques.
             </p>
             <p class="result-text">
-              ✅ Maximisation des performances tout en <strong>contrôlant l'exposition au risque</strong>.
+              ⚠️ Projet de R&D : il ne constitue ni un conseil en investissement ni une promesse de performance financière.
             </p>
           </div>
         </div>

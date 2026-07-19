@@ -1,17 +1,31 @@
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import DOMPurify from 'dompurify';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
-import { allArticles, Article } from '../data/articles';
+import type { Article, ArticleCategory } from '../data/articles';
+import { useLanguage } from '@/lib/i18n';
 
-const articles = allArticles;
+type SelectableCategory = Exclude<ArticleCategory, never>;
+
+const articleLoaders: Record<SelectableCategory, () => Promise<Article[]>> = {
+  culture: async () => (await import('../data/articles/culture')).cultureArticles,
+  devops: async () => (await import('../data/articles/devops')).devopsArticles,
+  tools: async () => (await import('../data/articles/tools')).toolsArticles,
+  architecture: async () => (await import('../data/articles/architecture')).architectureArticles,
+  freelance: async () => (await import('../data/articles/freelance')).freelanceArticles,
+};
+
 const DevNotes = () => {
-  const [selectedCategory, setSelectedCategory] = useState<'culture' | 'devops' | 'tools' | 'architecture' | 'freelance' | null>(null);
+  const { isEnglish } = useLanguage();
+  const [selectedCategory, setSelectedCategory] = useState<SelectableCategory | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const categoryConfig = {
     culture: {
       emoji: '🧠',
-      title: 'Culture & Méthodes',
+      title: isEnglish ? 'Culture & methods' : 'Culture & Méthodes',
       color: 'from-purple-500 to-pink-500'
     },
     devops: {
@@ -21,17 +35,17 @@ const DevNotes = () => {
     },
     tools: {
       emoji: '🧩',
-      title: 'Outils & Productivité',
+      title: isEnglish ? 'Tools & productivity' : 'Outils & Productivité',
       color: 'from-green-500 to-emerald-500'
     },
     architecture: {
       emoji: '🧰',
-      title: 'Architecture & Bonnes pratiques',
+      title: isEnglish ? 'Architecture & best practices' : 'Architecture & Bonnes pratiques',
       color: 'from-orange-500 to-red-500'
     },
     freelance: {
       emoji: '💼',
-      title: 'Gestion de projet & Freelance',
+      title: isEnglish ? 'Project management & freelance' : 'Gestion de projet & Freelance',
       color: 'from-indigo-500 to-purple-500'
     }
   };
@@ -40,13 +54,20 @@ const DevNotes = () => {
     ? articles.filter(article => article.category === selectedCategory)
     : [];
 
-  const handleCategoryClick = (category: 'culture' | 'devops' | 'tools' | 'architecture' | 'freelance') => {
+  const handleCategoryClick = async (category: SelectableCategory) => {
     if (selectedCategory === category) {
       setSelectedCategory(null);
       setSelectedArticle(null);
+      setArticles([]);
     } else {
       setSelectedCategory(category);
       setSelectedArticle(null);
+      setIsLoading(true);
+      try {
+        setArticles(await articleLoaders[category]());
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -62,17 +83,17 @@ const DevNotes = () => {
     <section id="devnotes" className="py-20 px-4 w-full overflow-x-hidden section-odd">
       <div className="container mx-auto max-w-6xl w-full">
         <div className="text-center mb-12 w-full">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Dev Notes 📝</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{isEnglish ? 'Selected dev notes 📝' : 'Dev Notes sélectionnées 📝'}</h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-2 px-4">
-            Une collection d'articles sur les bonnes pratiques de développement,
+            {isEnglish ? 'Technical notes on automation, AI, architecture and deployment,' : "Retours techniques autour de l'automatisation, de l'IA, de l'architecture et du déploiement,"}
           </p>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 px-4">
-            les méthodologies agiles et les outils pour être plus productif.
+            {isEnglish ? 'with access to all notes by topic.' : "avec un accès à l'ensemble des notes par thème."}
           </p>
           
           {!selectedArticle && (
             <p className="text-sm md:text-md text-muted-foreground font-medium mb-8">
-              Sélectionnez le topic souhaité :
+              {isEnglish ? 'Select a topic:' : 'Sélectionnez le topic souhaité :'}
             </p>
           )}
         </div>
@@ -85,7 +106,7 @@ const DevNotes = () => {
               variant="outline"
               className="mb-6"
             >
-              ← Retour aux articles
+              ← {isEnglish ? 'Back to articles' : 'Retour aux articles'}
             </Button>
             
             <Card className="border-2">
@@ -124,10 +145,10 @@ const DevNotes = () => {
                     [&_ul]:my-3 [&_ul]:space-y-0
                     [&_li]:my-0.5 [&_li]:leading-relaxed">
                   {selectedArticle.content ? (
-                    <div dangerouslySetInnerHTML={{ __html: selectedArticle.content }} />
+                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedArticle.content) }} />
                   ) : (
                     <p className="text-muted-foreground italic">
-                      Contenu de l'article à venir...
+                      {isEnglish ? 'Article content coming soon...' : "Contenu de l'article à venir..."}
                     </p>
                   )}
                 </div>
@@ -141,7 +162,7 @@ const DevNotes = () => {
               {Object.entries(categoryConfig).map(([key, config]) => (
                 <Button
                   key={key}
-                  onClick={() => handleCategoryClick(key as 'culture' | 'devops' | 'tools' | 'architecture' | 'freelance')}
+                  onClick={() => void handleCategoryClick(key as SelectableCategory)}
                   variant={selectedCategory === key ? "default" : "outline"}
                   className={`w-full sm:w-auto text-sm md:text-base lg:text-lg px-4 md:px-5 lg:px-6 py-4 md:py-4 lg:py-5 transition-all ${
                     selectedCategory === key 
@@ -156,13 +177,15 @@ const DevNotes = () => {
             </div>
 
             {/* Articles Grid */}
-            {selectedCategory && (
+            {selectedCategory && isLoading && (
+              <p className="text-center text-sm text-muted-foreground" aria-live="polite">{isEnglish ? 'Loading articles…' : 'Chargement des articles…'}</p>
+            )}
+            {selectedCategory && !isLoading && (
               <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 animate-in fade-in duration-500">
                 {filteredArticles.map((article) => (
                   <Card 
                     key={article.id}
-                    className="cursor-pointer hover:shadow-lg transition-all hover:scale-105 w-full"
-                    onClick={() => handleArticleClick(article)}
+                    className="hover:shadow-lg transition-all hover:scale-105 w-full"
                   >
                     <CardHeader>
                       <CardTitle className="text-base md:text-lg leading-tight">
@@ -170,8 +193,8 @@ const DevNotes = () => {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <Button variant="link" className="px-0">
-                        Lire l'article →
+                      <Button variant="link" className="px-0" onClick={() => handleArticleClick(article)}>
+                        {isEnglish ? 'Read article →' : "Lire l'article →"}
                       </Button>
                     </CardContent>
                   </Card>

@@ -35,8 +35,8 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: "t-4",
-    name: "Utilisateur d'Aqualis",
-    role: "",
+    name: "Utilisateur Aqualis anonymisé",
+    role: "Retour utilisateur anonymisé",
     service: "Application mobile",
     text: "Application très intuitive et apaisante — j'adore gérer mes poissons et mes aquariums au quotidien.",
     image: "/img_clients/user.png",
@@ -51,8 +51,8 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: "t-6",
-    name: "Utilisateur ATS",
-    role: "",
+    name: "Utilisateur ATS anonymisé",
+    role: "Retour utilisateur anonymisé",
     service: "Site ATS CV",
     text: "L’application répond bien au besoin initial : analyser rapidement un CV et obtenir un retour lisible. Le fonctionnement est simple, utile et efficace.",
     image: "/img_clients/user.png",

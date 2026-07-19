@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
+import { useLanguage } from "@/lib/i18n";
 
 const Hero = () => {
   const [typedText, setTypedText] = useState("");
-  const fullText = "Développeur Full-Stack IA & Automatisation\nSites vitrines, applications métier,\nAPI et automatisation";
+  const { isEnglish } = useLanguage();
+  const fullText = isEnglish
+    ? "Full-Stack AI & Automation Developer\nBusiness applications, internal APIs,\nAI workflows and n8n automations"
+    : "Développeur Full-Stack IA & Automatisation\nApplications métier, APIs internes,\nworkflows IA et automatisations n8n";
   
   useEffect(() => {
     let index = 0;
@@ -20,7 +24,7 @@ const Hero = () => {
     }, TYPING_INTERVAL);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [fullText]);
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -52,28 +56,29 @@ const Hero = () => {
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            En tant que développeur freelance, je conçois des outils web sur mesure pour aider les PME/TPE à gagner du temps, fiabiliser leurs flux
-            et centraliser leurs opérations métier.
+            {isEnglish
+              ? 'I build process-, data- and automation-focused full-stack applications that help teams make their workflows reliable and centralise business operations.'
+              : 'Je conçois des applications full-stack orientées process, données et automatisation pour aider les équipes à fiabiliser leurs flux et centraliser leurs opérations métier.'}
           </p>
 
           <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed">
-            Portails internes, back-offices, API et automatisations. Approche progressive, code maintenable,
-            communication claire.
+            {isEnglish
+              ? 'Internal portals, back offices, APIs and AI workflows. A progressive approach, maintainable code and clear communication.'
+              : 'Portails internes, back-offices, APIs et workflows IA. Approche progressive, code maintenable, communication claire.'}
           </p>
 
           <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed">
-            Ouvert à un CDI remote/full remote et disponible pour missions freelance ciblées.
+            {isEnglish
+              ? 'Open to remote/full-remote permanent roles and focused freelance engagements.'
+              : 'Ouvert à un CDI remote/full remote et disponible pour missions freelance ciblées.'}
           </p>
-
-
 
           {/* Reassurance line */}
           <div className="flex flex-wrap justify-center gap-3 py-3">
             {[
-              "Applications métier",
-              "API & automatisation",
-              "MVP / outils internes",
-              "Accompagnement technique",
+              ...(isEnglish
+                ? ["Business applications", "APIs & n8n automations", "MVP / internal tools", "Technical support"]
+                : ["Applications métier", "APIs & automatisations n8n", "MVP / outils internes", "Accompagnement technique"]),
             ].map((item) => (
               <span
                 key={item}
@@ -91,7 +96,7 @@ const Hero = () => {
               size="lg"
               className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-background font-semibold"
             >
-              <a href="#contact" onClick={() => trackEvent("cta_click", { location: "hero", cta: "contact" })}>Parler de votre projet</a>
+              <a href="#contact" onClick={() => trackEvent("cta_click", { location: "hero", cta: "contact" })}>{isEnglish ? 'Contact me about a role or project' : 'Me contacter pour un poste ou une mission'}</a>
             </Button>
             <Button
               asChild
@@ -99,7 +104,7 @@ const Hero = () => {
               variant="outline"
               className="border-primary text-primary hover:bg-primary/10"
             >
-              <a href="#projects" onClick={() => trackEvent("cta_click", { location: "hero", cta: "projects" })}>Voir mes réalisations</a>
+              <a href="#projects" onClick={() => trackEvent("cta_click", { location: "hero", cta: "projects" })}>{isEnglish ? 'View key projects' : 'Voir mes projets clés'}</a>
             </Button>
           </div>
         </div>
@@ -107,7 +112,7 @@ const Hero = () => {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-10">
-        <a href="#freelance" className="text-muted-foreground hover:text-primary transition-colors">
+        <a href="#about" className="text-muted-foreground hover:text-primary transition-colors" aria-label={isEnglish ? 'Go to the about section' : 'Aller à la section à propos'}>
           <ChevronDown className="w-8 h-8" />
         </a>
       </div>
@@ -119,6 +124,11 @@ const Hero = () => {
         @keyframes shimmer {
           0% { background-position: 200% center; }
           100% { background-position: -200% center; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .animate-pulse, .animate-bounce, .animate-fade-in {
+            animation: none !important;
+          }
         }
       `}</style>
     </section>

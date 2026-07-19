@@ -128,6 +128,20 @@ All colors MUST be HSL.
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 @layer utilities {
   .skip-link {
     position: fixed;
@@ -218,11 +232,11 @@ All colors MUST be HSL.
   }
 
   .tech-item {
-    @apply p-4 rounded-lg bg-card border border-border hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 space-y-2;
+    @apply flex min-h-44 flex-col items-center justify-center p-5 text-center rounded-lg bg-card border border-border hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 space-y-2;
   }
 
   .tech-icon {
-    @apply text-2xl md:text-3xl;
+    @apply block text-3xl md:text-4xl;
   }
 
   .tech-name {
@@ -230,7 +244,7 @@ All colors MUST be HSL.
   }
 
   .tech-desc {
-    @apply text-sm text-muted-foreground;
+    @apply text-sm text-muted-foreground leading-relaxed;
   }
 
   /* Features List */
@@ -269,7 +283,7 @@ All colors MUST be HSL.
   }
 
   .before-after {
-    @apply grid grid-cols-1 lg:grid-cols-2 gap-6;
+    @apply grid grid-cols-1 gap-5;
   }
 
   .before, .after {
@@ -297,11 +311,11 @@ All colors MUST be HSL.
   }
 
   .comparison-list.success li {
-    @apply text-foreground;
+    @apply block rounded-lg border border-green-500/20 bg-green-500/5 p-4 text-foreground;
   }
 
   .detail {
-    @apply block text-sm text-muted-foreground mt-1 ml-6;
+    @apply block text-sm text-muted-foreground mt-2 leading-relaxed;
   }
 
   /* Versions Grid */

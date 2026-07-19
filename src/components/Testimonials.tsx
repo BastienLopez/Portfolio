@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import testimonialsData, { Testimonial } from "@/data/testimonials";
+import { useLanguage } from "@/lib/i18n";
 
 // Lightweight testimonials horizontal scroller.
 // - gentle auto-scroll via requestAnimationFrame
@@ -28,6 +29,7 @@ const Avatar = ({ name, image }: { name: string; image?: string | null }) => {
 };
 
 export default function Testimonials(): JSX.Element {
+  const { isEnglish } = useLanguage();
   const listRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const tickerRef = useRef<HTMLDivElement | null>(null);
@@ -57,7 +59,7 @@ export default function Testimonials(): JSX.Element {
     const seqWidth = track.scrollWidth / 2 || 0;
     const duration = Math.max(10, seqWidth / speed); // ensure a minimum duration for elegance
     ticker.style.setProperty("--ticker-duration", `${duration}s`);
-  }, [isReducedMotion, testimonialsData.length]);
+  }, [isReducedMotion]);
 
   const loopedTestimonials = [...testimonialsData, ...testimonialsData];
 
@@ -78,7 +80,7 @@ export default function Testimonials(): JSX.Element {
       <div className="relative z-10">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto mb-6">
-            <h2 className="text-3xl md:text-4xl font-bold">Retours clients</h2>
+            <h2 className="text-3xl md:text-4xl font-bold">{isEnglish ? 'Client and anonymised user feedback' : 'Retours clients et utilisateurs anonymisés'}</h2>
           </div>
         </div>
 
@@ -89,7 +91,7 @@ export default function Testimonials(): JSX.Element {
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
               className="relative overflow-hidden px-4 md:px-8"
-              aria-label="Liste de témoignages"
+              aria-label={isEnglish ? 'Testimonials list' : 'Liste de témoignages'}
             >
               <div ref={trackRef} className="w-max">
                 <div

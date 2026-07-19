@@ -23,6 +23,14 @@ export const emploiProjects: Project[] = [
         </div>
 
         <div class="section info-box">
+          <h3 class="section-title">👤 Ma contribution</h3>
+          <p class="description">
+            Contribution au sein de l'équipe produit sur des sujets liés au wallet et à son écosystème technique.
+            Les détails d'implémentation restent volontairement limités pour des raisons de confidentialité.
+          </p>
+        </div>
+
+        <div class="section info-box">
           <h3 class="section-title">💡 Qu'est-ce qu'un Wallet Provider ?</h3>
           <p class="description">
             Un <strong>Wallet Provider</strong> fournit une infrastructure sécurisée pour stocker et gérer des 
@@ -208,16 +216,13 @@ export const emploiProjects: Project[] = [
         </div>
 
         <div class="section results">
-          <h3 class="section-title">📊 Impact et adoption</h3>
+          <h3 class="section-title">📊 Contexte produit</h3>
           <div class="result-box success">
             <p class="result-text highlight-large">
-              💼 <strong>40+ entreprises</strong> utilisent Talao pour leurs salariés et partenaires
+              💼 Produit d'identité numérique destiné à des contextes d'entreprise et de conformité européenne.
             </p>
             <p class="result-text">
-              ✅ <strong>50K+ wallets</strong> téléchargés sur iOS et Android
-            </p>
-            <p class="result-text">
-              ✅ <strong>100K+ preuves numériques</strong> émises et collectées
+              ✅ Les éléments présentés décrivent le produit et les standards associés, sans afficher de métrique non sourcée dans ce portfolio.
             </p>
             <p class="result-text">
               ✅ Solution <strong>souveraine européenne</strong>, hébergée et développée en Europe
@@ -234,21 +239,21 @@ export const emploiProjects: Project[] = [
             <div class="version-card">
               <h4>🔍 OIDC4VC QR Code Validator</h4>
               <p>Testez la conformité de vos issuers et verifiers selon OIDC4VCI et OIDC4VP</p>
-              <a href="https://talao.co/ai/qrcode" target="_blank" class="doc-link">
+              <a href="https://talao.co/ai/qrcode" target="_blank" rel="noopener noreferrer" class="doc-link">
                 🔗 Accéder au validateur →
               </a>
             </div>
             <div class="version-card">
               <h4>✅ VC / VP Validator</h4>
               <p>Validez vos credentials (VCs) et présentations (VPs) aux formats SD-JWT, JWT, JSON-LD</p>
-              <a href="https://talao.co/ai/vc" target="_blank" class="doc-link">
+              <a href="https://talao.co/ai/vc" target="_blank" rel="noopener noreferrer" class="doc-link">
                 🔗 Accéder au validateur →
               </a>
             </div>
             <div class="version-card featured">
               <h4>💻 GitHub Open Source</h4>
               <p>Code source complet accessible pour audit de sécurité et confidentialité</p>
-              <a href="https://github.com/TalaoDAO" target="_blank" class="doc-link">
+              <a href="https://github.com/TalaoDAO" target="_blank" rel="noopener noreferrer" class="doc-link">
                 🔗 Voir le code source →
               </a>
             </div>
@@ -277,6 +282,14 @@ export const emploiProjects: Project[] = [
             Développement et amélioration d'une <strong>plateforme back-end</strong> pour la gestion de portefeuilles numériques 
             et de <strong>credentials vérifiables</strong>. Participation au projet <strong>Discover</strong>, intégrant la gestion 
             des NFTs et des cryptomonnaies via l'API Coingecko.
+          </p>
+        </div>
+
+        <div class="section info-box">
+          <h3 class="section-title">👤 Ma contribution</h3>
+          <p class="description">
+            Participation au développement et à l'amélioration de briques de la plateforme Discover,
+            incluant les intégrations présentées ici. Le produit résulte d'un travail d'équipe.
           </p>
         </div>
 
@@ -332,8 +345,7 @@ export const emploiProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Application <strong>déployée sur l'App Store</strong> et utilisée par des <strong>milliers d'utilisateurs</strong> 
-              pour gérer leurs actifs numériques en toute sécurité.
+              ✅ Application <strong>déployée sur l'App Store</strong> pour la gestion d'actifs numériques.
             </p>
           </div>
         </div>
@@ -359,6 +371,14 @@ export const emploiProjects: Project[] = [
             Création et maintenance de la <strong>documentation technique complète</strong> pour Altme Wallet Provider. 
             Développement de <strong>deux versions</strong> de la documentation : une première version avec GitBook et 
             une seconde version moderne avec Docusaurus pour améliorer l'expérience développeur.
+          </p>
+        </div>
+
+        <div class="section info-box">
+          <h3 class="section-title">👤 Ma contribution</h3>
+          <p class="description">
+            Création et maintenance de contenus et de parcours de documentation, avec migration de GitBook
+            vers Docusaurus pour faciliter l'intégration des développeurs.
           </p>
         </div>
 
@@ -424,14 +444,14 @@ export const emploiProjects: Project[] = [
             <div class="version-card">
               <h4>V1 - GitBook</h4>
               <p>Version initiale simple et accessible</p>
-              <a href="https://altme-documentation.gitbook.io/wallet-provider-documentation" target="_blank" class="doc-link">
+              <a href="https://altme-documentation.gitbook.io/wallet-provider-documentation" target="_blank" rel="noopener noreferrer" class="doc-link">
                 📖 Consulter la documentation V1 →
               </a>
             </div>
             <div class="version-card featured">
               <h4>V2 - Docusaurus ⭐</h4>
               <p>Version moderne avec performances optimisées</p>
-              <a href="https://doc.wallet-provider.io/welcome/" target="_blank" class="doc-link">
+              <a href="https://doc.wallet-provider.io/welcome/" target="_blank" rel="noopener noreferrer" class="doc-link">
                 📘 Consulter la documentation V2 →
               </a>
             </div>
@@ -472,6 +492,14 @@ export const emploiProjects: Project[] = [
             Développement d'un <strong>bot Microsoft Teams intelligent</strong> intégré à Mastra pour automatiser la veille technologique. 
             Le bot agrège des flux RSS, effectue une <strong>synthèse NLP</strong> et fournit des insights propulsés par l'IA 
             pour faciliter le suivi de l'actualité en temps réel.
+          </p>
+        </div>
+
+        <div class="section info-box">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">
+            Conception du workflow de veille, développement du bot TypeScript, intégration avec Teams,
+            orchestration Mastra et configuration des alertes ciblées.
           </p>
         </div>
 
@@ -535,7 +563,7 @@ export const emploiProjects: Project[] = [
               sur les sujets qui les intéressent.
             </p>
             <p class="result-text">
-              ✅ <strong>Réduction de 70%</strong> du temps de veille manuelle grâce à l'automatisation intelligente.
+              ✅ Veille centralisée, synthèses et alertes disponibles dans l'espace de travail des équipes.
             </p>
           </div>
         </div>
@@ -546,7 +574,7 @@ export const emploiProjects: Project[] = [
   {
     id: 'seo-geo-optimization',
     title: 'SEO & GEO Optimization',
-    description: "Optimisation SEO et référencement local (GEO) pour différentes entreprises. Amélioration drastique de la visibilité en ligne avec gains mesurables : passage de l'anonymat à la reconnaissance par les IA (ChatGPT, Claude) et positionnement #1 sur Google pour les mots-clés stratégiques.",
+    description: "Optimisation SEO et référencement local (GEO) pour différentes entreprises : audit, données structurées, contenu et suivi des performances.",
     category: 'emploi',
     image: 'img_projects/seo_geo.png',
     tech: ['SEO', 'Google Analytics', 'Google Search Console', 'Schema.org', 'Local SEO', 'Données structurées'],
@@ -572,6 +600,13 @@ export const emploiProjects: Project[] = [
           <p class="highlight">
             🎯 <strong>Objectif :</strong> Être trouvé par vos clients potentiels au bon moment et être reconnu comme une référence 
             par les moteurs de recherche et les IA (ChatGPT, Claude, etc.).
+          </p>
+        </div>
+
+        <div class="section info-box">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">
+            Audit, optimisation des balises et contenus, structuration technique et mise en place des éléments de suivi SEO/GEO.
           </p>
         </div>
 
@@ -650,44 +685,42 @@ export const emploiProjects: Project[] = [
         </div>
 
         <div class="section">
-          <h3 class="section-title">📊 Résultats mesurables : Avant / Après</h3>
+          <h3 class="section-title">📊 Résultats et suivi</h3>
           
           <div class="comparison">
             <div class="before-after">
               <div class="before">
-                <h4>❌ Avant l'optimisation SEO</h4>
+                <h4>Point de départ</h4>
                 <ul class="comparison-list">
-                  <li>🚫 Aucune reconnaissance par les IA (ChatGPT, Claude)</li>
-                  <li>📉 Positionnement faible ou inexistant</li>
-                  <li>📄 Informations limitées et peu structurées</li>
-                  <li>🗺️ Visibilité locale quasi nulle</li>
-                  <li>👥 Trafic organique minimal</li>
+                  <li>📄 Informations et contenus à structurer</li>
+                  <li>🗺️ Présence locale à consolider</li>
+                  <li>📊 Indicateurs de visibilité à mettre en place</li>
                 </ul>
               </div>
               
               <div class="after">
-                <h4>✅ Après l'optimisation SEO</h4>
+                <h4>Actions et indicateurs à suivre</h4>
                 <ul class="comparison-list success">
-                  <li>🤖 <strong>Reconnaissance complète par les IA</strong><br/>
-                    <span class="detail">ChatGPT et Claude fournissent des infos détaillées et structurées</span>
+                  <li>🤖 <strong>Contenu et données structurées</strong><br/>
+                    <span class="detail">Base plus lisible pour les moteurs, les utilisateurs et les assistants IA</span>
                   </li>
-                  <li>🥇 <strong>Position #1 sur Google</strong><br/>
-                    <span class="detail">Pour les requêtes stratégiques et mots-clés ciblés</span>
+                  <li>🔎 <strong>Suivi du positionnement</strong><br/>
+                    <span class="detail">À vérifier par requête dans Search Console</span>
                   </li>
-                  <li>⭐ <strong>Rich snippets actifs</strong><br/>
-                    <span class="detail">Logo, coordonnées, avis, FAQ affichés</span>
+                  <li>⭐ <strong>Données structurées</strong><br/>
+                    <span class="detail">Mise en place à contrôler après indexation</span>
                   </li>
-                  <li>📈 <strong>+300% de trafic organique</strong><br/>
-                    <span class="detail">En moyenne sur 6 mois</span>
+                  <li>📈 <strong>Trafic organique</strong><br/>
+                    <span class="detail">À documenter avec une capture Analytics ou Search Console anonymisée</span>
                   </li>
-                  <li>💰 <strong>Meilleur taux de conversion</strong><br/>
-                    <span class="detail">Grâce à une meilleure qualification du trafic</span>
+                  <li>💬 <strong>Demandes qualifiées</strong><br/>
+                    <span class="detail">À mesurer selon les objectifs de chaque site</span>
                   </li>
-                  <li>🗺️ <strong>Visibilité locale renforcée</strong><br/>
-                    <span class="detail">Apparition dans le pack local Google Maps</span>
+                  <li>🗺️ <strong>Présence locale</strong><br/>
+                    <span class="detail">À suivre sur les requêtes et fiches locales pertinentes</span>
                   </li>
-                  <li>🏆 <strong>Crédibilité accrue</strong><br/>
-                    <span class="detail">Présence structurée sur tous les canaux digitaux</span>
+                  <li>🏆 <strong>Socle SEO maintenable</strong><br/>
+                    <span class="detail">Balises, structure technique et contenu plus cohérents</span>
                   </li>
                 </ul>
               </div>
@@ -696,23 +729,201 @@ export const emploiProjects: Project[] = [
         </div>
 
         <div class="section results">
-          <h3 class="section-title">🎯 Impact business concret</h3>
+          <h3 class="section-title">🎯 Résultats à documenter</h3>
           <div class="result-box success">
             <p class="result-text highlight-large">
-              💼 Passage d'une <strong>entreprise invisible en ligne</strong> à une <strong>référence reconnue</strong> 
-              par les moteurs de recherche, les IA et les utilisateurs.
+              💼 Les optimisations renforcent la base technique et éditoriale nécessaire à une meilleure visibilité.
             </p>
             <p class="result-text">
-              ✅ Les clients trouvent maintenant l'entreprise <strong>facilement</strong>, avec des informations 
-              <strong>complètes et fiables</strong>.
+              ✅ Les gains de positionnement, de trafic et de conversion doivent être validés avec des données source.
             </p>
             <p class="result-text">
-              ✅ Génération de <strong>plus de demandes qualifiées</strong> et augmentation significative des <strong>conversions</strong>.
+              ✅ Une capture Search Console ou Analytics anonymisée permettrait de compléter cette étude de cas.
             </p>
           </div>
         </div>
       </div>
     `,
     gallery: ['img_projects/seo_geo.png']
+  },
+  {
+    id: 'n8n-workflow-automation',
+    title: 'Automatisations n8n — Reporting, contenu & prospection',
+    description: "Workflows n8n pour automatiser la génération de rapports SocialPilot en PDF, l'adaptation de vidéos aux formats réseaux sociaux et la préparation de prospects depuis Google Maps.",
+    category: 'emploi',
+    image: 'img_projects/n8n.png',
+    tech: ['n8n', 'SocialPilot', 'Google Maps', 'PDF', 'Automatisation de workflows'],
+    detailedContent: `
+      <div class="project-detail">
+        <h2 class="project-title">⚙️ Automatisations n8n — reporting, contenu & prospection</h2>
+
+        <div class="section">
+          <h3 class="section-title">📋 Contexte du projet</h3>
+          <p class="description">
+            Conception de workflows <strong>n8n</strong> pour automatiser des opérations récurrentes autour
+            du reporting réseaux sociaux, de la préparation de contenus vidéo et de la prospection.
+            L'objectif : relier les outils existants, fiabiliser les étapes de traitement et produire des
+            livrables réutilisables pour le client.
+          </p>
+        </div>
+
+        <div class="section info-box">
+          <h3 class="section-title">👤 Ma contribution</h3>
+          <ul class="features-list">
+            <li class="feature-item"><span class="feature-icon">🔎</span><strong>Analyse des processus</strong> — identification des tâches répétitives et des sources de données.</li>
+            <li class="feature-item"><span class="feature-icon">🧩</span><strong>Architecture des workflows</strong> — découpage des étapes, déclencheurs, conditions et sorties.</li>
+            <li class="feature-item"><span class="feature-icon">🔌</span><strong>Intégrations</strong> — connexion d'API et de services tiers, transformation des données JSON.</li>
+            <li class="feature-item"><span class="feature-icon">🛡️</span><strong>Fiabilité</strong> — gestion des erreurs, contrôle des données et amélioration continue des scénarios.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">⚙️ Technologies et outils</h3>
+          <div class="tech-grid">
+            <div class="tech-item"><span class="tech-icon">🔄</span><span class="tech-name">n8n</span><p class="tech-desc">Orchestration et automatisation visuelle</p></div>
+            <div class="tech-item"><span class="tech-icon">🔌</span><span class="tech-name">API REST & Webhooks</span><p class="tech-desc">Connexion des outils et déclenchements</p></div>
+            <div class="tech-item"><span class="tech-icon">🧾</span><span class="tech-name">JSON & PDF</span><p class="tech-desc">Transformation de données et génération de livrables</p></div>
+            <div class="tech-item"><span class="tech-icon">🤖</span><span class="tech-name">IA & automatisation</span><p class="tech-desc">Analyse et enrichissement de certains traitements</p></div>
+            <div class="tech-item"><span class="tech-icon">📊</span><span class="tech-name">SocialPilot</span><p class="tech-desc">Données et rapports de réseaux sociaux</p></div>
+            <div class="tech-item"><span class="tech-icon">🎬</span><span class="tech-name">Traitement vidéo</span><p class="tech-desc">Préparation de contenus pour les réseaux sociaux</p></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">📊 Workflow 1 — Reporting SocialPilot</h3>
+          <p class="description">
+            Un scénario automatisé récupère les données disponibles, les prépare puis génère un rapport de suivi
+            au format PDF. Le résultat peut ensuite être transmis au client selon le canal défini.
+          </p>
+          <ul class="features-list">
+            <li class="feature-item">
+              <span class="feature-icon">📥</span>
+              <strong>Collecte et normalisation</strong> — récupération, nettoyage et mise en forme des données SocialPilot.
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">📄</span>
+              <strong>Rapport PDF</strong> — assemblage d'un livrable clair pour le suivi des performances sociales.
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">📤</span>
+              <strong>Distribution</strong> — préparation de l'envoi ou du dépôt du rapport auprès du client.
+            </li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">🎬 Workflow 2 — Dérush et préparation vidéo</h3>
+          <p class="description">
+            Le workflow organise le traitement de vidéos brutes afin de faciliter la préparation de déclinaisons
+            pour Instagram, Facebook, TikTok et d'autres formats de réseaux sociaux. Il peut enchaîner réception,
+            extraction de données, transcription, analyse et structuration des séquences à exploiter.
+          </p>
+          <ul class="features-list">
+            <li class="feature-item"><span class="feature-icon">🎥</span><strong>Réception et préparation</strong> — centralisation des médias et de leurs métadonnées.</li>
+            <li class="feature-item"><span class="feature-icon">📝</span><strong>Transcription et analyse</strong> — lecture des contenus pour identifier les passages utiles.</li>
+            <li class="feature-item"><span class="feature-icon">⏱️</span><strong>Séquençage</strong> — repérage de timestamps et organisation des éléments pour le montage.</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">📍 Workflow 3 — Préparation de prospection</h3>
+          <p class="description">
+            Collecte et structuration de prospects à partir de Google Maps pour préparer des listes exploitables
+            dans un processus commercial, avec les informations disponibles et les contrôles nécessaires.
+          </p>
+        </div>
+
+        <div class="section info-box">
+          <h3 class="section-title">🧱 Architecture commune</h3>
+          <p class="description">
+            Les automatisations reposent sur des déclencheurs planifiés ou à la demande, des connexions API,
+            des transformations de données, des branches conditionnelles et une sortie adaptée au besoin :
+            rapport, fichier, notification ou liste structurée.
+          </p>
+        </div>
+
+        <div class="section results">
+          <h3 class="section-title">🎯 Objectif et confidentialité</h3>
+          <div class="result-box success">
+            <p class="result-text">
+              ✅ Des workflows centralisés pour limiter les manipulations manuelles et rendre les livrables plus reproductibles.
+            </p>
+            <p class="result-text">
+              🔒 Projet client : les données, paramètres précis et résultats chiffrés ne sont pas publiés pour des raisons de confidentialité.
+            </p>
+          </div>
+        </div>
+      </div>
+    `,
+    gallery: ['img_projects/n8n1.png', 'img_projects/n8n2.png']
+    ,
+    translations: {
+      en: {
+        title: 'n8n Automations — reporting, content & prospecting',
+        description: 'n8n workflows that automate SocialPilot PDF reports, video adaptation for social media formats, and prospect-list preparation from Google Maps.',
+        detailedContent: `
+          <div class="project-detail">
+            <h2 class="project-title">⚙️ n8n automations — reporting, content & prospecting</h2>
+            <div class="section">
+              <h3 class="section-title">📋 Project context</h3>
+              <p class="description">Design of <strong>n8n</strong> workflows to automate recurring operations around social-media reporting, video-content preparation and prospecting. The aim is to connect existing tools, make processing steps reliable and create reusable client deliverables.</p>
+            </div>
+            <div class="section info-box">
+              <h3 class="section-title">👤 My contribution</h3>
+              <ul class="features-list">
+                <li class="feature-item"><span class="feature-icon">🔎</span><strong>Process analysis</strong> — identifying repetitive tasks and data sources.</li>
+                <li class="feature-item"><span class="feature-icon">🧩</span><strong>Workflow architecture</strong> — defining steps, triggers, conditions and outputs.</li>
+                <li class="feature-item"><span class="feature-icon">🔌</span><strong>Integrations</strong> — connecting APIs and third-party services, transforming JSON data.</li>
+                <li class="feature-item"><span class="feature-icon">🛡️</span><strong>Reliability</strong> — error handling, data checks and continuous scenario improvement.</li>
+              </ul>
+            </div>
+            <div class="section">
+              <h3 class="section-title">⚙️ Technologies and tools</h3>
+              <div class="tech-grid">
+                <div class="tech-item"><span class="tech-icon">🔄</span><span class="tech-name">n8n</span><p class="tech-desc">Visual orchestration and automation</p></div>
+                <div class="tech-item"><span class="tech-icon">🔌</span><span class="tech-name">REST APIs & Webhooks</span><p class="tech-desc">Tool connections and triggers</p></div>
+                <div class="tech-item"><span class="tech-icon">🧾</span><span class="tech-name">JSON & PDF</span><p class="tech-desc">Data transformation and document generation</p></div>
+                <div class="tech-item"><span class="tech-icon">🤖</span><span class="tech-name">AI & automation</span><p class="tech-desc">Analysis and enrichment of selected processing steps</p></div>
+                <div class="tech-item"><span class="tech-icon">📊</span><span class="tech-name">SocialPilot</span><p class="tech-desc">Social media data and reports</p></div>
+                <div class="tech-item"><span class="tech-icon">🎬</span><span class="tech-name">Video processing</span><p class="tech-desc">Preparing content for social platforms</p></div>
+              </div>
+            </div>
+            <div class="section">
+              <h3 class="section-title">📊 Workflow 1 — SocialPilot reporting</h3>
+              <p class="description">An automated scenario retrieves available data, prepares it and produces a PDF follow-up report. The result can then be sent to the client through the chosen channel.</p>
+              <ul class="features-list">
+                <li class="feature-item"><span class="feature-icon">📥</span><strong>Collection and normalisation</strong> — retrieving, cleaning and formatting SocialPilot data.</li>
+                <li class="feature-item"><span class="feature-icon">📄</span><strong>PDF report</strong> — assembling a clear deliverable for social-performance follow-up.</li>
+                <li class="feature-item"><span class="feature-icon">📤</span><strong>Distribution</strong> — preparing report delivery or storage for the client.</li>
+              </ul>
+            </div>
+            <div class="section">
+              <h3 class="section-title">🎬 Workflow 2 — Video derush and preparation</h3>
+              <p class="description">The workflow organises raw-video processing to support adaptations for Instagram, Facebook, TikTok and other social-media formats. It can chain media intake, data extraction, transcription, analysis and organisation of useful sequences.</p>
+              <ul class="features-list">
+                <li class="feature-item"><span class="feature-icon">🎥</span><strong>Intake and preparation</strong> — centralising media and metadata.</li>
+                <li class="feature-item"><span class="feature-icon">📝</span><strong>Transcription and analysis</strong> — reading content to identify useful excerpts.</li>
+                <li class="feature-item"><span class="feature-icon">⏱️</span><strong>Sequencing</strong> — locating timestamps and organising material for editing.</li>
+              </ul>
+            </div>
+            <div class="section">
+              <h3 class="section-title">📍 Workflow 3 — Prospecting preparation</h3>
+              <p class="description">Collecting and structuring prospects from Google Maps to prepare usable commercial lists, using available information and the required checks.</p>
+            </div>
+            <div class="section info-box">
+              <h3 class="section-title">🧱 Shared architecture</h3>
+              <p class="description">The automations rely on scheduled or on-demand triggers, API connections, data transformations, conditional branches and an output suited to the need: report, file, notification or structured list.</p>
+            </div>
+            <div class="section results">
+              <h3 class="section-title">🎯 Objective and confidentiality</h3>
+              <div class="result-box success">
+                <p class="result-text">✅ Centralised workflows reduce manual handling and make deliverables more reproducible.</p>
+                <p class="result-text">🔒 Client project: data, precise configuration and quantified results are not published for confidentiality reasons.</p>
+              </div>
+            </div>
+          </div>
+        `,
+      },
+    },
   }
 ];

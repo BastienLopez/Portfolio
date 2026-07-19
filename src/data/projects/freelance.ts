@@ -107,6 +107,18 @@ export const freelanceProjects: Project[] = [
           </p>
         </div>
 
+        <div class="section info-box">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">
+            Conception et développement full-stack de l'application : modules métier, back-office, gestion des droits,
+            intégration des données et préparation du déploiement Docker/CI-CD.
+          </p>
+          <p class="description">
+            Le projet traite des dossiers et des accès par rôle ; les détails fonctionnels restent partiellement anonymisés
+            pour préserver la confidentialité.
+          </p>
+        </div>
+
         <div class="section">
           <h3 class="section-title">⚙️ Technologies utilisées</h3>
           <div class="tech-grid">
@@ -289,6 +301,14 @@ export const freelanceProjects: Project[] = [
           </p>
         </div>
 
+        <div class="section info-box">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">
+            Conception et développement de l'application, de la logique d'analyse ATS explicable,
+            des parcours de validation et du pipeline de tests et de déploiement.
+          </p>
+        </div>
+
         <div class="section">
           <h3 class="section-title">🎯 Objectif & positionnement</h3>
           <ul class="features-list">
@@ -352,7 +372,7 @@ export const freelanceProjects: Project[] = [
         </div>
       </div>
     `,
-    gallery: ['img_projects/ATS_FILTER.png']
+    gallery: ['img_projects/ATS_FILTER.png', 'img_projects/ATS1.png', 'img_projects/ATS2.png', 'img_projects/ATS3.png']
   },
   {
     id: 'cledevoute',

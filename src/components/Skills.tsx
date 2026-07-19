@@ -1,7 +1,9 @@
 import { Code2, Database, Server, Cloud, GitBranch, Blocks, Brain, Workflow } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useLanguage } from "@/lib/i18n";
 
 const Skills = () => {
+  const { isEnglish } = useLanguage();
   const skillCategories = [
     {
       title: "Frontend",
@@ -16,19 +18,19 @@ const Skills = () => {
       skills: ["Node.js", "Python", "FastAPI", "Express", "REST APIs"],
     },
     {
-      title: "Database",
+      title: isEnglish ? "Databases" : "Bases de données",
       icon: Database,
       color: "text-cta",
       skills: ["MongoDB", "PostgreSQL", "SQL", "MySQL"],
     },
     {
-      title: "IA & Machine Learning",
+      title: isEnglish ? "AI & Machine Learning" : "IA & Machine Learning",
       icon: Brain,
       color: "text-primary",
       skills: ["Python", "TensorFlow", "PyTorch", "Vector DB", "Mastra Agent", "CUDA - RL - NLP"],
     },
     {
-      title: "Automatisation",
+      title: isEnglish ? "Automation" : "Automatisation",
       icon: Workflow,
       color: "text-accent",
       skills: ["n8n", "Python Scripts", "JavaScript/Node.js", "Workflow Automation", "API Integration"],
@@ -40,7 +42,7 @@ const Skills = () => {
       skills: ["Docker", "CI/CD", "GitHub Actions", "Self Hosting", "Github Pages"],
     },
     {
-      title: "Version Control",
+      title: isEnglish ? "Version control" : "Gestion de versions",
       icon: GitBranch,
       color: "text-primary",
       skills: ["Git", "GitHub", "Code Review", "Branching"],
@@ -60,11 +62,11 @@ const Skills = () => {
           {/* Section Header */}
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Compétences & Technologies
+              {isEnglish ? 'Skills & technologies' : 'Compétences & Technologies'}
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-6"></div>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Stack ciblée pour construire des applications métier, APIs et automatisations IA/n8n robustes, maintenables et exploitables en équipe.
+              {isEnglish ? 'A focused stack for building robust, maintainable, team-ready business applications, APIs and AI/n8n automations.' : 'Stack ciblée pour construire des applications métier, APIs et automatisations IA/n8n robustes, maintenables et exploitables en équipe.'}
             </p>
           </div>
 

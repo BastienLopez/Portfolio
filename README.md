@@ -1,11 +1,11 @@
-## Portfolio — Développeur freelance
+## Portfolio — Développeur Full-Stack IA & Automatisation
 
-Bienvenue sur mon portfolio de développeur freelance. Ce dépôt contient le site présentant mes compétences, mes réalisations (projets), ainsi que les moyens de me contacter.
+Portfolio de Bastien Lopez, développeur full-stack IA & automatisation. Le site s'adresse aux recruteurs pour des postes remote/full remote et aux clients pour des missions freelance ciblées.
 
 Disponible via : [Portfolio](https://bastienlopez.github.io/Portfolio/)
 ## À propos
 
-Ce site présente mon travail en tant que développeur web : création d'interfaces modernes avec React et TypeScript, développement d'API, intégration d'outils de CI/CD, et accompagnement technique pour des projets web professionnels.
+Ce site présente mon travail autour des applications métier, APIs internes, workflows IA, automatisations n8n, React, TypeScript, Python/FastAPI, Docker et CI/CD.
 
 ## Compétences
 
@@ -73,4 +73,4 @@ Important pour ce repo:
 
 ## Contact
 
-Pour toute demande de mission freelance, collaboration ou question technique, utilisez la section Contact du site ou contactez-moi via mon profil GitHub.
+Pour un poste remote/full remote, une mission freelance ciblée, une collaboration ou une question technique, utilisez la section Contact du site ou contactez-moi via GitHub ou LinkedIn.

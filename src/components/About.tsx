@@ -1,20 +1,17 @@
 import { FileText, Github, Linkedin, Mail, Clock, CheckCircle, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useLanguage } from "@/lib/i18n";
 
 const About = () => {
-  const stats = [
-    { label: "Années d'expérience", value: "5+" },
-    { label: "Projets orientés métier", value: "30+" },
-    { label: "Secteurs et contextes traités", value: "10+" },
-  ];
+  const { isEnglish } = useLanguage();
+  const stats = isEnglish
+    ? [{ label: "Years of experience", value: "5+" }, { label: "Business-focused projects", value: "30+" }, { label: "Industries and contexts covered", value: "10+" }]
+    : [{ label: "Années d'expérience", value: "5+" }, { label: "Projets orientés métier", value: "30+" }, { label: "Secteurs et contextes traités", value: "10+" }];
 
-  const trustPoints = [
-    "Cadrage clair avant de coder",
-    "Livraisons progressives avec priorités métier",
-    "Code lisible, documenté et transmissible",
-    "Communication simple avec interlocuteurs techniques et non techniques",
-  ];
+  const trustPoints = isEnglish
+    ? ["Clear scope before coding", "Incremental delivery driven by business priorities", "Readable, documented and transferable code", "Straightforward communication with technical and non-technical stakeholders"]
+    : ["Cadrage clair avant de coder", "Livraisons progressives avec priorités métier", "Code lisible, documenté et transmissible", "Communication simple avec interlocuteurs techniques et non techniques"];
 
   return (
     <section id="about" className="py-20 md:py-32 relative section-odd">
@@ -23,7 +20,7 @@ const About = () => {
           {/* Section Header */}
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              À propos de moi
+              {isEnglish ? 'About me' : 'À propos de moi'}
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto"></div>
           </div>
@@ -32,24 +29,23 @@ const About = () => {
             {/* Left: Bio */}
             <div className="space-y-6 animate-slide-in">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Je suis développeur full-stack confirmé, spécialisé dans les applications métier, les APIs et les automatisations IA/n8n.
+                {isEnglish ? 'I am an experienced full-stack developer specialising in business applications, APIs and AI/n8n automation.' : 'Je suis développeur full-stack confirmé, spécialisé dans les applications métier, les APIs et les automatisations IA/n8n.'}
               </p>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
-                J’accompagne à la fois des équipes produit en CDI/remote et des clients freelance qui veulent structurer, connecter ou automatiser leurs outils internes.
+                {isEnglish ? 'I support product teams in permanent remote roles and freelance clients who want to structure, connect or automate their internal tools.' : 'J’accompagne à la fois des équipes produit en CDI/remote et des clients freelance qui veulent structurer, connecter ou automatiser leurs outils internes.'}
               </p>
               
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Mon approche est pragmatique : comprendre le besoin métier, cadrer le périmètre utile, livrer rapidement une première version fiable, puis améliorer par itérations.
+                {isEnglish ? 'My approach is pragmatic: understand the business need, define the useful scope, quickly deliver a reliable first version, then improve it iteratively.' : 'Mon approche est pragmatique : comprendre le besoin métier, cadrer le périmètre utile, livrer rapidement une première version fiable, puis améliorer par itérations.'}
               </p>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
-                J’interviens principalement avec React, TypeScript, Node.js, Python/FastAPI, Docker, CI/CD et n8n.
-                L’objectif reste toujours le même : livrer un outil fiable, maintenable, documenté et utilisable par l’équipe.
+                {isEnglish ? 'I mainly work with React, TypeScript, Node.js, Python/FastAPI, Docker, CI/CD and n8n. The goal remains the same: deliver a reliable, maintainable, documented tool that the team can use.' : 'J’interviens principalement avec React, TypeScript, Node.js, Python/FastAPI, Docker, CI/CD et n8n. L’objectif reste toujours le même : livrer un outil fiable, maintenable, documenté et utilisable par l’équipe.'}
               </p>
 
               <Card className="p-5 bg-card border-border">
-                <p className="text-sm font-semibold mb-3">Ma façon de travailler</p>
+                <p className="text-sm font-semibold mb-3">{isEnglish ? 'How I work' : 'Ma façon de travailler'}</p>
                 <ul className="grid sm:grid-cols-2 gap-2 text-sm text-foreground/80 leading-6">
                   {trustPoints.map((point) => (
                     <li key={point} className="flex items-start gap-2">
@@ -77,7 +73,7 @@ const About = () => {
                 <Button asChild variant="outline" className="border-muted-foreground hover:border-foreground">
                   <a href="https://BastienLopez.github.io/Portfolio/CV_LOPEZ_BASTIEN_FREELANCE.pdf" download>
                     <FileText className="w-4 h-4 mr-2" />
-                    Voir mon CV
+                    {isEnglish ? 'View my résumé' : 'Voir mon CV'}
                   </a>
                 </Button>
               </div>
@@ -116,8 +112,8 @@ const About = () => {
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Disponible pour</p>
-                    <p className="text-lg font-semibold text-foreground">Nouvelles missions freelance</p>
+                    <p className="text-sm text-muted-foreground mb-1">{isEnglish ? 'Available for' : 'Disponible pour'}</p>
+                    <p className="text-lg font-semibold text-foreground">{isEnglish ? 'Remote/full-remote permanent roles or focused freelance projects' : 'CDI remote/full remote ou missions freelance ciblées'}</p>
                   </div>
                 </div>
               </Card>
