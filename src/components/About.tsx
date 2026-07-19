@@ -32,18 +32,20 @@ const About = () => {
             {/* Left: Bio */}
             <div className="space-y-6 animate-slide-in">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Je suis développeur full-stack freelance. J'accompagne des PME/TPE qui veulent structurer
-                leurs opérations avec des applications métier, des API et des automatisations utiles.
-              </p>
-              
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Mon approche est pragmatique : comprendre votre contexte, cibler le périmètre utile,
-                livrer rapidement une première version exploitable, puis améliorer par itérations.
+                Je suis développeur full-stack confirmé, spécialisé dans les applications métier, les APIs et les automatisations IA/n8n.
               </p>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Je travaille avec React, TypeScript, Node.js, Python, Docker et CI/CD selon vos besoins.
-                L'objectif reste toujours le même : un outil fiable, maintenable, et utile pour l'équipe.
+                J’accompagne à la fois des équipes produit en CDI/remote et des clients freelance qui veulent structurer, connecter ou automatiser leurs outils internes.
+              </p>
+              
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Mon approche est pragmatique : comprendre le besoin métier, cadrer le périmètre utile, livrer rapidement une première version fiable, puis améliorer par itérations.
+              </p>
+
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                J’interviens principalement avec React, TypeScript, Node.js, Python/FastAPI, Docker, CI/CD et n8n.
+                L’objectif reste toujours le même : livrer un outil fiable, maintenable, documenté et utilisable par l’équipe.
               </p>
 
               <Card className="p-5 bg-card border-border">

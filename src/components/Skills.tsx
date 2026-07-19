@@ -64,7 +64,7 @@ const Skills = () => {
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-6"></div>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Un éventail complet de technologies modernes pour construire des solutions performantes
+              Stack ciblée pour construire des applications métier, APIs et automatisations IA/n8n robustes, maintenables et exploitables en équipe.
             </p>
           </div>
 
