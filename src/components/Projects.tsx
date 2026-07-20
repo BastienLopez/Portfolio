@@ -15,15 +15,27 @@ const projects = allProjects.filter(
 );
 
 const freelanceDisplayOrder = [
-  'eloi-coachsteo',
-  'ats-filter-resume',
-  'luxury-auto-detailing',
   'erp-micro-creches',
+  'eloi-coachsteo',
+  'luxury-auto-detailing',
+  'ats-filter-resume',
   'cledevoute',
 ];
 
 const freelanceDisplayOrderIndex = new Map(
   freelanceDisplayOrder.map((id, index) => [id, index])
+);
+
+const openSourceDisplayOrder = [
+  'ia-trading',
+  'berserk-universe',
+  'pokemon-binder',
+  'patripro',
+  'novotel-roue-chance',
+];
+
+const openSourceDisplayOrderIndex = new Map(
+  openSourceDisplayOrder.map((id, index) => [id, index])
 );
 
 const englishProjectSummaries: Record<string, Pick<DisplayProject, 'title' | 'description'>> = {
@@ -89,7 +101,7 @@ const Projects = () => {
       ],
     },
     {
-      id: 'wallet-provider', title: 'Altme Wallet Provider', context: 'A digital-identity wallet product for organisations and end users.', need: 'Support a clear, maintainable product and documentation ecosystem.', solution: 'Contribution to product documentation and technical building blocks around wallet standards.', stack: 'eIDAS 2.0, Verifiable Credentials, OIDC4VC, EBSI', result: 'A more structured base for product and developer information.', role: 'Contribution to the product team and documentation work.', sections: [
+      id: 'wallet-provider', title: 'Altme Wallet Provider', context: 'A digital-identity wallet product for organisations and end users.', need: 'Support a clear, maintainable product and documentation ecosystem.', solution: 'Contribution to developer documentation, including the move from GitBook to Docusaurus, alongside wallet product work.', stack: 'eIDAS 2.0, Verifiable Credentials, OIDC4VC, EBSI', result: 'A more structured base for product and developer information.', role: 'Team contribution on wallet-ecosystem topics, documentation content and migration work.', sections: [
         { title: 'Product scope', items: ['Digital identity wallet for organisations and individuals.', 'Management, sharing and verification of verifiable credentials.', 'European eIDAS 2.0 and EUDI Wallet interoperability context.'] },
         { title: 'Standards & ecosystem', items: ['eIDAS 2.0, Verifiable Credentials, OIDC4VC and SSI.', 'Technical ecosystem covering secure digital-identity use cases.', 'Developer documentation maintained through GitBook then Docusaurus.'] },
         { title: 'My contribution', items: ['Contribution within the product team on wallet-related topics.', 'Documentation content, user paths and migration work.', 'Implementation details are deliberately limited for confidentiality.'] },
@@ -147,10 +159,10 @@ const Projects = () => {
       title: 'Altme Wallet Provider',
       context: 'Produit de portefeuille d’identité numérique pour organisations et utilisateurs.',
       need: 'Soutenir un écosystème produit et documentaire clair, maintenable.',
-      solution: 'Contribution à la documentation et aux briques techniques autour des standards wallet.',
-      stack: 'React, TypeScript, Docusaurus, Identité numérique',
+      solution: 'Contribution à la documentation développeur, notamment à la migration de GitBook vers Docusaurus, en parallèle des sujets produit wallet.',
+      stack: 'eIDAS 2.0, Verifiable Credentials, OIDC4VC, EBSI',
       result: 'Base plus structurée pour les informations produit et développeur.',
-      role: 'Contribution à l’équipe produit et aux travaux de documentation.',
+      role: 'Contribution en équipe sur l’écosystème wallet, les contenus de documentation et les travaux de migration.',
       sections: [
         { title: 'Périmètre produit', items: ['Wallet d’identité numérique pour organisations et particuliers.', 'Gestion, partage et vérification de données vérifiables.', 'Contexte européen eIDAS 2.0 et interopérabilité EUDI Wallet.'] },
         { title: 'Standards & écosystème', items: ['eIDAS 2.0, Verifiable Credentials, OIDC4VC et SSI.', 'Écosystème technique dédié à des cas d’usage d’identité numérique sécurisée.', 'Documentation développeur maintenue avec GitBook puis Docusaurus.'] },
@@ -163,7 +175,7 @@ const Projects = () => {
   const categoryConfig = {
     emploi: {
       emoji: '💼',
-      title: isEnglish ? 'CLIENT PROJECTS' : 'PROJETS CLIENTS',
+      title: isEnglish ? 'PROFESSIONAL PROJECTS' : 'PROJETS PRO',
       color: 'from-blue-500 to-cyan-500'
     },
     freelance: {
@@ -184,7 +196,7 @@ const Projects = () => {
   };
 
   const categoryLabels: Record<DisplayProjectCategory, string> = {
-    emploi: isEnglish ? 'CLIENT PROJECTS' : 'PROJETS CLIENTS',
+    emploi: isEnglish ? 'PROFESSIONAL PROJECTS' : 'PROJETS PRO',
     freelance: isEnglish ? 'FREELANCE PROJECTS' : 'MISSIONS FREELANCE',
     opensource: 'OPEN SOURCE',
     gaming: 'GAMING / MOBILE',
@@ -194,12 +206,18 @@ const Projects = () => {
     ? projects
         .filter(project => project.category === selectedCategory)
         .sort((a, b) => {
-          if (selectedCategory !== 'freelance') {
+          const displayOrderIndex = selectedCategory === 'freelance'
+            ? freelanceDisplayOrderIndex
+            : selectedCategory === 'opensource'
+              ? openSourceDisplayOrderIndex
+              : null;
+
+          if (!displayOrderIndex) {
             return 0;
           }
 
-          const aOrder = freelanceDisplayOrderIndex.get(a.id) ?? Number.MAX_SAFE_INTEGER;
-          const bOrder = freelanceDisplayOrderIndex.get(b.id) ?? Number.MAX_SAFE_INTEGER;
+          const aOrder = displayOrderIndex.get(a.id) ?? Number.MAX_SAFE_INTEGER;
+          const bOrder = displayOrderIndex.get(b.id) ?? Number.MAX_SAFE_INTEGER;
           return aOrder - bOrder;
         })
     : [];

@@ -6,8 +6,8 @@ import { useLanguage } from "@/lib/i18n";
 const About = () => {
   const { isEnglish } = useLanguage();
   const stats = isEnglish
-    ? [{ label: "Years of experience", value: "5+" }, { label: "Business-focused projects", value: "30+" }, { label: "Industries and contexts covered", value: "10+" }]
-    : [{ label: "Années d'expérience", value: "5+" }, { label: "Projets orientés métier", value: "30+" }, { label: "Secteurs et contextes traités", value: "10+" }];
+    ? [{ label: "Years of experience", value: "5+" }, { label: "Projects and builds", value: "30+" }, { label: "Industries and contexts covered", value: "10+" }]
+    : [{ label: "Années d'expérience", value: "5+" }, { label: "Projets et réalisations", value: "30+" }, { label: "Secteurs et contextes traités", value: "10+" }];
 
   const trustPoints = isEnglish
     ? ["Clear scope before coding", "Incremental delivery driven by business priorities", "Readable, documented and transferable code", "Straightforward communication with technical and non-technical stakeholders"]

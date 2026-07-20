@@ -5,13 +5,21 @@ import { trackEvent } from "@/lib/analytics";
 import { useLanguage } from "@/lib/i18n";
 
 const Hero = () => {
-  const [typedText, setTypedText] = useState("");
   const { isEnglish } = useLanguage();
   const fullText = isEnglish
     ? "Full-Stack AI & Automation Developer\nBusiness applications, internal APIs,\nAI workflows and n8n automations"
     : "Développeur Full-Stack IA & Automatisation\nApplications métier, APIs internes,\nworkflows IA et automatisations n8n";
+  const [typedText, setTypedText] = useState(() => (
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? fullText : ""
+  ));
   
   useEffect(() => {
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (motionQuery.matches) {
+      setTypedText(fullText);
+      return;
+    }
+
     let index = 0;
     const TYPING_INTERVAL = 70;
     const timer = setInterval(() => {
@@ -57,8 +65,8 @@ const Hero = () => {
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             {isEnglish
-              ? 'I build process-, data- and automation-focused full-stack applications that help teams make their workflows reliable and centralise business operations.'
-              : 'Je conçois des applications full-stack orientées process, données et automatisation pour aider les équipes à fiabiliser leurs flux et centraliser leurs opérations métier.'}
+              ? 'I build business applications and AI/n8n automations that connect tools, make processes reliable and reduce manual tasks.'
+              : 'Je développe des applications métier et des automatisations IA/n8n pour connecter les outils, fiabiliser les process et réduire les tâches manuelles.'}
           </p>
 
           <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed">

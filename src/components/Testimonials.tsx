@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Pause, Play } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import testimonialsData, { Testimonial } from "@/data/testimonials";
 import { useLanguage } from "@/lib/i18n";
 
@@ -35,6 +37,7 @@ export default function Testimonials(): JSX.Element {
   const tickerRef = useRef<HTMLDivElement | null>(null);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isManuallyPaused, setIsManuallyPaused] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -53,6 +56,8 @@ export default function Testimonials(): JSX.Element {
       ticker.style.animation = "none";
       return;
     }
+
+    ticker.style.animation = "";
 
     const speed = 45; // px per second (slower, smoother)
     // compute width of one sequence (half of duplicated content)
@@ -80,7 +85,19 @@ export default function Testimonials(): JSX.Element {
       <div className="relative z-10">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto mb-6">
-            <h2 className="text-3xl md:text-4xl font-bold">{isEnglish ? 'Client and anonymised user feedback' : 'Retours clients et utilisateurs anonymisés'}</h2>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <h2 className="text-3xl md:text-4xl font-bold">{isEnglish ? 'Client and anonymised user feedback' : 'Retours clients et utilisateurs anonymisés'}</h2>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setIsManuallyPaused((paused) => !paused)}
+                aria-label={isManuallyPaused ? (isEnglish ? 'Resume testimonial scrolling' : 'Reprendre le défilement des témoignages') : (isEnglish ? 'Pause testimonial scrolling' : 'Mettre en pause le défilement des témoignages')}
+              >
+                {isManuallyPaused ? <Play className="mr-2 h-4 w-4" /> : <Pause className="mr-2 h-4 w-4" />}
+                {isManuallyPaused ? (isEnglish ? 'Resume' : 'Reprendre le défilement') : (isEnglish ? 'Pause' : 'Mettre en pause')}
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -90,17 +107,23 @@ export default function Testimonials(): JSX.Element {
               ref={listRef}
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
+              onFocus={() => setIsPaused(true)}
+              onBlur={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false);
+              }}
               className="relative overflow-hidden px-4 md:px-8"
               aria-label={isEnglish ? 'Testimonials list' : 'Liste de témoignages'}
+              tabIndex={0}
             >
               <div ref={trackRef} className="w-max">
                 <div
                   ref={tickerRef}
-                  className={`ticker flex gap-6 md:gap-8 items-stretch py-4 pr-6 md:pr-10 ${isPaused ? " paused" : ""}`}
+                  className={`ticker flex gap-6 md:gap-8 items-stretch py-4 pr-6 md:pr-10 ${isPaused || isManuallyPaused || isReducedMotion ? " paused" : ""}`}
                 >
                   {loopedTestimonials.map((t: Testimonial, idx) => (
                         <article
                           key={`${t.id}-${idx}`}
+                          aria-hidden={idx >= testimonialsData.length}
                           className="w-[340px] min-w-[340px] md:w-[420px] md:min-w-[420px] bg-card/95 border border-border rounded-2xl p-6 flex-shrink-0 shadow-lg"
                         >
                           <div className="mb-3 text-center">

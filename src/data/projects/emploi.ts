@@ -751,14 +751,14 @@ export const emploiProjects: Project[] = [
   },
   {
     id: 'n8n-workflow-automation',
-    title: 'Automatisations n8n — Reporting, contenu & prospection',
+    title: 'Automatisations n8n — Reporting, derush video & prospection',
     description: "Workflows n8n pour automatiser la génération de rapports SocialPilot en PDF, l'adaptation de vidéos aux formats réseaux sociaux et la préparation de prospects depuis Google Maps.",
     category: 'emploi',
     image: 'img_projects/n8n.png',
     tech: ['n8n', 'SocialPilot', 'Google Maps', 'PDF', 'Automatisation de workflows'],
     detailedContent: `
       <div class="project-detail">
-        <h2 class="project-title">⚙️ Automatisations n8n — reporting, contenu & prospection</h2>
+        <h2 class="project-title">⚙️ Automatisations n8n — reporting, derush video & prospection</h2>
 
         <div class="section">
           <h3 class="section-title">📋 Contexte du projet</h3>

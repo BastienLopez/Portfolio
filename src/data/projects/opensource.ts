@@ -83,7 +83,7 @@ export const opensourceProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Projet <strong>open source</strong> apprécié par la communauté des fans de Berserk.
+              ✅ Projet <strong>open source</strong> réunissant contenus, navigation interactive et exploration de l'univers de Berserk.
             </p>
             <p class="result-text">
               ✅ Ressource <strong>complète</strong> pour découvrir ou redécouvrir cet univers légendaire.
@@ -113,6 +113,14 @@ export const opensourceProjects: Project[] = [
             Application web complète pour <strong>gérer sa collection de cartes Pokémon TCG</strong>. 
             Permet d'ajouter, classer et visualiser les cartes dans un classeur virtuel, 
             avec un système de <strong>recherche avancée</strong> et des statistiques détaillées de collection.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">
+            Conception et développement de l'application React, logique de collection,
+            intégration des données Pokémon TCG, recherche, statistiques et import/export.
           </p>
         </div>
 

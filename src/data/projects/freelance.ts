@@ -4,7 +4,7 @@ export const freelanceProjects: Project[] = [
   {
     id: 'eloi-coachsteo',
     title: 'Eloi CoachStéo - Sport Trainer',
-    description: "Site vitrine one-page pour un coach sportif et ostéopathe. Présentation des services de remise en forme, de préparation physique et de programmes personnalisés HYRIX.",
+    description: "Site vitrine one-page pour un coach sportif et ostéopathe. Présentation des services de remise en forme, de préparation physique et de programmes personnalisés HYROX.",
     category: 'freelance',
     image: 'img_projects/eloi_sport.png',
     tech: ['React', 'Tailwind CSS', 'JavaScript'],
@@ -19,7 +19,15 @@ export const freelanceProjects: Project[] = [
           <p class="description">
             Création d'un <strong>site vitrine one-page</strong> pour un coach sportif et ostéopathe professionnel. 
             Le site présente ses services de remise en forme, de préparation physique et de programmes personnalisés 
-            <strong>HYRIX</strong> avec un design moderne et responsive.
+            <strong>HYROX</strong> avec un design moderne et responsive.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">
+            Conception du site, intégration React et Tailwind CSS, mise en page responsive,
+            structuration des contenus et mise en ligne.
           </p>
         </div>
 
@@ -53,7 +61,7 @@ export const freelanceProjects: Project[] = [
             </li>
             <li class="feature-item">
               <span class="feature-icon">🏋️</span>
-              <strong>Services détaillés</strong> - Présentation des programmes HYRIX
+              <strong>Services détaillés</strong> - Présentation des programmes HYROX
             </li>
             <li class="feature-item">
               <span class="feature-icon">📧</span>
@@ -231,6 +239,14 @@ export const freelanceProjects: Project[] = [
         </div>
 
         <div class="section">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">
+            Conception et intégration frontend avec React et Tailwind CSS, adaptation responsive,
+            présentation des prestations, galerie, prise de contact et déploiement du site.
+          </p>
+        </div>
+
+        <div class="section">
           <h3 class="section-title">⚙️ Technologies utilisées</h3>
           <div class="tech-grid">
             <div class="tech-item">
@@ -272,7 +288,7 @@ export const freelanceProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Site <strong>déployé</strong> et optimisé pour présenter l'ensemble des prestations et convertir les visiteurs en clients.
+              ✅ Site déployé, conçu pour présenter clairement les prestations et faciliter la prise de contact.
             </p>
           </div>
         </div>
@@ -362,6 +378,17 @@ export const freelanceProjects: Project[] = [
         </div>
 
         <div class="section results">
+          <h3 class="section-title">⚠️ Limites et interprétation du score</h3>
+          <div class="result-box">
+            <p class="result-text">
+              Le score est un indicateur d'aide à l'optimisation basé sur des règles d'analyse.
+              Les ATS utilisent des règles et technologies différentes : aucun score ne peut garantir
+              qu'un CV sera accepté ou transmis à un recruteur.
+            </p>
+          </div>
+        </div>
+
+        <div class="section results">
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">✅ Pipeline qualité stable : lint, typecheck, tests unitaires, integration, UI.</p>
@@ -435,7 +462,7 @@ export const freelanceProjects: Project[] = [
           <div class="result-box success">
             <p class="result-text">✅ Site déployé et accessible publiquement via GitHub Pages.</p>
             <p class="result-text">✅ Amélioration du rendu initial et réduction du poids des pages grâce aux images optimisées.</p>
-            <p class="result-text">✅ Expérience utilisateur améliorée sur mobile (navigation plus rapide, CTA visibles).</p>
+            <p class="result-text">✅ Interface responsive avec navigation et appels à l'action adaptés aux usages mobiles.</p>
           </div>
         </div>
 

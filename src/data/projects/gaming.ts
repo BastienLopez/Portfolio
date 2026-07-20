@@ -26,6 +26,11 @@ export const gamingProjects: Project[] = [
           </p>
         </div>
 
+        <div class="section info-box">
+          <h3 class="section-title">🏷️ Statut du projet</h3>
+          <p class="description">Projet personnel et expérimentation d'une boucle de gamification appliquée aux sessions de focus.</p>
+        </div>
+
         <div class="section">
           <h3 class="section-title">🔄 Boucle principale (core loop)</h3>
           <ul class="features-list">
@@ -83,7 +88,7 @@ export const gamingProjects: Project[] = [
   {
     id: 'nolvus-mod-automation',
     title: 'Nolvus Mod Automation',
-    description: "Automation of mods download (+3k5 mods) Nolvus Skyrim for free account. AutoHotkey script pour télécharger automatiquement les mods Nolvus sans compte premium.",
+    description: "Script AutoHotkey pour automatiser une grande partie des clics répétitifs nécessaires aux téléchargements Nolvus sans compte premium.",
     category: 'gaming',
     image: 'img_projects/nolvus.png',
     tech: ['AutoHotkey', 'Automation', 'OCR'],
@@ -95,8 +100,8 @@ export const gamingProjects: Project[] = [
         <div class="section">
           <h3 class="section-title">📋 Contexte du projet</h3>
           <p class="description">
-            Script <strong>AutoHotkey</strong> permettant d'automatiser le téléchargement de plus de <strong>3500 mods</strong> 
-            pour Nolvus Skyrim sans avoir besoin d'un compte premium. Le script détecte automatiquement le bouton 
+            Script <strong>AutoHotkey</strong> permettant d'automatiser une grande partie des clics répétitifs
+            nécessaires aux téléchargements Nolvus Skyrim sans avoir besoin d'un compte premium. Le script détecte automatiquement le bouton
             "Slow Download" et gère le scrolling de la page.
           </p>
         </div>
@@ -155,7 +160,7 @@ export const gamingProjects: Project[] = [
               ✅ Téléchargement <strong>automatique</strong> de tous les mods sans intervention manuelle.
             </p>
             <p class="result-text">
-              ✅ <strong>Économie de plusieurs heures</strong> de clics répétitifs pour utilisateurs gratuits.
+              ✅ Réduction des clics répétitifs nécessaires aux téléchargements sans compte premium.
             </p>
           </div>
         </div>
@@ -180,7 +185,7 @@ export const gamingProjects: Project[] = [
           <p class="description">
             Guide complet d'installation de <strong>Bloodborne sur PC</strong> via l'émulateur ShadPS4. 
             Inclut l'installation du jeu, des <strong>mods graphiques</strong>, ReShade et les patchs <strong>60 FPS</strong> 
-            pour une expérience optimale sur PC.
+            pour une configuration PC enrichie avec les améliorations graphiques et correctifs présentés.
           </p>
         </div>
 
@@ -243,7 +248,7 @@ export const gamingProjects: Project[] = [
             </li>
             <li class="feature-item">
               <span class="feature-icon">📊</span>
-              <strong>Optimisation</strong> - Performances maximales
+              <strong>Optimisation</strong> - Réglages et correctifs présentés dans le guide
             </li>
           </ul>
         </div>
@@ -255,10 +260,10 @@ export const gamingProjects: Project[] = [
               ✅ Guide <strong>détaillé</strong> pour jouer à Bloodborne sur PC avec graphismes améliorés.
             </p>
             <p class="result-text">
-              ✅ <strong>60 FPS stables</strong> et tous les bugs majeurs corrigés.
+              ✅ Patchs 60 FPS et correctifs documentés dans le guide, selon la configuration utilisée.
             </p>
             <p class="result-text">
-              ✅ Expérience <strong>supérieure</strong> à la version PS4 originale.
+              ✅ Configuration visant une expérience PC plus fluide avec les améliorations graphiques et correctifs présentés.
             </p>
           </div>
         </div>
@@ -283,7 +288,7 @@ export const gamingProjects: Project[] = [
           <p class="description">
             Guide complet d'installation de <strong>Demon's Souls (PS3) sur PC</strong> via l'émulateur RPCS3. 
             Inclut l'installation du firmware PS3, du jeu, des <strong>mods graphiques</strong> et des patchs <strong>60 FPS</strong> 
-            pour une expérience optimale.
+            pour une configuration PC enrichie avec résolution, textures, correctifs et options communautaires.
           </p>
         </div>
 
