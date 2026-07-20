@@ -598,7 +598,7 @@ export const opensourceProjects: Project[] = [
   {
     id: 'novotel-roue-chance',
     title: 'NOVOTEL - Roue de la Chance',
-    description: "Site web interactif pour le NOVOTEL Reims Tinqueux permettant aux clients de donner leur avis et de tenter leur chance avec une roue de la fortune pour gagner des récompenses.",
+    description: "Parcours mobile accessible par QR code pour le NOVOTEL Reims Tinqueux, combinant retour d’expérience autour du restaurant et animation promotionnelle avec roue de la chance.",
     category: 'opensource',
     image: 'img_projects/novotel.png',
     tech: ['JavaScript', 'D3.js', 'HTML', 'CSS', 'GitHub Actions'],
@@ -610,7 +610,7 @@ export const opensourceProjects: Project[] = [
         <div class="section">
           <h3 class="section-title">📋 Contexte du projet</h3>
           <p class="description">
-            Expérience web conçue pour le restaurant du <strong>NOVOTEL Reims Tinqueux</strong>. Des QR codes placés sur les sous-verres permettaient aux clients d’accéder depuis leur téléphone à un parcours autour d’un avis Google, puis à une roue de la chance offrant la possibilité de gagner un lot.
+            Expérience web conçue pour le restaurant du <strong>NOVOTEL Reims Tinqueux</strong>. Des QR codes placés sur les sous-verres permettaient aux clients d’accéder depuis leur téléphone à un parcours de retour d’expérience autour du restaurant, incluant un avis Google et une animation promotionnelle avec roue de la chance.
           </p>
         </div>
 
@@ -696,7 +696,7 @@ export const opensourceProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Solution <strong>complète et professionnelle</strong> pour améliorer l'engagement client.
+              ✅ Parcours mobile accessible par QR code, combinant formulaire, redirection et animation interactive.
             </p>
             <p class="result-text">
               ✅ Système <strong>gamifié</strong> encourageant les retours d'expérience avec une expérience ludique.

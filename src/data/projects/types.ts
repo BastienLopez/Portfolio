@@ -1,3 +1,9 @@
+export type ProjectGalleryItem = {
+  src: string;
+  title?: string;
+  alt?: string;
+};
+
 export interface Project {
   id: string;
   title: string;
@@ -8,6 +14,6 @@ export interface Project {
   github?: string;
   demo?: string;
   detailedContent?: string;
-  gallery?: string[];
+  gallery?: Array<string | ProjectGalleryItem>;
   translations?: Partial<Record<'en', Pick<Project, 'title' | 'description' | 'detailedContent'>>>;
 }

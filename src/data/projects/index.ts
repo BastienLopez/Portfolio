@@ -2,9 +2,9 @@ import { emploiProjects } from './emploi';
 import { freelanceProjects } from './freelance';
 import { opensourceProjects } from './opensource';
 import { gamingProjects } from './gaming';
-import { Project } from './types';
+import { Project, ProjectGalleryItem } from './types';
 
-export type { Project };
+export type { Project, ProjectGalleryItem };
 
 export const allProjects: Project[] = [
   ...emploiProjects,

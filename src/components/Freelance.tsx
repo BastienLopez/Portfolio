@@ -253,15 +253,38 @@ const Freelance = () => {
           </div>
 
           {isEnglish ? (
-            <Card className="mb-12 p-6 md:p-8 text-center">
-              <h3 className="text-2xl font-bold">Freelance details currently available in French</h3>
-              <p className="mx-auto mt-3 max-w-2xl leading-7 text-muted-foreground">The service overview, offers, process, anonymised examples and FAQ are being translated. You can already contact me in English to discuss a role or a focused project.</p>
-              <Button asChild className="mt-6 bg-cta hover:bg-cta/90 text-cta-foreground">
-                <a href="#contact">Contact me</a>
-              </Button>
-            </Card>
+            <div className="space-y-8 mb-12">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <Card className="p-5 text-center"><p className="text-lg font-semibold text-primary">Clear scope</p><p className="mt-2 text-sm text-muted-foreground">Priorities, deliverables and constraints defined together.</p></Card>
+                <Card className="p-5 text-center"><p className="text-lg font-semibold text-primary">Iterative delivery</p><p className="mt-2 text-sm text-muted-foreground">Regular checkpoints and visible progress.</p></Card>
+                <Card className="p-5 text-center"><p className="text-lg font-semibold text-primary">Handover</p><p className="mt-2 text-sm text-muted-foreground">Documented, transferable deliverables for your team.</p></Card>
+                <Card className="p-5 text-center"><p className="text-lg font-semibold text-primary">Optional support</p><p className="mt-2 text-sm text-muted-foreground">Follow-up, fixes and planned improvements when needed.</p></Card>
+              </div>
+              <Card className="p-6 md:p-8">
+                <h3 className="text-2xl font-bold">Services and delivery approach</h3>
+                <div className="mt-5 grid gap-5 md:grid-cols-2 text-sm leading-6 text-foreground/80">
+                  <p><strong className="text-foreground">Websites and MVPs.</strong> Clear public-facing websites and focused product scopes for validating a concrete need.</p>
+                  <p><strong className="text-foreground">Business applications and APIs.</strong> Tools to centralise business data, workflows and access rules.</p>
+                  <p><strong className="text-foreground">Automation.</strong> API and workflow integrations that reduce repetitive manual operations.</p>
+                  <p><strong className="text-foreground">Technical foundations.</strong> Maintainable code, Docker, CI/CD and documentation adapted to the scope.</p>
+                </div>
+              </Card>
+              <div className="grid gap-5 md:grid-cols-3">
+                <Card className="p-6"><h3 className="text-xl font-bold">Starter</h3><p className="mt-3 text-sm text-muted-foreground">A focused website, MVP or key business module after a short scoping phase.</p></Card>
+                <Card className="p-6 border-primary"><h3 className="text-xl font-bold">Business</h3><p className="mt-3 text-sm text-muted-foreground">A web application with APIs, roles, dashboards and iterative delivery.</p></Card>
+                <Card className="p-6"><h3 className="text-xl font-bold">ERP-scale</h3><p className="mt-3 text-sm text-muted-foreground">Multi-process tools, integrations and a long-term technical roadmap.</p></Card>
+              </div>
+              <Card className="p-6 md:p-8">
+                <h3 className="text-2xl font-bold">How a project runs</h3>
+                <ol className="mt-4 grid gap-2 text-sm text-foreground/80 md:grid-cols-2"><li>1. Scope business priorities and useful boundaries.</li><li>2. Agree on a technical approach and estimate.</li><li>3. Build iteratively with regular checkpoints.</li><li>4. Deliver, document and hand over the work.</li></ol>
+              </Card>
+              <Card className="p-6 md:p-8">
+                <h3 className="text-2xl font-bold">Frequently asked questions</h3>
+                <div className="mt-4 grid gap-4 text-sm leading-6 text-foreground/80 md:grid-cols-2"><p><strong className="text-foreground">Timeline.</strong> It depends on the scope; a focused task can take days, while an ERP is delivered in stages.</p><p><strong className="text-foreground">Collaboration.</strong> Daily rate, fixed-price scope or staged delivery can be selected during scoping.</p><p><strong className="text-foreground">Code ownership.</strong> Delivered code can be transferred under the terms of the quotation or contract.</p><p><strong className="text-foreground">Confidentiality.</strong> An NDA can be signed before sensitive information is shared.</p></div>
+              </Card>
+            </div>
           ) : (
-            <>
+          <>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
             {proofItems.map((item) => (
               <Card key={item.label} className="p-5 md:p-6 bg-card border-border text-center h-full flex flex-col">
@@ -471,7 +494,7 @@ const Freelance = () => {
               ))}
             </div>
           </Card>
-            </>
+          </>
           )}
 
           <Card className="p-5 md:p-6 bg-card border-primary/40 text-center">

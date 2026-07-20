@@ -39,7 +39,7 @@ const Skills = () => {
       title: "DevOps",
       icon: Cloud,
       color: "text-cta",
-      skills: ["Docker", "CI/CD", "GitHub Actions", "Self Hosting", "Github Pages"],
+      skills: ["Docker", "CI/CD", "GitHub Actions", "Self Hosting", "GitHub Pages"],
     },
     {
       title: isEnglish ? "Git & documentation" : "Git & documentation",

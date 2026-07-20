@@ -304,7 +304,7 @@ export const emploiProjects: Project[] = [
             <div class="tech-item">
               <span class="tech-icon">🐍</span>
               <span class="tech-name">Python</span>
-              <p class="tech-desc">Développement backend robuste</p>
+              <p class="tech-desc">Développement backend</p>
             </div>
             <div class="tech-item">
               <span class="tech-icon">💰</span>
@@ -336,7 +336,7 @@ export const emploiProjects: Project[] = [
             </li>
             <li class="feature-item">
               <span class="feature-icon">📱</span>
-              <strong>Interface responsive</strong> - Expérience utilisateur optimale sur tous supports
+              <strong>Interface responsive</strong> - Parcours adapté aux principaux supports
             </li>
           </ul>
         </div>
@@ -426,7 +426,7 @@ export const emploiProjects: Project[] = [
             </li>
             <li class="feature-item">
               <span class="feature-icon">🔍</span>
-              <strong>Recherche optimisée</strong> - Full-text search ultra-rapide
+              <strong>Recherche</strong> - Recherche plein texte dans la documentation
             </li>
             <li class="feature-item">
               <span class="feature-icon">🌍</span>
@@ -463,7 +463,7 @@ export const emploiProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Documentation <strong>complète et professionnelle</strong> facilitant l'intégration pour les développeurs.
+              ✅ Documentation structurée pour faciliter l’intégration des développeurs.
             </p>
             <p class="result-text">
               ✅ Migration vers Docusaurus pour proposer une navigation plus structurée
@@ -510,7 +510,7 @@ export const emploiProjects: Project[] = [
             <div class="tech-item">
               <span class="tech-icon">📘</span>
               <span class="tech-name">TypeScript</span>
-              <p class="tech-desc">Développement typé et robuste</p>
+              <p class="tech-desc">Développement typé</p>
             </div>
             <div class="tech-item">
               <span class="tech-icon">☁️</span>
@@ -696,7 +696,7 @@ export const emploiProjects: Project[] = [
         </div>
 
         <div class="section">
-          <h3 class="section-title">📊 Résultats et suivi</h3>
+          <h3 class="section-title">📊 Travail réalisé et suivi</h3>
           
           <div class="comparison">
             <div class="before-after">
@@ -716,19 +716,19 @@ export const emploiProjects: Project[] = [
                     <span class="detail">Base plus lisible pour les moteurs, les utilisateurs et les assistants IA</span>
                   </li>
                   <li>🔎 <strong>Suivi du positionnement</strong><br/>
-                    <span class="detail">À vérifier par requête dans Search Console</span>
+                    <span class="detail">Indicateurs structurés pour suivre les requêtes dans Search Console</span>
                   </li>
                   <li>⭐ <strong>Données structurées</strong><br/>
-                    <span class="detail">Mise en place à contrôler après indexation</span>
+                    <span class="detail">Éléments Schema.org intégrés au socle technique</span>
                   </li>
                   <li>📈 <strong>Trafic organique</strong><br/>
-                    <span class="detail">À documenter avec une capture Analytics ou Search Console anonymisée</span>
+                    <span class="detail">Mesure disponible via les outils Analytics et Search Console configurés</span>
                   </li>
                   <li>💬 <strong>Demandes qualifiées</strong><br/>
-                    <span class="detail">À mesurer selon les objectifs de chaque site</span>
+                    <span class="detail">Indicateur à suivre selon les objectifs définis avec chaque entreprise</span>
                   </li>
                   <li>🗺️ <strong>Présence locale</strong><br/>
-                    <span class="detail">À suivre sur les requêtes et fiches locales pertinentes</span>
+                    <span class="detail">Fondations mises en place pour les requêtes et fiches locales pertinentes</span>
                   </li>
                   <li>🏆 <strong>Socle SEO maintenable</strong><br/>
                     <span class="detail">Balises, structure technique et contenu plus cohérents</span>
@@ -740,16 +740,16 @@ export const emploiProjects: Project[] = [
         </div>
 
         <div class="section results">
-          <h3 class="section-title">🎯 Résultats à documenter</h3>
+          <h3 class="section-title">🎯 Résultat</h3>
           <div class="result-box success">
             <p class="result-text highlight-large">
-              💼 Les optimisations renforcent la base technique et éditoriale nécessaire à une meilleure visibilité.
+              💼 Le travail met en place un socle technique et éditorial mesurable via Search Console et Analytics.
             </p>
             <p class="result-text">
-              ✅ Les gains de positionnement, de trafic et de conversion doivent être validés avec des données source.
+              ✅ Les métadonnées, la structure technique, les données structurées et les signaux locaux sont organisés dans une base maintenable.
             </p>
             <p class="result-text">
-              ✅ Une capture Search Console ou Analytics anonymisée permettrait de compléter cette étude de cas.
+              ✅ Les résultats de trafic, de positionnement ou de conversion ne sont pas avancés sans données source.
             </p>
           </div>
         </div>

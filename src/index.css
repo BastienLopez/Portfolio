@@ -366,6 +366,26 @@ All colors MUST be HSL.
     @apply my-4 max-w-3xl text-base leading-7 text-foreground/75 md:text-lg;
   }
 
+  .project-inline-visual {
+    @apply my-6 block w-full overflow-hidden rounded-md border border-border bg-card text-left transition-colors hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary;
+  }
+
+  .project-inline-visual img {
+    @apply max-h-[28rem] w-full bg-secondary/30 object-contain;
+  }
+
+  .project-inline-visual span {
+    @apply block border-t border-border px-3 py-2 text-sm font-medium text-foreground;
+  }
+
+  .inline-visual-grid {
+    @apply my-6 grid gap-4 md:grid-cols-2;
+  }
+
+  .inline-visual-grid .project-inline-visual {
+    @apply my-0;
+  }
+
   .project-detail-content strong {
     @apply font-semibold text-foreground;
   }

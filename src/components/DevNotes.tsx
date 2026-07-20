@@ -159,11 +159,7 @@ const DevNotes = () => {
                     [&_li]:my-0.5 [&_li]:leading-relaxed">
                   {selectedArticle.content ? (
                     <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(renderArticleContent(selectedArticle.content)) }} />
-                  ) : (
-                    <p className="text-muted-foreground italic">
-                      {isEnglish ? 'Article content coming soon...' : "Contenu de l'article à venir..."}
-                    </p>
-                  )}
+                  ) : null}
                 </div>
               </CardContent>
             </Card>

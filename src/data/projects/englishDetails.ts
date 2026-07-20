@@ -48,9 +48,9 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     sections: [
       { title: "Business modules", items: ["Multi-nursery management and consolidated dashboards", "Children, parent and staff records", "Attendance, staff attendance, planning and daily handovers", "Documents, contracts, invoicing, reporting and CSV/PDF exports", "Secure family portal and differentiated administrator, professional and parent areas"] },
       { title: "Multi-site architecture and access", items: ["A nursery context and a dedicated identifier scope the main business resources", "The backend verifies authorised sites and roles before serving data", "Global administrators can supervise the network while local users only access their assigned sites", "Because children, parents and staff data are sensitive, access control, confidentiality and traceability were treated as core concerns"] },
-      { title: "Quality and operations", items: ["Unit, integration, end-to-end and load-test approach", "Documented REST API with Swagger/OpenAPI export", "Containerised environment, CI/CD preparation, health checks, backups, monitoring and operational runbooks", "Architecture designed so new sites and modules can be added without replacing the existing foundation"] },
+      { title: "Quality and delivery", items: ["Automated Jest suites around backend, frontend and critical flows", "Documented REST API with Swagger/OpenAPI export", "Reproducible Docker environment and configured CI workflows", "A deployment workflow is prepared; current production use is not asserted here"] },
     ],
-    results: ["Five micro-nurseries can be supervised from one interface, with business modules and differentiated access by role.", "The project covers the full lifecycle of a business application: requirements, UX/UI, full-stack development, data, tests, deployment preparation, documentation and maintenance."],
+    results: ["Five micro-nurseries can be supervised from one interface, with business modules and differentiated access by role.", "The project covers requirements, UX/UI, full-stack development, data, tests, delivery preparation, documentation and maintenance."],
   },
   "luxury-auto-detailing": {
     title: "Luxury Auto Detailing",

@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { allProjects, Project } from "@/data/projects";
+import { allProjects, Project, ProjectGalleryItem } from "@/data/projects";
 import { getEnglishDetailedContent } from "@/data/projects/englishDetails";
 import { useLanguage } from "@/lib/i18n";
 
@@ -84,7 +84,7 @@ const resolveImage = (img?: string | null) => {
   return `${import.meta.env.BASE_URL}${normalized}`;
 };
 
-const stripDecorativeEmoji = (content: string) =>
+const removeDecorativeEmoji = (content: string) =>
   content.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, "");
 
 const getSectionMarker = (title: string) => {
@@ -97,30 +97,21 @@ const getSectionMarker = (title: string) => {
   if (/contribution|mon role|ma contribution|role/.test(normalizedTitle))
     return true;
   if (/technologie|standards|outils/.test(normalizedTitle)) return true;
-  if (
-    /fonctionnalite|cas d.?usage|attestation|partenaire|certification/.test(
-      normalizedTitle,
-    )
-  )
-    return true;
+  if (/architecture|multi.?creche|multi.?site/.test(normalizedTitle)) return true;
   if (/resultat|objectif|suivi/.test(normalizedTitle)) return true;
 
   return null;
 };
 
 const decorateDetailedContent = (content: string) => {
-  let markerCount = 0;
-
-  return stripDecorativeEmoji(content).replace(
+  return removeDecorativeEmoji(content).replace(
     /<h3([^>]*)class="([^"]*\bsection-title\b[^"]*)"([^>]*)>([\s\S]*?)<\/h3>/gi,
     (_match, beforeClass, classNames, afterClass, title) => {
       const marker = getSectionMarker(title.replace(/<[^>]+>/g, ""));
 
-      if (!marker || markerCount >= 5) {
+      if (!marker) {
         return `<h3${beforeClass}class="${classNames}"${afterClass}>${title}</h3>`;
       }
-
-      markerCount += 1;
       return `<h3${beforeClass}class="${classNames}"${afterClass}><span class="section-marker" aria-hidden="true"></span>${title}</h3>`;
     },
   );
@@ -270,6 +261,9 @@ const Projects = () => {
           ...project.translations?.en,
           ...englishProjectSummaries[project.id],
           ...(englishDetailedContent ? { detailedContent: englishDetailedContent } : {}),
+          ...(project.id === "wallet-provider" && !englishDetailedContent
+            ? { detailedContent: undefined }
+            : {}),
         }
       : project;
   };
@@ -685,15 +679,16 @@ const Projects = () => {
   const localizedSelectedProject = selectedProject
     ? localizeProject(selectedProject)
     : null;
-  const hasEnglishCaseStudy = Boolean(
-    selectedProject &&
-      (getEnglishDetailedContent(selectedProject.id) ||
-        selectedProject.translations?.en?.detailedContent),
-  );
-  const galleryImages =
-    localizedSelectedProject?.gallery?.filter(
-      (image) => image !== localizedSelectedProject.image,
-    ) ?? [];
+  const galleryImages: ProjectGalleryItem[] =
+    localizedSelectedProject?.gallery
+      ?.map((image) => (typeof image === "string" ? { src: image } : image))
+      .filter(
+        (image) =>
+          typeof localizedSelectedProject.image !== "string" ||
+          image.title ||
+          image.src !== localizedSelectedProject.image,
+      ) ?? [];
+  const isErpCaseStudy = localizedSelectedProject?.id === "erp-micro-creches";
 
   const showPreviousImage = () => {
     setActiveGalleryIndex((index) =>
@@ -949,6 +944,7 @@ const Projects = () => {
               </CardHeader>
               <CardContent className="px-6 pb-8 pt-6 md:px-8 md:pt-8">
                 {/* Project Image */}
+                {!isErpCaseStudy && (
                 <div className="mb-6">
                   <img
                     src={resolveImage(localizedSelectedProject.image)}
@@ -959,8 +955,9 @@ const Projects = () => {
                     className="max-h-96 w-full rounded-md border border-border bg-secondary/30 object-contain"
                   />
                 </div>
+                )}
 
-                {galleryImages.length > 0 && (
+                {!isErpCaseStudy && galleryImages.length > 0 && (
                   <div className="mb-8">
                     <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                       {isEnglish ? "Project screenshots" : "Captures du projet"}
@@ -968,23 +965,21 @@ const Projects = () => {
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {galleryImages.map((image, index) => (
                         <button
-                          key={image}
+                          key={`${image.src}-${image.title ?? index}`}
                           type="button"
                           onClick={() => setActiveGalleryIndex(index)}
                           className="group relative overflow-hidden rounded-md border border-border bg-secondary/30 text-left transition-colors hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                           aria-label={`${isEnglish ? "Open" : "Ouvrir"} ${isEnglish ? "screenshot" : "la capture"} ${index + 1}`}
                         >
                           <img
-                            src={resolveImage(image)}
-                            alt={`${localizedSelectedProject.title} — ${isEnglish ? "screenshot" : "capture"} ${index + 1}`}
+                            src={resolveImage(image.src)}
+                            alt={image.alt ?? `${localizedSelectedProject.title} — ${isEnglish ? "screenshot" : "capture"} ${index + 1}`}
                             loading="lazy"
                             decoding="async"
                             className="w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                           />
-                          <span className="absolute inset-x-0 bottom-0 bg-background/80 px-3 py-2 text-xs font-medium text-foreground opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-                            {isEnglish
-                              ? "Open full screen"
-                              : "Agrandir la capture"}
+                          <span className="block border-t border-border bg-card/95 px-3 py-2 text-xs font-medium text-foreground">
+                            {image.title ?? (isEnglish ? "Open full screen" : "Agrandir la capture")}
                           </span>
                         </button>
                       ))}
@@ -1005,19 +1000,18 @@ const Projects = () => {
                 </div>
 
                 {/* Detailed Content */}
-                <div className="project-detail-content">
-                  {isEnglish && !hasEnglishCaseStudy ? (
-                    <div className="border-l-2 border-primary/60 py-1 pl-4 text-foreground">
-                      <h3 className="mt-0 text-lg font-semibold">
-                        Detailed case study currently available in French.
-                      </h3>
-                      <p className="mb-0 text-muted-foreground">
-                        The project summary, role and stack remain available in
-                        English. A complete English case study will be added
-                        when the source content is translated.
-                      </p>
-                    </div>
-                  ) : localizedSelectedProject.detailedContent ? (
+                <div
+                  className="project-detail-content"
+                  onClick={(event) => {
+                    const trigger = (event.target as HTMLElement).closest<HTMLButtonElement>("[data-gallery-index]");
+                    const index = Number(trigger?.dataset.galleryIndex);
+
+                    if (trigger && Number.isInteger(index) && galleryImages[index]) {
+                      setActiveGalleryIndex(index);
+                    }
+                  }}
+                >
+                  {localizedSelectedProject.detailedContent ? (
                     <div
                       dangerouslySetInnerHTML={{
                         __html: prepareDetailedContent(
@@ -1025,13 +1019,7 @@ const Projects = () => {
                         ),
                       }}
                     />
-                  ) : (
-                    <p className="text-muted-foreground italic">
-                      {isEnglish
-                        ? "Detailed project content coming soon..."
-                        : "Contenu détaillé du projet à venir..."}
-                    </p>
-                  )}
+                  ) : null}
                 </div>
 
                 {/* Action Buttons */}
@@ -1244,8 +1232,8 @@ const Projects = () => {
               onClick={(event) => event.stopPropagation()}
             >
               <img
-                src={resolveImage(galleryImages[activeGalleryIndex])}
-                alt={`${localizedSelectedProject?.title ?? "Projet"} — ${isEnglish ? "screenshot" : "capture"} ${activeGalleryIndex + 1}`}
+                src={resolveImage(galleryImages[activeGalleryIndex].src)}
+                alt={galleryImages[activeGalleryIndex].alt ?? `${localizedSelectedProject?.title ?? "Projet"} — ${isEnglish ? "screenshot" : "capture"} ${activeGalleryIndex + 1}`}
                 className="max-h-[85vh] max-w-full rounded-md border border-border bg-card object-contain shadow-lg"
               />
               <button
@@ -1285,6 +1273,7 @@ const Projects = () => {
               )}
               <p className="absolute bottom-0 rounded-sm border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground">
                 {activeGalleryIndex + 1} / {galleryImages.length} ·{" "}
+                {galleryImages[activeGalleryIndex].title ? `${galleryImages[activeGalleryIndex].title} · ` : ""}
                 {isEnglish ? "Use ← → or Esc" : "Utilisez ← → ou Échap"}
               </p>
             </div>
