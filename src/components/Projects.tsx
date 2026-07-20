@@ -67,6 +67,41 @@ const resolveImage = (img?: string | null) => {
   return `${import.meta.env.BASE_URL}${normalized}`;
 };
 
+const stripDecorativeEmoji = (content: string) => content.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '');
+
+const getSectionMarker = (title: string) => {
+  const normalizedTitle = title
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLocaleLowerCase('fr-FR');
+
+  if (/contexte|context|presentation/.test(normalizedTitle)) return '◇';
+  if (/contribution|mon role|ma contribution|role/.test(normalizedTitle)) return '◎';
+  if (/technologie|standards|outils/.test(normalizedTitle)) return '⌘';
+  if (/fonctionnalite|cas d.?usage|attestation|partenaire|certification/.test(normalizedTitle)) return '✦';
+  if (/resultat|objectif|suivi/.test(normalizedTitle)) return '↗';
+
+  return null;
+};
+
+const decorateDetailedContent = (content: string) => {
+  let markerCount = 0;
+
+  return stripDecorativeEmoji(content).replace(
+    /<h3([^>]*)class="([^"]*\bsection-title\b[^"]*)"([^>]*)>([\s\S]*?)<\/h3>/gi,
+    (_match, beforeClass, classNames, afterClass, title) => {
+      const marker = getSectionMarker(title.replace(/<[^>]+>/g, ''));
+
+      if (!marker || markerCount >= 5) {
+        return `<h3${beforeClass}class="${classNames}"${afterClass}>${title}</h3>`;
+      }
+
+      markerCount += 1;
+      return `<h3${beforeClass}class="${classNames}"${afterClass}><span class="section-marker" aria-hidden="true">${marker}</span>${title}</h3>`;
+    }
+  );
+};
+
 const Projects = () => {
   const { isEnglish } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<DisplayProjectCategory | null>('emploi');
@@ -396,28 +431,25 @@ const Projects = () => {
 
         {/* Project Detail View */}
         {localizedSelectedProject ? (
-          <div ref={projectDetailRef} className="max-w-4xl mx-auto w-full scroll-mt-28">
+          <div ref={projectDetailRef} className="mx-auto w-full max-w-5xl scroll-mt-28">
             <Button 
               onClick={handleBackToList}
               variant="outline"
-              className="mb-6"
+              className="mb-6 border-border text-foreground hover:border-primary hover:bg-secondary"
             >
               ← {isEnglish ? 'Back to projects' : 'Retour aux projets'}
             </Button>
             
-            <Card className="border-2">
-              <CardHeader>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">
-                    {categoryConfig[localizedSelectedProject.category].emoji}
-                  </span>
-                  <span className="text-sm font-medium text-muted-foreground">
+            <Card className="overflow-hidden rounded-md border border-border bg-card shadow-none">
+              <CardHeader className="border-b border-border px-6 py-6 md:px-8">
+                <div className="mb-3">
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                     {categoryLabels[localizedSelectedProject.category]}
                   </span>
                 </div>
-              <CardTitle className="text-xl md:text-2xl">{localizedSelectedProject.title}</CardTitle>
+              <CardTitle className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">{localizedSelectedProject.title}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-6 pb-8 pt-6 md:px-8 md:pt-8">
                 {/* Project Image */}
                 <div className="mb-6">
                   <img
@@ -426,20 +458,20 @@ const Projects = () => {
                     loading="lazy"
                     decoding="async"
                     sizes="(max-width: 768px) 100vw, 960px"
-                    className="w-full rounded-[5px] object-contain max-h-96"
+                    className="max-h-96 w-full rounded-md border border-border bg-secondary/30 object-contain"
                   />
                 </div>
 
                 {galleryImages.length > 0 && (
                   <div className="mb-8">
-                    <h3 className="text-lg font-semibold mb-3">{isEnglish ? 'Project screenshots' : 'Captures du projet'}</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-muted-foreground">{isEnglish ? 'Project screenshots' : 'Captures du projet'}</h3>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {galleryImages.map((image, index) => (
                         <button
                           key={image}
                           type="button"
                           onClick={() => setActiveGalleryIndex(index)}
-                          className="group relative overflow-hidden rounded-[5px] border border-border bg-secondary text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          className="group relative overflow-hidden rounded-md border border-border bg-secondary/30 text-left transition-colors hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                           aria-label={`${isEnglish ? 'Open' : 'Ouvrir'} ${isEnglish ? 'screenshot' : 'la capture'} ${index + 1}`}
                         >
                           <img
@@ -459,11 +491,11 @@ const Projects = () => {
                 )}
 
                 {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="mb-8 flex flex-wrap gap-2 border-y border-border py-4">
                   {localizedSelectedProject.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full"
+                      className="rounded-sm border border-border bg-secondary/30 px-2.5 py-1 text-xs font-medium text-foreground/80"
                     >
                       {tech}
                     </span>
@@ -471,30 +503,14 @@ const Projects = () => {
                 </div>
 
                 {/* Detailed Content */}
-                <div 
-                  className="prose prose-sm md:prose-lg max-w-none dark:prose-invert
-                    prose-headings:font-bold
-                    prose-h1:text-3xl prose-h1:mb-6
-                    prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
-                    prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
-                    prose-h4:text-lg prose-h4:mt-4 prose-h4:mb-2
-                    prose-p:my-3 prose-p:leading-relaxed
-                    prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:underline
-                    prose-strong:text-primary
-                    prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono
-                    prose-li:my-0.5 prose-li:list-disc prose-li:ml-6
-                    prose-ul:my-3 prose-ul:list-disc prose-ul:pl-6
-                    prose-ol:my-3 prose-ol:list-decimal prose-ol:pl-6
-                    prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic
-                    [&_ul]:my-3 [&_ul]:space-y-0
-                    [&_li]:my-0.5 [&_li]:leading-relaxed">
+                <div className="project-detail-content">
                   {isEnglish && !hasEnglishCaseStudy ? (
-                    <div className="rounded-lg border border-primary/30 bg-primary/5 p-5 text-foreground">
+                    <div className="border-l-2 border-primary/60 py-1 pl-4 text-foreground">
                       <h3 className="mt-0 text-lg font-semibold">Detailed case study currently available in French.</h3>
                       <p className="mb-0 text-muted-foreground">The project summary, role and stack remain available in English. A complete English case study will be added when the source content is translated.</p>
                     </div>
                   ) : localizedSelectedProject.detailedContent ? (
-                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(localizedSelectedProject.detailedContent) }} />
+                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decorateDetailedContent(localizedSelectedProject.detailedContent)) }} />
                   ) : (
                     <p className="text-muted-foreground italic">
                       {isEnglish ? 'Detailed project content coming soon...' : 'Contenu détaillé du projet à venir...'}
@@ -503,9 +519,9 @@ const Projects = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-wrap gap-3 mt-8">
+                <div className="mt-8 flex flex-wrap gap-3 border-t border-border pt-6">
                   {localizedSelectedProject.github && (
-                    <Button asChild size="default" variant="outline" className="flex-1 min-w-40 border-primary text-primary hover:bg-primary/10">
+                    <Button asChild size="default" variant="outline" className="min-w-40 flex-1 rounded-md border-border text-foreground hover:border-primary hover:bg-secondary">
                       <a href={localizedSelectedProject.github} target="_blank" rel="noopener noreferrer">
                         <Github className="w-4 h-4 mr-2" />
                         {isEnglish ? 'Source code' : 'Code source'}
@@ -516,7 +532,7 @@ const Projects = () => {
                     <Button
                       asChild
                       size="default"
-                      className="flex-1 min-w-40 bg-gradient-to-r from-primary to-accent hover:opacity-90"
+                      className="min-w-40 flex-1 rounded-md bg-primary text-primary-foreground shadow-none hover:bg-primary/90"
                     >
                       <a href={localizedSelectedProject.demo} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="w-4 h-4 mr-2" />
@@ -670,22 +686,22 @@ const Projects = () => {
               <img
                 src={resolveImage(galleryImages[activeGalleryIndex])}
                 alt={`${localizedSelectedProject?.title ?? 'Projet'} — ${isEnglish ? 'screenshot' : 'capture'} ${activeGalleryIndex + 1}`}
-                className="max-h-[85vh] max-w-full rounded-lg border border-border bg-card object-contain shadow-2xl"
+                className="max-h-[85vh] max-w-full rounded-md border border-border bg-card object-contain shadow-lg"
               />
-              <button data-gallery-close type="button" onClick={() => setActiveGalleryIndex(null)} className="absolute right-0 top-0 rounded-full border border-border bg-card p-2 text-foreground shadow-lg transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={isEnglish ? 'Close viewer' : 'Fermer la visionneuse'}>
+              <button data-gallery-close type="button" onClick={() => setActiveGalleryIndex(null)} className="absolute right-0 top-0 rounded-md border border-border bg-card p-2 text-foreground shadow-lg transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label={isEnglish ? 'Close viewer' : 'Fermer la visionneuse'}>
                 <X className="h-5 w-5" />
               </button>
               {galleryImages.length > 1 && (
                 <>
-                  <button type="button" onClick={showPreviousImage} className="absolute left-1 rounded-full border border-border bg-card p-3 text-foreground shadow-lg transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:left-4" aria-label={isEnglish ? 'Previous screenshot' : 'Capture précédente'}>
+                  <button type="button" onClick={showPreviousImage} className="absolute left-1 rounded-md border border-border bg-card p-3 text-foreground shadow-lg transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:left-4" aria-label={isEnglish ? 'Previous screenshot' : 'Capture précédente'}>
                     <ChevronLeft className="h-6 w-6" />
                   </button>
-                  <button type="button" onClick={showNextImage} className="absolute right-1 rounded-full border border-border bg-card p-3 text-foreground shadow-lg transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:right-4" aria-label={isEnglish ? 'Next screenshot' : 'Capture suivante'}>
+                  <button type="button" onClick={showNextImage} className="absolute right-1 rounded-md border border-border bg-card p-3 text-foreground shadow-lg transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:right-4" aria-label={isEnglish ? 'Next screenshot' : 'Capture suivante'}>
                     <ChevronRight className="h-6 w-6" />
                   </button>
                 </>
               )}
-              <p className="absolute bottom-0 rounded-full bg-card px-3 py-1.5 text-xs text-muted-foreground">
+              <p className="absolute bottom-0 rounded-sm border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground">
                 {activeGalleryIndex + 1} / {galleryImages.length} · {isEnglish ? 'Use ← → or Esc' : 'Utilisez ← → ou Échap'}
               </p>
             </div>

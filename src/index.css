@@ -187,159 +187,212 @@ All colors MUST be HSL.
   }
 }
 
-/* Project Detail Styling */
+/* Project detail: sober B2B case-study system, shared by every project record. */
 @layer components {
-  /* Container principal */
   .project-detail {
-    @apply space-y-8;
+    @apply space-y-0;
   }
 
-  /* Titre principal du projet */
   .project-title {
-    @apply text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6 pb-2 border-b-2 border-primary/30;
+    @apply mb-7 border-b border-border pb-5 text-3xl font-semibold tracking-tight text-foreground md:text-4xl;
   }
 
-  /* Sections */
-  .section {
-    @apply space-y-4 p-6 rounded-lg bg-secondary/50 border border-border/50;
+  .project-detail .section {
+    @apply space-y-5 py-8;
   }
 
-  .section.results {
-    @apply bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/30;
+  .project-detail .section + .section {
+    @apply border-t border-border/40;
   }
 
-  .section.info-box {
-    @apply bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-blue-500/30;
+  .project-detail .section.results,
+  .project-detail .section.info-box {
+    @apply bg-transparent;
   }
 
-  /* Titres de section */
   .section-title {
-    @apply text-xl md:text-2xl font-bold text-primary mb-4 flex items-center gap-2;
+    @apply mb-3 flex items-center gap-2 text-lg font-semibold tracking-tight text-foreground md:text-xl;
   }
 
-  /* Description */
+  .section-marker {
+    @apply inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-xs font-medium text-primary;
+  }
+
   .description {
-    @apply text-base md:text-lg leading-relaxed text-muted-foreground;
+    @apply max-w-3xl text-base leading-7 text-foreground/75 md:text-lg;
   }
 
   .highlight {
-    @apply text-base md:text-lg leading-relaxed text-foreground font-medium bg-primary/10 p-4 rounded-lg border-l-4 border-primary;
+    @apply border-l-2 border-primary/60 bg-transparent py-1 pl-4 text-base font-medium leading-7 text-foreground md:text-lg;
   }
 
-  /* Tech Grid */
   .tech-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
+    @apply grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3;
   }
 
   .tech-item {
-    @apply flex min-h-44 flex-col items-center justify-center p-5 text-center rounded-lg bg-card border border-border hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 space-y-2;
+    @apply min-h-0 rounded-sm bg-secondary/30 px-4 py-3 text-left;
   }
 
-  .tech-icon {
-    @apply block text-3xl md:text-4xl;
+  .tech-icon,
+  .feature-icon {
+    @apply hidden;
   }
 
   .tech-name {
-    @apply block text-base md:text-lg font-semibold text-foreground;
+    @apply block text-sm font-semibold text-foreground;
   }
 
   .tech-desc {
-    @apply text-sm text-muted-foreground leading-relaxed;
+    @apply mt-1 block text-sm leading-6 text-muted-foreground;
   }
 
-  /* Features List */
-  .features-list {
-    @apply space-y-3 list-none pl-0;
+  .features-list,
+  .comparison-list {
+    @apply grid list-none gap-x-8 gap-y-2 pl-0 sm:grid-cols-2;
   }
 
-  .feature-item {
-    @apply flex items-start gap-3 p-3 rounded-lg bg-card/50 border border-border/50 hover:border-primary/50 transition-colors;
+  .feature-item,
+  .comparison-list li {
+    @apply relative py-2 pl-4 text-sm leading-6 text-foreground/80;
   }
 
-  .feature-icon {
-    @apply text-xl md:text-2xl flex-shrink-0 mt-0.5;
+  .feature-item::before,
+  .comparison-list li::before {
+    content: '';
+    @apply absolute left-0 top-5 h-1 w-1 rounded-full bg-primary/70;
   }
 
-  /* Result Box */
-  .result-box {
-    @apply p-6 rounded-lg border-2 space-y-3;
-  }
-
+  .result-box,
   .result-box.success {
-    @apply bg-green-500/10 border-green-500/50;
+    @apply space-y-3 rounded-md border border-border/70 bg-secondary/25 p-5;
   }
 
   .result-text {
-    @apply text-base md:text-lg leading-relaxed;
+    @apply text-base leading-7 text-foreground/80 md:text-lg;
   }
 
   .result-text.highlight-large {
-    @apply text-lg md:text-xl font-semibold;
+    @apply text-lg font-semibold text-foreground md:text-xl;
   }
 
-  /* Comparison Layout */
   .comparison {
-    @apply space-y-6;
+    @apply space-y-5;
   }
 
-  .before-after {
-    @apply grid grid-cols-1 gap-5;
+  .before-after,
+  .versions-grid {
+    @apply grid grid-cols-1 gap-x-8 gap-y-5 md:grid-cols-2;
   }
 
-  .before, .after {
-    @apply p-6 rounded-lg border-2 space-y-4;
+  .before,
+  .after,
+  .version-card,
+  .version-card.featured {
+    @apply space-y-3 rounded-sm bg-secondary/25 px-4 py-4;
   }
 
-  .before {
-    @apply bg-red-500/5 border-red-500/30;
-  }
-
-  .after {
-    @apply bg-green-500/5 border-green-500/30;
-  }
-
-  .before h4, .after h4 {
-    @apply text-xl font-bold mb-4;
-  }
-
-  .comparison-list {
-    @apply space-y-3 list-none pl-0;
-  }
-
-  .comparison-list li {
-    @apply flex items-start gap-2 text-sm md:text-base leading-relaxed;
+  .before h4,
+  .after h4,
+  .version-card h4 {
+    @apply mb-2 text-base font-semibold text-foreground;
   }
 
   .comparison-list.success li {
-    @apply block rounded-lg border border-green-500/20 bg-green-500/5 p-4 text-foreground;
+    @apply block bg-transparent p-0 py-2 pl-4 text-foreground/80;
   }
 
-  .detail {
-    @apply block text-sm text-muted-foreground mt-2 leading-relaxed;
-  }
-
-  /* Versions Grid */
-  .versions-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
-  }
-
-  .version-card {
-    @apply p-6 rounded-lg bg-card border border-border hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 space-y-3;
-  }
-
-  .version-card.featured {
-    @apply border-primary/50 bg-primary/5;
-  }
-
-  .version-card h4 {
-    @apply text-lg md:text-xl font-bold text-foreground;
-  }
-
+  .detail,
   .version-card p {
-    @apply text-sm text-muted-foreground;
+    @apply mt-1 block text-sm leading-6 text-muted-foreground;
+  }
+
+  .workflow-steps {
+    @apply grid gap-5;
+  }
+
+  .workflow-step {
+    @apply max-w-3xl;
+  }
+
+  .workflow-step h4 {
+    @apply mb-1.5 text-base font-semibold text-foreground;
+  }
+
+  .workflow-step p,
+  .workflow-services {
+    @apply m-0 text-sm leading-6 text-muted-foreground;
+  }
+
+  .workflow-services {
+    @apply rounded-sm bg-secondary/25 px-4 py-3 text-foreground/80;
   }
 
   .doc-link {
-    @apply inline-block mt-2 text-primary hover:text-accent transition-colors font-medium;
+    @apply mt-2 inline-block text-sm font-medium text-primary underline-offset-4 transition-colors hover:text-foreground hover:underline;
+  }
+
+  .project-detail-content > h1,
+  .project-detail-content > h2,
+  .project-detail-content > h3 {
+    @apply mt-10 text-xl font-semibold tracking-tight text-foreground md:text-2xl;
+  }
+
+  .project-detail-content > h4 {
+    @apply mt-7 text-base font-semibold text-foreground md:text-lg;
+  }
+
+  .project-detail-content p {
+    @apply my-4 max-w-3xl text-base leading-7 text-foreground/75 md:text-lg;
+  }
+
+  .project-detail-content strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .project-detail-content a {
+    @apply text-primary underline underline-offset-4 hover:text-foreground;
+  }
+
+  .project-detail-content code {
+    @apply rounded-sm border border-border bg-secondary/40 px-1.5 py-0.5 text-sm text-foreground;
+  }
+
+  .project-detail-content pre {
+    @apply overflow-x-auto rounded-md border border-border bg-secondary/30 p-4 text-sm;
+  }
+
+  .project-detail-content blockquote {
+    @apply my-5 border-l-2 border-primary/60 py-1 pl-4 text-foreground/80;
+  }
+
+  .project-detail-content ul:not(.features-list):not(.comparison-list),
+  .project-detail-content ol {
+    @apply my-4 space-y-2 pl-5 text-base leading-7 text-foreground/75 md:text-lg;
+  }
+
+  .project-detail-content ul:not(.features-list):not(.comparison-list) {
+    @apply list-disc;
+  }
+
+  .project-detail-content ol {
+    @apply list-decimal;
+  }
+
+  .project-detail-content table {
+    @apply my-6 w-full border-collapse text-left text-sm;
+  }
+
+  .project-detail-content th,
+  .project-detail-content td {
+    @apply border-b border-border px-3 py-3 align-top;
+  }
+
+  .project-detail-content th {
+    @apply font-semibold text-foreground;
+  }
+
+  .project-detail-content td {
+    @apply text-muted-foreground;
   }
 }

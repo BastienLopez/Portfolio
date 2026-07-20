@@ -795,37 +795,82 @@ export const emploiProjects: Project[] = [
         <div class="section">
           <h3 class="section-title">📊 Workflow 1 — Reporting SocialPilot</h3>
           <p class="description">
-            Un scénario automatisé récupère les données disponibles, les prépare puis génère un rapport de suivi
-            au format PDF. Le résultat peut ensuite être transmis au client selon le canal défini.
+            Conception d’un workflow n8n capable d’automatiser la production complète de reportings social media
+            à partir des rapports PDF générés par SocialPilot.
           </p>
-          <ul class="features-list">
-            <li class="feature-item">
-              <span class="feature-icon">📥</span>
-              <strong>Collecte et normalisation</strong> — récupération, nettoyage et mise en forme des données SocialPilot.
-            </li>
-            <li class="feature-item">
-              <span class="feature-icon">📄</span>
-              <strong>Rapport PDF</strong> — assemblage d'un livrable clair pour le suivi des performances sociales.
-            </li>
-            <li class="feature-item">
-              <span class="feature-icon">📤</span>
-              <strong>Distribution</strong> — préparation de l'envoi ou du dépôt du rapport auprès du client.
-            </li>
-          </ul>
+          <p class="description">
+            Le système prend en charge l’ensemble du processus : récupération des fichiers sources, extraction et
+            structuration des données, contrôle des KPI, analyse des performances, génération d’un rapport client
+            personnalisé et vérification finale du document avant livraison.
+          </p>
+          <div class="workflow-steps">
+            <div class="workflow-step">
+              <h4>Collecte et sécurisation des données</h4>
+              <p>Le workflow se déclenche automatiquement selon une planification définie et surveille les nouveaux rapports reçus par email. Les pièces jointes PDF sont récupérées, contrôlées puis comparées aux fichiers déjà présents dans Google Drive afin d’éviter les doublons et les traitements inutiles. Chaque nouveau rapport est ensuite archivé avant de poursuivre son traitement.</p>
+            </div>
+            <div class="workflow-step">
+              <h4>Extraction et structuration des KPI</h4>
+              <p>Les données contenues dans les rapports SocialPilot sont extraites puis analysées réseau par réseau. Le workflow transforme les informations issues des différents formats de rapports en une structure JSON commune et normalisée, tout en conservant les spécificités propres à chaque réseau. Une couche de validation contrôle ensuite la présence et la cohérence des indicateurs attendus.</p>
+            </div>
+            <div class="workflow-step">
+              <h4>OCR et récupération des données visuelles</h4>
+              <p>Lorsque certaines informations ne sont accessibles que dans des graphiques ou éléments visuels, le workflow identifie les données manquantes et déclenche un traitement OCR ciblé. Les informations récupérées sont structurées, normalisées puis réintégrées au jeu de données principal, sans appliquer inutilement l’OCR à l’ensemble du document.</p>
+            </div>
+            <div class="workflow-step">
+              <h4>Analyse automatisée des performances</h4>
+              <p>À partir des données consolidées, une couche d’analyse génère une lecture synthétique des performances sociales : évolution de l’audience, engagement, performances des formats de contenu et signaux d’alerte. Des règles de contrôle maintiennent les conclusions et recommandations dans le périmètre des données réellement disponibles.</p>
+            </div>
+            <div class="workflow-step">
+              <h4>Génération du rapport client</h4>
+              <p>Une fois les données validées et enrichies, le workflow construit le contexte nécessaire au rapport final. Le PDF regroupe les KPI par réseau, les tableaux de performance, les analyses, les recommandations et les éléments visuels issus des rapports sources pour produire un livrable unique et exploitable par le client.</p>
+            </div>
+            <div class="workflow-step">
+              <h4>Contrôle qualité, livraison et supervision</h4>
+              <p>Un premier audit vérifie le contenu du document, puis un second contrôle analyse visuellement les pages générées afin de détecter les problèmes de mise en page, les contenus coupés ou les visuels manquants. Le rapport reçoit un statut final avant son dépôt dans Google Drive et son éventuelle association à Notion. Les notifications Discord suivent l’exécution, la couverture des données, le contrôle qualité et les erreurs techniques.</p>
+            </div>
+          </div>
+          <p class="workflow-services"><strong>Technologies et services utilisés :</strong> n8n, SocialPilot, Gmail API, Google Drive, Notion, OCR, analyse IA, génération PDF et Discord.</p>
         </div>
 
         <div class="section">
-          <h3 class="section-title">🎬 Workflow 2 — Dérush et préparation vidéo</h3>
+          <h3 class="section-title">🎬 Workflow 2 — Dérushage et pré-montage vidéo assistés par IA</h3>
           <p class="description">
-            Le workflow organise le traitement de vidéos brutes afin de faciliter la préparation de déclinaisons
-            pour Instagram, Facebook, TikTok et d'autres formats de réseaux sociaux. Il peut enchaîner réception,
-            extraction de données, transcription, analyse et structuration des séquences à exploiter.
+            Conception d’un pipeline n8n dédié à l’analyse et à la préparation automatisée de vidéos longues pour la
+            création de contenus courts destinés aux réseaux sociaux.
           </p>
-          <ul class="features-list">
-            <li class="feature-item"><span class="feature-icon">🎥</span><strong>Réception et préparation</strong> — centralisation des médias et de leurs métadonnées.</li>
-            <li class="feature-item"><span class="feature-icon">📝</span><strong>Transcription et analyse</strong> — lecture des contenus pour identifier les passages utiles.</li>
-            <li class="feature-item"><span class="feature-icon">⏱️</span><strong>Séquençage</strong> — repérage de timestamps et organisation des éléments pour le montage.</li>
-          </ul>
+          <p class="description">
+            Le workflow transforme une vidéo brute en livrables exploitables pour le montage : transcription
+            structurée, sélection des meilleurs passages, organisation des séquences, sous-titres, timeline,
+            preview vidéo et fichiers techniques. L’objectif est de réduire le travail manuel avant le montage tout
+            en conservant un contrôle éditorial et technique sur les séquences sélectionnées.
+          </p>
+          <div class="workflow-steps">
+            <div class="workflow-step">
+              <h4>Ingestion et préparation des médias</h4>
+              <p>Le workflow récupère les nouvelles vidéos depuis Google Drive et vérifie automatiquement qu’elles n’ont pas déjà été traitées. Pour chaque fichier, un environnement de travail est créé avec les chemins, dossiers et paramètres nécessaires. La durée cible peut aussi être définie afin d’adapter la sélection des séquences au format final attendu.</p>
+            </div>
+            <div class="workflow-step">
+              <h4>Extraction audio et transcription</h4>
+              <p>L’audio est extrait puis envoyé dans une chaîne de transcription basée sur Whisper. La transcription conserve les informations temporelles nécessaires pour retrouver chaque phrase dans la vidéo originale. Le workflow détecte aussi la langue, nettoie et découpe le texte en blocs exploitables, puis applique des contrôles avant l’analyse.</p>
+            </div>
+            <div class="workflow-step">
+              <h4>Analyse éditoriale des rushes</h4>
+              <p>La transcription sert à identifier les passages les plus intéressants selon la pertinence du sujet, le potentiel de rétention, l’énergie, l’émotion, la qualité audio, la densité d’information, les répétitions et l’autonomie de l’extrait. Les séquences sont classées et scorées pour préparer la sélection de montage.</p>
+            </div>
+            <div class="workflow-step">
+              <h4>Détection des questions et réponses</h4>
+              <p>Pour les interviews, le workflow analyse la structure de la conversation afin d’identifier les questions et leurs réponses. Les timestamps sont contrôlés pour éviter les silences inutiles, les débuts trop précoces et les coupures au milieu d’une phrase. Les blocs validés peuvent former des séquences structurées avec une carte question suivie de la réponse correspondante.</p>
+            </div>
+            <div class="workflow-step">
+              <h4>Construction automatique du pré-montage</h4>
+              <p>À partir des meilleures séquences, le workflow génère une EDL — Edit Decision List — qui décrit précisément la structure du futur montage. La timeline peut intégrer un hook d’ouverture, des blocs question-réponse, des micro-coupes techniques et les extraits retenus, avec des contrôles contre les doublons et les mauvaises coupures.</p>
+            </div>
+            <div class="workflow-step">
+              <h4>Sous-titres, preview et livraison</h4>
+              <p>Le pipeline génère les sous-titres et informations temporelles, ainsi qu’une timeline compatible avec Adobe Premiere. Une preview MP4 peut visualiser l’enchaînement proposé avant le montage définitif. Les livrables et rapports de contrôle sont organisés dans une arborescence Google Drive dédiée, pour préparer des formats verticaux adaptés à Instagram, TikTok, Facebook et aux autres plateformes sociales.</p>
+            </div>
+          </div>
+          <p class="workflow-services"><strong>Technologies et services utilisés :</strong> n8n, Google Drive API, FFmpeg, Whisper, JavaScript, microservices vidéo, analyse IA, génération EDL, sous-titres SRT/ASS et export de timeline pour le montage.</p>
         </div>
 
         <div class="section">
