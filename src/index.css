@@ -201,10 +201,6 @@ All colors MUST be HSL.
     @apply space-y-5 py-8;
   }
 
-  .project-detail .section + .section {
-    @apply border-t border-border/40;
-  }
-
   .project-detail .section.results,
   .project-detail .section.info-box {
     @apply bg-transparent;
@@ -215,7 +211,7 @@ All colors MUST be HSL.
   }
 
   .section-marker {
-    @apply inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-xs font-medium text-primary;
+    @apply h-5 w-1 shrink-0 rounded-full bg-primary/70;
   }
 
   .description {
@@ -274,6 +270,30 @@ All colors MUST be HSL.
 
   .result-text.highlight-large {
     @apply text-lg font-semibold text-foreground md:text-xl;
+  }
+
+  .project-metrics {
+    @apply border-y border-border/70 py-7;
+  }
+
+  .metrics-grid {
+    @apply grid gap-3 sm:grid-cols-3;
+  }
+
+  .metrics-grid > div {
+    @apply flex flex-col gap-1 border-l-2 border-primary/60 py-1 pl-3;
+  }
+
+  .metrics-grid > div:only-child {
+    @apply sm:col-span-3;
+  }
+
+  .metrics-grid strong {
+    @apply text-xl font-semibold text-foreground;
+  }
+
+  .metrics-grid span {
+    @apply text-sm leading-5 text-muted-foreground;
   }
 
   .comparison {

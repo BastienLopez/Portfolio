@@ -24,6 +24,26 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, locale);
     document.documentElement.lang = locale;
+
+    const metadata = locale === 'en'
+      ? {
+          title: 'Bastien Lopez — Full-Stack AI & Automation Developer',
+          description: 'Full-stack developer specialising in business applications, AI and n8n automation. Available for remote/full-remote roles and freelance projects.',
+          locale: 'en_US',
+        }
+      : {
+          title: 'Bastien Lopez — Développeur Full-Stack IA & Automatisation',
+          description: 'Développeur Full-Stack spécialisé en applications métier, IA et automatisation n8n. Disponible pour CDI remote/full remote et missions freelance.',
+          locale: 'fr_FR',
+        };
+
+    document.title = metadata.title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', metadata.description);
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', metadata.title);
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', metadata.description);
+    document.querySelector('meta[property="og:locale"]')?.setAttribute('content', metadata.locale);
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', metadata.title);
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', metadata.description);
   }, [locale]);
 
   const value = useMemo(

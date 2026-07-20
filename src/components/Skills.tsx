@@ -9,10 +9,10 @@ const Skills = () => {
       title: "Frontend",
       icon: Code2,
       color: "text-primary",
-  skills: ["React", "TypeScript", "Next.js", "HTML5/CSS3", "CMS : Webflow", "Doc : Gitbook / Docusaurus"],
+      skills: ["React", "TypeScript", "Next.js", "JavaScript", "HTML5 / CSS3", "Webflow"],
     },
     {
-      title: "Backend",
+      title: "Backend & APIs",
       icon: Server,
       color: "text-accent",
       skills: ["Node.js", "Python", "FastAPI", "Express", "REST APIs"],
@@ -21,13 +21,13 @@ const Skills = () => {
       title: isEnglish ? "Databases" : "Bases de données",
       icon: Database,
       color: "text-cta",
-      skills: ["MongoDB", "PostgreSQL", "SQL", "MySQL"],
+      skills: ["MongoDB", "PostgreSQL", "SQL", "MySQL", "Vector DB"],
     },
     {
       title: isEnglish ? "AI & Machine Learning" : "IA & Machine Learning",
       icon: Brain,
       color: "text-primary",
-      skills: ["Python", "TensorFlow", "PyTorch", "Vector DB", "Mastra Agent", "CUDA - RL - NLP"],
+      skills: ["Agents IA / Mastra", "TensorFlow", "PyTorch", "CUDA", "Reinforcement Learning", "NLP"],
     },
     {
       title: isEnglish ? "Automation" : "Automatisation",
@@ -42,16 +42,16 @@ const Skills = () => {
       skills: ["Docker", "CI/CD", "GitHub Actions", "Self Hosting", "Github Pages"],
     },
     {
-      title: isEnglish ? "Version control" : "Gestion de versions",
+      title: isEnglish ? "Git & documentation" : "Git & documentation",
       icon: GitBranch,
       color: "text-primary",
-      skills: ["Git", "GitHub", "Code Review", "Branching"],
+      skills: ["Git", "GitHub", "Code Review", "Branching", "GitBook", "Docusaurus"],
     },
     {
-      title: "Architecture",
+      title: isEnglish ? "Architecture & quality" : "Architecture & qualité",
       icon: Blocks,
       color: "text-accent",
-      skills: ["Microservices", "Clean Code", "Design Patterns", "TDD Testing", "Web3"],
+      skills: ["Microservices", "Clean Code", "Design Patterns", "TDD / Testing"],
     },
   ];
 
@@ -103,6 +103,9 @@ const Skills = () => {
               </Card>
             ))}
           </div>
+          <p className="mt-6 text-center text-sm text-muted-foreground">
+            {isEnglish ? "Other experience: Web3" : "Autre expérience : Web3"}
+          </p>
         </div>
       </div>
     </section>

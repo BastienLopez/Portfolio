@@ -345,7 +345,7 @@ export const emploiProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Application <strong>déployée sur l'App Store</strong> pour la gestion d'actifs numériques.
+              ✅ Contribution au développement et à l’amélioration de briques du module Discover et de ses intégrations de données, au sein de l’équipe produit.
             </p>
           </div>
         </div>
@@ -380,6 +380,7 @@ export const emploiProjects: Project[] = [
             Création et maintenance de contenus et de parcours de documentation, avec migration de GitBook
             vers Docusaurus pour faciliter l'intégration des développeurs.
           </p>
+          <p class="highlight"><strong>50+ pages et sections</strong> de documentation migrées ou maintenues entre GitBook et Docusaurus.</p>
         </div>
 
         <div class="section">
@@ -526,6 +527,13 @@ export const emploiProjects: Project[] = [
               <span class="tech-name">OpenAI API</span>
               <p class="tech-desc">Traitement du langage naturel avancé</p>
             </div>
+          </div>
+        </div>
+
+        <div class="section project-metrics">
+          <h3 class="section-title">Quelques chiffres</h3>
+          <div class="metrics-grid">
+            <div><strong>500+</strong><span>sources de veille connectées</span></div>
           </div>
         </div>
 
@@ -789,6 +797,15 @@ export const emploiProjects: Project[] = [
             <div class="tech-item"><span class="tech-icon">🤖</span><span class="tech-name">IA & automatisation</span><p class="tech-desc">Analyse et enrichissement de certains traitements</p></div>
             <div class="tech-item"><span class="tech-icon">📊</span><span class="tech-name">SocialPilot</span><p class="tech-desc">Données et rapports de réseaux sociaux</p></div>
             <div class="tech-item"><span class="tech-icon">🎬</span><span class="tech-name">Traitement vidéo</span><p class="tech-desc">Préparation de contenus pour les réseaux sociaux</p></div>
+          </div>
+        </div>
+
+        <div class="section project-metrics">
+          <h3 class="section-title">Quelques chiffres</h3>
+          <div class="metrics-grid">
+            <div><strong>15+</strong><span>rapports générés</span></div>
+            <div><strong>200+ h</strong><span>de rush traitées</span></div>
+            <div><strong>10+</strong><span>tâches automatisées</span></div>
           </div>
         </div>
 

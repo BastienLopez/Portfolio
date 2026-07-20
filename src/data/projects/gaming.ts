@@ -371,10 +371,10 @@ export const gamingProjects: Project[] = [
               ✅ Guide <strong>détaillé</strong> pour jouer à Demon's Souls sur PC.
             </p>
             <p class="result-text">
-              ✅ <strong>Résolution 4K</strong>, textures HD et 60 FPS stables.
+              Configuration documentée combinant résolution améliorée, textures HD, patchs 60 FPS et correctifs communautaires.
             </p>
             <p class="result-text">
-              ✅ Version <strong>définitive</strong> du classique de FromSoftware.
+              ✅ Patchs 60 FPS et correctifs communautaires à utiliser selon la configuration choisie.
             </p>
           </div>
         </div>

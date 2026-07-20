@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 
 const LanguageSelector = () => {
-  const { locale, setLocale } = useLanguage();
+  const { locale, setLocale, isEnglish } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
   const selectLanguage = (language: 'fr' | 'en') => {
@@ -18,7 +18,7 @@ const LanguageSelector = () => {
         type="button"
         onClick={() => setIsOpen((open) => !open)}
         className="flex h-10 min-w-[92px] items-center justify-between gap-2 rounded-xl border border-primary bg-card px-3 text-sm font-bold text-foreground shadow-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-        aria-label="Choisir la langue"
+        aria-label={isEnglish ? 'Choose language' : 'Choisir la langue'}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
@@ -30,7 +30,7 @@ const LanguageSelector = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-[60] mt-2 min-w-full overflow-hidden rounded-xl border border-border bg-card p-1 shadow-xl" role="listbox" aria-label="Langues disponibles">
+        <div className="absolute right-0 top-full z-[60] mt-2 min-w-full overflow-hidden rounded-xl border border-border bg-card p-1 shadow-xl" role="listbox" aria-label={isEnglish ? 'Available languages' : 'Langues disponibles'}>
           {(['fr', 'en'] as const).filter((language) => language !== locale).map((language) => (
             <button
               key={language}

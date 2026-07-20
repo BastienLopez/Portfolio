@@ -184,7 +184,7 @@ export const opensourceProjects: Project[] = [
             </li>
             <li class="feature-item">
               <span class="feature-icon">📱</span>
-              <strong>Interface intuitive</strong> - Responsive et ergonomique
+              <strong>Interface responsive</strong> - Consultation et gestion adaptées aux écrans courants
             </li>
           </ul>
         </div>
@@ -193,10 +193,10 @@ export const opensourceProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Outil <strong>pratique et complet</strong> pour les collectionneurs de cartes Pokémon.
+              ✅ Application permettant de rechercher, organiser, importer et suivre une collection Pokémon TCG.
             </p>
             <p class="result-text">
-              ✅ Interface <strong>moderne et ergonomique</strong> facilitant la gestion et le suivi des collections.
+              ✅ Recherche, statistiques et classeur virtuel regroupés dans le même parcours.
             </p>
           </div>
         </div>
@@ -336,7 +336,7 @@ export const opensourceProjects: Project[] = [
   {
     id: 'patripro',
     title: 'PatriPro',
-    description: "Application de gestion de patrimoine financier. Suivi des portefeuilles, comptes bancaires, livrets, emprunts et budget avec analyses et insights en temps réel.",
+    description: "Application permettant de centraliser le suivi des comptes, placements, budgets et emprunts dans un même tableau de bord.",
     category: 'opensource',
     image: 'img_projects/PatriPro.png',
     tech: ['React', 'Tailwind CSS', 'JavaScript', 'Chart.js'],
@@ -378,6 +378,11 @@ export const opensourceProjects: Project[] = [
               <p class="tech-desc">Hébergement et déploiement</p>
             </div>
           </div>
+        </div>
+
+        <div class="section info-box">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">Conception et développement de l’application, structuration du dashboard, logique de gestion patrimoniale, suivi des données financières et visualisations.</p>
         </div>
 
         <div class="section">
@@ -456,10 +461,10 @@ export const opensourceProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Solution <strong>complète</strong> pour centraliser et piloter son patrimoine financier.
+              Application permettant de centraliser comptes, placements, budgets et emprunts dans un même tableau de bord.
             </p>
             <p class="result-text">
-              ✅ Interface <strong>intuitive</strong> avec graphiques en temps réel et recommandations.
+              Visualisations pour suivre l’évolution du patrimoine, la répartition des actifs et les flux mensuels.
             </p>
             <p class="result-text">
               ✅ Application <strong>déployée</strong> et accessible publiquement en production.
@@ -469,6 +474,126 @@ export const opensourceProjects: Project[] = [
       </div>
     `,
     gallery: ['img_projects/PatriPro.png']
+  },
+  {
+    id: "ats-filter-resume",
+    title: "ATS Filter Resume - Analyse ATS explicable de CV",
+    description:
+      "Application full stack d'analyse ATS de CV avec recommandations explicables et priorisées, avec ou sans offre d'emploi.",
+    category: 'opensource',
+    image: "img_projects/ATS_FILTER.png",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS v4",
+      "Vitest",
+      "Playwright",
+      "GitHub Actions",
+      "Docker",
+    ],
+    demo: "https://bastienlopez.github.io/ATS_FILTER_RESUME/",
+    detailedContent: `
+      <div class="project-detail">
+        <h2 class="project-title">📄 ATS Filter Resume - Analyse ATS explicable de CV</h2>
+
+        <div class="section">
+          <h3 class="section-title">📋 Contexte du projet</h3>
+          <p class="description">
+            Le projet est né d'un besoin concret : de nombreuses candidatures sont filtrées automatiquement
+            avant lecture humaine. L'objectif est de fournir un diagnostic clair, pédagogique et actionnable
+            pour corriger un CV selon des critères ATS réalistes, sans promesse trompeuse d'embauche.
+          </p>
+        </div>
+
+        <div class="section info-box">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">
+            Conception et développement de l'application, de la logique d'analyse ATS explicable,
+            des parcours de validation et du pipeline de tests et de déploiement.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">🎯 Objectif & positionnement</h3>
+          <ul class="features-list">
+            <li class="feature-item">
+              <span class="feature-icon">🧩</span>
+              <strong>Type</strong> - Application web full stack
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">🎯</span>
+              <strong>Objectif</strong> - Évaluer la compatibilité ATS d'un CV avec ou sans offre d'emploi
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">👥</span>
+              <strong>Cible</strong> - Candidats qui veulent augmenter leurs chances de passer les filtres ATS
+            </li>
+            <li class="feature-item">
+              <span class="feature-icon">🚀</span>
+              <strong>Statut</strong> - Projet fonctionnel avec pipeline qualité et déploiement GitHub Pages
+            </li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">⚙️ Technologies utilisées</h3>
+          <div class="tech-grid">
+            <div class="tech-item"><span class="tech-icon">🧠</span><span class="tech-name">Frontend</span><p class="tech-desc">Next.js 16, React 19, TypeScript, Tailwind CSS v4</p></div>
+            <div class="tech-item"><span class="tech-icon">🔌</span><span class="tech-name">Backend</span><p class="tech-desc">API Routes Next.js et logique d'analyse ATS maison</p></div>
+            <div class="tech-item"><span class="tech-icon">📄</span><span class="tech-name">Parsing CV</span><p class="tech-desc">pdf-parse, mammoth</p></div>
+            <div class="tech-item"><span class="tech-icon">✅</span><span class="tech-name">Validation</span><p class="tech-desc">Zod, React Hook Form</p></div>
+            <div class="tech-item"><span class="tech-icon">🧪</span><span class="tech-name">Tests</span><p class="tech-desc">Vitest (unit, integration, UI) et Playwright (e2e)</p></div>
+            <div class="tech-item"><span class="tech-icon">🧹</span><span class="tech-name">Qualité</span><p class="tech-desc">ESLint, Prettier, Husky, lint-staged</p></div>
+            <div class="tech-item"><span class="tech-icon">⚡</span><span class="tech-name">CI/CD</span><p class="tech-desc">GitHub Actions (CI unifiée + déploiement GitHub Pages)</p></div>
+            <div class="tech-item"><span class="tech-icon">🐳</span><span class="tech-name">Containerisation</span><p class="tech-desc">Docker, docker compose</p></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">✨ Fonctionnalités principales</h3>
+          <ul class="features-list">
+            <li class="feature-item"><span class="feature-icon">📥</span>Import CV en PDF ou DOCX</li>
+            <li class="feature-item"><span class="feature-icon">🧾</span>Analyse avec ou sans offre d'emploi</li>
+            <li class="feature-item"><span class="feature-icon">🧱</span>Détection des sections critiques du CV</li>
+            <li class="feature-item"><span class="feature-icon">🔎</span>Extraction des mots-clés, outils, langues et pré-requis</li>
+            <li class="feature-item"><span class="feature-icon">📊</span>Scoring détaillé : global, ATS, lisibilité, matching, structure, complétude</li>
+            <li class="feature-item"><span class="feature-icon">🚨</span>Identification des risques de rejet automatisé</li>
+            <li class="feature-item"><span class="feature-icon">🛠️</span>Recommandations priorisées avec impact estimé</li>
+            <li class="feature-item"><span class="feature-icon">🧭</span>Dashboard résultat complet et explicable</li>
+            <li class="feature-item"><span class="feature-icon">📱</span>Parcours testé de bout en bout (desktop et mobile)</li>
+          </ul>
+        </div>
+
+        <div class="section results">
+          <h3 class="section-title">⚠️ Limites et interprétation du score</h3>
+          <div class="result-box">
+            <p class="result-text">
+              Le score est un indicateur d'aide à l'optimisation basé sur des règles d'analyse.
+              Les ATS utilisent des règles et technologies différentes : aucun score ne peut garantir
+              qu'un CV sera accepté ou transmis à un recruteur.
+            </p>
+          </div>
+        </div>
+
+        <div class="section results">
+          <h3 class="section-title">🎯 Résultats</h3>
+          <div class="result-box success">
+            <p class="result-text">✅ Pipeline qualité stable : lint, typecheck, tests unitaires, integration, UI.</p>
+            <p class="result-text">✅ Suite e2e verte sur les parcours principaux.</p>
+            <p class="result-text">✅ Build production valide et workflow CI/CD unifié exécuté au push.</p>
+            <p class="result-text">✅ Build statique GitHub Pages valide pour publication.</p>
+            <p class="result-text">✅ Projet présentable en portfolio avec architecture claire et logique métier explicable.</p>
+          </div>
+        </div>
+      </div>
+    `,
+    gallery: [
+      "img_projects/ATS_FILTER.png",
+      "img_projects/ATS1.png",
+      "img_projects/ATS2.png",
+      "img_projects/ATS3.png",
+    ],
   },
   {
     id: 'novotel-roue-chance',
@@ -485,10 +610,13 @@ export const opensourceProjects: Project[] = [
         <div class="section">
           <h3 class="section-title">📋 Contexte du projet</h3>
           <p class="description">
-            Site web interactif conçu pour le <strong>NOVOTEL Reims Tinqueux</strong> permettant aux clients 
-            de donner leur avis et de participer à un <strong>jeu de la roue de la fortune</strong> pour gagner 
-            des récompenses attractives. Système gamifié pour améliorer l'engagement client.
+            Expérience web conçue pour le restaurant du <strong>NOVOTEL Reims Tinqueux</strong>. Des QR codes placés sur les sous-verres permettaient aux clients d’accéder depuis leur téléphone à un parcours autour d’un avis Google, puis à une roue de la chance offrant la possibilité de gagner un lot.
           </p>
+        </div>
+
+        <div class="section info-box">
+          <h3 class="section-title">👤 Mon rôle</h3>
+          <p class="description">Conception de l’expérience web, développement frontend, logique de la roue, intégration du parcours QR, formulaire et déploiement automatisé.</p>
         </div>
 
         <div class="section">
