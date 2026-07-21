@@ -101,7 +101,7 @@ export const freelanceProjects: Project[] = [
     description:
       "ERP métier multi-crèches avec portail familles et site vitrine : opérations, données, documents, planning, transmissions et pilotage centralisés.",
     category: "freelance",
-    image: "img_projects/creche.png",
+    image: "img_projects/erp-micro-creches-vue-multisite.png",
     tech: [
       "React",
       "Node.js",
@@ -119,7 +119,7 @@ export const freelanceProjects: Project[] = [
           <p class="description">ERP métier conçu pour centraliser la gestion opérationnelle et administrative d’un réseau de <strong>cinq micro-crèches</strong>, avec un espace professionnel et un portail destiné aux familles.</p>
           <p class="description">La plateforme remplace des données et opérations dispersées par un environnement unique, adapté au multi-établissements, aux profils utilisateurs distincts et aux informations sensibles liées aux enfants, parents et équipes.</p>
           <p class="description">Elle rassemble les modules métier utiles au suivi quotidien, à la coordination des établissements et au pilotage des responsables autorisés.</p>
-          <button type="button" class="project-inline-visual" data-gallery-index="0"><img src="img_projects/creche.png" alt="Emplacement pour le dashboard global multi-crèches" /><span>Dashboard global / multi-crèches</span></button>
+          <button type="button" class="project-inline-visual" data-gallery-index="0"><img src="img_projects/erp-micro-creches-gestion-enfants.png" alt="Interface de gestion des enfants d'une micro-crèche" /><span>Gestion des enfants</span></button>
         </div>
         <div class="section info-box">
           <h3 class="section-title">Mon rôle</h3>
@@ -152,8 +152,7 @@ export const freelanceProjects: Project[] = [
             <li class="feature-item"><strong>Parent</strong> — consultation des seules informations associées à ses enfants.</li>
           </ul>
           <div class="inline-visual-grid">
-            <button type="button" class="project-inline-visual" data-gallery-index="1"><img src="img_projects/creche.png" alt="Emplacement pour le sélecteur de crèche et le contexte actif" /><span>Sélecteur de crèche + contexte actif</span></button>
-            <button type="button" class="project-inline-visual" data-gallery-index="7"><img src="img_projects/creche.png" alt="Emplacement pour le schéma d’architecture" /><span>Schéma architecture</span></button>
+            <button type="button" class="project-inline-visual" data-gallery-index="1"><img src="img_projects/erp-micro-creches-vue-multisite.png" alt="Vue consolidée des enfants avec sélection de l'établissement" /><span>Vue multi-crèches et contexte actif</span></button>
           </div>
         </div>
         <div class="section">
@@ -171,16 +170,27 @@ export const freelanceProjects: Project[] = [
             <li class="feature-item"><strong>Administration</strong> — rôles, permissions et paramètres d’accès.</li>
           </ul>
           <div class="inline-visual-grid">
-            <button type="button" class="project-inline-visual" data-gallery-index="2"><img src="img_projects/creche.png" alt="Emplacement pour la gestion des enfants et un dossier enfant" /><span>Gestion enfants / dossier enfant</span></button>
-            <button type="button" class="project-inline-visual" data-gallery-index="3"><img src="img_projects/creche.png" alt="Emplacement pour la badgeuse, les présences ou les transmissions" /><span>Badgeuse / présences ou transmissions</span></button>
-            <button type="button" class="project-inline-visual" data-gallery-index="4"><img src="img_projects/creche.png" alt="Emplacement pour le portail parent ou le journal quotidien" /><span>Portail parent / journal quotidien</span></button>
-            <button type="button" class="project-inline-visual" data-gallery-index="6"><img src="img_projects/creche.png" alt="Emplacement pour le planning" /><span>Planning</span></button>
+            <button type="button" class="project-inline-visual" data-gallery-index="2"><img src="img_projects/erp-micro-creches-presences-du-jour.png" alt="Suivi quotidien des présences, absences et retards" /><span>Présences du jour</span></button>
+            <button type="button" class="project-inline-visual" data-gallery-index="3"><img src="img_projects/erp-micro-creches-planning-hebdomadaire.png" alt="Calendrier hebdomadaire des créneaux de présence" /><span>Planning hebdomadaire</span></button>
+            <button type="button" class="project-inline-visual" data-gallery-index="4"><img src="img_projects/erp-micro-creches-suivi-heures-realisees.png" alt="Synthèse hebdomadaire et mensuelle des heures réalisées par enfant" /><span>Suivi des heures réalisées</span></button>
+            <button type="button" class="project-inline-visual" data-gallery-index="5"><img src="img_projects/erp-micro-creches-portail-parent-accueil.png" alt="Tableau de bord sécurisé destiné aux familles" /><span>Portail parent - accueil</span></button>
+            <button type="button" class="project-inline-visual" data-gallery-index="6"><img src="img_projects/erp-micro-creches-portail-parent-transmissions.png" alt="Fiche enfant et transmissions quotidiennes accessibles aux parents" /><span>Portail parent - transmissions</span></button>
           </div>
+        </div>
+        <div class="section">
+          <h3 class="section-title">Administration et dossiers familles</h3>
+          <p class="description">Les administrateurs peuvent créer et gérer les comptes parents, associer les enfants aux bonnes familles et centraliser les documents et pièces administratives depuis un même espace.</p>
+          <button type="button" class="project-inline-visual" data-gallery-index="7"><img src="img_projects/erp-micro-creches-gestion-comptes-parents.png" alt="Gestion des comptes parents, des enfants associés et des documents" /><span>Administration des comptes parents et dossiers familles</span></button>
         </div>
         <div class="section">
           <h3 class="section-title">Données sensibles et sécurité</h3>
           <p class="description">L’application manipule des données concernant les enfants, les parents et le personnel. L’authentification, les rôles, les contrôles côté backend et l’isolation par établissement encadrent leur accès. Des mesures de protection et de gestion des accès ont été intégrées ; aucune conformité juridique formelle n’est revendiquée.</p>
-          <button type="button" class="project-inline-visual" data-gallery-index="5"><img src="img_projects/creche.png" alt="Emplacement pour les rôles et permissions" /><span>Rôles / permissions</span></button>
+          <button type="button" class="project-inline-visual" data-gallery-index="8"><img src="img_projects/erp-micro-creches-roles-permissions.png" alt="Schéma des rôles, périmètres d'accès et contrôles RBAC de l'ERP" /><span>Rôles, permissions et périmètres d’accès</span></button>
+        </div>
+        <div class="section">
+          <h3 class="section-title">Architecture technique</h3>
+          <p class="description">L’ERP repose sur une SPA React connectée à une API Express, avec une couche de DTO partagés, des contrôles d’accès côté backend, MongoDB pour les données métier, Redis pour les besoins associés et des suites de tests automatisés autour des parcours critiques.</p>
+          <button type="button" class="project-inline-visual" data-gallery-index="9"><img src="img_projects/erp-micro-creches-architecture-technique.png" alt="Architecture React, Express, MongoDB, Redis, tests et Docker" /><span>Architecture technique de l’ERP</span></button>
         </div>
         <div class="section">
           <h3 class="section-title">Qualité et livraison</h3>
@@ -205,14 +215,16 @@ export const freelanceProjects: Project[] = [
       </div>
     `,
     gallery: [
-      { src: "img_projects/creche.png", title: "Dashboard global / multi-crèches", alt: "Emplacement pour le dashboard global multi-crèches" },
-      { src: "img_projects/creche.png", title: "Sélecteur de crèche + contexte actif", alt: "Emplacement pour le sélecteur de crèche et le contexte actif" },
-      { src: "img_projects/creche.png", title: "Gestion enfants / dossier enfant", alt: "Emplacement pour la gestion des enfants et un dossier enfant" },
-      { src: "img_projects/creche.png", title: "Badgeuse / présences ou transmissions", alt: "Emplacement pour la badgeuse, les présences ou les transmissions" },
-      { src: "img_projects/creche.png", title: "Portail parent / journal quotidien", alt: "Emplacement pour le portail parent ou le journal quotidien" },
-      { src: "img_projects/creche.png", title: "Rôles / permissions", alt: "Emplacement pour les rôles et permissions" },
-      { src: "img_projects/creche.png", title: "Planning", alt: "Emplacement pour le planning" },
-      { src: "img_projects/creche.png", title: "Schéma architecture", alt: "Emplacement pour le schéma d’architecture" },
+      { src: "img_projects/erp-micro-creches-gestion-enfants.png", title: "Gestion des enfants", alt: "Interface de gestion des enfants d'une micro-crèche" },
+      { src: "img_projects/erp-micro-creches-vue-multisite.png", title: "Vue multi-crèches et contexte actif", alt: "Vue consolidée des enfants avec sélection de l'établissement" },
+      { src: "img_projects/erp-micro-creches-presences-du-jour.png", title: "Présences du jour", alt: "Suivi quotidien des présences, absences et retards" },
+      { src: "img_projects/erp-micro-creches-planning-hebdomadaire.png", title: "Planning hebdomadaire des présences", alt: "Calendrier hebdomadaire des créneaux de présence" },
+      { src: "img_projects/erp-micro-creches-suivi-heures-realisees.png", title: "Suivi des heures réalisées", alt: "Synthèse hebdomadaire et mensuelle des heures réalisées par enfant" },
+      { src: "img_projects/erp-micro-creches-portail-parent-accueil.png", title: "Portail parent - tableau de bord", alt: "Tableau de bord sécurisé destiné aux familles" },
+      { src: "img_projects/erp-micro-creches-portail-parent-transmissions.png", title: "Portail parent - transmissions quotidiennes", alt: "Fiche enfant et transmissions quotidiennes accessibles aux parents" },
+      { src: "img_projects/erp-micro-creches-gestion-comptes-parents.png", title: "Administration des comptes parents", alt: "Gestion des comptes parents, des enfants associés et des documents" },
+      { src: "img_projects/erp-micro-creches-roles-permissions.png", title: "Rôles et permissions", alt: "Schéma des rôles, périmètres d'accès et contrôles RBAC de l'ERP" },
+      { src: "img_projects/erp-micro-creches-architecture-technique.png", title: "Architecture technique de l'ERP", alt: "Architecture React, Express, MongoDB, Redis, tests et Docker" },
     ],
   },
   {
