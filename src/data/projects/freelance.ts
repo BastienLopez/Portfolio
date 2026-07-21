@@ -119,6 +119,7 @@ export const freelanceProjects: Project[] = [
           <p class="description">ERP métier conçu pour centraliser la gestion opérationnelle et administrative d’un réseau de <strong>cinq micro-crèches</strong>, avec un espace professionnel et un portail destiné aux familles.</p>
           <p class="description">La plateforme remplace des données et opérations dispersées par un environnement unique, adapté au multi-établissements, aux profils utilisateurs distincts et aux informations sensibles liées aux enfants, parents et équipes.</p>
           <p class="description">Elle rassemble les modules métier utiles au suivi quotidien, à la coordination des établissements et au pilotage des responsables autorisés.</p>
+          <p class="description">Informations sensibles et visuels anonymisées et sécurisées selon les règles de confidentialité.</p>
           <button type="button" class="project-inline-visual" data-gallery-index="0"><img src="img_projects/erp-micro-creches-gestion-enfants.png" alt="Interface de gestion des enfants d'une micro-crèche" /><span>Gestion des enfants</span></button>
         </div>
         <div class="section info-box">
@@ -140,6 +141,7 @@ export const freelanceProjects: Project[] = [
           <div class="metrics-grid">
             <div><strong>5</strong><span>micro-crèches gérées depuis une même plateforme</span></div>
             <div><strong>4</strong><span>profils d’accès principaux</span></div>
+            <div><strong>8</strong><span>ans de données récupérées</span></div>
           </div>
         </div>
         <div class="section">
@@ -151,7 +153,7 @@ export const freelanceProjects: Project[] = [
             <li class="feature-item"><strong>Professionnel</strong> — accès aux opérations quotidiennes de son établissement.</li>
             <li class="feature-item"><strong>Parent</strong> — consultation des seules informations associées à ses enfants.</li>
           </ul>
-          <div class="inline-visual-grid">
+          <div class="project-inline-visual">
             <button type="button" class="project-inline-visual" data-gallery-index="1"><img src="img_projects/erp-micro-creches-vue-multisite.png" alt="Vue consolidée des enfants avec sélection de l'établissement" /><span>Vue multi-crèches et contexte actif</span></button>
           </div>
         </div>
