@@ -163,7 +163,7 @@ export const freelanceProjects: Project[] = [
             <li class="feature-item"><strong>Présences &amp; badgeuse</strong> — arrivées, départs, absences et historique.</li>
             <li class="feature-item"><strong>Planning</strong> — organisation des équipes et des activités.</li>
             <li class="feature-item"><strong>Transmissions</strong> — suivi quotidien partagé avec les familles.</li>
-            <li class="feature-item"><strong>Portail parents</strong> — espace sécurisé dédié aux familles.</li>
+            <li class="feature-item"><strong>Portail parents</strong> — espace dédié aux familles avec accès différenciés.</li>
             <li class="feature-item"><strong>Personnel</strong> — gestion des équipes et de leurs informations.</li>
             <li class="feature-item"><strong>Documents</strong> — centralisation des éléments administratifs.</li>
             <li class="feature-item"><strong>Reporting</strong> — tableaux de bord et indicateurs utiles au pilotage.</li>
@@ -174,7 +174,7 @@ export const freelanceProjects: Project[] = [
             <button type="button" class="project-inline-visual" data-gallery-index="2"><img src="img_projects/erp-micro-creches-presences-du-jour.png" alt="Suivi quotidien des présences, absences et retards" loading="lazy" decoding="async" /><span>Présences du jour</span></button>
             <button type="button" class="project-inline-visual" data-gallery-index="3"><img src="img_projects/erp-micro-creches-planning-hebdomadaire.png" alt="Calendrier hebdomadaire des créneaux de présence" loading="lazy" decoding="async" /><span>Planning hebdomadaire</span></button>
             <button type="button" class="project-inline-visual" data-gallery-index="4"><img src="img_projects/erp-micro-creches-suivi-heures-realisees.png" alt="Synthèse hebdomadaire et mensuelle des heures réalisées par enfant" loading="lazy" decoding="async" /><span>Suivi des heures réalisées</span></button>
-            <button type="button" class="project-inline-visual" data-gallery-index="5"><img src="img_projects/erp-micro-creches-portail-parent-accueil.png" alt="Tableau de bord sécurisé destiné aux familles" loading="lazy" decoding="async" /><span>Portail parent - accueil</span></button>
+            <button type="button" class="project-inline-visual" data-gallery-index="5"><img src="img_projects/erp-micro-creches-portail-parent-accueil.png" alt="Tableau de bord destiné aux familles" loading="lazy" decoding="async" /><span>Portail parent - accueil</span></button>
             <button type="button" class="project-inline-visual" data-gallery-index="6"><img src="img_projects/erp-micro-creches-portail-parent-transmissions.png" alt="Fiche enfant et transmissions quotidiennes accessibles aux parents" loading="lazy" decoding="async" /><span>Portail parent - transmissions</span></button>
           </div>
         </div>
@@ -190,12 +190,12 @@ export const freelanceProjects: Project[] = [
         </div>
         <div class="section">
           <h3 class="section-title">Architecture technique</h3>
-          <p class="description">L’ERP repose sur une SPA React connectée à une API Express, avec une couche de DTO partagés, des contrôles d’accès côté backend, MongoDB pour les données métier et des suites de tests automatisés autour des parcours critiques.</p>
+          <p class="description">L’ERP repose sur une SPA React connectée à une API Express, avec des contrôles d’accès côté backend, MongoDB pour les données métier et des suites de tests automatisés autour de certains parcours critiques.</p>
           <button type="button" class="project-inline-visual" data-gallery-index="9"><img src="img_projects/erp-micro-creches-architecture-technique.png" alt="Architecture React, Express, MongoDB, tests et Docker" loading="lazy" decoding="async" /><span>Architecture technique de l’ERP</span></button>
         </div>
         <div class="section">
           <h3 class="section-title">Qualité et livraison</h3>
-          <p class="description">Le dépôt comprend des suites Jest autour du backend, du frontend et des parcours critiques, une documentation API préparée autour de Swagger/OpenAPI, un environnement Docker reproductible et des workflows CI configurés. Un workflow de déploiement est préparé ; l’usage en production n’est pas affirmé ici.</p>
+          <p class="description">Le dépôt comprend des suites Jest principalement autour du backend et de certains parcours critiques, une documentation API préparée autour de Swagger/OpenAPI, un environnement Docker reproductible et des workflows CI configurés. Un workflow de déploiement est préparé ; l’usage en production n’est pas affirmé ici.</p>
         </div>
         <div class="section">
           <h3 class="section-title">Principaux défis</h3>

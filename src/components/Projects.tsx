@@ -369,7 +369,7 @@ const Projects = () => {
               title: "Functional scope",
               items: [
                 "Centralised multi-site management from one interface.",
-                "Records, registrations, attendance, planning and invoicing.",
+                "Records, registrations, attendance and planning.",
                 "Dashboards and granular access rights by role.",
               ],
             },

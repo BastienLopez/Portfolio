@@ -70,7 +70,7 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     title: "Multi-Nursery ERP & Digital Ecosystem",
     context: [
       "Business ERP designed to centralise the operation of a network of five micro-nurseries, alongside a family portal and a public-facing website.",
-      "The platform brings together children, families, staff, attendance, planning, records, documents, invoicing, dashboards and multi-site administration in one environment.",
+      "The platform brings together children, families, staff, attendance, planning, records, documents, dashboards and multi-site administration in one environment.",
       "It was designed for multi-site use: data is separated by nursery and access is restricted according to each user profile.",
     ],
     role: "I designed and developed the full-stack solution: functional architecture, React interfaces, Node.js APIs, MongoDB data model, role-based access, tests, Docker-based environments, CI/CD preparation, documentation and operational readiness. I also integrated eight years of historical data to preserve continuity with existing records. Functional details remain partly anonymised for confidentiality.",
@@ -79,13 +79,13 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     sections: [
       {
         title: "Business modules",
-        items: ["Multi-nursery management and consolidated dashboards", "Children, parent and staff records", "Attendance, staff attendance, planning and daily handovers", "Documents, contracts, invoicing, reporting and CSV/PDF exports", "Secure family portal and differentiated administrator, professional and parent areas"],
+        items: ["Multi-nursery management and consolidated dashboards", "Children, parent and staff records", "Attendance, staff attendance, planning and daily handovers", "Documents, reporting and operational indicators", "Family portal with role-based access, alongside differentiated administrator and professional areas"],
         visuals: [
           { src: "img_projects/erp-micro-creches-gestion-enfants.png", alt: "Micro-nursery child-management interface", caption: "Child management", galleryIndex: 0 },
           { src: "img_projects/erp-micro-creches-presences-du-jour.png", alt: "Daily attendance, absence and late-arrival monitoring", caption: "Daily attendance", galleryIndex: 2 },
           { src: "img_projects/erp-micro-creches-planning-hebdomadaire.png", alt: "Weekly attendance planning calendar", caption: "Weekly planning", galleryIndex: 3 },
           { src: "img_projects/erp-micro-creches-suivi-heures-realisees.png", alt: "Weekly and monthly completed-hours summary", caption: "Completed-hours tracking", galleryIndex: 4 },
-          { src: "img_projects/erp-micro-creches-portail-parent-accueil.png", alt: "Secure dashboard for families", caption: "Family portal dashboard", galleryIndex: 5 },
+          { src: "img_projects/erp-micro-creches-portail-parent-accueil.png", alt: "Family dashboard", caption: "Family portal dashboard", galleryIndex: 5 },
           { src: "img_projects/erp-micro-creches-portail-parent-transmissions.png", alt: "Child record and daily handovers available to parents", caption: "Family portal handovers", galleryIndex: 6 },
         ],
         visualLayout: "grid",
@@ -105,11 +105,11 @@ const englishCaseStudies: Record<string, CaseStudy> = {
       },
       {
         title: "Technical architecture",
-        description: ["The ERP uses a React SPA connected to an Express API, shared DTOs, backend access controls, MongoDB for business data and automated tests around critical journeys."],
+        description: ["The ERP uses a React SPA connected to an Express API, with backend access controls, MongoDB for business data and automated tests around selected critical journeys."],
         items: [],
         visuals: [{ src: "img_projects/erp-micro-creches-architecture-technique.png", alt: "React, Express, MongoDB, testing and Docker architecture", caption: "ERP technical architecture", galleryIndex: 9 }],
       },
-      { title: "Quality and delivery", items: ["Automated Jest suites around backend, frontend and critical flows", "API documentation prepared around Swagger/OpenAPI", "Reproducible Docker environment and configured CI workflows", "A deployment workflow is prepared; current production use is not asserted here"] },
+      { title: "Quality and delivery", items: ["Automated Jest suites cover the backend and selected critical flows", "API documentation prepared around Swagger/OpenAPI", "Reproducible Docker environment and configured CI workflows", "A deployment workflow is prepared; current production use is not asserted here"] },
     ],
     results: ["Five micro-nurseries can be supervised from one interface, with business modules and differentiated access by role.", "The project covers requirements, UX/UI, full-stack development, data, tests, delivery preparation, documentation and maintenance."],
   },
@@ -181,7 +181,7 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     title: "Novotel Restaurant — QR Prize Wheel",
     context: ["A real web experience created for the NOVOTEL Reims Tinqueux restaurant. QR codes on table coasters led guests to a mobile journey around a Google review and a prize wheel, with the opportunity to win a reward."],
     role: "Web-experience design, frontend development, wheel logic, QR journey integration, form handling and automated deployment.",
-    technologies: ["React", "JavaScript", "Tailwind CSS", "GitHub Pages"],
+    technologies: ["JavaScript", "D3.js", "HTML5", "CSS3", "GitHub Actions"],
     sections: [{ title: "Guest journey", items: ["Scan a QR code from the restaurant coaster", "Open the mobile web experience", "Follow the Google-review journey", "Play the prize wheel and manage the reward flow"] }],
     results: ["A mobile-first, QR-accessible journey built specifically for this restaurant context."],
   },
@@ -246,8 +246,8 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     context: ["SEO and local-search work for business websites: audit, structured data, content, technical structure and follow-up indicators. GEO is treated as an editorial and structural approach for generative engines, not as a synonym for local SEO."],
     role: "Audit, metadata and content optimisation, technical structure and implementation of SEO and local-monitoring foundations.",
     technologies: ["SEO", "Google Analytics", "Google Search Console", "Schema.org", "Local SEO", "Structured data"],
-    sections: [{ title: "Scope", items: ["On-page, off-page and technical SEO", "Structured data and URL structure", "Image optimisation and mobile-first implementation", "Local presence and Search Console / Analytics monitoring"] }, { title: "Follow-up", items: ["Positioning, organic traffic and qualified leads should be measured from source data", "An anonymised Analytics or Search Console capture can complete the case study"] }],
-    results: ["Technical and editorial foundations are strengthened; traffic and ranking gains remain to be documented with source data."],
+    sections: [{ title: "Scope", items: ["On-page, off-page and technical SEO", "Structured data and URL structure", "Image optimisation and mobile-first implementation", "Local presence and Search Console / Analytics monitoring"] }],
+    results: ["Tracking foundations are configured through Search Console and Analytics. No traffic, ranking or conversion gains are claimed without source data."],
   },
   "n8n-workflow-automation": {
     title: "n8n Automations — Reporting, Video Derush & Prospecting",
