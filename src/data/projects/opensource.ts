@@ -679,7 +679,7 @@ export const opensourceProjects: Project[] = [
             </li>
             <li class="feature-item">
               <span class="feature-icon">🔒</span>
-              <strong>Conformité RGPD</strong> - Mentions légales complètes
+              <strong>Informations légales &amp; confidentialité</strong> - Mentions légales et informations de confidentialité intégrées
             </li>
             <li class="feature-item">
               <span class="feature-icon">🚀</span>

@@ -1,14 +1,43 @@
+type InlineVisual = {
+  src: string;
+  alt: string;
+  caption: string;
+  galleryIndex: number;
+};
+
+type CaseStudySection = {
+  title: string;
+  items: string[];
+  description?: string[];
+  visuals?: InlineVisual[];
+  visualLayout?: "grid";
+};
+
 type CaseStudy = {
   title: string;
   context: string[];
   role?: string;
   technologies: string[];
-  sections: Array<{ title: string; items: string[] }>;
+  introVisuals?: InlineVisual[];
+  sections: CaseStudySection[];
   results: string[];
 };
 
 const toList = (items: string[]) =>
   `<ul class="features-list">${items.map((item) => `<li class="feature-item">${item}</li>`).join("")}</ul>`;
+
+const renderVisuals = (visuals: InlineVisual[] = [], layout?: "grid") => {
+  if (visuals.length === 0) return "";
+
+  const content = visuals
+    .map(
+      ({ src, alt, caption, galleryIndex }) =>
+        `<button type="button" class="project-inline-visual" data-gallery-index="${galleryIndex}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async" /><span>${caption}</span></button>`,
+    )
+    .join("");
+
+  return layout === "grid" ? `<div class="inline-visual-grid">${content}</div>` : content;
+};
 
 const renderCaseStudy = (caseStudy: CaseStudy) => `
   <div class="project-detail">
@@ -17,12 +46,13 @@ const renderCaseStudy = (caseStudy: CaseStudy) => `
       <h3 class="section-title">Project context</h3>
       ${caseStudy.context.map((paragraph) => `<p class="description">${paragraph}</p>`).join("")}
     </div>
+    ${renderVisuals(caseStudy.introVisuals)}
     ${caseStudy.role ? `<div class="section info-box"><h3 class="section-title">My role</h3><p class="description">${caseStudy.role}</p></div>` : ""}
     <div class="section">
       <h3 class="section-title">Technologies</h3>
       <div class="tech-grid">${caseStudy.technologies.map((technology) => `<div class="tech-item"><span class="tech-name">${technology}</span></div>`).join("")}</div>
     </div>
-    ${caseStudy.sections.map((section) => `<div class="section"><h3 class="section-title">${section.title}</h3>${toList(section.items)}</div>`).join("")}
+    ${caseStudy.sections.map((section) => `<div class="section"><h3 class="section-title">${section.title}</h3>${section.description?.map((paragraph) => `<p class="description">${paragraph}</p>`).join("") ?? ""}${section.items.length > 0 ? toList(section.items) : ""}${renderVisuals(section.visuals, section.visualLayout)}</div>`).join("")}
     <div class="section results"><h3 class="section-title">Outcome</h3><div class="result-box success">${caseStudy.results.map((result) => `<p class="result-text">${result}</p>`).join("")}</div></div>
   </div>
 `;
@@ -43,12 +73,43 @@ const englishCaseStudies: Record<string, CaseStudy> = {
       "The platform brings together children, families, staff, attendance, planning, records, documents, invoicing, dashboards and multi-site administration in one environment.",
       "It was designed for multi-site use: data is separated by nursery and access is restricted according to each user profile.",
     ],
-    role: "I designed and developed the full-stack solution: functional architecture, React interfaces, Node.js APIs, MongoDB data model, role-based access, tests, Docker-based environments, CI/CD preparation, documentation and operational readiness. Functional details remain partly anonymised for confidentiality.",
-    technologies: ["React", "JavaScript", "Node.js", "Express", "MongoDB", "Mongoose", "JWT / RBAC", "Docker", "CI/CD", "TDD", "Swagger / OpenAPI"],
+    role: "I designed and developed the full-stack solution: functional architecture, React interfaces, Node.js APIs, MongoDB data model, role-based access, tests, Docker-based environments, CI/CD preparation, documentation and operational readiness. I also integrated eight years of historical data to preserve continuity with existing records. Functional details remain partly anonymised for confidentiality.",
+    technologies: ["React", "JavaScript", "Node.js", "Express", "MongoDB", "Mongoose", "JWT / RBAC", "Docker", "CI/CD", "TDD"],
+    introVisuals: [{ src: "img_projects/erp-micro-creches-vue-multisite.png", alt: "Consolidated children view with nursery selection", caption: "Multi-nursery view and active context", galleryIndex: 1 }],
     sections: [
-      { title: "Business modules", items: ["Multi-nursery management and consolidated dashboards", "Children, parent and staff records", "Attendance, staff attendance, planning and daily handovers", "Documents, contracts, invoicing, reporting and CSV/PDF exports", "Secure family portal and differentiated administrator, professional and parent areas"] },
+      {
+        title: "Business modules",
+        items: ["Multi-nursery management and consolidated dashboards", "Children, parent and staff records", "Attendance, staff attendance, planning and daily handovers", "Documents, contracts, invoicing, reporting and CSV/PDF exports", "Secure family portal and differentiated administrator, professional and parent areas"],
+        visuals: [
+          { src: "img_projects/erp-micro-creches-gestion-enfants.png", alt: "Micro-nursery child-management interface", caption: "Child management", galleryIndex: 0 },
+          { src: "img_projects/erp-micro-creches-presences-du-jour.png", alt: "Daily attendance, absence and late-arrival monitoring", caption: "Daily attendance", galleryIndex: 2 },
+          { src: "img_projects/erp-micro-creches-planning-hebdomadaire.png", alt: "Weekly attendance planning calendar", caption: "Weekly planning", galleryIndex: 3 },
+          { src: "img_projects/erp-micro-creches-suivi-heures-realisees.png", alt: "Weekly and monthly completed-hours summary", caption: "Completed-hours tracking", galleryIndex: 4 },
+          { src: "img_projects/erp-micro-creches-portail-parent-accueil.png", alt: "Secure dashboard for families", caption: "Family portal dashboard", galleryIndex: 5 },
+          { src: "img_projects/erp-micro-creches-portail-parent-transmissions.png", alt: "Child record and daily handovers available to parents", caption: "Family portal handovers", galleryIndex: 6 },
+        ],
+        visualLayout: "grid",
+      },
       { title: "Multi-site architecture and access", items: ["A nursery context and a dedicated identifier scope the main business resources", "The backend verifies authorised sites and roles before serving data", "Global administrators can supervise the network while local users only access their assigned sites", "Because children, parents and staff data are sensitive, access control, confidentiality and traceability were treated as core concerns"] },
-      { title: "Quality and delivery", items: ["Automated Jest suites around backend, frontend and critical flows", "Documented REST API with Swagger/OpenAPI export", "Reproducible Docker environment and configured CI workflows", "A deployment workflow is prepared; current production use is not asserted here"] },
+      {
+        title: "Family account and record administration",
+        description: ["Administrators can create and manage parent accounts, link children to the appropriate families and centralise administrative documents in one place."],
+        items: [],
+        visuals: [{ src: "img_projects/erp-micro-creches-gestion-comptes-parents.png", alt: "Parent accounts, linked children and document management", caption: "Family account and record administration", galleryIndex: 7 }],
+      },
+      {
+        title: "Sensitive data and security",
+        description: ["The application handles information about children, parents and staff. Authentication, role-based access, backend controls and nursery isolation govern access; no formal legal compliance is claimed."],
+        items: [],
+        visuals: [{ src: "img_projects/erp-micro-creches-roles-permissions.png", alt: "ERP roles, access scopes and RBAC controls", caption: "Roles, permissions and access scopes", galleryIndex: 8 }],
+      },
+      {
+        title: "Technical architecture",
+        description: ["The ERP uses a React SPA connected to an Express API, shared DTOs, backend access controls, MongoDB for business data and automated tests around critical journeys."],
+        items: [],
+        visuals: [{ src: "img_projects/erp-micro-creches-architecture-technique.png", alt: "React, Express, MongoDB, testing and Docker architecture", caption: "ERP technical architecture", galleryIndex: 9 }],
+      },
+      { title: "Quality and delivery", items: ["Automated Jest suites around backend, frontend and critical flows", "API documentation prepared around Swagger/OpenAPI", "Reproducible Docker environment and configured CI workflows", "A deployment workflow is prepared; current production use is not asserted here"] },
     ],
     results: ["Five micro-nurseries can be supervised from one interface, with business modules and differentiated access by role.", "The project covers requirements, UX/UI, full-stack development, data, tests, delivery preparation, documentation and maintenance."],
   },
@@ -59,6 +120,14 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     technologies: ["React", "Tailwind CSS", "JavaScript"],
     sections: [{ title: "Delivered features", items: ["Service presentation", "Before/after gallery", "Appointment and direct-contact journey", "Responsive navigation"] }],
     results: ["Public website designed to present the services clearly and support contact requests."],
+  },
+  "wallet-provider": {
+    title: "Altme Wallet Provider",
+    context: ["Digital identity wallet product for organisations and individuals, designed around verifiable credentials and interoperability standards."],
+    role: "Contribution to the product and its technical ecosystem within the team.",
+    technologies: ["Identity Wallet", "eIDAS 2.0", "Verifiable Credentials", "OIDC4VC", "EBSI", "SSI"],
+    sections: [{ title: "Contribution scope", items: ["Digital identity wallet product", "Verifiable-credential management", "Interoperability with the European EUDI Wallet ecosystem"] }],
+    results: ["Contribution to the technical product ecosystem for a digital identity wallet."],
   },
   cledevoute: {
     title: "Cle De Voute — Masonry",

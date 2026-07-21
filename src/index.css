@@ -215,7 +215,7 @@ All colors MUST be HSL.
   }
 
   .description {
-    @apply max-w-3xl text-base leading-7 text-foreground/75 md:text-lg;
+    @apply w-full max-w-none text-base leading-7 text-foreground/75 md:text-lg;
   }
 
   .highlight {
@@ -332,7 +332,7 @@ All colors MUST be HSL.
   }
 
   .workflow-step {
-    @apply max-w-3xl;
+    @apply w-full max-w-none;
   }
 
   .workflow-step h4 {
@@ -363,7 +363,7 @@ All colors MUST be HSL.
   }
 
   .project-detail-content p {
-    @apply my-4 max-w-3xl text-base leading-7 text-foreground/75 md:text-lg;
+    @apply my-4 w-full max-w-none text-base leading-7 text-foreground/75 md:text-lg;
   }
 
   .project-inline-visual {

@@ -49,6 +49,91 @@ const englishProjectSummaries: Record<
   string,
   Pick<DisplayProject, "title" | "description">
 > = {
+  "altme-wallet": {
+    title: "Altme Wallet Platform",
+    description:
+      "Backend platform development and improvement for managing digital wallets and verifiable credentials.",
+  },
+  "altme-documentation": {
+    title: "Altme Documentation",
+    description:
+      "Creation and maintenance of developer documentation for Altme Wallet Provider, across GitBook and Docusaurus.",
+  },
+  "seo-geo-optimization": {
+    title: "SEO & Local Search Visibility",
+    description:
+      "SEO and local-search work for business websites: audit, structured data, content and performance monitoring.",
+  },
+  "n8n-workflow-automation": {
+    title: "n8n Automations — Reporting, Video Derush & Prospecting",
+    description:
+      "n8n workflows for social-media reporting, social-video preparation and prospect-list preparation from Google Maps.",
+  },
+  "eloi-coachsteo": {
+    title: "Eloi CoachSteo — Sport Trainer",
+    description:
+      "One-page showcase website for a sports coach and osteopath, presenting fitness, physical preparation and tailored HYROX programmes.",
+  },
+  "luxury-auto-detailing": {
+    title: "Luxury Auto Detailing",
+    description:
+      "Showcase website for premium car-detailing services: cleaning, polishing, ceramic protection and interior restoration.",
+  },
+  cledevoute: {
+    title: "Cle De Voute — Masonry",
+    description:
+      "Showcase website for Cle De Voute Masonry, presenting services and completed work.",
+  },
+  "berserk-universe": {
+    title: "Berserk Universe",
+    description:
+      "Interactive platform dedicated to Kentarō Miura's Berserk universe, with summaries, character analysis and an interactive map.",
+  },
+  "pokemon-binder": {
+    title: "Pokémon Binder",
+    description:
+      "Web application for managing a Pokémon TCG card collection in a virtual binder, with search and collection statistics.",
+  },
+  "ia-trading": {
+    title: "AI Stock Trading Bot",
+    description:
+      "Experimental data-collection, backtesting and AI market-signal analysis project, with no financial performance claims.",
+  },
+  patripro: {
+    title: "PatriPro",
+    description:
+      "Application that centralises the tracking of accounts, investments, budgets and loans in one dashboard.",
+  },
+  "ats-filter-resume": {
+    title: "ATS Filter Resume — Explainable CV Analysis",
+    description:
+      "Full-stack CV ATS-analysis application with prioritised, explainable recommendations, with or without a job description.",
+  },
+  "novotel-roue-chance": {
+    title: "NOVOTEL — Prize Wheel",
+    description:
+      "QR-accessible mobile journey for NOVOTEL Reims Tinqueux, combining restaurant feedback with a promotional prize wheel.",
+  },
+  aqualis: {
+    title: "Aqualis",
+    description:
+      "Gamified aquarium app for focus sessions: earn gold and XP, collect fish, manage aquariums and start breeding.",
+  },
+  "nolvus-mod-automation": {
+    title: "Nolvus Mod Automation",
+    description:
+      "AutoHotkey script that automates many repetitive clicks needed to download Nolvus files without a premium account.",
+  },
+  "bloodborne-shadps4": {
+    title: "Bloodborne — Emulator Installation Guide",
+    description:
+      "Installation guide for Bloodborne through the shadPS4 emulator, including graphical mods and community fixes.",
+  },
+  "demons-souls-rpcs3": {
+    title: "Demon's Souls — Emulator Installation Guide",
+    description:
+      "Installation guide for Demon's Souls through RPCS3, including graphical mods and community fixes.",
+  },
   "erp-micro-creches": {
     title: "Micro-nursery ERP",
     description:
@@ -261,9 +346,6 @@ const Projects = () => {
           ...project.translations?.en,
           ...englishProjectSummaries[project.id],
           ...(englishDetailedContent ? { detailedContent: englishDetailedContent } : {}),
-          ...(project.id === "wallet-provider" && !englishDetailedContent
-            ? { detailedContent: undefined }
-            : {}),
         }
       : project;
   };
