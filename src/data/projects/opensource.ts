@@ -95,6 +95,227 @@ export const opensourceProjects: Project[] = [
     gallery: ['img_projects/berserk.png']
   },
   {
+  id: "codex-limits-usage",
+  title: "Codex Limits Usage - Windows",
+  description:
+    "Application Windows native qui suit le quota Codex restant, compare la consommation à un planning configurable et estime le jour et l'heure où le quota pourrait atteindre 0 %.",
+  category: "opensource",
+  image: "img_projects/codex-limits.png",
+  tech: [
+    "C#",
+    ".NET 8",
+    "WPF",
+    "Codex App Server",
+    "PowerShell",
+    "GitHub Actions",
+  ],
+  github: "https://github.com/BastienLopez/Codex-limits-windows",
+  detailedContent: `
+    <div class="project-detail">
+      <h2 class="project-title">📊 Codex Limits Usage - Windows</h2>
+
+      <div class="section">
+        <h3 class="section-title">📋 Contexte du projet</h3>
+        <p class="description">
+          Codex indique le pourcentage de quota restant, mais cette valeur ne permet pas toujours
+          de savoir si le quota tiendra jusqu'à sa prochaine réinitialisation.
+        </p>
+        <p class="description">
+          <strong>Codex Limits Usage</strong> est une application Windows locale et open source
+          qui analyse le rythme de consommation, le compare à un planning de travail configurable
+          et estime le moment où le quota pourrait atteindre 0 %.
+        </p>
+      </div>
+
+      <div class="section info-box">
+        <h3 class="section-title">👤 Mon rôle</h3>
+        <p class="description">
+          Conception et développement complet de l'application : interface WPF,
+          intégration avec Codex App Server, moteur de prévision, historique local,
+          fonctionnement en arrière-plan, packaging en EXE autonome et pipeline CI/CD.
+        </p>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">🎯 Objectif & positionnement</h3>
+        <ul class="features-list">
+          <li class="feature-item">
+            <span class="feature-icon">🖥️</span>
+            <strong>Type</strong> - Application desktop native pour Windows
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">🎯</span>
+            <strong>Objectif</strong> - Savoir si le quota Codex restant tiendra jusqu'au reset
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">👥</span>
+            <strong>Cible</strong> - Développeurs utilisant régulièrement Codex CLI
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">🌐</span>
+            <strong>Positionnement</strong> - Projet indépendant, local, open source et non officiel
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">📦</span>
+            <strong>Distribution</strong> - Un seul EXE Windows x64 avec .NET 8 intégré
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">⚙️ Technologies utilisées</h3>
+        <div class="tech-grid">
+          <div class="tech-item">
+            <span class="tech-icon">💻</span>
+            <span class="tech-name">C# / .NET 8</span>
+            <p class="tech-desc">Logique applicative et moteur de prévision</p>
+          </div>
+
+          <div class="tech-item">
+            <span class="tech-icon">🪟</span>
+            <span class="tech-name">WPF</span>
+            <p class="tech-desc">Interface desktop native Windows</p>
+          </div>
+
+          <div class="tech-item">
+            <span class="tech-icon">🔌</span>
+            <span class="tech-name">Codex App Server</span>
+            <p class="tech-desc">Lecture locale des limites d'utilisation</p>
+          </div>
+
+          <div class="tech-item">
+            <span class="tech-icon">📨</span>
+            <span class="tech-name">JSON-RPC</span>
+            <p class="tech-desc">Communication avec le processus Codex CLI</p>
+          </div>
+
+          <div class="tech-item">
+            <span class="tech-icon">⚡</span>
+            <span class="tech-name">PowerShell</span>
+            <p class="tech-desc">Build, tests et génération de l'EXE autonome</p>
+          </div>
+
+          <div class="tech-item">
+            <span class="tech-icon">🔄</span>
+            <span class="tech-name">GitHub Actions</span>
+            <p class="tech-desc">Compilation, tests et publication automatisée</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">✨ Fonctionnalités principales</h3>
+        <ul class="features-list">
+          <li class="feature-item">
+            <span class="feature-icon">📊</span>
+            Affichage du quota restant et du quota déjà consommé
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">📉</span>
+            Graphique cible, consommation réelle, projection et historique
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">⏳</span>
+            Estimation du jour et de l'heure où le quota pourrait atteindre 0 %
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">📅</span>
+            Planning configurable avec jours et horaires de travail
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">🎯</span>
+            Calcul du quota encore utilisable aujourd'hui pour rester sur la cible
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">🛡️</span>
+            Réserve de sécurité configurable
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">💾</span>
+            Historique local limité à 90 jours
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">🔔</span>
+            Fonctionnement en arrière-plan dans la zone de notification Windows
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">🌍</span>
+            Interface disponible en français et en anglais
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">🔐 Architecture locale & confidentialité</h3>
+        <ul class="features-list">
+          <li class="feature-item">
+            L'application lance localement <code>codex app-server --listen stdio://</code>
+          </li>
+          <li class="feature-item">
+            Les limites sont récupérées avec <code>account/rateLimits/read</code>
+          </li>
+          <li class="feature-item">
+            Aucune lecture des prompts, conversations ou fichiers de travail
+          </li>
+          <li class="feature-item">
+            Aucune télémétrie, publicité ou service d'analyse distant
+          </li>
+          <li class="feature-item">
+            Les paramètres et échantillons d'utilisation restent enregistrés localement
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">🚀 Qualité & distribution</h3>
+        <ul class="features-list">
+          <li class="feature-item">
+            Smoke tests sur les calculs de planning, de rythme et de projection
+          </li>
+          <li class="feature-item">
+            Build et tests automatisés avec GitHub Actions
+          </li>
+          <li class="feature-item">
+            Publication sous la forme d'un EXE Windows x64 autonome
+          </li>
+          <li class="feature-item">
+            Runtime .NET 8 directement inclus dans l'exécutable
+          </li>
+          <li class="feature-item">
+            Génération d'empreintes SHA-256 pour les fichiers distribués
+          </li>
+          <li class="feature-item">
+            Installation de Codex CLI proposée uniquement lorsqu'il est absent
+          </li>
+        </ul>
+      </div>
+
+      <div class="section results">
+        <h3 class="section-title">🎯 Résultats</h3>
+        <div class="result-box success">
+          <p class="result-text">
+            ✅ Application Windows fonctionnelle permettant de visualiser et anticiper
+            la consommation du quota Codex.
+          </p>
+          <p class="result-text">
+            ✅ Distribution simplifiée : l'utilisateur télécharge un seul EXE
+            et n'a besoin ni du dépôt Git, ni du SDK .NET.
+          </p>
+          <p class="result-text">
+            ✅ Fonctionnement local, historique limité, interface bilingue
+            et exécution possible en arrière-plan.
+          </p>
+          <p class="result-text">
+            ✅ Projet open source distribué sous licence MIT avec CI/CD
+            et documentation de confidentialité et de sécurité.
+          </p>
+        </div>
+      </div>
+    </div>
+    `,
+    gallery: ["img_projects/codex-limits.png"],
+  },
+  {
     id: 'pokemon-binder',
     title: 'Pokémon Binder',
     description: "Application web pour gérer sa collection de cartes Pokémon TCG. Permet d'ajouter, classer et visualiser les cartes dans un classeur virtuel, avec recherche avancée et statistiques de collection.",

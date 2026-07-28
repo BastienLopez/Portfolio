@@ -145,6 +145,64 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     sections: [{ title: "Features", items: ["Character profiles and detailed summaries", "Interactive map of key places", "Chronological timeline", "Responsive dark interface"] }],
     results: ["Open-source exploration project combining structured content and interactive navigation."],
   },
+  "codex-limits-usage": {
+  title: "Codex Limits Usage — Windows",
+  context: [
+    "Codex displays the remaining usage percentage, but that value alone does not show whether the limit will last until the next reset.",
+    "Codex Limits Usage is a local, open-source Windows application that compares current consumption with a configurable work schedule and estimates when the remaining limit may reach 0%.",
+  ],
+  role:
+    "Full application design and development: WPF interface, Codex App Server integration, forecasting engine, local history, system-tray background operation, standalone executable packaging and CI/CD.",
+  technologies: [
+    "C#",
+    ".NET 8",
+    "WPF",
+    "Codex App Server",
+    "JSON-RPC",
+    "PowerShell",
+    "GitHub Actions",
+  ],
+  sections: [
+    {
+      title: "Main features",
+      items: [
+        "Remaining and consumed usage percentages",
+        "Target, actual, projected and historical usage chart",
+        "Estimated day and time when the remaining limit may reach 0%",
+        "Configurable working days, hours and refresh interval",
+        "Daily usage allowance calculated against the target",
+        "Configurable safety buffer",
+        "Local history retained for up to 90 days",
+        "French and English interface",
+        "System-tray background operation",
+      ],
+    },
+    {
+      title: "Local architecture and privacy",
+      items: [
+        "Local communication with codex app-server through JSON-RPC",
+        "No access to prompts, conversations or working files",
+        "No telemetry, advertising or remote analytics",
+        "Settings and usage samples remain stored locally",
+      ],
+    },
+    {
+      title: "Quality and distribution",
+      items: [
+        "Smoke tests covering scheduling, forecasting and chart calculations",
+        "Automated build and test pipeline with GitHub Actions",
+        "Self-contained Windows x64 executable with the .NET 8 runtime included",
+        "SHA-256 checksums generated for distributed files",
+        "Codex CLI installation is offered only when no local executable is found",
+      ],
+    },
+  ],
+  results: [
+    "A native Windows utility for visualising and anticipating Codex usage.",
+    "End users only need to download and launch one executable; the repository and .NET SDK are not required.",
+    "The project is open source, MIT-licensed and documented for privacy, security and third-party attribution.",
+  ],
+},
   "pokemon-binder": {
     title: "Pokémon Binder",
     context: ["Web application for searching, organising, importing and tracking a Pokémon TCG card collection in a virtual binder."],

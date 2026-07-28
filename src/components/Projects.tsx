@@ -35,6 +35,7 @@ const freelanceDisplayOrderIndex = new Map(
 const openSourceDisplayOrder = [
   "ia-trading",
   "ats-filter-resume",
+  "codex-limits-usage",
   "berserk-universe",
   "pokemon-binder",
   "patripro",
@@ -88,6 +89,11 @@ const englishProjectSummaries: Record<
     title: "Berserk Universe",
     description:
       "Interactive platform dedicated to Kentarō Miura's Berserk universe, with summaries, character analysis and an interactive map.",
+  },
+  "codex-limits-usage": {
+    title: "Codex Limits Usage",
+    description:
+      "Local Windows application that displays remaining Codex quota, measures consumption rate, and estimates when quota reaches 0% based on a configurable work schedule.",
   },
   "pokemon-binder": {
     title: "Pokémon Binder",
