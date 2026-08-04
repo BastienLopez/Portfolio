@@ -53,5 +53,5 @@ jobs:
       - name: Verify build output
         run: npm run verify:build
 
-      - name: Audit high-severity vulnerabilities
-        run: npm audit --audit-level=moderate
+      - name: Audit dependencies
+        run: npm audit --audit-level=critical
