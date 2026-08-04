@@ -369,7 +369,6 @@ const Projects = () => {
           result:
             "Clearer processes and better day-to-day operational control.",
           role: "Full-stack design and development, plus delivery structuring.",
-          link: "/Portfolio/cases/erp-micro-creches.html",
           sections: [
             {
               title: "Functional scope",
@@ -524,7 +523,6 @@ const Projects = () => {
           result:
             "Gestion de cinq micro-crèches centralisée dans une interface unique, avec supervision multi-établissements et accès différenciés selon les rôles.",
           role: "Conception et développement full-stack : architecture fonctionnelle, interfaces, backend, données, droits d’accès, conteneurisation et préparation du déploiement.",
-          link: "/Portfolio/cases/erp-micro-creches.html",
           sections: [
             {
               title: "Périmètre fonctionnel",
