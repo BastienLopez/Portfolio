@@ -24,13 +24,13 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Structures qui veulent centraliser leurs données métier
 
 ## Sections importantes
-- Hero et proposition de valeur: https://bastienlopez.github.io/Portfolio/
-- À propos et disponibilité: https://bastienlopez.github.io/Portfolio/#about
-- Projets: https://bastienlopez.github.io/Portfolio/#projects
-- Freelance (services, offres, FAQ): https://bastienlopez.github.io/Portfolio/#freelance
-- Compétences: https://bastienlopez.github.io/Portfolio/#skills
-- Dev Notes: https://bastienlopez.github.io/Portfolio/#devnotes
-- Contact: https://bastienlopez.github.io/Portfolio/#contact
+- Hero et proposition de valeur: https://bastienlopez.fr/
+- À propos et disponibilité: https://bastienlopez.fr/#about
+- Projets: https://bastienlopez.fr/#projects
+- Freelance (services, offres, FAQ): https://bastienlopez.fr/#freelance
+- Compétences: https://bastienlopez.fr/#skills
+- Dev Notes: https://bastienlopez.fr/#devnotes
+- Contact: https://bastienlopez.fr/#contact
 
 ## Contact et profils
 - Email: bastien.lopez40@gmail.com
@@ -39,4 +39,4 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 
 ## Notes
 - Langue principale: français
-- Site hébergé sur GitHub Pages sous le sous-chemin /Portfolio/
+- Site officiel: https://bastienlopez.fr/

@@ -71,7 +71,7 @@ const About = () => {
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="border-muted-foreground hover:border-foreground">
-                  <a href="https://BastienLopez.github.io/Portfolio/CV_LOPEZ_BASTIEN_FREELANCE.pdf" download>
+                  <a href="/CV_LOPEZ_BASTIEN_FREELANCE.pdf" download>
                     <FileText className="w-4 h-4 mr-2" />
                     {isEnglish ? 'View my résumé' : 'Voir mon CV'}
                   </a>
