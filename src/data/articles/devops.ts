@@ -3,7 +3,7 @@
 export const devopsArticles: Article[] = [
   // ⚙️ CI/CD & DevOps
     { 
-      id: '11', 
+      id: 'devops-11',
       title: 'Qu\'est-ce que le CI/CD et pourquoi c\'est essentiel', 
       category: 'devops',
       content: `
@@ -269,7 +269,7 @@ export const devopsArticles: Article[] = [
       `
     },
     { 
-      id: '12', 
+      id: 'devops-12',
       title: 'Mettre en place une pipeline CI/CD simple avec GitHub Actions', 
       category: 'devops',
       content: `
@@ -595,7 +595,7 @@ Avantages clés :
       `
     },
     { 
-      id: '13', 
+      id: 'devops-13',
       title: 'Comment versionner efficacement avec Git et GitHub', 
       category: 'devops',
       content: `
@@ -888,7 +888,7 @@ Règles d'or :
       `
     },
     { 
-      id: '14', 
+      id: 'devops-14',
       title: 'Les erreurs fréquentes sur Git et comment les éviter', 
       category: 'devops',
       content: `
@@ -1123,7 +1123,7 @@ Les clés :
       `
     },
     { 
-      id: '15', 
+      id: 'devops-15',
       title: 'Docker pour les débutants : comprendre images, containers et volumes', 
       category: 'devops',
       content: `
@@ -1337,7 +1337,7 @@ Tu codes sur ton PC, tu déploies sur n'importe quel serveur. <strong class="fon
       `
     },
     { 
-      id: '16', 
+      id: 'devops-16',
       title: 'Créer ton environnement de dev avec Docker Compose', 
       category: 'devops',
       content: `
@@ -1511,7 +1511,7 @@ Avantages clés :
       `
     },
     { 
-      id: '17', 
+      id: 'devops-17',
       title: 'Bonnes pratiques pour les environnements de staging et production', 
       category: 'devops',
       content: `
@@ -1717,7 +1717,7 @@ Règles d'or :
       `
     },
     { 
-      id: '18', 
+      id: 'devops-18',
       title: 'Introduction à Kubernetes (pour les curieux)', 
       category: 'devops',
       content: `
@@ -1900,7 +1900,7 @@ Avantages :
       `
     },
     { 
-      id: '19', 
+      id: 'devops-19',
       title: 'Automatiser les tests avant un déploiement', 
       category: 'devops',
       content: `
@@ -2119,7 +2119,7 @@ Règles d'or :
       `
     },
     { 
-      id: '20', 
+      id: 'devops-20',
       title: 'Surveiller et monitorer ses apps après déploiement', 
       category: 'devops',
       content: `
@@ -2349,7 +2349,7 @@ Les 3 piliers :
       `
     },
   {
-    id: '21',
+    id: 'devops-21',
     title: 'Infrastructure as Code avec Terraform',
     category: 'devops',
     content: `
@@ -2609,7 +2609,7 @@ Avantages clés :
     `
   },
   {
-    id: '22',
+    id: 'devops-22',
     title: 'Sécurité DevOps : Les essentiels (DevSecOps)',
     category: 'devops',
     content: `

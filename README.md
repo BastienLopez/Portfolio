@@ -28,7 +28,7 @@ Le site est construit avec : Vite, React, TypeScript, shadcn-ui et Tailwind CSS.
 
 ## Installation et développement local
 
-Prérequis : Node.js 22.12 ou supérieur et npm 10 ou supérieur. La version majeure attendue est indiquée dans `.nvmrc`.
+Prérequis : Node.js 22.12 ou supérieur et npm 10 ou supérieur. Le runtime local et CI recommandé est Node.js 22.22.0, indiqué dans `.nvmrc`.
 
 Installer les dépendances :
 
@@ -60,6 +60,25 @@ Vérifier le contenu généré :
 npm run verify:build
 ```
 
+Vérifier les variantes d’images :
+
+```powershell
+npm run verify:performance-assets
+```
+
+Lancer les tests unitaires :
+
+```powershell
+npm test
+```
+
+Lancer les parcours navigateur, responsive et axe (Chromium) :
+
+```powershell
+npx playwright install chromium
+npm run test:e2e
+```
+
 Les fichiers produits sont placés dans `dist/`.
 
 Tester le build avec le serveur de preview :
@@ -83,13 +102,15 @@ powershell -ExecutionPolicy Bypass -File .\scripts\deploy-vps.ps1 `
 
 Les paramètres `VpsUser` et `RemotePath` peuvent être personnalisés. Leurs valeurs par défaut sont `bl_ovh` et `/var/www/bastienlopez.fr`.
 
-Caddy, installé séparément sur le VPS, servira directement `/var/www/bastienlopez.fr`. Pour que React Router gère les routes inconnues et affiche sa page NotFound, sa configuration devra utiliser `try_files {path} /index.html`. Caddy gérera automatiquement HTTPS ; aucun cron Certbot n'est nécessaire.
+Caddy, installé séparément sur le VPS, servira directement `/var/www/bastienlopez.fr`. La configuration de référence est [`deploy/Caddyfile.example`](deploy/Caddyfile.example). Elle garde les routes SPA connues (`/` et `/mentions-legales`) en 200, sert les fichiers existants et affiche la page React NotFound avec un vrai statut 404 pour les chemins inconnus. Caddy gérera automatiquement HTTPS ; aucun cron Certbot n'est nécessaire.
+
+La même configuration redirige `www.bastienlopez.fr` vers le domaine canonique, conserve `/` et `/mentions-legales` en 200, sert les fichiers existants et affiche la page React NotFound avec un vrai statut 404 pour les chemins inconnus. Elle active les headers de sécurité et une CSP en `Content-Security-Policy`. Vérifier dans Chrome le domaine canonique, `/mentions-legales`, une route inconnue, un asset existant et le sous-domaine `www`. L'application ne charge pas de script de mesure d'audience côté client ; `connect-src 'self'` et `img-src 'self' data:` restent donc volontairement bornés.
 
 Le déploiement de production reste manuel pour le moment. Aucune CI ne se connecte au VPS.
 
 ## CI
 
-Le workflow GitHub Actions [`.github/workflows/ci.yml`](.github/workflows/ci.yml) vérifie le projet avec Node 22 : installation via `npm ci`, lint, TypeScript, build, vérification de `dist/` et audit npm au niveau élevé. Il ne déploie ni sur GitHub Pages ni sur le VPS.
+Le workflow GitHub Actions [`.github/workflows/ci.yml`](.github/workflows/ci.yml) vérifie le projet avec Node.js 22.22.0. Il sépare les contrôles de qualité, les tests unitaires, les parcours Chromium/axe et les liens critiques. La CI ne déploie ni sur GitHub Pages ni sur le VPS.
 
 ## SEO / GEO
 

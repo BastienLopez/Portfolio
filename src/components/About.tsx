@@ -49,7 +49,7 @@ const About = () => {
                 <ul className="grid sm:grid-cols-2 gap-2 text-sm text-foreground/80 leading-6">
                   {trustPoints.map((point) => (
                     <li key={point} className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 text-primary mt-1" />
+                      <CheckCircle className="w-4 h-4 text-primary mt-1" aria-hidden="true" />
                       <span>{point}</span>
                     </li>
                   ))}
@@ -60,19 +60,19 @@ const About = () => {
               <div className="flex flex-wrap gap-4 pt-4">
                 <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
                   <a href="https://github.com/BastienLopez" target="_blank" rel="noopener noreferrer">
-                    <Github className="w-4 h-4 mr-2" />
+                    <Github className="w-4 h-4 mr-2" aria-hidden="true" />
                     GitHub
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="border-accent text-accent hover:bg-accent/10">
                   <a href="https://www.linkedin.com/in/bastien-lopez-fullstack/" target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="w-4 h-4 mr-2" />
+                    <Linkedin className="w-4 h-4 mr-2" aria-hidden="true" />
                     LinkedIn
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="border-muted-foreground hover:border-foreground">
                   <a href="/CV_LOPEZ_BASTIEN_FREELANCE.pdf" download>
-                    <FileText className="w-4 h-4 mr-2" />
+                    <FileText className="w-4 h-4 mr-2" aria-hidden="true" />
                     {isEnglish ? 'View my résumé' : 'Voir mon CV'}
                   </a>
                 </Button>
@@ -96,9 +96,9 @@ const About = () => {
                     </div>
                     <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
                       <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                        {index === 0 && <Clock className="w-6 h-6 text-primary" />}
-                        {index === 1 && <CheckCircle className="w-6 h-6 text-primary" />}
-                        {index === 2 && <Code className="w-6 h-6 text-primary" />}
+                        {index === 0 && <Clock className="w-6 h-6 text-primary" aria-hidden="true" />}
+                        {index === 1 && <CheckCircle className="w-6 h-6 text-primary" aria-hidden="true" />}
+                        {index === 2 && <Code className="w-6 h-6 text-primary" aria-hidden="true" />}
                       </div>
                     </div>
                   </div>
@@ -109,7 +109,7 @@ const About = () => {
               <Card className="p-6 bg-gradient-to-br from-primary/10 to-accent/10 border-primary/50">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-primary" />
+                    <Mail className="w-6 h-6 text-primary" aria-hidden="true" />
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground mb-1">{isEnglish ? 'Available for' : 'Disponible pour'}</p>

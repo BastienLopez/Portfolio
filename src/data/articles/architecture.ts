@@ -4,7 +4,7 @@
 export const architectureArticles: Article[] = [
 // 🧰 Architecture & Bonnes pratiques de code
   { 
-    id: '31', 
+    id: 'architecture-31',
     title: 'Comprendre les principes SOLID en développement', 
     category: 'architecture',
     content: `
@@ -144,7 +144,7 @@ const service = new UserService(new MySQLDatabase());
     `
   },
   { 
-    id: '32', 
+    id: 'architecture-32',
     title: 'Comment découper proprement une application en modules ou microservices', 
     category: 'architecture',
     content: `
@@ -263,7 +263,7 @@ Découpe bien pensée = <strong class="font-bold text-primary">longévité du pr
     `
   },
   { 
-    id: '33', 
+    id: 'architecture-33',
     title: 'Quand (et comment) adopter une architecture hexagonale', 
     category: 'architecture',
     content: `
@@ -411,7 +411,7 @@ Idéale pour projets évolutifs avec logique métier riche.
     `
   },
   { 
-    id: '34', 
+    id: 'architecture-34',
     title: 'Les design patterns essentiels à connaître (Factory, Singleton, Observer…)', 
     category: 'architecture',
     content: `
@@ -636,7 +636,7 @@ Design patterns = <strong class="font-bold text-primary">vocabulaire commun</str
     `
   },
   { 
-    id: '35', 
+    id: 'architecture-35',
     title: 'Gérer la dette technique intelligemment', 
     category: 'architecture',
     content: `
@@ -770,7 +770,7 @@ La dette technique, c'est comme un crédit : <strong class="font-bold text-prima
     `
   },
   { 
-    id: '36', 
+    id: 'architecture-36',
     title: 'Créer un projet scalable dès le départ', 
     category: 'architecture',
     content: `
@@ -964,7 +964,7 @@ spec:
     `
   },
   { 
-    id: '37', 
+    id: 'architecture-37',
     title: 'Bien gérer les logs et erreurs dans une app', 
     category: 'architecture',
     content: `
@@ -1162,7 +1162,7 @@ app.use(Sentry.Handlers.errorHandler());
     `
   },
   { 
-    id: '38', 
+    id: 'architecture-38',
     title: 'Structurer un projet front (React, Vue, Angular) proprement', 
     category: 'architecture',
     content: `
@@ -1389,7 +1389,7 @@ import { useAuth } from '@/features/auth/hooks/useAuth';
     `
   },
   { 
-    id: '39', 
+    id: 'architecture-39',
     title: 'Pourquoi et comment faire du linting / formattage automatique (ESLint, Prettier, etc.)', 
     category: 'architecture',
     content: `
@@ -1606,7 +1606,7 @@ golangci-lint run
     `
   },
   { 
-    id: '40', 
+    id: 'architecture-40',
     title: 'Mesurer la qualité du code : coverage, performance et maintainability', 
     category: 'architecture',
     content: `
@@ -1816,7 +1816,7 @@ jobs:
     `
   },
   { 
-    id: '41', 
+    id: 'architecture-41',
     title: 'SOLID à la loupe : approfondir les principes de conception objet', 
     category: 'architecture',
     content: `
@@ -2083,7 +2083,7 @@ const testService = new UserService(mockRepo);
     `
   },
   { 
-    id: '42', 
+    id: 'architecture-42',
     title: 'Design Patterns : catalogue des patterns incontournables', 
     category: 'architecture',
     content: `

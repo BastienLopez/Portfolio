@@ -27,7 +27,7 @@ const Skills = () => {
       title: isEnglish ? "AI & Machine Learning" : "IA & Machine Learning",
       icon: Brain,
       color: "text-primary",
-      skills: ["Agents IA / Mastra", "TensorFlow", "PyTorch", "CUDA", "Reinforcement Learning", "NLP"],
+      skills: [isEnglish ? "AI agents / Mastra" : "Agents IA / Mastra", "TensorFlow", "PyTorch", "CUDA", "Reinforcement Learning", "NLP"],
     },
     {
       title: isEnglish ? "Automation" : "Automatisation",
@@ -39,7 +39,7 @@ const Skills = () => {
       title: "DevOps",
       icon: Cloud,
       color: "text-cta",
-      skills: ["Docker", "CI/CD", "GitHub Actions", "Self Hosting", "GitHub Pages"],
+      skills: ["Docker", "CI/CD", "GitHub Actions", isEnglish ? "Self-hosting" : "Auto-hébergement", isEnglish ? "Static VPS hosting" : "Hébergement statique sur VPS"],
     },
     {
       title: isEnglish ? "Git & documentation" : "Git & documentation",
@@ -51,7 +51,7 @@ const Skills = () => {
       title: isEnglish ? "Architecture & quality" : "Architecture & qualité",
       icon: Blocks,
       color: "text-accent",
-      skills: ["Microservices", "Clean Code", "Design Patterns", "TDD / Testing"],
+      skills: ["Microservices", "Clean Code", "Design Patterns", isEnglish ? "TDD / Testing" : "TDD / tests"],
     },
   ];
 
@@ -80,7 +80,7 @@ const Skills = () => {
               >
                 <div className="flex items-start gap-4 mb-4">
                   <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <category.icon className={`w-6 h-6 ${category.color}`} />
+                    <category.icon className={`w-6 h-6 ${category.color}`} aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-foreground mb-1">
@@ -95,7 +95,7 @@ const Skills = () => {
                       key={skill}
                       className="text-sm text-muted-foreground flex items-center gap-2 group-hover:text-foreground transition-colors"
                     >
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true"></div>
                       {skill}
                     </li>
                   ))}

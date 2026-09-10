@@ -288,7 +288,7 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     context: ["Creation and maintenance of technical documentation for Altme Wallet Provider, with a GitBook version followed by a Docusaurus version to support developer onboarding."],
     role: "Documentation content and developer journeys, including migration work from GitBook to Docusaurus.",
     technologies: ["GitBook", "Docusaurus", "Markdown", "React", "TypeScript"],
-    sections: [{ title: "Documentation work", items: ["API reference and integration guides", "Interactive code examples and search", "GitBook-to-Docusaurus migration", "50+ documentation pages and sections migrated or maintained"] }],
+    sections: [{ title: "Documentation work", items: ["API reference and integration guides", "Interactive code examples and search", "GitBook-to-Docusaurus migration", "Documentation pages and sections migrated or maintained across GitBook and Docusaurus"] }],
     results: ["A more structured, maintainable documentation base for developers."],
   },
   "teams-bot-mastra": {
@@ -296,7 +296,7 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     context: ["Microsoft Teams bot designed to centralise technology monitoring. It collects RSS sources, produces AI-assisted summaries and sends targeted alerts to the team workspace."],
     role: "Monitoring-workflow design, TypeScript bot development, Teams integration, Mastra orchestration and alert configuration.",
     technologies: ["TypeScript", "Azure Bot Framework", "Mastra", "OpenAI API"],
-    sections: [{ title: "Workflow", items: ["Selected RSS-source collection", "AI-assisted summaries and prioritisation", "Microsoft Teams delivery and targeted alerts", "Configurable sources and alert rules", "500+ monitoring sources connected to the aggregation and analysis system"] }],
+    sections: [{ title: "Workflow", items: ["Selected RSS-source collection", "AI-assisted summaries and prioritisation", "Microsoft Teams delivery and targeted alerts", "Configurable sources and alert rules", "Monitoring sources connected to the aggregation and analysis system"] }],
     results: ["Monitoring, summaries and alerts are centralised in the team workspace."],
   },
   "seo-geo-optimization": {
@@ -316,7 +316,7 @@ const englishCaseStudies: Record<string, CaseStudy> = {
       { title: "SocialPilot reporting workflow", items: ["Scheduled email intake, attachment checks and Google Drive archive", "KPI extraction, normalisation and validation by social network", "Targeted OCR when information is only available in visuals", "Performance analysis, client-PDF generation, content and visual QA, delivery and Discord supervision"] },
       { title: "AI-assisted video derush workflow", items: ["Raw-video intake, workspace preparation and duplicate checks", "Audio extraction, Whisper transcription and timestamped content", "Editorial analysis of useful sequences, questions and answers", "EDL generation for Premiere-oriented pre-editing, subtitles, preview and organised deliverables for social formats"] },
       { title: "Prospecting workflow", items: ["Google Maps collection and structured prospect-list preparation", "Checks around available information and the expected commercial output"] },
-      { title: "Confirmed figures", items: ["15+ reports generated", "200+ hours of raw footage processed", "10+ automated tasks"] },
+      { title: "Scope handled", items: ["Report generation and quality checks", "Raw-footage preparation and AI-assisted derush", "Documented n8n automation workflows"] },
     ],
     results: ["Centralised workflows reduce manual handoffs and make deliverables more reproducible.", "Client data, exact settings and unconfirmed results remain confidential."],
   },

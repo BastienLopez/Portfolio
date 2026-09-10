@@ -5,4 +5,10 @@ export interface Article {
   content: string;
 }
 
+export interface ArticleTranslation {
+  id: string;
+  title: string;
+  content: string;
+}
+
 export type ArticleCategory = Article['category'];

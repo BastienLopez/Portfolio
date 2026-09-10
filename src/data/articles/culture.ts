@@ -3,7 +3,7 @@
 export const cultureArticles: Article[] = [
   // 🧠 Culture & Méthodes
     { 
-      id: '1', 
+      id: 'culture-1',
       title: 'Comprendre les bases de l\'agilité : Scrum, Kanban, XP', 
       category: 'culture',
       content: `
@@ -421,7 +421,7 @@ export const cultureArticles: Article[] = [
       `
     },
     { 
-      id: '2', 
+      id: 'culture-2',
       title: 'Comment écrire de bonnes User Stories', 
       category: 'culture',
       content: `
@@ -477,7 +477,7 @@ export const cultureArticles: Article[] = [
       `
     },
     { 
-      id: '3', 
+      id: 'culture-3',
       title: 'Les 5 piliers du TDD (Test Driven Development)', 
       category: 'culture',
       content: `
@@ -528,7 +528,7 @@ export const cultureArticles: Article[] = [
       `
     },
     { 
-      id: '4', 
+      id: 'culture-4',
       title: 'Comment organiser un sprint efficacement', 
       category: 'culture',
       content: `
@@ -582,7 +582,7 @@ export const cultureArticles: Article[] = [
       `
     },
     { 
-      id: '5', 
+      id: 'culture-5',
       title: 'Code Review : les bonnes pratiques pour donner (et recevoir) du feedback', 
       category: 'culture',
       content: `
@@ -625,7 +625,7 @@ export const cultureArticles: Article[] = [
       `
     },
     { 
-      id: '6', 
+      id: 'culture-6',
       title: 'Pourquoi documenter son code est un superpouvoir', 
       category: 'culture',
       content: `
@@ -673,7 +673,7 @@ export const cultureArticles: Article[] = [
       `
     },
     { 
-      id: '7', 
+      id: 'culture-7',
       title: 'Comment faire du refactoring sans tout casser', 
       category: 'culture',
       content: `
@@ -727,7 +727,7 @@ export const cultureArticles: Article[] = [
       `
     },
     { 
-      id: '8', 
+      id: 'culture-8',
       title: 'Les 10 commandements du clean code', 
       category: 'culture',
       content: `
@@ -784,7 +784,7 @@ export const cultureArticles: Article[] = [
       `
     },
     { 
-      id: '9', 
+      id: 'culture-9',
       title: 'Comment bien nommer ses variables et fonctions', 
       category: 'culture',
       content: `
@@ -832,7 +832,7 @@ export const cultureArticles: Article[] = [
       `
     },
     { 
-      id: '10', 
+      id: 'culture-10',
       title: 'Automatiser ses tâches répétitives : introduction au DevOps mindset', 
       category: 'culture',
       content: `
@@ -889,7 +889,7 @@ export const cultureArticles: Article[] = [
       `
     },
   {
-    id: '11',
+    id: 'culture-11',
     title: 'Pair Programming & Mob Programming : coder à plusieurs',
     category: 'culture',
     content: `
@@ -1019,7 +1019,7 @@ La collaboration rend le code meilleur et l'équipe plus forte ! 🤝
     `
   },
   {
-    id: '12',
+    id: 'culture-12',
     title: 'Apprendre en continu : rester à jour dans la tech',
     category: 'culture',
     content: `

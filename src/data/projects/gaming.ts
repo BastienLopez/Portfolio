@@ -10,7 +10,7 @@ export const gamingProjects: Project[] = [
     image: 'img_projects/aqualis.png',
     tech: ['React Native', 'Expo', 'TypeScript', 'Context API'],
     github: 'https://github.com/BastienLopez/Aqualis',
-    demo: 'https://bastienlopez.github.io/Aqualis/aquarium',
+    demo: 'https://bastienlopez.github.io/Aqualis/',
     detailedContent: `
       <div class="project-detail">
         <h2 class="project-title">🐠 Aqualis</h2>

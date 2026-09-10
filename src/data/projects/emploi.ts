@@ -8,7 +8,7 @@ export const emploiProjects: Project[] = [
     category: 'emploi',
     image: 'img_projects/wallet_provider.png',
     tech: ['Identity Wallet', 'eIDAS 2.0', 'Verifiable Credentials', 'OIDC4VC', 'EBSI', 'SSI'],
-    demo: 'https://www.talao.io/fr/',
+    demo: 'https://www.talao.io/index_fr.html',
     detailedContent: `
       <div class="project-detail">
         <h2 class="project-title">🔐 Altme Wallet Provider</h2>
@@ -380,7 +380,7 @@ export const emploiProjects: Project[] = [
             Création et maintenance de contenus et de parcours de documentation, avec migration de GitBook
             vers Docusaurus pour faciliter l'intégration des développeurs.
           </p>
-          <p class="highlight"><strong>50+ pages et sections</strong> de documentation migrées ou maintenues entre GitBook et Docusaurus.</p>
+          <p class="highlight"><strong>Pages et sections de documentation</strong> migrées ou maintenues entre GitBook et Docusaurus.</p>
         </div>
 
         <div class="section">
@@ -531,9 +531,9 @@ export const emploiProjects: Project[] = [
         </div>
 
         <div class="section project-metrics">
-          <h3 class="section-title">Quelques chiffres</h3>
+          <h3 class="section-title">Périmètre de veille</h3>
           <div class="metrics-grid">
-            <div><strong>500+</strong><span>sources de veille connectées</span></div>
+            <div><strong>Sources connectées</strong><span>Agrégation et analyse configurées</span></div>
           </div>
         </div>
 
@@ -801,11 +801,11 @@ export const emploiProjects: Project[] = [
         </div>
 
         <div class="section project-metrics">
-          <h3 class="section-title">Quelques chiffres</h3>
+          <h3 class="section-title">Périmètre traité</h3>
           <div class="metrics-grid">
-            <div><strong>15+</strong><span>rapports générés</span></div>
-            <div><strong>200+ h</strong><span>de rush traitées</span></div>
-            <div><strong>10+</strong><span>tâches automatisées</span></div>
+            <div><strong>Rapports</strong><span>Génération et contrôle qualité</span></div>
+            <div><strong>Rush vidéo</strong><span>Préparation et dérushage assistés</span></div>
+            <div><strong>Workflows</strong><span>Automatisations n8n documentées</span></div>
           </div>
         </div>
 

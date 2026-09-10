@@ -13,5 +13,5 @@ export const allArticles: Article[] = [
   ...freelanceArticles,
 ];
 
-export type { Article, ArticleCategory } from './types';
+export type { Article, ArticleCategory, ArticleTranslation } from './types';
 export { cultureArticles, devopsArticles, toolsArticles, architectureArticles, freelanceArticles };

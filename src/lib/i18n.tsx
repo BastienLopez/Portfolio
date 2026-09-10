@@ -12,17 +12,35 @@ type LanguageContextValue = {
 const STORAGE_KEY = 'portfolio-language';
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-const getInitialLocale = (): Locale => {
+const readStoredLocale = (): Locale => {
   if (typeof window === 'undefined') return 'fr';
 
-  return window.localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'fr';
+  try {
+    return window.localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'fr';
+  } catch {
+    return 'fr';
+  }
+};
+
+const persistLocale = (locale: Locale) => {
+  if (typeof window === 'undefined') return;
+
+  try {
+    window.localStorage.setItem(STORAGE_KEY, locale);
+  } catch {
+    // Storage can be unavailable in private or restricted browsing contexts.
+  }
+};
+
+const getInitialLocale = (): Locale => {
+  return readStoredLocale();
 };
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>(getInitialLocale);
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, locale);
+    persistLocale(locale);
     document.documentElement.lang = locale;
 
     const metadata = locale === 'en'

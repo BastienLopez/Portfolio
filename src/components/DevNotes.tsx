@@ -1,18 +1,59 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import DOMPurify from 'dompurify';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
-import type { Article, ArticleCategory } from '../data/articles';
+import type { Article, ArticleCategory, ArticleTranslation } from '../data/articles';
 import { useLanguage } from '@/lib/i18n';
 
 type SelectableCategory = Exclude<ArticleCategory, never>;
+type LocalizedArticle = Article & { titleEn: string; contentEn: string };
 
-const articleLoaders: Record<SelectableCategory, () => Promise<Article[]>> = {
-  culture: async () => (await import('../data/articles/culture')).cultureArticles,
-  devops: async () => (await import('../data/articles/devops')).devopsArticles,
-  tools: async () => (await import('../data/articles/tools')).toolsArticles,
-  architecture: async () => (await import('../data/articles/architecture')).architectureArticles,
-  freelance: async () => (await import('../data/articles/freelance')).freelanceArticles,
+const mergeTranslations = (articles: Article[], translations: ArticleTranslation[]): LocalizedArticle[] => {
+  const translationsById = new Map(translations.map((translation) => [translation.id, translation]));
+
+  return articles.map((article) => {
+    const translation = translationsById.get(article.id);
+    if (!translation) throw new Error(`Missing English translation for ${article.id}`);
+    return { ...article, titleEn: translation.title, contentEn: translation.content };
+  });
+};
+
+const articleLoaders: Record<SelectableCategory, () => Promise<LocalizedArticle[]>> = {
+  culture: async () => {
+    const [{ cultureArticles }, { default: translations }] = await Promise.all([
+      import('../data/articles/culture'),
+      import('../data/articles/en/culture.json'),
+    ]);
+    return mergeTranslations(cultureArticles, translations);
+  },
+  devops: async () => {
+    const [{ devopsArticles }, { default: translations }] = await Promise.all([
+      import('../data/articles/devops'),
+      import('../data/articles/en/devops.json'),
+    ]);
+    return mergeTranslations(devopsArticles, translations);
+  },
+  tools: async () => {
+    const [{ toolsArticles }, { default: translations }] = await Promise.all([
+      import('../data/articles/tools'),
+      import('../data/articles/en/tools.json'),
+    ]);
+    return mergeTranslations(toolsArticles, translations);
+  },
+  architecture: async () => {
+    const [{ architectureArticles }, { default: translations }] = await Promise.all([
+      import('../data/articles/architecture'),
+      import('../data/articles/en/architecture.json'),
+    ]);
+    return mergeTranslations(architectureArticles, translations);
+  },
+  freelance: async () => {
+    const [{ freelanceArticles }, { default: translations }] = await Promise.all([
+      import('../data/articles/freelance'),
+      import('../data/articles/en/freelance.json'),
+    ]);
+    return mergeTranslations(freelanceArticles, translations);
+  },
 };
 
 const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (character) => ({
@@ -31,9 +72,11 @@ const renderArticleContent = (content: string) => content.replace(
 const DevNotes = () => {
   const { isEnglish } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<SelectableCategory | null>(null);
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [selectedArticle, setSelectedArticle] = useState<LocalizedArticle | null>(null);
+  const [articles, setArticles] = useState<LocalizedArticle[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+  const loadRequestRef = useRef(0);
 
   const categoryConfig = {
     culture: {
@@ -67,21 +110,41 @@ const DevNotes = () => {
     ? articles.filter(article => article.category === selectedCategory)
     : [];
 
-  const handleCategoryClick = async (category: SelectableCategory) => {
+  const loadArticles = async (category: SelectableCategory) => {
+    const requestId = ++loadRequestRef.current;
+    setSelectedCategory(category);
+    setSelectedArticle(null);
+    setIsLoading(true);
+    setLoadError(false);
+
+    try {
+      const loadedArticles = await articleLoaders[category]();
+      if (requestId !== loadRequestRef.current) return;
+      setArticles(loadedArticles);
+    } catch {
+      if (requestId !== loadRequestRef.current) return;
+      setArticles([]);
+      setLoadError(true);
+    } finally {
+      if (requestId === loadRequestRef.current) setIsLoading(false);
+    }
+  };
+
+  const handleCategoryClick = (category: SelectableCategory) => {
     if (selectedCategory === category) {
+      loadRequestRef.current += 1;
       setSelectedCategory(null);
       setSelectedArticle(null);
       setArticles([]);
+      setLoadError(false);
+      setIsLoading(false);
     } else {
-      setSelectedCategory(category);
-      setSelectedArticle(null);
-      setIsLoading(true);
-      try {
-        setArticles(await articleLoaders[category]());
-      } finally {
-        setIsLoading(false);
-      }
+      void loadArticles(category);
     }
+  };
+
+  const handleRetry = () => {
+    if (selectedCategory) void loadArticles(selectedCategory);
   };
 
   const handleArticleClick = (article: Article) => {
@@ -103,7 +166,6 @@ const DevNotes = () => {
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 px-4">
             {isEnglish ? 'with access to all notes by topic.' : "avec un accès à l'ensemble des notes par thème."}
           </p>
-          
           {!selectedArticle && (
             <p className="text-sm md:text-md text-muted-foreground font-medium mb-8">
               {isEnglish ? 'Select a topic:' : 'Sélectionnez le topic souhaité :'}
@@ -125,40 +187,40 @@ const DevNotes = () => {
             <Card className="border-2">
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">
+                  <span className="text-2xl" aria-hidden="true">
                     {categoryConfig[selectedArticle.category].emoji}
                   </span>
                   <span className="text-sm font-medium text-muted-foreground">
                     {categoryConfig[selectedArticle.category].title}
                   </span>
                 </div>
-                <CardTitle className="text-xl md:text-2xl">{selectedArticle.title}</CardTitle>
+                <CardTitle className="text-xl md:text-2xl">{isEnglish ? selectedArticle.titleEn : selectedArticle.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div 
-                  className="prose prose-sm md:prose-lg max-w-none dark:prose-invert
+                  className="devnotes-content prose prose-sm md:prose-lg max-w-none text-white dark:prose-invert
                     prose-headings:font-bold
                     prose-h1:text-3xl prose-h1:mb-6
                     prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
                     prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
                     prose-h4:text-lg prose-h4:mt-4 prose-h4:mb-2
-                    prose-p:my-3 prose-p:leading-relaxed
+                    prose-p:my-3 prose-p:leading-relaxed prose-p:text-white
                     prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:underline
                     prose-strong:text-primary
-                    prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono
-                    prose-pre:bg-gray-900 prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-pre:my-4
-                    prose-li:my-0.5 prose-li:list-disc prose-li:ml-6
+                    prose-code:bg-secondary prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:text-white
+                    prose-pre:bg-slate-950 prose-pre:text-white prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-pre:my-4
+                    prose-li:my-0.5 prose-li:list-disc prose-li:ml-6 prose-li:text-white
                     prose-ul:my-3 prose-ul:list-disc prose-ul:pl-6
                     prose-ol:my-3 prose-ol:list-decimal prose-ol:pl-6
-                    prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic
+                    prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-white
                     prose-table:my-6 prose-table:w-full prose-table:border-collapse
-                    prose-th:border prose-th:border-gray-300 dark:prose-th:border-gray-700 prose-th:bg-gray-100 dark:prose-th:bg-gray-800 prose-th:p-3 prose-th:text-left prose-th:font-semibold
-                    prose-td:border prose-td:border-gray-300 dark:prose-td:border-gray-700 prose-td:p-3
+                    prose-th:border prose-th:border-gray-300 dark:prose-th:border-gray-700 prose-th:bg-gray-100 dark:prose-th:bg-gray-800 prose-th:p-3 prose-th:text-left prose-th:font-semibold prose-th:text-white
+                    prose-td:border prose-td:border-gray-300 dark:prose-td:border-gray-700 prose-td:p-3 prose-td:text-white
                     prose-img:rounded-lg prose-img:my-6
                     [&_ul]:my-3 [&_ul]:space-y-0
                     [&_li]:my-0.5 [&_li]:leading-relaxed">
-                  {selectedArticle.content ? (
-                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(renderArticleContent(selectedArticle.content)) }} />
+                  {(isEnglish ? selectedArticle.contentEn : selectedArticle.content) ? (
+                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(renderArticleContent(isEnglish ? selectedArticle.contentEn : selectedArticle.content)) }} />
                   ) : null}
                 </div>
               </CardContent>
@@ -179,7 +241,7 @@ const DevNotes = () => {
                       : 'hover:scale-105'
                   }`}
                 >
-                  <span className="mr-2 text-lg">{config.emoji}</span>
+                  <span className="mr-2 text-lg" aria-hidden="true">{config.emoji}</span>
                   <span>{config.title}</span>
                 </Button>
               ))}
@@ -189,7 +251,17 @@ const DevNotes = () => {
             {selectedCategory && isLoading && (
               <p className="text-center text-sm text-muted-foreground" aria-live="polite">{isEnglish ? 'Loading articles…' : 'Chargement des articles…'}</p>
             )}
-            {selectedCategory && !isLoading && (
+            {selectedCategory && !isLoading && loadError && (
+              <div className="mx-auto flex max-w-xl flex-col items-center gap-3 rounded-lg border border-destructive/40 bg-destructive/5 p-6 text-center" role="alert">
+                <p className="text-sm text-foreground">
+                  {isEnglish ? 'The articles could not be loaded.' : 'Les articles n’ont pas pu être chargés.'}
+                </p>
+                <Button type="button" variant="outline" onClick={handleRetry}>
+                  {isEnglish ? 'Retry' : 'Réessayer'}
+                </Button>
+              </div>
+            )}
+            {selectedCategory && !isLoading && !loadError && (
               <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 animate-in fade-in duration-500">
                 {filteredArticles.map((article) => (
                   <Card 

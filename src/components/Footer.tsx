@@ -1,4 +1,5 @@
-import { Heart, Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useLanguage } from "@/lib/i18n";
 
 const Footer = () => {
@@ -60,6 +61,12 @@ const Footer = () => {
               <p className="text-sm text-muted-foreground mt-4">
                 {isEnglish ? 'Available for remote/full-remote permanent roles or focused freelance engagements.' : 'Disponible pour un CDI remote/full remote ou des missions freelance ciblées'}
               </p>
+              <Link
+                to="/mentions-legales"
+                className="mt-4 inline-block text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-primary hover:underline"
+              >
+                {isEnglish ? "Legal notice" : "Mentions légales"}
+              </Link>
             </div>
           </div>
         </div>

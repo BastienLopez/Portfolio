@@ -1,25 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import DOMPurify from "dompurify";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ExternalLink,
-  Github,
-  X,
-} from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { allProjects, Project, ProjectGalleryItem } from "@/data/projects";
 import { getEnglishDetailedContent } from "@/data/projects/englishDetails";
+import { ProjectDetail } from "@/components/projects/ProjectDetail";
+import { ProjectGallery } from "@/components/projects/ProjectGallery";
 import { useLanguage } from "@/lib/i18n";
+import { getHistoryState, getProjectIdFromHash } from "@/lib/project-navigation";
+import {
+  decorateDetailedContent,
+  renderProjectMarkdown,
+} from "@/lib/project-content";
+import { getImageManifestEntry, getImageSrcSet } from "@/lib/image-variants";
 
-type ProjectCategory = Project["category"];
-type DisplayProjectCategory = Exclude<ProjectCategory, "browser">;
-type DisplayProject = Project & { category: DisplayProjectCategory };
+type DisplayProjectCategory = Project["category"];
+type DisplayProject = Project;
 
-const projects = allProjects.filter(
-  (project): project is DisplayProject => project.category !== "browser",
-);
+const projects: DisplayProject[] = allProjects;
 
 const freelanceDisplayOrder = [
   "erp-micro-creches",
@@ -175,150 +174,6 @@ const resolveImage = (img?: string | null) => {
   return `${import.meta.env.BASE_URL}${normalized}`;
 };
 
-const removeDecorativeEmoji = (content: string) =>
-  content.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, "");
-
-const getSectionMarker = (title: string) => {
-  const normalizedTitle = title
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLocaleLowerCase("fr-FR");
-
-  if (/contexte|context|presentation/.test(normalizedTitle)) return true;
-  if (/contribution|mon role|ma contribution|role/.test(normalizedTitle))
-    return true;
-  if (/technologie|standards|outils/.test(normalizedTitle)) return true;
-  if (/architecture|multi.?creche|multi.?site/.test(normalizedTitle)) return true;
-  if (/resultat|objectif|suivi/.test(normalizedTitle)) return true;
-
-  return null;
-};
-
-const decorateDetailedContent = (content: string) => {
-  return removeDecorativeEmoji(content).replace(
-    /<h3([^>]*)class="([^"]*\bsection-title\b[^"]*)"([^>]*)>([\s\S]*?)<\/h3>/gi,
-    (_match, beforeClass, classNames, afterClass, title) => {
-      const marker = getSectionMarker(title.replace(/<[^>]+>/g, ""));
-
-      if (!marker) {
-        return `<h3${beforeClass}class="${classNames}"${afterClass}>${title}</h3>`;
-      }
-      return `<h3${beforeClass}class="${classNames}"${afterClass}><span class="section-marker" aria-hidden="true"></span>${title}</h3>`;
-    },
-  );
-};
-
-const escapeHtml = (value: string) =>
-  value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-const formatMarkdownInline = (value: string) =>
-  escapeHtml(value)
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-
-const renderProjectMarkdown = (content: string) => {
-  const lines = content.trim().split(/\r?\n/);
-  const html: string[] = ['<div class="project-detail">'];
-  let paragraph: string[] = [];
-  let isListOpen = false;
-  let isSectionOpen = false;
-  let isSubsectionOpen = false;
-  let hasTitle = false;
-  let hasFirstSection = false;
-
-  const closeList = () => {
-    if (isListOpen) {
-      html.push("</ul>");
-      isListOpen = false;
-    }
-  };
-
-  const flushParagraph = () => {
-    if (paragraph.length > 0) {
-      html.push(
-        `<p class="description">${formatMarkdownInline(paragraph.join(" "))}</p>`,
-      );
-      paragraph = [];
-    }
-  };
-
-  const closeSubsection = () => {
-    flushParagraph();
-    closeList();
-    if (isSubsectionOpen) {
-      html.push("</div>");
-      isSubsectionOpen = false;
-    }
-  };
-
-  const closeSection = () => {
-    closeSubsection();
-    if (isSectionOpen) {
-      html.push("</div>");
-      isSectionOpen = false;
-    }
-  };
-
-  const openSection = (title: string) => {
-    closeSection();
-    html.push(
-      `<div class="section"><h3 class="section-title">${formatMarkdownInline(title)}</h3>`,
-    );
-    isSectionOpen = true;
-    hasFirstSection = true;
-  };
-
-  for (const rawLine of lines) {
-    const line = rawLine.trim();
-
-    if (!line || line === "---") {
-      flushParagraph();
-      closeList();
-      continue;
-    }
-
-    const heading = /^(#{1,3})\s+(.+)$/.exec(line);
-    if (heading) {
-      const [, level, title] = heading;
-
-      if (!hasTitle) {
-        html.push(
-          `<h2 class="project-title">${formatMarkdownInline(title)}</h2>`,
-        );
-        hasTitle = true;
-      } else if (level === "#" || !hasFirstSection) {
-        openSection(title);
-      } else {
-        closeSubsection();
-        html.push(
-          `<div class="workflow-step"><h4>${formatMarkdownInline(title)}</h4>`,
-        );
-        isSubsectionOpen = true;
-      }
-      continue;
-    }
-
-    const listItem = /^\*\s+(.+)$/.exec(line);
-    if (listItem) {
-      flushParagraph();
-      if (!isListOpen) {
-        html.push('<ul class="features-list">');
-        isListOpen = true;
-      }
-      html.push(
-        `<li class="feature-item">${formatMarkdownInline(listItem[1].replace(/;\s*$/, ""))}</li>`,
-      );
-      continue;
-    }
-
-    paragraph.push(line);
-  }
-
-  closeSection();
-  html.push("</div>");
-  return html.join("");
-};
-
 const prepareDetailedContent = (content: string) => {
   const renderedContent = content.trimStart().startsWith("# ")
     ? renderProjectMarkdown(content)
@@ -341,8 +196,10 @@ const Projects = () => {
   const [activeGalleryIndex, setActiveGalleryIndex] = useState<number | null>(
     null,
   );
+  const projectsHeadingRef = useRef<HTMLHeadingElement | null>(null);
   const projectDetailRef = useRef<HTMLDivElement | null>(null);
   const galleryViewerRef = useRef<HTMLDivElement | null>(null);
+  const hadProjectSelectionRef = useRef(false);
   const localizeProject = (project: DisplayProject) => {
     const englishDetailedContent = getEnglishDetailedContent(project.id);
 
@@ -720,6 +577,15 @@ const Projects = () => {
     : [];
 
   const handleCategoryClick = (category: DisplayProjectCategory) => {
+    const clearProjectHash = () => {
+      if (!window.location.hash.startsWith("#project=")) return;
+      window.history.replaceState(
+        { ...getHistoryState(), portfolioProjectId: null },
+        "",
+        `${window.location.pathname}${window.location.search}`,
+      );
+    };
+
     if (selectedCategory === category) {
       setSelectedCategory(null);
       setSelectedProject(null);
@@ -727,39 +593,99 @@ const Projects = () => {
       setSelectedCategory(category);
       setSelectedProject(null);
     }
+    hadProjectSelectionRef.current = false;
+    setActiveGalleryIndex(null);
+    clearProjectHash();
   };
 
   const handleProjectClick = (project: DisplayProject) => {
+    const nextHash = `#project=${encodeURIComponent(project.id)}`;
+    const historyState = getHistoryState();
+
     setSelectedProject(project);
-    window.history.replaceState(null, "", `#project=${project.id}`);
+    setSelectedCategory(project.category);
+    setActiveGalleryIndex(null);
+    hadProjectSelectionRef.current = true;
+    window.history.pushState(
+      {
+        ...historyState,
+        portfolioProjectId: project.id,
+        portfolioProjectNavigation: "push",
+      },
+      "",
+      `${window.location.pathname}${window.location.search}${nextHash}`,
+    );
   };
 
   const handleFeaturedProjectClick = (projectId: string) => {
     const project = projects.find((entry) => entry.id === projectId);
     if (!project) return;
-    setSelectedCategory(project.category);
-    setSelectedProject(project);
-    window.history.replaceState(null, "", `#project=${project.id}`);
+    handleProjectClick(project);
   };
 
   const handleBackToList = () => {
+    const historyState = getHistoryState();
+    const projectId = getProjectIdFromHash(window.location.hash);
+
+    if (
+      projectId &&
+      historyState.portfolioProjectId === projectId &&
+      historyState.portfolioProjectNavigation === "push"
+    ) {
+      window.history.back();
+      return;
+    }
+
+    hadProjectSelectionRef.current = false;
     setSelectedProject(null);
     setActiveGalleryIndex(null);
     window.history.replaceState(
-      null,
+      { ...historyState, portfolioProjectId: null },
       "",
       `${window.location.pathname}${window.location.search}`,
     );
   };
 
   useEffect(() => {
-    const projectId = window.location.hash.replace(/^#project=/, "");
-    const project = projects.find((entry) => entry.id === projectId);
+    const syncProjectFromHash = () => {
+      const projectId = getProjectIdFromHash(window.location.hash);
+      const project = projectId
+        ? projects.find((entry) => entry.id === projectId)
+        : undefined;
 
-    if (project) {
-      setSelectedCategory(project.category);
-      setSelectedProject(project);
-    }
+      if (project) {
+        hadProjectSelectionRef.current = true;
+        setSelectedCategory(project.category);
+        setSelectedProject(project);
+        setActiveGalleryIndex(null);
+        return;
+      }
+
+      const shouldRestoreFocus = hadProjectSelectionRef.current;
+      hadProjectSelectionRef.current = false;
+      setSelectedProject(null);
+      setActiveGalleryIndex(null);
+
+      if (window.location.hash.startsWith("#project=")) {
+        window.history.replaceState(
+          { ...getHistoryState(), portfolioProjectId: null },
+          "",
+          `${window.location.pathname}${window.location.search}`,
+        );
+      }
+
+      if (shouldRestoreFocus) {
+        window.setTimeout(() => projectsHeadingRef.current?.focus(), 0);
+      }
+    };
+
+    syncProjectFromHash();
+    window.addEventListener("popstate", syncProjectFromHash);
+    window.addEventListener("hashchange", syncProjectFromHash);
+    return () => {
+      window.removeEventListener("popstate", syncProjectFromHash);
+      window.removeEventListener("hashchange", syncProjectFromHash);
+    };
   }, []);
 
   const localizedSelectedProject = selectedProject
@@ -802,6 +728,7 @@ const Projects = () => {
           : "smooth",
         block: "start",
       });
+      projectDetailRef.current?.focus({ preventScroll: true });
     }, 0);
 
     return () => window.clearTimeout(scrollTimer);
@@ -870,7 +797,11 @@ const Projects = () => {
       <div className="container mx-auto max-w-7xl w-full">
         {/* Section Header */}
         <div className="text-center mb-12 w-full">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2
+            ref={projectsHeadingRef}
+            tabIndex={-1}
+            className="text-3xl md:text-4xl font-bold mb-4 focus-visible:outline-none"
+          >
             {isEnglish
               ? "Case studies & work"
               : "Études de cas et réalisations"}
@@ -931,9 +862,9 @@ const Projects = () => {
             </div>
 
             <Card className="mx-auto flex w-full max-w-none flex-col border-border bg-card p-6 md:p-8">
-              <h4 className="mb-5 text-2xl font-semibold">
+              <h3 className="mb-5 text-2xl font-semibold">
                 {selectedFeaturedCaseStudy.title}
-              </h4>
+              </h3>
               <div className="grid flex-1 gap-x-10 gap-y-4 text-sm leading-7 text-foreground/80 md:grid-cols-2 md:text-base">
                 <p>
                   <span className="text-foreground font-medium">
@@ -976,13 +907,13 @@ const Projects = () => {
                     key={section.title}
                     className="rounded-lg border border-border bg-secondary/20 p-4"
                   >
-                    <h5 className="mb-3 font-semibold text-foreground">
+                    <h4 className="mb-3 font-semibold text-foreground">
                       {section.title}
-                    </h5>
+                    </h4>
                     <ul className="space-y-2 text-sm leading-6 text-foreground/75">
                       {section.items.map((item) => (
                         <li key={item} className="flex gap-2">
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
                           {item}
                         </li>
                       ))}
@@ -1003,150 +934,19 @@ const Projects = () => {
           </div>
         )}
 
-        {/* Project Detail View */}
         {localizedSelectedProject ? (
-          <div
-            ref={projectDetailRef}
-            className="mx-auto w-full max-w-5xl scroll-mt-28"
-          >
-            <Button
-              onClick={handleBackToList}
-              variant="outline"
-              className="mb-6 border-border text-foreground hover:border-primary hover:bg-secondary"
-            >
-              ← {isEnglish ? "Back to projects" : "Retour aux projets"}
-            </Button>
-
-            <Card className="overflow-hidden rounded-md border border-border bg-card shadow-none">
-              <CardHeader className="border-b border-border px-6 py-6 md:px-8">
-                <div className="mb-3">
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                    {categoryLabels[localizedSelectedProject.category]}
-                  </span>
-                </div>
-                <CardTitle className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-                  {localizedSelectedProject.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="px-6 pb-8 pt-6 md:px-8 md:pt-8">
-                {/* Project Image */}
-                {!isErpCaseStudy && (
-                <div className="mb-6">
-                  <img
-                    src={resolveImage(localizedSelectedProject.image)}
-                    alt={localizedSelectedProject.title}
-                    loading="lazy"
-                    decoding="async"
-                    sizes="(max-width: 768px) 100vw, 960px"
-                    className="max-h-96 w-full rounded-md border border-border bg-secondary/30 object-contain"
-                  />
-                </div>
-                )}
-
-                {!isErpCaseStudy && galleryImages.length > 0 && (
-                  <div className="mb-8">
-                    <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                      {isEnglish ? "Project screenshots" : "Captures du projet"}
-                    </h3>
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      {galleryImages.map((image, index) => (
-                        <button
-                          key={`${image.src}-${image.title ?? index}`}
-                          type="button"
-                          onClick={() => setActiveGalleryIndex(index)}
-                          className="group relative overflow-hidden rounded-md border border-border bg-secondary/30 text-left transition-colors hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                          aria-label={`${isEnglish ? "Open" : "Ouvrir"} ${isEnglish ? "screenshot" : "la capture"} ${index + 1}`}
-                        >
-                          <img
-                            src={resolveImage(image.src)}
-                            alt={image.alt ?? `${localizedSelectedProject.title} — ${isEnglish ? "screenshot" : "capture"} ${index + 1}`}
-                            loading="lazy"
-                            decoding="async"
-                            className="w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
-                          />
-                          <span className="block border-t border-border bg-card/95 px-3 py-2 text-xs font-medium text-foreground">
-                            {image.title ?? (isEnglish ? "Open full screen" : "Agrandir la capture")}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Tech Stack */}
-                <div className="mb-8 flex flex-wrap gap-2 border-y border-border py-4">
-                  {localizedSelectedProject.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-sm border border-border bg-secondary/30 px-2.5 py-1 text-xs font-medium text-foreground/80"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Detailed Content */}
-                <div
-                  className="project-detail-content"
-                  onClick={(event) => {
-                    const trigger = (event.target as HTMLElement).closest<HTMLButtonElement>("[data-gallery-index]");
-                    const index = Number(trigger?.dataset.galleryIndex);
-
-                    if (trigger && Number.isInteger(index) && galleryImages[index]) {
-                      setActiveGalleryIndex(index);
-                    }
-                  }}
-                >
-                  {localizedSelectedProject.detailedContent ? (
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: prepareDetailedContent(
-                          localizedSelectedProject.detailedContent,
-                        ),
-                      }}
-                    />
-                  ) : null}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="mt-8 flex flex-wrap gap-3 border-t border-border pt-6">
-                  {localizedSelectedProject.github && (
-                    <Button
-                      asChild
-                      size="default"
-                      variant="outline"
-                      className="min-w-40 flex-1 rounded-md border-border text-foreground hover:border-primary hover:bg-secondary"
-                    >
-                      <a
-                        href={localizedSelectedProject.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github className="w-4 h-4 mr-2" />
-                        {isEnglish ? "Source code" : "Code source"}
-                      </a>
-                    </Button>
-                  )}
-                  {localizedSelectedProject.demo && (
-                    <Button
-                      asChild
-                      size="default"
-                      className="min-w-40 flex-1 rounded-md bg-primary text-primary-foreground shadow-none hover:bg-primary/90"
-                    >
-                      <a
-                        href={localizedSelectedProject.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Demo
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <ProjectDetail
+            project={localizedSelectedProject}
+            categoryLabel={categoryLabels[localizedSelectedProject.category]}
+            galleryImages={galleryImages}
+            isEnglish={isEnglish}
+            isErpCaseStudy={isErpCaseStudy}
+            resolveImage={resolveImage}
+            prepareDetailedContent={prepareDetailedContent}
+            onBack={handleBackToList}
+            onOpenGallery={setActiveGalleryIndex}
+            detailRef={projectDetailRef}
+          />
         ) : (
           <>
             {/* Category Buttons */}
@@ -1171,7 +971,7 @@ const Projects = () => {
                       : "hover:scale-105"
                   }`}
                 >
-                  <span className="mr-2 text-lg">{config.emoji}</span>
+                  <span className="mr-2 text-lg" aria-hidden="true">{config.emoji}</span>
                   <span>{categoryLabels[key as DisplayProjectCategory]}</span>
                 </Button>
               ))}
@@ -1192,10 +992,13 @@ const Projects = () => {
                       <div className="relative h-48 md:h-56 lg:h-52 overflow-hidden bg-secondary flex items-center justify-center">
                         <img
                           src={resolveImage(project.image)}
+                          srcSet={getImageSrcSet(project.image, resolveImage)}
                           alt={localizedProject.title}
                           loading="lazy"
                           decoding="async"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          width={getImageManifestEntry(project.image)?.width}
+                          height={getImageManifestEntry(project.image)?.height}
                           className="max-w-full max-h-full object-contain rounded-[5px] transition-transform duration-500 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -1245,7 +1048,7 @@ const Projects = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                <ExternalLink className="w-4 h-4 mr-2" />
+                                <ExternalLink className="w-4 h-4 mr-2" aria-hidden="true" />
                                 Demo
                               </a>
                             </Button>
@@ -1262,7 +1065,7 @@ const Projects = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                <Github className="w-4 h-4 mr-2" />
+                                <Github className="w-4 h-4 mr-2" aria-hidden="true" />
                                 Code
                               </a>
                             </Button>
@@ -1291,7 +1094,7 @@ const Projects = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Github className="w-5 h-5 mr-2" />
+                <Github className="w-5 h-5 mr-2" aria-hidden="true" />
                 {isEnglish
                   ? "View all projects on GitHub"
                   : "Voir tous les projets sur GitHub"}
@@ -1300,70 +1103,18 @@ const Projects = () => {
           </div>
         )}
 
-        {activeGalleryIndex !== null && galleryImages[activeGalleryIndex] && (
-          <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 p-4 backdrop-blur-sm"
-            role="dialog"
-            aria-modal="true"
-            aria-label={
-              isEnglish
-                ? "Project screenshot viewer"
-                : "Visionneuse de captures du projet"
-            }
-            onClick={() => setActiveGalleryIndex(null)}
-          >
-            <div
-              ref={galleryViewerRef}
-              className="relative flex h-full w-full max-w-7xl items-center justify-center px-14 sm:px-20"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <img
-                src={resolveImage(galleryImages[activeGalleryIndex].src)}
-                alt={galleryImages[activeGalleryIndex].alt ?? `${localizedSelectedProject?.title ?? "Projet"} — ${isEnglish ? "screenshot" : "capture"} ${activeGalleryIndex + 1}`}
-                className="max-h-[85vh] max-w-full rounded-md border border-border bg-card object-contain shadow-lg"
-              />
-              <button
-                data-gallery-close
-                type="button"
-                onClick={() => setActiveGalleryIndex(null)}
-                className="absolute right-0 top-0 rounded-md border border-border bg-card p-2 text-foreground shadow-lg transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                aria-label={
-                  isEnglish ? "Close viewer" : "Fermer la visionneuse"
-                }
-              >
-                <X className="h-5 w-5" />
-              </button>
-              {galleryImages.length > 1 && (
-                <>
-                  <button
-                    type="button"
-                    onClick={showPreviousImage}
-                    className="absolute left-1 rounded-md border border-border bg-card p-3 text-foreground shadow-lg transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:left-4"
-                    aria-label={
-                      isEnglish ? "Previous screenshot" : "Capture précédente"
-                    }
-                  >
-                    <ChevronLeft className="h-6 w-6" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={showNextImage}
-                    className="absolute right-1 rounded-md border border-border bg-card p-3 text-foreground shadow-lg transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:right-4"
-                    aria-label={
-                      isEnglish ? "Next screenshot" : "Capture suivante"
-                    }
-                  >
-                    <ChevronRight className="h-6 w-6" />
-                  </button>
-                </>
-              )}
-              <p className="absolute bottom-0 rounded-sm border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground">
-                {activeGalleryIndex + 1} / {galleryImages.length} ·{" "}
-                {galleryImages[activeGalleryIndex].title ? `${galleryImages[activeGalleryIndex].title} · ` : ""}
-                {isEnglish ? "Use ← → or Esc" : "Utilisez ← → ou Échap"}
-              </p>
-            </div>
-          </div>
+        {activeGalleryIndex !== null && (
+          <ProjectGallery
+            galleryImages={galleryImages}
+            activeGalleryIndex={activeGalleryIndex}
+            projectTitle={localizedSelectedProject?.title}
+            isEnglish={isEnglish}
+            galleryViewerRef={galleryViewerRef}
+            resolveImage={resolveImage}
+            onClose={() => setActiveGalleryIndex(null)}
+            onPrevious={showPreviousImage}
+            onNext={showNextImage}
+          />
         )}
       </div>
     </section>

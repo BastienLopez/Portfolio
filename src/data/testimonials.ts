@@ -27,7 +27,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: "t-3",
-    name: "José",
+    name: "J. DM",
     role: "Gérant",
     service: "ERP sur mesure",
     text: "L’outil a permis de mieux centraliser les informations et de simplifier le suivi quotidien. L’interface est claire et adaptée aux besoins terrain.",
@@ -35,14 +35,6 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: "t-4",
-    name: "Utilisateur Aqualis anonymisé",
-    role: "Retour utilisateur anonymisé",
-    service: "Application mobile",
-    text: "Application très intuitive et apaisante — j'adore gérer mes poissons et mes aquariums au quotidien.",
-    image: "/img_clients/user.png",
-  },
-  {
-    id: "t-5",
     name: "Marino",
     role: "Clé de Voûte · Gérant",
     service: "Site vitrine & optimisation SEO",
@@ -50,7 +42,7 @@ export const testimonials: Testimonial[] = [
     image: "/img_clients/marino.png",
   },
   {
-    id: "t-6",
+    id: "t-5",
     name: "Utilisateur ATS anonymisé",
     role: "Retour utilisateur anonymisé",
     service: "Site ATS CV",

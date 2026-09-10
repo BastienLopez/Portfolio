@@ -31,5 +31,14 @@ dist-ssr
 *.sln
 *.sw?
 .codex
+.security-audit
 AGENTS.md
 PROJECT_MEMORY.md
+
+# Local test and audit artifacts
+artifacts
+scripts/phase0-url-results.json
+coverage
+playwright-report
+test-results
+.lighthouseci

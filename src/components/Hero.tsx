@@ -47,7 +47,7 @@ const Hero = () => {
         }}></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 pt-16 md:pt-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
           {/* Title with typing effect */}
           <div className="space-y-4">
@@ -65,20 +65,14 @@ const Hero = () => {
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             {isEnglish
-              ? 'I build business applications and AI/n8n automations that connect tools, make processes reliable and reduce manual tasks.'
-              : 'Je développe des applications métier et des automatisations IA/n8n pour connecter les outils, fiabiliser les process et réduire les tâches manuelles.'}
+              ? 'I build business applications and AI/n8n automations for remote product teams and focused freelance clients, backed by 5+ years of experience and 30+ projects.'
+              : 'Je construis des applications métier et des automatisations IA/n8n pour des équipes produit en remote et des clients freelance ciblés, avec 5+ ans d’expérience et 30+ projets à l’appui.'}
           </p>
 
           <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed">
             {isEnglish
-              ? 'Internal portals, back offices, APIs and AI workflows. A progressive approach, maintainable code and clear communication.'
-              : 'Portails internes, back-offices, APIs et workflows IA. Approche progressive, code maintenable, communication claire.'}
-          </p>
-
-          <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed">
-            {isEnglish
-              ? 'Open to remote/full-remote permanent roles and focused freelance engagements.'
-              : 'Ouvert à un CDI remote/full remote et disponible pour missions freelance ciblées.'}
+              ? 'Internal portals, back offices, APIs and AI workflows: clear scope, maintainable code and documented handover.'
+              : 'Portails internes, back-offices, APIs et workflows IA : périmètre clair, code maintenable et passation documentée.'}
           </p>
 
           {/* Reassurance line */}

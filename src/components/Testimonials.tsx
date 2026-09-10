@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import testimonialsData, { Testimonial } from "@/data/testimonials";
@@ -19,7 +19,7 @@ const Avatar = ({ name, image }: { name: string; image?: string | null }) => {
 
   const resolved = resolveImage(image ?? undefined);
   if (resolved) {
-    return <img src={resolved} alt={name} className="w-20 h-20 rounded-full object-cover" />;
+    return <img src={resolved} alt="" className="w-20 h-20 rounded-full object-cover" />;
   }
 
   const initials = name
@@ -27,7 +27,7 @@ const Avatar = ({ name, image }: { name: string; image?: string | null }) => {
     .map((n) => n[0])
     .slice(0, 2)
     .join("");
-  return <div className="w-20 h-20 rounded-full bg-primary/15 text-primary flex items-center justify-center font-semibold">{initials}</div>;
+  return <div className="w-20 h-20 rounded-full bg-primary/15 text-primary flex items-center justify-center font-semibold" aria-hidden="true">{initials}</div>;
 };
 
 export default function Testimonials(): JSX.Element {
@@ -69,7 +69,7 @@ export default function Testimonials(): JSX.Element {
   const loopedTestimonials = [...testimonialsData, ...testimonialsData];
 
   return (
-    <section id="testimonials" className="relative py-16 md:py-24 w-screen left-1/2 -translate-x-1/2 overflow-hidden">
+    <section id="testimonials" className="relative w-full overflow-hidden py-16 md:py-24">
       {/* background full width + subtle grid like hero */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10"></div>
       <div className="absolute inset-0 opacity-20">
@@ -94,7 +94,7 @@ export default function Testimonials(): JSX.Element {
                 onClick={() => setIsManuallyPaused((paused) => !paused)}
                 aria-label={isManuallyPaused ? (isEnglish ? 'Resume testimonial scrolling' : 'Reprendre le défilement des témoignages') : (isEnglish ? 'Pause testimonial scrolling' : 'Mettre en pause le défilement des témoignages')}
               >
-                {isManuallyPaused ? <Play className="mr-2 h-4 w-4" /> : <Pause className="mr-2 h-4 w-4" />}
+                {isManuallyPaused ? <Play className="mr-2 h-4 w-4" aria-hidden="true" /> : <Pause className="mr-2 h-4 w-4" aria-hidden="true" />}
                 {isManuallyPaused ? (isEnglish ? 'Resume' : 'Reprendre le défilement') : (isEnglish ? 'Pause' : 'Mettre en pause')}
               </Button>
             </div>

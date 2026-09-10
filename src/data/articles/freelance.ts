@@ -4,7 +4,7 @@ export const freelanceArticles: Article[] = [
 
   // 💼 Gestion de projet & Freelance
   { 
-    id: '41', 
+    id: 'freelance-41',
     title: 'Premier contact client : comment qualifier le besoin efficacement', 
     category: 'freelance',
     content: `
@@ -133,7 +133,7 @@ Ne connaît pas la différence React/Vue.
     `
   },
   { 
-    id: '42', 
+    id: 'freelance-42',
     title: 'Rédiger un cahier des charges clair et complet', 
     category: 'freelance',
     content: `
@@ -243,7 +243,7 @@ Le cahier des charges (CDC) <strong class="font-bold text-primary">protège free
     `
   },
   { 
-    id: '43', 
+    id: 'freelance-43',
     title: 'Créer une proposition commerciale et un devis professionnel', 
     category: 'freelance',
     content: `
@@ -373,7 +373,7 @@ Une proposition commerciale <strong class="font-bold text-primary">transforme ex
     `
   },
   { 
-    id: '44', 
+    id: 'freelance-44',
     title: 'Modèle de contrat de prestation (TJM, livrables, clauses clés)', 
     category: 'freelance',
     content: `
@@ -417,7 +417,7 @@ C'est ton <strong class="font-bold text-primary">bouclier professionnel</strong>
     `
   },
   { 
-    id: '45', 
+    id: 'freelance-45',
     title: 'Comment estimer un projet (temps, coûts, complexité)', 
     category: 'freelance',
     content: `
@@ -588,7 +588,7 @@ Une bonne estimation = projet rentable + client satisfait. 📊
     `
   },
   { 
-    id: '46', 
+    id: 'freelance-46',
     title: 'Outils pour gérer un projet client (Trello, Notion, Jira, etc.)', 
     category: 'freelance',
     content: `
@@ -767,7 +767,7 @@ La simplicité et la constance battent toujours la complexité.
     `
   },
   { 
-    id: '47', 
+    id: 'freelance-47',
     title: 'Créer une documentation technique à destination du client / futur dev', 
     category: 'freelance',
     content: `
@@ -1084,7 +1084,7 @@ Une doc claire différencie un développeur professionnel d'un amateur. 📚
     `
   },
   { 
-    id: '48', 
+    id: 'freelance-48',
     title: 'Gérer la relation client pendant le développement (transparence, reporting, livrables intermédiaires)', 
     category: 'freelance',
     content: `
@@ -1339,7 +1339,7 @@ Investis dans la relation client : c'est ton meilleur ROI. 💬
     `
   },
   { 
-    id: '49', 
+    id: 'freelance-49',
     title: 'Déploiement en production : check-list et bonnes pratiques de livraison', 
     category: 'freelance',
     content: `
@@ -1602,7 +1602,7 @@ Clone cette checklist pour chaque projet : zéro stress, zéro surprise. 🚀
     `
   },
   { 
-    id: '50', 
+    id: 'freelance-50',
     title: 'Assurer le suivi post-livraison : maintenance, retours, fidélisation du client', 
     category: 'freelance',
     content: `
@@ -1883,7 +1883,7 @@ Ton meilleur commercial = tes anciens clients satisfaits. 🌟
     `
   },
   { 
-    id: '51', 
+    id: 'freelance-51',
     title: 'Pricing : comment fixer son TJM ou ses forfaits en freelance', 
     category: 'freelance',
     content: `
@@ -1983,7 +1983,7 @@ L'expérience et la spécialisation justifient une augmentation progressive.
     `
   },
   { 
-    id: '52', 
+    id: 'freelance-52',
     title: 'Contrats et aspects juridiques : se protéger en freelance', 
     category: 'freelance',
     content: `

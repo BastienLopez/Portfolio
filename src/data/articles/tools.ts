@@ -4,7 +4,7 @@
 export const toolsArticles: Article[] = [
  // 🧩 Outils & Productivité
   { 
-    id: '21', 
+    id: 'tools-21',
     title: 'Les extensions VS Code indispensables', 
     category: 'tools',
     content: `
@@ -224,7 +224,7 @@ Les must-have par catégorie :
     `
   },
   { 
-    id: '22', 
+    id: 'tools-22',
     title: 'Organiser sa veille tech efficacement', 
     category: 'tools',
     content: `
@@ -387,7 +387,7 @@ Les 3 règles d'or :
     `
   },
   { 
-    id: '23', 
+    id: 'tools-23',
     title: 'Améliorer sa productivité avec des scripts Bash simples', 
     category: 'tools',
     content: `
@@ -575,7 +575,7 @@ Les 3 use cases principaux :
     `
   },
   { 
-    id: '24', 
+    id: 'tools-24',
     title: 'Écrire une documentation claire en Markdown (README, Wiki, etc.)', 
     category: 'tools',
     content: `
@@ -775,7 +775,7 @@ Markdown = <strong class="font-bold text-primary">communication efficace</strong
     `
   },
   { 
-    id: '25', 
+    id: 'tools-25',
     title: 'Utiliser GitHub Projects pour gérer ses side projects', 
     category: 'tools',
     content: `
@@ -903,7 +903,7 @@ GitHub Projects = <strong class="font-bold text-primary">Jira simplifié</strong
     `
   },
   { 
-    id: '26', 
+    id: 'tools-26',
     title: 'Créer un setup de terminal productif (Oh My Zsh, Starship, aliases…)', 
     category: 'tools',
     content: `
@@ -1080,7 +1080,7 @@ Un terminal bien configuré = <strong class="font-bold text-primary">gain de vit
     `
   },
   { 
-    id: '27', 
+    id: 'tools-27',
     title: 'Gérer ses secrets et clés API en local sans risque', 
     category: 'tools',
     content: `
@@ -1255,7 +1255,7 @@ La gestion de secrets = <strong class="font-bold text-primary">sécurité 101</s
     `
   },
   { 
-    id: '28', 
+    id: 'tools-28',
     title: 'Optimiser ses builds avec Makefile ou Taskfile', 
     category: 'tools',
     content: `
@@ -1430,7 +1430,7 @@ Make/Taskfile = <strong class="font-bold text-primary">interface unifiée</stron
     `
   },
   { 
-    id: '29', 
+    id: 'tools-29',
     title: 'Sauvegarder et synchroniser sa config de dev entre machines', 
     category: 'tools',
     content: `
@@ -1594,7 +1594,7 @@ Sauvegarder sa config = <strong class="font-bold text-primary">assurance tranqui
     `
   },
   { 
-    id: '30', 
+    id: 'tools-30',
     title: 'Découvrir des outils CLI méconnus qui simplifient la vie (fzf, bat, exa, tldr…)', 
     category: 'tools',
     content: `
@@ -1804,7 +1804,7 @@ Ces outils n'ont pas d'interface graphique, mais offrent <strong class="font-bol
     `
   },
   {
-    id: '31',
+    id: 'tools-31',
     title: 'Figma pour développeurs : maquettes et design systems',
     category: 'tools',
     content: `
@@ -1849,7 +1849,7 @@ Le designer crée des composants (Button, Card) avec variants (primary, secondar
 Récupère les design tokens programmatiquement :
 
 \`\`\`javascript
-const response = await fetch('https://api.figma.com/v1/files/FILE_KEY', {
+const response = await fetch('https://api.figma.com', {
   headers: { 'X-Figma-Token': 'YOUR_TOKEN' }
 });
 \`\`\`
@@ -1867,7 +1867,7 @@ Figma = langage commun entre design et dev ! 🎨
     `
   },
   {
-    id: '32',
+    id: 'tools-32',
     title: 'Notion : organiser sa veille et ses projets',
     category: 'tools',
     content: `

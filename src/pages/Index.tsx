@@ -1,7 +1,8 @@
-import { Suspense, lazy } from "react";
+import { lazy } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
+import DeferredSection from "@/components/DeferredSection";
 import { useLanguage } from "@/lib/i18n";
 
 const About = lazy(() => import("@/components/About"));
@@ -25,14 +26,24 @@ const Index = () => {
       <Navbar />
       <main id="main-content">
         <Hero />
-        <Suspense fallback={<div className="container mx-auto px-4 py-12 text-sm text-muted-foreground">{isEnglish ? 'Loading sections...' : 'Chargement des sections...'}</div>}>
+        <DeferredSection sectionId="about" loadingLabel={isEnglish ? "Loading about section..." : "Chargement de la présentation..."}>
           <About />
+        </DeferredSection>
+        <DeferredSection sectionId="projects" loadingLabel={isEnglish ? "Loading projects..." : "Chargement des projets..."}>
           <Projects />
+        </DeferredSection>
+        <DeferredSection sectionId="skills" loadingLabel={isEnglish ? "Loading skills..." : "Chargement des compétences..."}>
           <Skills />
+        </DeferredSection>
+        <DeferredSection sectionId="freelance" loadingLabel={isEnglish ? "Loading freelance work..." : "Chargement des missions..."}>
           <Freelance />
+        </DeferredSection>
+        <DeferredSection sectionId="devnotes" loadingLabel={isEnglish ? "Loading notes..." : "Chargement des notes..."}>
           <DevNotes />
+        </DeferredSection>
+        <DeferredSection sectionId="contact" loadingLabel={isEnglish ? "Loading contact..." : "Chargement du contact..."}>
           <Contact />
-        </Suspense>
+        </DeferredSection>
         <Footer />
       </main>
     </div>
