@@ -104,7 +104,7 @@ const Hero = () => {
               asChild
               size="lg"
               variant="outline"
-              className="border-primary text-primary hover:bg-primary/10"
+              className="border-primary text-cyan-300 hover:bg-primary/10 hover:text-cyan-200"
             >
               <a href="#projects" onClick={() => trackEvent("cta_click", { location: "hero", cta: "projects" })}>{isEnglish ? 'View key projects' : 'Voir mes projets clés'}</a>
             </Button>

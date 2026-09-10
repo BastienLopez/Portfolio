@@ -103,6 +103,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build production preview
+        run: npm run build
+
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
