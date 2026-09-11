@@ -69,7 +69,7 @@ export default function Testimonials(): JSX.Element {
   const loopedTestimonials = [...testimonialsData, ...testimonialsData];
 
   return (
-    <section id="testimonials" className="relative w-full overflow-hidden py-16 md:py-24">
+    <section id="testimonials" className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden py-16 md:py-24">
       {/* background full width + subtle grid like hero */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10"></div>
       <div className="absolute inset-0 opacity-20">
