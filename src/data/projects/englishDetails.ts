@@ -90,6 +90,10 @@ const englishCaseStudies: Record<string, CaseStudy> = {
         ],
         visualLayout: "grid",
       },
+      {
+        title: "Public metrics",
+        items: ["5 micro-nurseries managed from one platform", "4 main access profiles", "8 years of historical data migrated"],
+      },
       { title: "Multi-site architecture and access", items: ["A nursery context and a dedicated identifier scope the main business resources", "The backend verifies authorised sites and roles before serving data", "Global administrators can supervise the network while local users only access their assigned sites", "Because children, parents and staff data are sensitive, access control, confidentiality and traceability were treated as core concerns"] },
       {
         title: "Family account and record administration",
@@ -134,7 +138,10 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     context: ["Showcase website for a masonry company, created to present its services and completed work."],
     role: "Frontend design and integration, lightweight UI design, performance work and GitHub Pages deployment.",
     technologies: ["React", "Tailwind CSS", "JavaScript", "Vite", "GitHub Pages"],
-    sections: [{ title: "Implementation", items: ["Service and portfolio presentation", "Mobile-first reusable components", "Image optimisation and lazy loading", "Clear calls to action and contact form"] }],
+    sections: [
+      { title: "Implementation", items: ["Service and portfolio presentation", "Mobile-first reusable components", "Image optimisation and lazy loading", "Clear calls to action and contact form"] },
+      { title: "Public metrics", items: ["+60% site traffic attributed to SEO and GEO improvements", "+15% weekly quote requests"] },
+    ],
     results: ["Deployed public website with responsive navigation and contact actions suited to mobile use."],
   },
   "berserk-universe": {

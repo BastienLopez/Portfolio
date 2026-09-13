@@ -3,6 +3,8 @@
 Date de l’audit : 2026-09-09, addendum design/refonte  
 Périmètre : dépôt complet du portfolio, configuration, CI/CD, scripts de déploiement, assets publics, rendu local et site de production. Les dossiers générés ou vendoriés ont été exclus de la revue de code, mais leurs tailles et leur influence sur le build ont été mesurées. Aucun correctif de code n’a été appliqué pendant l’audit.
 
+> **État vérifié le 13 septembre 2026 :** ce document conserve la photographie et les recommandations de la baseline du 9 septembre. Les résultats après corrections (prérendu des routes, compression Bloodborne, couverture anglaise 60/60, allègement visuel, claims et droits attestés par le propriétaire, tests et Lighthouse) sont tenus à jour dans [anti-vibecode-audit.md](anti-vibecode-audit.md). Les scores et blocages décrits ci-dessous ne doivent pas être lus comme l’état courant lorsqu’ils contredisent cet addendum.
+
 Les niveaux de preuve utilisés sont :
 
 - **STATIQUE** : lecture du dépôt et des configurations ;

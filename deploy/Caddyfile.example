@@ -45,7 +45,7 @@ bastienlopez.fr {
 	respond @probe 404
 
 	# Ces routes sont gérées par React et doivent rester en 200.
-	@spa path / /mentions-legales
+	@spa path / /mentions-legales /freelance
 	handle @spa {
 		try_files {path} /index.html
 		file_server

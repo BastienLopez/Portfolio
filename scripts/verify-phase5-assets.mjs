@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -28,6 +28,17 @@ const actualNames = existsSync(assetsDirectory)
 const referencedSet = new Set(uniqueReferencedNames);
 for (const name of actualNames) {
   if (!referencedSet.has(name)) failures.push(`Unreferenced optimized image: public/img_optimized/${name}`);
+}
+
+const performanceBudgets = { "bloodborne-1440.webp": 750 * 1024 };
+for (const [name, budget] of Object.entries(performanceBudgets)) {
+  const assetPath = path.join(assetsDirectory, name);
+  if (!existsSync(assetPath)) continue;
+
+  const size = statSync(assetPath).size;
+  if (size > budget) {
+    failures.push(`${name} exceeds its ${Math.round(budget / 1024)} KiB budget (${Math.round(size / 1024)} KiB).`);
+  }
 }
 
 if (failures.length > 0) {

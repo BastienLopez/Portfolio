@@ -75,7 +75,7 @@ All colors MUST be HSL.
   background-color: #14191F; /* slightly different dark tone */
 }
 
-/* Add a short gradient at the bottom of each section to blend into the following one */
+/* Blend section boundaries so adjacent content does not meet on a hard line. */
 .section-odd::after,
 .section-even::after {
   content: "";
@@ -83,7 +83,7 @@ All colors MUST be HSL.
   left: 0;
   right: 0;
   bottom: 0;
-  height: 10vh;
+  height: clamp(3rem, 10vh, 8rem);
   pointer-events: none;
   z-index: 0;
 }
@@ -94,6 +94,19 @@ All colors MUST be HSL.
 
 .section-even::after {
   background: linear-gradient(180deg, rgba(20,25,31,0) 0%, #0F1319 100%);
+}
+
+/* Dev Notes shares the same surface as the following contact section. */
+#devnotes.section-even::after {
+  background: linear-gradient(180deg, rgba(20,25,31,0) 0%, #14191F 100%);
+}
+
+/* The freelance FAQ follows the carousel. Keep the alternating section blend, then
+   carry its final colour into the FAQ before returning to the normal surface. */
+#testimonials + .section-odd {
+  background-color: #0F1319;
+  background-image: linear-gradient(180deg, #14191F 0%, #0F1319 clamp(3rem, 10vh, 8rem));
+  background-repeat: no-repeat;
 }
 
 /* Hero: fade the grid pattern at the bottom to progressively hide squares when scrolling */
@@ -108,10 +121,34 @@ All colors MUST be HSL.
   z-index: 2;
 }
 
+/* Keep the hero vertically breathable on short desktop screens while respecting
+   the browser's dynamic viewport on mobile. */
+.hero-section {
+  min-height: max(100vh, 50rem);
+  min-height: max(100dvh, 50rem);
+}
+
+/* Browser zoom can reduce the CSS viewport height on a 1080p screen. Compress
+   only the inter-block rhythm in that case so the CTAs remain in view. */
+@media (min-width: 1024px) and (max-height: 760px) {
+  .hero-section {
+    min-height: max(100vh, 44rem);
+  }
+
+  .hero-section > .container > .max-w-4xl > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem;
+  }
+}
+
 
 @layer base {
   * {
     @apply border-border;
+  }
+
+  /* Keep anchored sections clear of the fixed navigation on every viewport. */
+  section[id] {
+    scroll-margin-top: 5rem;
   }
 
   body {
@@ -205,6 +242,16 @@ All colors MUST be HSL.
     content: none !important;
   }
 
+  .devnotes-content h1,
+  .devnotes-content h3,
+  .devnotes-content h4 {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .devnotes-content h2 {
+    color: hsl(var(--primary)) !important;
+  }
+
   .devnotes-content :not(pre) > code {
     background-color: hsl(var(--secondary));
     border: 1px solid hsl(var(--border));
@@ -244,6 +291,91 @@ All colors MUST be HSL.
 
   .highlight {
     @apply border-l-2 border-primary/60 bg-transparent py-1 pl-4 text-base font-medium leading-7 text-foreground md:text-lg;
+  }
+
+  .project-case-summary {
+    @apply mb-8 rounded-md border border-border bg-secondary/15 p-4 md:p-6;
+  }
+
+  .project-case-summary__overview {
+    @apply border-b border-border pb-5;
+  }
+
+  .project-case-summary__eyebrow {
+    @apply mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary;
+  }
+
+  .project-case-summary__overview-copy {
+    @apply space-y-2;
+  }
+
+  .project-case-summary__overview-copy p {
+    @apply text-base leading-7 text-foreground/85 md:text-lg;
+  }
+
+  .project-case-summary__grid {
+    @apply mt-5 grid gap-4 md:grid-cols-2;
+  }
+
+  .project-case-summary__grid.has-metrics {
+    @apply lg:grid-cols-3;
+  }
+
+  .project-case-summary__section {
+    @apply min-w-0 rounded-sm border border-border/80 bg-card/60 p-4;
+  }
+
+  .project-case-summary__heading {
+    @apply mb-3 text-base font-semibold tracking-tight text-foreground md:text-lg;
+  }
+
+  .project-case-summary__list {
+    @apply m-0 grid list-none gap-2 p-0;
+  }
+
+  .project-case-summary__list li {
+    @apply relative pl-4 text-sm leading-6 text-foreground/75;
+  }
+
+  .project-case-summary__list li::before {
+    content: '';
+    @apply absolute left-0 top-[0.65rem] h-1 w-1 rounded-full bg-primary/70;
+  }
+
+  .testimonials-viewport {
+    isolation: isolate;
+  }
+
+  .ticker {
+    display: flex;
+    align-items: stretch;
+    animation: ticker var(--ticker-duration, 60s) linear infinite;
+  }
+
+  .ticker.paused {
+    animation-play-state: paused;
+  }
+
+  @keyframes ticker {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .testimonial-slide {
+    flex: 0 0 340px;
+    width: 340px;
+  }
+
+  @media (min-width: 768px) {
+    .testimonial-slide {
+      flex-basis: 420px;
+      width: 420px;
+    }
   }
 
   .tech-grid {

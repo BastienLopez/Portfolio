@@ -68,7 +68,7 @@ const DeferredSection = ({ sectionId, children, loadingLabel }: DeferredSectionP
     <div
       ref={wrapperRef}
       aria-busy={!isLoaded}
-      className="min-h-[24rem]"
+      className="min-h-[24rem] scroll-mt-20"
     >
       {isLoaded ? (
         <Suspense

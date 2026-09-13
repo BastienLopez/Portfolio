@@ -60,6 +60,8 @@ Vérifier le contenu généré :
 npm run verify:build
 ```
 
+Le hero reste lisible sur les hauteurs courtes : les CTA et l'indicateur de défilement restent dans le flux, et le titre complet est conservé dans le prérendu malgré son effet de frappe. Les parcours responsive couvrent notamment 320, 375, 430, 768, 1280 et 1920 px de large, ainsi que les hauteurs desktop courtes.
+
 Vérifier les variantes d’images :
 
 ```powershell
@@ -102,9 +104,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\deploy-vps.ps1 `
 
 Les paramètres `VpsUser` et `RemotePath` peuvent être personnalisés. Leurs valeurs par défaut sont `bl_ovh` et `/var/www/bastienlopez.fr`.
 
-Caddy, installé séparément sur le VPS, servira directement `/var/www/bastienlopez.fr`. La configuration de référence est [`deploy/Caddyfile.example`](deploy/Caddyfile.example). Elle garde les routes SPA connues (`/` et `/mentions-legales`) en 200, sert les fichiers existants et affiche la page React NotFound avec un vrai statut 404 pour les chemins inconnus. Caddy gérera automatiquement HTTPS ; aucun cron Certbot n'est nécessaire.
+Caddy, installé séparément sur le VPS, servira directement `/var/www/bastienlopez.fr`. La configuration de référence est [`deploy/Caddyfile.example`](deploy/Caddyfile.example). Elle garde les routes SPA connues (`/`, `/freelance` et `/mentions-legales`) en 200, sert les fichiers existants et affiche la page React NotFound avec un vrai statut 404 pour les chemins inconnus. Caddy gérera automatiquement HTTPS ; aucun cron Certbot n'est nécessaire.
 
-La même configuration redirige `www.bastienlopez.fr` vers le domaine canonique, conserve `/` et `/mentions-legales` en 200, sert les fichiers existants et affiche la page React NotFound avec un vrai statut 404 pour les chemins inconnus. Elle active les headers de sécurité et une CSP en `Content-Security-Policy`. Vérifier dans Chrome le domaine canonique, `/mentions-legales`, une route inconnue, un asset existant et le sous-domaine `www`. L'application ne charge pas de script de mesure d'audience côté client ; `connect-src 'self'` et `img-src 'self' data:` restent donc volontairement bornés.
+La même configuration redirige `www.bastienlopez.fr` vers le domaine canonique, conserve `/`, `/freelance` et `/mentions-legales` en 200, sert les fichiers existants et affiche la page React NotFound avec un vrai statut 404 pour les chemins inconnus. Elle active les headers de sécurité et une CSP en `Content-Security-Policy`. Vérifier dans Chrome le domaine canonique, `/freelance`, `/mentions-legales`, une route inconnue, un asset existant et le sous-domaine `www`. L'application ne charge pas de script de mesure d'audience côté client ; `connect-src 'self'` et `img-src 'self' data:` restent donc volontairement bornés.
 
 Le déploiement de production reste manuel pour le moment. Aucune CI ne se connecte au VPS.
 
@@ -130,6 +132,8 @@ Fichiers publics SEO :
 Image sociale Open Graph : [public/og-image.svg](public/og-image.svg). Pour la remplacer, conserver un format 1200x630 et mettre à jour les URL `og:image` et `twitter:image` dans [index.html](index.html) si le nom change.
 
 Après la mise en ligne du domaine, une nouvelle validation Search Console pourra être effectuée si nécessaire.
+
+Après chaque déploiement qui modifie les routes publiques, vérifier que `/freelance` répond en 200, que `/sitemap.xml` contient cette URL et que `/robots.txt` référence le sitemap, puis resoumettre `sitemap.xml` dans Search Console.
 
 ## Contact
 

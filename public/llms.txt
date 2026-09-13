@@ -2,6 +2,13 @@
 
 Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & automatisation, disponible pour un CDI remote/full remote ou des missions freelance ciblées.
 
+## Identité vérifiable
+- Nom: Bastien Lopez
+- Site officiel: https://bastienlopez.fr/
+- Page dédiée aux services freelance: https://bastienlopez.fr/freelance
+- Langues du site: français et anglais
+- Localisation déclarée: Reims, France; interventions à distance en France et en Europe
+
 ## Positionnement
 - Applications métier, APIs internes, workflows IA et automatisations n8n
 - Focus sur des solutions utiles, maintenables et déployables pour les équipes et les clients
@@ -20,14 +27,18 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - PME
 - Porteurs de projet
 - Équipes produit et recruteurs pour des postes remote/full remote
-- Equipes qui veulent remplacer des process manuels
+- Équipes qui veulent remplacer des process manuels
 - Structures qui veulent centraliser leurs données métier
+
+## Zone d’intervention
+- Basé à Reims, France
+- Travail à distance pour des équipes en France et en Europe
 
 ## Sections importantes
 - Hero et proposition de valeur: https://bastienlopez.fr/
 - À propos et disponibilité: https://bastienlopez.fr/#about
 - Projets: https://bastienlopez.fr/#projects
-- Freelance (services, offres, FAQ): https://bastienlopez.fr/#freelance
+- Freelance (services, projets, avis et FAQ): https://bastienlopez.fr/freelance
 - Compétences: https://bastienlopez.fr/#skills
 - Dev Notes: https://bastienlopez.fr/#devnotes
 - Contact: https://bastienlopez.fr/#contact

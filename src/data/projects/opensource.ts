@@ -561,6 +561,7 @@ export const opensourceProjects: Project[] = [
     category: 'opensource',
     image: 'img_projects/PatriPro.png',
     tech: ['React', 'Tailwind CSS', 'JavaScript', 'Chart.js'],
+    github: 'https://github.com/BastienLopez/PatriPro',
     demo: 'https://bastienlopez.github.io/PatriPro/',
     detailedContent: `
       <div class="project-detail">

@@ -1,9 +1,10 @@
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useLanguage } from "@/lib/i18n";
+import { useLanguage, usePageMetadata } from "@/lib/i18n";
 
 const Legal = () => {
   const { isEnglish } = useLanguage();
+  usePageMetadata('legal');
 
   return (
     <main className="min-h-screen bg-background px-4 py-12 text-foreground md:py-20">

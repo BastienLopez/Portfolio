@@ -8,6 +8,9 @@ const failures = [];
 
 const requiredFiles = [
   "index.html",
+  path.join("freelance", "index.html"),
+  path.join("mentions-legales", "index.html"),
+  "404.html",
   "robots.txt",
   "sitemap.xml",
   "llms.txt",
@@ -47,6 +50,50 @@ if (existsSync(path.join(distDirectory, "index.html"))) {
   if (!/<meta name="twitter:url" content="https:\/\/bastienlopez\.fr\//.test(indexHtml)) {
     failures.push("twitter:url does not use bastienlopez.fr.");
   }
+
+  if (!/<h2[^>]*>[\s\S]*Développeur Full-Stack IA &amp; Automatisation\s+Applications métier, APIs et workflows n8n[\s\S]*<\/h2>/.test(indexHtml)) {
+    failures.push("The prerendered home page does not contain the complete hero heading.");
+  }
+}
+
+const prerenderedRoutes = [
+  {
+    file: "index.html",
+    marker: "Bastien Lopez",
+    title: "Bastien Lopez —",
+  },
+  {
+    file: path.join("freelance", "index.html"),
+    marker: "Pour un poste",
+    title: "Freelance —",
+  },
+  {
+    file: path.join("mentions-legales", "index.html"),
+    marker: "Mentions légales",
+    title: "Mentions légales —",
+  },
+  {
+    file: "404.html",
+    marker: "Page introuvable",
+    title: "Page introuvable —",
+  },
+];
+
+for (const route of prerenderedRoutes) {
+  const routePath = path.join(distDirectory, route.file);
+  if (!existsSync(routePath)) continue;
+
+  const html = readText(route.file);
+  if (!html.includes(route.marker)) {
+    failures.push(`Prerendered ${route.file} does not contain its expected content.`);
+  }
+  if (!html.includes(`<title>${route.title}`)) {
+    failures.push(`Prerendered ${route.file} does not contain route-specific metadata.`);
+  }
+
+  if (route.file === path.join("freelance", "index.html") && !html.includes("freelance#service")) {
+    failures.push("Prerendered freelance page does not contain its service structured data.");
+  }
 }
 
 if (existsSync(path.join(distDirectory, "robots.txt"))) {
@@ -60,6 +107,9 @@ if (existsSync(path.join(distDirectory, "sitemap.xml"))) {
   const sitemap = readText("sitemap.xml");
   if (!sitemap.includes("https://bastienlopez.fr/")) {
     failures.push("sitemap.xml does not contain the production URL.");
+  }
+  if (!sitemap.includes("https://bastienlopez.fr/freelance")) {
+    failures.push("sitemap.xml does not contain the public freelance route.");
   }
 }
 

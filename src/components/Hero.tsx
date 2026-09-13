@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
@@ -7,35 +7,39 @@ import { useLanguage } from "@/lib/i18n";
 const Hero = () => {
   const { isEnglish } = useLanguage();
   const fullText = isEnglish
-    ? "Full-Stack AI & Automation Developer\nBusiness applications, internal APIs,\nAI workflows and n8n automations"
-    : "Développeur Full-Stack IA & Automatisation\nApplications métier, APIs internes,\nworkflows IA et automatisations n8n";
-  const [typedText, setTypedText] = useState(() => (
-    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? fullText : ""
-  ));
-  
+    ? "Full-Stack AI & Automation Developer\nBusiness applications, APIs and n8n workflows"
+    : "Développeur Full-Stack IA & Automatisation\nApplications métier, APIs et workflows n8n";
+  const [typedText, setTypedText] = useState(fullText);
+  const [typingComplete, setTypingComplete] = useState(false);
+
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (motionQuery.matches) {
       setTypedText(fullText);
+      setTypingComplete(true);
       return;
     }
 
     let index = 0;
-    const TYPING_INTERVAL = 70;
-    const timer = setInterval(() => {
-      if (index <= fullText.length) {
-        setTypedText(fullText.slice(0, index));
-        index++;
-      } else {
-        clearInterval(timer);
+    setTypedText("");
+    setTypingComplete(false);
+    const TYPING_INTERVAL = 50;
+
+    const timer = window.setInterval(() => {
+      index += 1;
+      setTypedText(fullText.slice(0, index));
+
+      if (index >= fullText.length) {
+        window.clearInterval(timer);
+        setTypingComplete(true);
       }
     }, TYPING_INTERVAL);
 
-    return () => clearInterval(timer);
+    return () => window.clearInterval(timer);
   }, [fullText]);
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" className="hero-section relative flex items-start justify-center overflow-hidden lg:items-center">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10"></div>
       
@@ -47,40 +51,39 @@ const Hero = () => {
         }}></div>
       </div>
 
-      <div className="container mx-auto px-4 pt-16 md:pt-20 relative z-10">
-        <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
+      <div className="container relative z-10 mx-auto px-4 pb-8 pt-24 sm:pb-10 sm:pt-28 lg:translate-y-7 lg:pb-0 lg:pt-20">
+        <div className="mx-auto max-w-4xl space-y-8 text-center">
           {/* Title with typing effect */}
           <div className="space-y-4">
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               Bastien Lopez
             </h1>
-            <div className="min-h-[96px] md:min-h-[128px] flex items-start justify-center">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl leading-tight font-medium whitespace-pre-line text-primary supports-[background-clip:text]:bg-gradient-to-r supports-[background-clip:text]:from-primary supports-[background-clip:text]:via-accent supports-[background-clip:text]:to-primary supports-[background-clip:text]:bg-clip-text supports-[background-clip:text]:text-transparent bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite]">
-                {typedText}
-                <span className="animate-pulse">|</span>
+            <div className="flex min-h-[96px] items-start justify-center md:min-h-[128px]">
+              <h2
+                data-hero-title
+                data-typing-complete={typingComplete ? "true" : "false"}
+                aria-label={fullText.replaceAll("\n", " ")}
+                className="bg-[length:200%_auto] text-2xl font-medium leading-tight text-primary supports-[background-clip:text]:bg-gradient-to-r supports-[background-clip:text]:from-primary supports-[background-clip:text]:via-accent supports-[background-clip:text]:to-primary supports-[background-clip:text]:bg-clip-text supports-[background-clip:text]:text-transparent md:text-3xl lg:text-4xl whitespace-pre-line animate-[shimmer_3s_linear_infinite]"
+              >
+                <span aria-hidden="true">{typedText}</span>
+                {!typingComplete && <span className="animate-pulse" aria-hidden="true">|</span>}
               </h2>
             </div>
           </div>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
             {isEnglish
-              ? 'I build business applications and AI/n8n automations for remote product teams and focused freelance clients, backed by 5+ years of experience and 30+ projects.'
-              : 'Je construis des applications métier et des automatisations IA/n8n pour des équipes produit en remote et des clients freelance ciblés, avec 5+ ans d’expérience et 30+ projets à l’appui.'}
-          </p>
-
-          <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed">
-            {isEnglish
-              ? 'Internal portals, back offices, APIs and AI workflows: clear scope, maintainable code and documented handover.'
-              : 'Portails internes, back-offices, APIs et workflows IA : périmètre clair, code maintenable et passation documentée.'}
+              ? 'I create internal tools and automations that simplify day-to-day work. 7+ years of experience, 30+ projects.'
+              : 'Je crée des outils internes et des automatisations qui simplifient le travail quotidien. 7+ ans d’expérience, 30+ projets.'}
           </p>
 
           {/* Reassurance line */}
           <div className="flex flex-wrap justify-center gap-3 py-3">
             {[
               ...(isEnglish
-                ? ["Business applications", "APIs & n8n automations", "MVP / internal tools", "Technical support"]
-                : ["Applications métier", "APIs & automatisations n8n", "MVP / outils internes", "Accompagnement technique"]),
+                ? ["Business applications", "APIs & AI workflows", "Technical support"]
+                : ["Applications métier", "APIs & workflows IA", "Accompagnement technique"]),
             ].map((item) => (
               <span
                 key={item}
@@ -92,31 +95,39 @@ const Hero = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
+          <div className="flex flex-col flex-wrap items-center justify-center gap-4 pt-6 sm:flex-row">
             <Button
               asChild
               size="lg"
-              className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-background font-semibold"
+              className="w-full max-w-full whitespace-normal bg-blue-600 px-3 text-center font-semibold text-white hover:bg-blue-500 sm:w-auto sm:max-w-none sm:whitespace-nowrap sm:px-8"
             >
-              <a href="#contact" onClick={() => trackEvent("cta_click", { location: "hero", cta: "contact" })}>{isEnglish ? 'Contact me about a role or project' : 'Me contacter pour un poste ou une mission'}</a>
+              <a href="#projects" onClick={() => trackEvent("cta_click", { location: "hero", cta: "projects" })}>{isEnglish ? 'View key projects' : 'Voir mes projets clés'}</a>
             </Button>
             <Button
               asChild
               size="lg"
               variant="outline"
-              className="border-primary text-cyan-300 hover:bg-primary/10 hover:text-cyan-200"
+              className="w-full max-w-full whitespace-normal px-3 text-center border-accent text-foreground hover:bg-accent/10 hover:text-foreground sm:w-auto sm:max-w-none sm:whitespace-nowrap sm:px-8"
             >
-              <a href="#projects" onClick={() => trackEvent("cta_click", { location: "hero", cta: "projects" })}>{isEnglish ? 'View key projects' : 'Voir mes projets clés'}</a>
+              <a href="#contact" onClick={() => trackEvent("cta_click", { location: "hero", cta: "contact" })}>{isEnglish ? 'Contact me' : 'Me contacter'}</a>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="w-full max-w-full whitespace-normal px-3 text-center border-accent text-cyan-300 hover:bg-accent/10 hover:text-cyan-200 sm:w-auto sm:max-w-none sm:whitespace-nowrap sm:px-8"
+            >
+              <a href="/freelance" onClick={() => trackEvent("cta_click", { location: "hero", cta: "freelance" })}>{isEnglish ? 'My freelance services' : 'Mes services freelance'}</a>
             </Button>
           </div>
-        </div>
-      </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-10">
-        <a href="#about" className="text-muted-foreground hover:text-primary transition-colors" aria-label={isEnglish ? 'Go to the about section' : 'Aller à la section à propos'}>
-          <ChevronDown className="w-8 h-8" />
-        </a>
+          {/* Keep the scroll affordance in the document flow so it cannot cover the CTAs. */}
+          <div className="mt-8 flex justify-center sm:mt-10 lg:mt-8">
+            <a href="#about" className="animate-bounce text-muted-foreground transition-colors hover:text-primary" aria-label={isEnglish ? 'Go to the about section' : 'Aller à la section à propos'}>
+              <ChevronDown className="h-8 w-8" />
+            </a>
+          </div>
+        </div>
       </div>
 
       {/* Bottom fade to blend hero into next section */}
@@ -127,8 +138,9 @@ const Hero = () => {
           0% { background-position: 200% center; }
           100% { background-position: -200% center; }
         }
+
         @media (prefers-reduced-motion: reduce) {
-          .animate-pulse, .animate-bounce, .animate-fade-in {
+          .animate-bounce, .animate-fade-in, .animate-pulse {
             animation: none !important;
           }
         }

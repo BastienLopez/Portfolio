@@ -3,17 +3,17 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
 import DeferredSection from "@/components/DeferredSection";
-import { useLanguage } from "@/lib/i18n";
+import { useLanguage, usePageMetadata } from "@/lib/i18n";
 
 const About = lazy(() => import("@/components/About"));
 const Skills = lazy(() => import("@/components/Skills"));
 const Projects = lazy(() => import("@/components/Projects"));
 const DevNotes = lazy(() => import("@/components/DevNotes"));
-const Freelance = lazy(() => import("@/components/Freelance"));
 const Contact = lazy(() => import("@/components/Contact"));
 
 const Index = () => {
   const { isEnglish } = useLanguage();
+  usePageMetadata('home');
 
   return (
     <div className="min-h-screen w-full">
@@ -34,9 +34,6 @@ const Index = () => {
         </DeferredSection>
         <DeferredSection sectionId="skills" loadingLabel={isEnglish ? "Loading skills..." : "Chargement des compétences..."}>
           <Skills />
-        </DeferredSection>
-        <DeferredSection sectionId="freelance" loadingLabel={isEnglish ? "Loading freelance work..." : "Chargement des missions..."}>
-          <Freelance />
         </DeferredSection>
         <DeferredSection sectionId="devnotes" loadingLabel={isEnglish ? "Loading notes..." : "Chargement des notes..."}>
           <DevNotes />

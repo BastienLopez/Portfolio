@@ -34,3 +34,16 @@ test("supports keyboard access for the language menu and gallery", async ({ page
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog", { name: /Visionneuse/ })).toBeHidden();
 });
+
+test("keeps Dev Notes subheadings readable on the dark article surface", async ({ page }) => {
+  await page.goto("/#devnotes");
+  await expect(page.locator("#devnotes")).toBeVisible();
+  await page.getByRole("button", { name: /Architecture & Bonnes pratiques/ }).click();
+  await page.getByRole("button", { name: /Lire l'article/ }).first().click();
+
+  const headingColors = await page.locator(".devnotes-content h3, .devnotes-content h4").evaluateAll((elements) =>
+    elements.map((element) => getComputedStyle(element).color),
+  );
+  expect(headingColors.length).toBeGreaterThan(0);
+  expect(headingColors.every((color) => color !== "rgb(17, 24, 39)")).toBe(true);
+});

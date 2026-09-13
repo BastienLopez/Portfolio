@@ -18,18 +18,53 @@ import { getImageManifestEntry, getImageSrcSet } from "@/lib/image-variants";
 type DisplayProjectCategory = Project["category"];
 type DisplayProject = Project;
 
-const projects: DisplayProject[] = allProjects;
+type FeaturedCaseStudySection = {
+  title: string;
+  items: string[];
+};
+
+type FeaturedCaseStudy = {
+  id: string;
+  title: string;
+  context: string;
+  need: string;
+  solution: string;
+  stack: string;
+  result: string;
+  role: string;
+  tasks: string[];
+  gains: string[];
+  sections: FeaturedCaseStudySection[];
+};
+
+const portfolioProjects: DisplayProject[] = allProjects;
+const freelancePageProjectIds = new Set([
+  "ats-filter-resume",
+  "n8n-workflow-automation",
+  "seo-geo-optimization",
+]);
+const freelanceProjects: DisplayProject[] = allProjects.filter(
+  (project) =>
+    project.category === "freelance" || freelancePageProjectIds.has(project.id),
+);
 
 const freelanceDisplayOrder = [
-  "erp-micro-creches",
   "eloi-coachsteo",
-  "luxury-auto-detailing",
   "cledevoute",
+  "luxury-auto-detailing",
+  "ats-filter-resume",
+  "erp-micro-creches",
+  "seo-geo-optimization",
+  "n8n-workflow-automation",
 ];
 
 const freelanceDisplayOrderIndex = new Map(
   freelanceDisplayOrder.map((id, index) => [id, index]),
 );
+
+const freelancePageTitleOverrides: Record<string, string> = {
+  "seo-geo-optimization": "SEO & GEO référencement local",
+};
 
 const openSourceDisplayOrder = [
   "ia-trading",
@@ -156,15 +191,12 @@ const englishProjectSummaries: Record<
   },
 };
 
-const featuredProjectConfig: Record<string, { emoji: string; color: string }> =
+const featuredProjectConfig: Record<string, { emoji: string }> =
   {
-    "erp-micro-creches": { emoji: "💼", color: "from-blue-500 to-cyan-500" },
-    "teams-bot-mastra": { emoji: "🤖", color: "from-purple-500 to-pink-500" },
-    "n8n-workflow-automation": {
-      emoji: "⚙️",
-      color: "from-green-500 to-emerald-500",
-    },
-    "wallet-provider": { emoji: "🌐", color: "from-orange-500 to-red-500" },
+    "erp-micro-creches": { emoji: "💼" },
+    "teams-bot-mastra": { emoji: "🤖" },
+    "n8n-workflow-automation": { emoji: "⚙️" },
+    "wallet-provider": { emoji: "🌐" },
   };
 
 const resolveImage = (img?: string | null) => {
@@ -172,6 +204,15 @@ const resolveImage = (img?: string | null) => {
   if (img.startsWith("http") || img.startsWith("data:")) return img;
   const normalized = img.replace(/^\/+/, "");
   return `${import.meta.env.BASE_URL}${normalized}`;
+};
+
+const shouldContainProjectImage = (project: DisplayProject) => {
+  const entry = getImageManifestEntry(project.image);
+  if (!entry) return false;
+
+  // Preserve square/portrait artwork (wallet screens, documentation covers,
+  // desktop screenshots) while letting wide project captures fill the card.
+  return entry.width / entry.height < 1.35;
 };
 
 const prepareDetailedContent = (content: string) => {
@@ -184,15 +225,21 @@ const prepareDetailedContent = (content: string) => {
   );
 };
 
-const Projects = () => {
+type ProjectsProps = {
+  mode?: "portfolio" | "freelance";
+};
+
+const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
   const { isEnglish } = useLanguage();
+  const isFreelancePage = mode === "freelance";
+  const projectsForView = isFreelancePage ? freelanceProjects : portfolioProjects;
   const [selectedCategory, setSelectedCategory] =
-    useState<DisplayProjectCategory | null>("emploi");
+    useState<DisplayProjectCategory | null>(isFreelancePage ? "freelance" : "emploi");
   const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(
     null,
   );
   const [selectedFeaturedProjectId, setSelectedFeaturedProjectId] =
-    useState("erp-micro-creches");
+    useState<string | null>(null);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState<number | null>(
     null,
   );
@@ -202,8 +249,7 @@ const Projects = () => {
   const hadProjectSelectionRef = useRef(false);
   const localizeProject = (project: DisplayProject) => {
     const englishDetailedContent = getEnglishDetailedContent(project.id);
-
-    return isEnglish
+    const localizedProject = isEnglish
       ? {
           ...project,
           ...project.translations?.en,
@@ -211,8 +257,16 @@ const Projects = () => {
           ...(englishDetailedContent ? { detailedContent: englishDetailedContent } : {}),
         }
       : project;
+    const freelanceTitle =
+      !isEnglish && isFreelancePage
+        ? freelancePageTitleOverrides[project.id]
+        : undefined;
+
+    return freelanceTitle
+      ? { ...localizedProject, title: freelanceTitle }
+      : localizedProject;
   };
-  const featuredCaseStudies = isEnglish
+  const featuredCaseStudies: FeaturedCaseStudy[] = isEnglish
     ? [
         {
           id: "erp-micro-creches",
@@ -226,6 +280,16 @@ const Projects = () => {
           result:
             "Clearer processes and better day-to-day operational control.",
           role: "Full-stack design and development, plus delivery structuring.",
+          tasks: [
+            "Analyse the multi-site operating model and translate it into business modules.",
+            "Build the React interfaces, Node.js services, MongoDB model and role-based access.",
+            "Set up Docker, CI/CD, tests and delivery documentation.",
+          ],
+          gains: [
+            "Five micro-nurseries can be managed from one shared workspace.",
+            "Dashboards and role-based access make day-to-day follow-up easier to read.",
+            "Historical data and documented delivery support continuity after handover.",
+          ],
           sections: [
             {
               title: "Functional scope",
@@ -264,6 +328,16 @@ const Projects = () => {
           result:
             "Centralised monitoring and faster notifications on tracked topics.",
           role: "Workflow design, Teams integration and bot development.",
+          tasks: [
+            "Select RSS sources and define the monitoring and alerting workflow.",
+            "Connect Mastra agents for summaries and prioritisation, then deliver through Teams.",
+            "Develop the TypeScript bot with Azure Bot Framework and configurable rules.",
+          ],
+          gains: [
+            "Technology monitoring is available in the team's existing communication space.",
+            "Summaries prepare the signal before it reaches the people concerned.",
+            "Adjustable sources and alerts keep the workflow focused on relevant topics.",
+          ],
           sections: [
             {
               title: "Workflow",
@@ -301,6 +375,16 @@ const Projects = () => {
           stack: "n8n, REST APIs, Webhooks, JSON, PDF",
           result: "Centralised workflows and reproducible deliverables.",
           role: "Process analysis, workflow design and integrations.",
+          tasks: [
+            "Model SocialPilot reporting, video preparation and Google Maps prospecting flows.",
+            "Wire APIs, webhooks, JSON transformations, branches and output formats in n8n.",
+            "Add data checks, error handling and delivery documentation to each scenario.",
+          ],
+          gains: [
+            "Reports, files, notifications and prospect lists follow repeatable paths.",
+            "Fewer manual handoffs are needed between intake, processing and delivery.",
+            "Traceable scenarios make later review and maintenance easier.",
+          ],
           sections: [
             {
               title: "Automated workflows",
@@ -339,6 +423,16 @@ const Projects = () => {
           result:
             "A more structured base for product and developer information.",
           role: "Team contribution on wallet-ecosystem topics, documentation content and migration work.",
+          tasks: [
+            "Contribute to wallet-product topics involving credentials, identity and interoperability.",
+            "Write and reorganise developer guidance during the GitBook to Docusaurus migration.",
+            "Document user paths while keeping confidential implementation details out of the public case study.",
+          ],
+          gains: [
+            "Developers have a clearer, more maintainable documentation entry point.",
+            "The migration provides a structured base for continued product documentation.",
+            "Standards context helps teams understand wallet and credential interoperability.",
+          ],
           sections: [
             {
               title: "Product scope",
@@ -380,6 +474,16 @@ const Projects = () => {
           result:
             "Gestion de cinq micro-crèches centralisée dans une interface unique, avec supervision multi-établissements et accès différenciés selon les rôles.",
           role: "Conception et développement full-stack : architecture fonctionnelle, interfaces, backend, données, droits d’accès, conteneurisation et préparation du déploiement.",
+          tasks: [
+            "Analyser le fonctionnement multi-établissements et le traduire en modules métier.",
+            "Développer les interfaces React, les services Node.js, le modèle MongoDB et les droits par rôle.",
+            "Mettre en place Docker, CI/CD, tests et documentation de livraison.",
+          ],
+          gains: [
+            "Les cinq micro-crèches sont suivies depuis un espace de travail partagé.",
+            "Les tableaux de bord et droits d’accès rendent le suivi quotidien plus lisible.",
+            "Les données historiques et la documentation facilitent la continuité après la livraison.",
+          ],
           sections: [
             {
               title: "Périmètre fonctionnel",
@@ -418,6 +522,16 @@ const Projects = () => {
           result:
             "Veille centralisée et notifications plus rapides sur les sujets suivis.",
           role: "Conception du workflow, intégration Teams et développement du bot.",
+          tasks: [
+            "Sélectionner les sources RSS et définir le workflow de veille et d’alertes.",
+            "Connecter les agents Mastra pour les synthèses et la priorisation, puis diffuser dans Teams.",
+            "Développer le bot TypeScript avec Azure Bot Framework et des règles configurables.",
+          ],
+          gains: [
+            "La veille technologique est disponible dans l’espace de communication déjà utilisé par l’équipe.",
+            "Les synthèses préparent l’information avant sa transmission aux personnes concernées.",
+            "Les sources et alertes ajustables gardent le workflow centré sur les sujets utiles.",
+          ],
           sections: [
             {
               title: "Workflow",
@@ -455,6 +569,16 @@ const Projects = () => {
           stack: "n8n, API REST, Webhooks, JSON, PDF",
           result: "Workflows centralisés et livrables reproductibles.",
           role: "Analyse des processus, conception des workflows et intégrations.",
+          tasks: [
+            "Modéliser les flux de reporting SocialPilot, de préparation vidéo et de prospection Google Maps.",
+            "Relier API, webhooks, transformations JSON, branches et formats de sortie dans n8n.",
+            "Ajouter contrôles de données, gestion des erreurs et documentation de livraison à chaque scénario.",
+          ],
+          gains: [
+            "Rapports, fichiers, notifications et listes de prospects suivent des parcours reproductibles.",
+            "Les passages manuels diminuent entre la réception, le traitement et la livraison.",
+            "Des scénarios traçables facilitent la relecture et la maintenance.",
+          ],
           sections: [
             {
               title: "Workflows automatisés",
@@ -493,6 +617,16 @@ const Projects = () => {
           result:
             "Base plus structurée pour les informations produit et développeur.",
           role: "Contribution en équipe sur l’écosystème wallet, les contenus de documentation et les travaux de migration.",
+          tasks: [
+            "Contribuer aux sujets wallet liés aux credentials, à l’identité et à l’interopérabilité.",
+            "Rédiger et réorganiser les guides développeur pendant la migration de GitBook vers Docusaurus.",
+            "Documenter les parcours tout en gardant les détails d’implémentation confidentiels hors du cas public.",
+          ],
+          gains: [
+            "Les développeurs disposent d’un point d’entrée documentaire plus clair et maintenable.",
+            "La migration fournit une base structurée pour poursuivre la documentation produit.",
+            "Le contexte des standards aide à comprendre l’interopérabilité des wallets et credentials.",
+          ],
           sections: [
             {
               title: "Périmètre produit",
@@ -521,32 +655,38 @@ const Projects = () => {
           ],
         },
       ];
-  const selectedFeaturedCaseStudy =
-    featuredCaseStudies.find((item) => item.id === selectedFeaturedProjectId) ??
-    featuredCaseStudies[0];
+  const visibleFeaturedCaseStudies = featuredCaseStudies;
+  const selectedFeaturedCaseStudy = visibleFeaturedCaseStudies.find(
+    (item) => item.id === selectedFeaturedProjectId,
+  );
 
-  const categoryConfig = {
+  const categoryDefinitions = {
     emploi: {
       emoji: "💼",
       title: isEnglish ? "PROFESSIONAL PROJECTS" : "PROJETS PRO",
-      color: "from-blue-500 to-cyan-500",
     },
     freelance: {
       emoji: "🚀",
       title: isEnglish ? "FREELANCE PROJECTS" : "MISSIONS FREELANCE",
-      color: "from-purple-500 to-pink-500",
     },
     opensource: {
       emoji: "🌟",
       title: "OPEN SOURCE",
-      color: "from-green-500 to-emerald-500",
     },
     gaming: {
       emoji: "🎮",
       title: "GAMING / MOBILE",
-      color: "from-orange-500 to-red-500",
     },
   };
+
+  const categoryConfig = isFreelancePage
+    ? { freelance: categoryDefinitions.freelance }
+    : {
+        emploi: categoryDefinitions.emploi,
+        freelance: categoryDefinitions.freelance,
+        opensource: categoryDefinitions.opensource,
+        gaming: categoryDefinitions.gaming,
+      };
 
   const categoryLabels: Record<DisplayProjectCategory, string> = {
     emploi: isEnglish ? "PROFESSIONAL PROJECTS" : "PROJETS PRO",
@@ -556,8 +696,9 @@ const Projects = () => {
   };
 
   const filteredProjects = selectedCategory
-    ? projects
-        .filter((project) => project.category === selectedCategory)
+    ? (isFreelancePage
+        ? projectsForView
+        : projectsForView.filter((project) => project.category === selectedCategory))
         .sort((a, b) => {
           const displayOrderIndex =
             selectedCategory === "freelance"
@@ -603,7 +744,7 @@ const Projects = () => {
     const historyState = getHistoryState();
 
     setSelectedProject(project);
-    setSelectedCategory(project.category);
+    setSelectedCategory(isFreelancePage ? "freelance" : project.category);
     setActiveGalleryIndex(null);
     hadProjectSelectionRef.current = true;
     window.history.pushState(
@@ -618,7 +759,7 @@ const Projects = () => {
   };
 
   const handleFeaturedProjectClick = (projectId: string) => {
-    const project = projects.find((entry) => entry.id === projectId);
+    const project = projectsForView.find((entry) => entry.id === projectId);
     if (!project) return;
     handleProjectClick(project);
   };
@@ -650,12 +791,12 @@ const Projects = () => {
     const syncProjectFromHash = () => {
       const projectId = getProjectIdFromHash(window.location.hash);
       const project = projectId
-        ? projects.find((entry) => entry.id === projectId)
+        ? projectsForView.find((entry) => entry.id === projectId)
         : undefined;
 
       if (project) {
         hadProjectSelectionRef.current = true;
-        setSelectedCategory(project.category);
+        setSelectedCategory(isFreelancePage ? "freelance" : project.category);
         setSelectedProject(project);
         setActiveGalleryIndex(null);
         return;
@@ -686,7 +827,7 @@ const Projects = () => {
       window.removeEventListener("popstate", syncProjectFromHash);
       window.removeEventListener("hashchange", syncProjectFromHash);
     };
-  }, []);
+  }, [isFreelancePage, projectsForView]);
 
   const localizedSelectedProject = selectedProject
     ? localizeProject(selectedProject)
@@ -792,7 +933,11 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="py-20 px-4 w-full overflow-x-hidden section-even"
+      className={`px-4 w-full overflow-x-hidden section-even ${
+        isFreelancePage
+          ? "pb-20 pt-8 md:pb-20 md:pt-12"
+          : "py-20"
+      }`}
     >
       <div className="container mx-auto max-w-7xl w-full">
         {/* Section Header */}
@@ -802,45 +947,56 @@ const Projects = () => {
             tabIndex={-1}
             className="text-3xl md:text-4xl font-bold mb-4 focus-visible:outline-none"
           >
-            {isEnglish
-              ? "Case studies & work"
-              : "Études de cas et réalisations"}
+            {isFreelancePage
+              ? (isEnglish ? "Freelance projects" : "Projets freelance")
+              : (isEnglish ? "Case studies & work" : "Études de cas et réalisations")}
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-6"></div>
+          <div className="mx-auto mb-6 h-1 w-20 bg-primary"></div>
           <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto mb-8 px-4">
-            {isEnglish
-              ? "Business applications, APIs, AI workflows and automations: a selection of concrete projects, followed by access to all work and explorations."
-              : "Applications métier, APIs, workflows IA et automatisations : une sélection de projets concrets, puis accès à l'ensemble des réalisations et explorations."}
+            {isFreelancePage
+              ? (isEnglish
+                ? "Websites, business applications and tailored tools delivered for freelance clients."
+                : "Sites vitrines, applications métier et outils sur mesure réalisés pour des clients freelance.")
+              : (isEnglish
+                ? "Business applications, APIs, AI workflows and automations: a selection of concrete projects, followed by access to all work and explorations."
+                : "Applications métier, APIs, workflows IA et automatisations : une sélection de projets concrets, puis accès à l'ensemble des réalisations et explorations.")}
           </p>
         </div>
 
-        {!selectedProject && (
+        {!selectedProject && !isFreelancePage && (
           <div className="mb-12">
             <div className="mb-5">
               <h3 className="text-2xl md:text-3xl font-bold mb-2">
-                {isEnglish ? "4 key projects" : "4 projets clés"}
+                {isEnglish
+                  ? `${visibleFeaturedCaseStudies.length} key projects`
+                  : `${visibleFeaturedCaseStudies.length} projets clés`}
               </h3>
               <p className="text-sm md:text-base text-muted-foreground">
                 {isEnglish
-                  ? "Context, need, role, solution and value delivered — for a role or a client project."
-                  : "Contexte, besoin, rôle, solution et valeur produite — pour un recrutement comme pour une mission."}
+                  ? "Context, need, role, solution and value delivered — for a role or a client project. ↓ Click to view my key projects below. ↓"
+                  : "Contexte, besoin, rôle, solution et valeur produite — pour un recrutement comme pour une mission. ↓ Cliquez pour voir mes projets clés ci-dessous. ↓"}
               </p>
             </div>
             <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
-              {featuredCaseStudies.map((item) => {
+              {visibleFeaturedCaseStudies.map((item) => {
                 const config = featuredProjectConfig[item.id];
-                const isSelected = selectedFeaturedCaseStudy.id === item.id;
+                const isSelected = selectedFeaturedProjectId === item.id;
 
                 return (
                   <Button
                     key={item.id}
                     type="button"
                     variant={isSelected ? "default" : "outline"}
-                    onClick={() => setSelectedFeaturedProjectId(item.id)}
-                    aria-pressed={isSelected}
-                    className={`h-auto min-h-20 whitespace-normal px-3 py-4 text-center text-xs sm:text-sm md:text-base transition-all ${
+                    onClick={() =>
+                      setSelectedFeaturedProjectId((currentId) =>
+                        currentId === item.id ? null : item.id,
+                      )
+                    }
+                    aria-expanded={isSelected}
+                    aria-controls="featured-case-study"
+                      className={`h-auto min-h-20 whitespace-normal px-3 py-4 text-center text-xs transition-colors sm:text-sm md:text-base ${
                       isSelected
-                        ? `bg-gradient-to-r ${config.color} text-white shadow-lg`
+                        ? "border-primary bg-primary text-primary-foreground"
                         : "border-border hover:border-primary hover:bg-primary/5"
                     }`}
                   >
@@ -861,76 +1017,131 @@ const Projects = () => {
               })}
             </div>
 
-            <Card className="mx-auto flex w-full max-w-none flex-col border-border bg-card p-6 md:p-8">
-              <h3 className="mb-5 text-2xl font-semibold">
-                {selectedFeaturedCaseStudy.title}
-              </h3>
-              <div className="grid flex-1 gap-x-10 gap-y-4 text-sm leading-7 text-foreground/80 md:grid-cols-2 md:text-base">
-                <p>
-                  <span className="text-foreground font-medium">
-                    {isEnglish ? "Context:" : "Contexte:"}
-                  </span>{" "}
-                  {selectedFeaturedCaseStudy.context}
-                </p>
-                <p>
-                  <span className="text-foreground font-medium">
-                    {isEnglish ? "Need:" : "Besoin:"}
-                  </span>{" "}
-                  {selectedFeaturedCaseStudy.need}
-                </p>
-                <p>
-                  <span className="text-foreground font-medium">
-                    {isEnglish ? "Solution:" : "Solution:"}
-                  </span>{" "}
-                  {selectedFeaturedCaseStudy.solution}
-                </p>
-                <p>
-                  <span className="text-foreground font-medium">Stack:</span>{" "}
-                  {selectedFeaturedCaseStudy.stack}
-                </p>
-                <p>
-                  <span className="text-foreground font-medium">
-                    {isEnglish ? "Result:" : "Résultat:"}
-                  </span>{" "}
-                  {selectedFeaturedCaseStudy.result}
-                </p>
-                <p>
-                  <span className="text-foreground font-medium">
-                    {isEnglish ? "My role:" : "Mon rôle:"}
-                  </span>{" "}
-                  {selectedFeaturedCaseStudy.role}
-                </p>
-              </div>
-              <div className="mt-8 grid gap-4 border-t border-border pt-6 md:grid-cols-3">
-                {selectedFeaturedCaseStudy.sections.map((section) => (
-                  <div
-                    key={section.title}
-                    className="rounded-lg border border-border bg-secondary/20 p-4"
+            {selectedFeaturedCaseStudy && (
+              <Card
+                id="featured-case-study"
+                className="mx-auto flex w-full max-w-none flex-col border-border bg-card p-6 md:p-8"
+              >
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <h3 className="text-2xl font-semibold">
+                    {selectedFeaturedCaseStudy.title}
+                  </h3>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedFeaturedProjectId(null)}
+                    aria-label={isEnglish ? "Close case study" : "Fermer l’étude de cas"}
                   >
+                    {isEnglish ? "Close" : "Fermer"}
+                  </Button>
+                </div>
+                <div className="mt-5 grid flex-1 gap-x-10 gap-y-4 text-sm leading-7 text-foreground/80 md:grid-cols-2 md:text-base">
+                  <p>
+                    <span className="font-medium text-foreground">
+                      {isEnglish ? "Context:" : "Contexte:"}
+                    </span>{" "}
+                    {selectedFeaturedCaseStudy.context}
+                  </p>
+                  <p>
+                    <span className="font-medium text-foreground">
+                      {isEnglish ? "Need:" : "Besoin:"}
+                    </span>{" "}
+                    {selectedFeaturedCaseStudy.need}
+                  </p>
+                  <p>
+                    <span className="font-medium text-foreground">
+                      {isEnglish ? "Solution:" : "Solution:"}
+                    </span>{" "}
+                    {selectedFeaturedCaseStudy.solution}
+                  </p>
+                  <p>
+                    <span className="font-medium text-foreground">Stack:</span>{" "}
+                    {selectedFeaturedCaseStudy.stack}
+                  </p>
+                  <p>
+                    <span className="font-medium text-foreground">
+                      {isEnglish ? "Result:" : "Résultat:"}
+                    </span>{" "}
+                    {selectedFeaturedCaseStudy.result}
+                  </p>
+                  <p>
+                    <span className="font-medium text-foreground">
+                      {isEnglish ? "My role:" : "Mon rôle:"}
+                    </span>{" "}
+                    {selectedFeaturedCaseStudy.role}
+                  </p>
+                </div>
+
+                <div className="mt-8 grid gap-4 border-t border-border pt-6 md:grid-cols-2">
+                  <div className="rounded-lg border border-border bg-secondary/20 p-4">
                     <h4 className="mb-3 font-semibold text-foreground">
-                      {section.title}
+                      {isEnglish ? "Tasks delivered" : "Tâches réalisées"}
                     </h4>
                     <ul className="space-y-2 text-sm leading-6 text-foreground/75">
-                      {section.items.map((item) => (
-                        <li key={item} className="flex gap-2">
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
-                          {item}
+                      {selectedFeaturedCaseStudy.tasks.map((task) => (
+                        <li key={task} className="flex gap-2">
+                          <span
+                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                            aria-hidden="true"
+                          />
+                          {task}
                         </li>
                       ))}
                     </ul>
                   </div>
-                ))}
-              </div>
-              <Button
-                variant="link"
-                className="mt-6 h-auto w-fit justify-start px-0 text-primary"
-                onClick={() =>
-                  handleFeaturedProjectClick(selectedFeaturedCaseStudy.id)
-                }
-              >
-                {isEnglish ? "View project →" : "Voir le projet →"}
-              </Button>
-            </Card>
+                  <div className="rounded-lg border border-border bg-secondary/20 p-4">
+                    <h4 className="mb-3 font-semibold text-foreground">
+                      {isEnglish ? "Value delivered" : "Gains / valeur produite"}
+                    </h4>
+                    <ul className="space-y-2 text-sm leading-6 text-foreground/75">
+                      {selectedFeaturedCaseStudy.gains.map((gain) => (
+                        <li key={gain} className="flex gap-2">
+                          <span
+                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                            aria-hidden="true"
+                          />
+                          {gain}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="mt-8 grid gap-4 border-t border-border pt-6 md:grid-cols-3">
+                  {selectedFeaturedCaseStudy.sections.map((section) => (
+                    <div
+                      key={section.title}
+                      className="rounded-lg border border-border bg-secondary/20 p-4"
+                    >
+                      <h4 className="mb-3 font-semibold text-foreground">
+                        {section.title}
+                      </h4>
+                      <ul className="space-y-2 text-sm leading-6 text-foreground/75">
+                        {section.items.map((item) => (
+                          <li key={item} className="flex gap-2">
+                            <span
+                              className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                              aria-hidden="true"
+                            />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <Button
+                  variant="link"
+                  className="mt-6 h-auto w-fit justify-start px-0 text-primary"
+                  onClick={() =>
+                    handleFeaturedProjectClick(selectedFeaturedCaseStudy.id)
+                  }
+                >
+                  {isEnglish ? "View full project →" : "Voir la fiche complète →"}
+                </Button>
+              </Card>
+            )}
           </div>
         )}
 
@@ -957,25 +1168,29 @@ const Projects = () => {
                   : "Une sélection de mes réalisations récentes, du frontend au backend."}
               </p>
             </div>
-            <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-3 mb-12 px-2 max-w-5xl mx-auto">
-              {Object.entries(categoryConfig).map(([key, config]) => (
-                <Button
-                  key={key}
-                  onClick={() =>
-                    handleCategoryClick(key as DisplayProjectCategory)
-                  }
-                  variant={selectedCategory === key ? "default" : "outline"}
-                  className={`w-full text-xs sm:text-sm md:text-base lg:text-lg px-2 sm:px-4 md:px-5 lg:px-6 py-3 md:py-4 lg:py-5 transition-all ${
-                    selectedCategory === key
-                      ? `bg-gradient-to-r ${config.color} text-white shadow-lg`
-                      : "hover:scale-105"
-                  }`}
-                >
-                  <span className="mr-2 text-lg" aria-hidden="true">{config.emoji}</span>
-                  <span>{categoryLabels[key as DisplayProjectCategory]}</span>
-                </Button>
-              ))}
-            </div>
+            {!isFreelancePage && (
+              <div className="mx-auto mb-12 grid w-full max-w-5xl grid-cols-2 gap-3 px-2 lg:grid-cols-4">
+                {Object.entries(categoryConfig).map(([key, config]) => (
+                  <Button
+                    key={key}
+                    onClick={() =>
+                      handleCategoryClick(key as DisplayProjectCategory)
+                    }
+                    variant={selectedCategory === key ? "default" : "outline"}
+                      className={`w-full px-2 py-3 text-xs transition-colors sm:px-4 sm:text-sm md:px-5 md:py-4 md:text-base lg:px-6 lg:py-5 lg:text-lg ${
+                      selectedCategory === key
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border text-foreground hover:border-primary/60 hover:bg-primary/5"
+                    }`}
+                  >
+                    <span className="mr-2 text-lg" aria-hidden="true">
+                      {config.emoji}
+                    </span>
+                    <span>{categoryLabels[key as DisplayProjectCategory]}</span>
+                  </Button>
+                ))}
+              </div>
+            )}
 
             {/* Projects Grid */}
             {selectedCategory && (
@@ -986,7 +1201,7 @@ const Projects = () => {
                   return (
                     <Card
                       key={project.id}
-                      className="group overflow-hidden bg-card border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 flex flex-col h-full"
+                      className="group flex h-full flex-col overflow-hidden border-border bg-card shadow-none transition-colors duration-200 hover:border-primary/60"
                     >
                       {/* Project Image */}
                       <div className="relative h-48 md:h-56 lg:h-52 overflow-hidden bg-secondary flex items-center justify-center">
@@ -999,14 +1214,15 @@ const Projects = () => {
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           width={getImageManifestEntry(project.image)?.width}
                           height={getImageManifestEntry(project.image)?.height}
-                          className="max-w-full max-h-full object-contain rounded-[5px] transition-transform duration-500 group-hover:scale-105"
+                          className={shouldContainProjectImage(project)
+                            ? "max-h-full max-w-full rounded-[5px] object-contain"
+                            : "h-full w-full object-cover"}
                         />
-                        <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
 
                       {/* Project Info */}
                       <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                        <h3 className="text-xl font-bold text-foreground">
                           {localizedProject.title}
                         </h3>
 
@@ -1019,7 +1235,7 @@ const Projects = () => {
                           {project.tech.map((tech) => (
                             <span
                               key={tech}
-                              className="px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full"
+                              className="rounded-md border border-border bg-secondary px-3 py-1 text-xs font-medium text-foreground/75"
                             >
                               {tech}
                             </span>
@@ -1027,46 +1243,51 @@ const Projects = () => {
                         </div>
 
                         {/* Links */}
-                        <div className="flex flex-wrap gap-3 pt-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="flex-1 min-w-32 border-primary text-primary hover:bg-primary/10"
-                            onClick={() => handleProjectClick(project)}
+                        <div className="space-y-3 pt-2">
+                          <div
+                            className={`grid gap-3 ${project.github ? "grid-cols-2" : "grid-cols-1"}`}
                           >
-                            {isEnglish ? "Learn more" : "En savoir plus"}
-                          </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="w-full min-w-0 border-border px-2 text-xs text-foreground hover:border-primary hover:text-primary sm:text-sm"
+                              onClick={() => handleProjectClick(project)}
+                            >
+                              {isEnglish ? "Learn more" : "En savoir plus"}
+                            </Button>
+
+                            {project.github && (
+                              <Button
+                                asChild
+                                size="sm"
+                                variant="outline"
+                                className="w-full min-w-0 border-border px-2 text-xs text-foreground hover:border-primary hover:text-primary sm:text-sm"
+                              >
+                                <a
+                                  href={project.github}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <Github className="mr-2 h-4 w-4 shrink-0" aria-hidden="true" />
+                                  Code
+                                </a>
+                              </Button>
+                            )}
+                          </div>
 
                           {project.demo && (
                             <Button
                               asChild
-                              size="sm"
-                              className="flex-1 min-w-32 bg-gradient-to-r from-primary to-accent hover:opacity-90"
+                              size="lg"
+                              className="w-full bg-cta text-cta-foreground hover:bg-cta/90"
                             >
                               <a
                                 href={project.demo}
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                <ExternalLink className="w-4 h-4 mr-2" aria-hidden="true" />
-                                Demo
-                              </a>
-                            </Button>
-                          )}
-                          {project.github && (
-                            <Button
-                              asChild
-                              size="sm"
-                              variant="outline"
-                              className="flex-1 min-w-32 border-primary text-primary hover:bg-primary/10"
-                            >
-                              <a
-                                href={project.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <Github className="w-4 h-4 mr-2" aria-hidden="true" />
-                                Code
+                                <ExternalLink className="mr-2 h-4 w-4" aria-hidden="true" />
+                                {isEnglish ? "View project" : "Voir le projet"}
                               </a>
                             </Button>
                           )}

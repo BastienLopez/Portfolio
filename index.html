@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bastien Lopez — Développeur Full-Stack IA & Automatisation</title>
     <base href="%BASE_URL%">
-    <meta name="description" content="Développeur Full-Stack spécialisé en applications métier, IA et automatisation n8n. Disponible pour CDI remote/full remote et missions freelance." />
+    <meta name="description" content="Sites internet, applications métier, APIs internes et automatisations IA/n8n par Bastien Lopez. Disponible pour CDI remote ou missions freelance." />
     <meta name="author" content="Bastien Lopez" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0b1220" />
     <link rel="canonical" href="https://bastienlopez.fr/" />
     <link rel="alternate" hreflang="fr-FR" href="https://bastienlopez.fr/" />
+    <link rel="alternate" hreflang="en-US" href="https://bastienlopez.fr/" />
     <link rel="alternate" hreflang="x-default" href="https://bastienlopez.fr/" />
 
     <meta property="og:title" content="Bastien Lopez — Développeur Full-Stack IA & Automatisation" />
-    <meta property="og:description" content="Développeur Full-Stack spécialisé en applications métier, IA et automatisation n8n. Disponible pour CDI remote/full remote et missions freelance." />
+    <meta property="og:description" content="Sites internet, applications métier, APIs internes et automatisations IA/n8n par Bastien Lopez. Disponible pour CDI remote ou missions freelance." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bastienlopez.fr/" />
     <meta property="og:image" content="https://bastienlopez.fr/og-image.svg" />
@@ -23,11 +24,12 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:site_name" content="Portfolio Bastien Lopez" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Bastien Lopez — Développeur Full-Stack IA & Automatisation" />
-    <meta name="twitter:description" content="Développeur Full-Stack spécialisé en applications métier, IA et automatisation n8n. Disponible pour CDI remote/full remote et missions freelance." />
+    <meta name="twitter:description" content="Sites internet, applications métier, APIs internes et automatisations IA/n8n par Bastien Lopez. Disponible pour CDI remote ou missions freelance." />
     <meta name="twitter:image" content="https://bastienlopez.fr/og-image.svg" />
     <meta name="twitter:url" content="https://bastienlopez.fr/" />
 
@@ -43,6 +45,10 @@
         "@id": "https://bastienlopez.fr/#website",
         "url": "https://bastienlopez.fr/",
         "name": "Portfolio Bastien Lopez",
+        "description": "Portfolio de Bastien Lopez : sites internet, applications métier, APIs internes et automatisations IA/n8n.",
+        "publisher": {
+          "@id": "https://bastienlopez.fr/#person"
+        },
         "inLanguage": "fr-FR"
       }
     </script>
@@ -54,8 +60,11 @@
         "@id": "https://bastienlopez.fr/#webpage",
         "url": "https://bastienlopez.fr/",
         "name": "Bastien Lopez — Développeur Full-Stack IA & Automatisation",
-        "description": "Portfolio de Bastien Lopez : applications métier, APIs internes, automatisations n8n et solutions IA.",
+        "description": "Portfolio de Bastien Lopez : sites internet, applications métier, APIs internes et automatisations IA/n8n.",
         "inLanguage": "fr-FR",
+        "about": {
+          "@id": "https://bastienlopez.fr/#person"
+        },
         "isPartOf": {
           "@id": "https://bastienlopez.fr/#website"
         }
@@ -69,7 +78,9 @@
         "@id": "https://bastienlopez.fr/#person",
         "name": "Bastien Lopez",
         "jobTitle": "Développeur Full-Stack IA & Automatisation",
+        "description": "Développeur basé à Reims, spécialisé dans les sites internet, applications métier, APIs internes et automatisations IA/n8n.",
         "url": "https://bastienlopez.fr/",
+        "knowsLanguage": ["fr-FR", "en-US"],
         "sameAs": [
           "https://github.com/BastienLopez",
           "https://www.linkedin.com/in/bastien-lopez-fullstack/"
@@ -100,7 +111,7 @@
         "@id": "https://bastienlopez.fr/#service",
         "name": "Bastien Lopez - Développement full-stack IA & automatisation",
         "url": "https://bastienlopez.fr/",
-        "description": "Conception d'applications métier, APIs internes, automatisations n8n et solutions IA, pour les équipes et les clients freelance.",
+        "description": "Sites internet, applications métier, APIs internes et automatisations IA/n8n pour les équipes produit et les clients freelance.",
         "provider": {
           "@id": "https://bastienlopez.fr/#person"
         },
@@ -116,6 +127,10 @@
         ],
         "areaServed": [
           {
+            "@type": "City",
+            "name": "Reims"
+          },
+          {
             "@type": "Country",
             "name": "France"
           },
@@ -124,6 +139,12 @@
             "name": "Europe"
           }
         ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Reims",
+          "addressCountry": "FR"
+        },
+        "availableLanguage": ["fr-FR", "en-US"],
         "sameAs": [
           "https://github.com/BastienLopez",
           "https://www.linkedin.com/in/bastien-lopez-fullstack/"
@@ -131,62 +152,6 @@
       }
     </script>
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Quels sont les délais habituels ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Le délai dépend du périmètre. Une mission ciblée peut être livrée en quelques jours, un MVP en quelques semaines, et un ERP léger sur plusieurs lots."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Comment fonctionne la facturation ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Selon le besoin, la facturation peut se faire en TJM, en forfait ou en lots, avec jalons, livrables et visibilité budget."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "À qui appartient le code ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Le code livré est transférable au client selon les termes du devis ou du contrat, avec passation et documentation."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Proposes-tu de la maintenance ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Oui, un accompagnement post-livraison est possible: correctifs, évolutions, optimisation performance et suivi technique."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Peux-tu reprendre un projet existant ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Oui, après un audit rapide de l'existant pour sécuriser la reprise avant d'ajouter de nouvelles fonctionnalités."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Peux-tu signer un NDA ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Oui, un NDA peut être signé avant partage des informations sensibles."
-            }
-          }
-        ]
-      }
-    </script>
   </head>
 
   <body>

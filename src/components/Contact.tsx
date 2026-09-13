@@ -14,16 +14,16 @@ const Contact = () => {
   return (
     <section id="contact" className="py-20 md:py-32 relative bg-secondary/30 section-even">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-6xl mx-auto text-center">
           <div className="mb-12 animate-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">{isEnglish ? 'Let’s discuss a role or project' : 'Parlons d’un poste ou d’une mission'}</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-6"></div>
+            <div className="mx-auto mb-6 h-1 w-20 bg-primary"></div>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               {isEnglish ? 'Whether you are recruiting or need focused delivery, share your context and I will get back to you with a concrete, tailored approach.' : 'Que vous recrutiez ou ayez un besoin de réalisation ciblé, partagez votre contexte : je vous réponds avec une approche concrète et adaptée.'}
             </p>
           </div>
 
-          <Card className="p-8 bg-card border-border space-y-6">
+          <Card className="space-y-6 border-border bg-transparent p-8 shadow-none">
             <div className="space-y-5">
               <div className="grid gap-3 text-center sm:grid-cols-2">
                 <div className="rounded-lg border border-border bg-secondary/25 p-4">

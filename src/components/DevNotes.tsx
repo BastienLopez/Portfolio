@@ -82,27 +82,22 @@ const DevNotes = () => {
     culture: {
       emoji: '🧠',
       title: isEnglish ? 'Culture & methods' : 'Culture & Méthodes',
-      color: 'from-purple-500 to-pink-500'
     },
     devops: {
       emoji: '⚙️',
       title: 'CI/CD & DevOps',
-      color: 'from-blue-500 to-cyan-500'
     },
     tools: {
       emoji: '🧩',
       title: isEnglish ? 'Tools & productivity' : 'Outils & Productivité',
-      color: 'from-green-500 to-emerald-500'
     },
     architecture: {
       emoji: '🧰',
       title: isEnglish ? 'Architecture & best practices' : 'Architecture & Bonnes pratiques',
-      color: 'from-orange-500 to-red-500'
     },
     freelance: {
       emoji: '💼',
       title: isEnglish ? 'Project management & freelance' : 'Gestion de projet & Freelance',
-      color: 'from-indigo-500 to-purple-500'
     }
   };
 
@@ -156,15 +151,12 @@ const DevNotes = () => {
   };
 
   return (
-    <section id="devnotes" className="py-20 px-4 w-full overflow-x-hidden section-odd">
+    <section id="devnotes" className="py-20 px-4 w-full overflow-x-hidden section-even">
       <div className="container mx-auto max-w-6xl w-full">
         <div className="text-center mb-12 w-full">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{isEnglish ? 'Selected dev notes 📝' : 'Dev Notes sélectionnées 📝'}</h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-2 px-4">
-            {isEnglish ? 'Technical notes on automation, AI, architecture and deployment,' : "Retours techniques autour de l'automatisation, de l'IA, de l'architecture et du déploiement,"}
-          </p>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 px-4">
-            {isEnglish ? 'with access to all notes by topic.' : "avec un accès à l'ensemble des notes par thème."}
+            {isEnglish ? 'Technical notes on automation, AI, architecture and deployment, with access to all notes by topic.' : "Retours techniques autour de l'automatisation, de l'IA, de l'architecture et du déploiement, avec un accès à l'ensemble des notes par thème."}
           </p>
           {!selectedArticle && (
             <p className="text-sm md:text-md text-muted-foreground font-medium mb-8">
@@ -184,7 +176,7 @@ const DevNotes = () => {
               ← {isEnglish ? 'Back to articles' : 'Retour aux articles'}
             </Button>
             
-            <Card className="border-2">
+            <Card className="border-border bg-transparent shadow-none">
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-2xl" aria-hidden="true">
@@ -199,11 +191,11 @@ const DevNotes = () => {
               <CardContent>
                 <div 
                   className="devnotes-content prose prose-sm md:prose-lg max-w-none text-white dark:prose-invert
-                    prose-headings:font-bold
-                    prose-h1:text-3xl prose-h1:mb-6
-                    prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
-                    prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
-                    prose-h4:text-lg prose-h4:mt-4 prose-h4:mb-2
+                    prose-headings:font-bold prose-headings:text-white
+                    prose-h1:text-3xl prose-h1:mb-6 prose-h1:text-white
+                    prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h2:text-primary
+                    prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-white
+                    prose-h4:text-lg prose-h4:mt-4 prose-h4:mb-2 prose-h4:text-white
                     prose-p:my-3 prose-p:leading-relaxed prose-p:text-white
                     prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:underline
                     prose-strong:text-primary
@@ -237,8 +229,8 @@ const DevNotes = () => {
                   variant={selectedCategory === key ? "default" : "outline"}
                   className={`w-full sm:w-auto text-sm md:text-base lg:text-lg px-4 md:px-5 lg:px-6 py-4 md:py-4 lg:py-5 transition-all ${
                     selectedCategory === key 
-                      ? `bg-gradient-to-r ${config.color} text-white shadow-lg` 
-                      : 'hover:scale-105'
+                      ? 'border-primary bg-primary text-primary-foreground'
+                      : 'border-border text-foreground hover:border-primary hover:text-primary'
                   }`}
                 >
                   <span className="mr-2 text-lg" aria-hidden="true">{config.emoji}</span>
@@ -266,11 +258,11 @@ const DevNotes = () => {
                 {filteredArticles.map((article) => (
                   <Card 
                     key={article.id}
-                    className="hover:shadow-lg transition-all hover:scale-105 w-full"
+                    className="w-full border-border bg-transparent shadow-none transition-colors duration-200 hover:border-primary/60"
                   >
                     <CardHeader>
                       <CardTitle className="text-base md:text-lg leading-tight">
-                        {article.title}
+                        {isEnglish ? article.titleEn : article.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>

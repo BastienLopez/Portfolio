@@ -1,9 +1,10 @@
 import { Home } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useLanguage } from "@/lib/i18n";
+import { useLanguage, usePageMetadata } from "@/lib/i18n";
 
 const NotFound = () => {
   const { isEnglish } = useLanguage();
+  usePageMetadata('notFound');
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-4 text-foreground">

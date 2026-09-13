@@ -6,6 +6,8 @@ const rootDirectory = path.resolve(path.dirname(fileURLToPath(import.meta.url)),
 const sourceDirectories = [path.join(rootDirectory, "src", "data", "projects"), path.join(rootDirectory, "src", "components")];
 const urlPattern = /https?:\/\/[^\s"'<>`]+/g;
 const excludedHosts = new Set(["localhost", "127.0.0.1", "example.com"]);
+// First-party routes are verified locally by Playwright; live deployment readback is a separate gate.
+const firstPartyHosts = new Set(["bastienlopez.fr", "www.bastienlopez.fr"]);
 const failures = [];
 const results = [];
 const urls = new Set();
@@ -24,7 +26,9 @@ const collectUrls = (directory) => {
       const candidate = match[0].replace(/[),.;]+$/g, "");
       try {
         const parsed = new URL(candidate);
-        if (!excludedHosts.has(parsed.hostname)) urls.add(parsed.toString());
+        if (!excludedHosts.has(parsed.hostname) && !firstPartyHosts.has(parsed.hostname)) {
+          urls.add(parsed.toString());
+        }
       } catch {
         // Ignore template fragments and malformed examples; the build handles local paths.
       }

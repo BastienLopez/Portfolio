@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import type { Project, ProjectGalleryItem } from "@/data/projects";
 import { getImageManifestEntry, getImageSrcSet } from "@/lib/image-variants";
+import { ProjectCaseStudySummary } from "./ProjectCaseStudySummary";
 import { ProjectNavigation } from "./ProjectNavigation";
 
 type ProjectDetailProps = {
@@ -36,6 +37,10 @@ export const ProjectDetail = ({
   onOpenGallery,
   detailRef,
 }: ProjectDetailProps) => {
+  const detailedContentHtml = project.detailedContent
+    ? prepareDetailedContent(project.detailedContent)
+    : "";
+
   const handleDetailedContentClick = (event: MouseEvent<HTMLDivElement>) => {
     const trigger = (event.target as HTMLElement).closest<HTMLButtonElement>(
       "[data-gallery-index]",
@@ -131,11 +136,17 @@ export const ProjectDetail = ({
             ))}
           </div>
 
+          <ProjectCaseStudySummary
+            contentHtml={detailedContentHtml}
+            description={project.description}
+            isEnglish={isEnglish}
+          />
+
           <div className="project-detail-content" onClick={handleDetailedContentClick}>
-            {project.detailedContent ? (
+            {detailedContentHtml ? (
               <div
                 dangerouslySetInnerHTML={{
-                  __html: prepareDetailedContent(project.detailedContent),
+                  __html: detailedContentHtml,
                 }}
               />
             ) : null}
@@ -163,7 +174,7 @@ export const ProjectDetail = ({
               >
                 <a href={project.demo} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="w-4 h-4 mr-2" aria-hidden="true" />
-                  Demo
+                  {isEnglish ? "View project" : "Voir le projet"}
                 </a>
               </Button>
             )}

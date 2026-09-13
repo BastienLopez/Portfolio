@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ChevronDown, Languages, Menu, X, Github, Linkedin, Mail } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 
@@ -122,6 +123,10 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isEnglish } = useLanguage();
+  const location = useLocation();
+
+  const sectionHref = (hash: string) =>
+    location.pathname === "/" ? hash : `${import.meta.env.BASE_URL}${hash}`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -132,12 +137,12 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { href: "#about", label: isEnglish ? "About" : "À propos" },
-    { href: "#projects", label: isEnglish ? "Projects" : "Projets" },
-    { href: "#skills", label: "Stack" },
-    { href: "#freelance", label: isEnglish ? "Services" : "Services" },
-    { href: "#devnotes", label: "Dev Notes" },
-    { href: "#contact", label: isEnglish ? "Contact" : "Contact" },
+    { href: sectionHref("#about"), label: isEnglish ? "About" : "À propos" },
+    { href: sectionHref("#projects"), label: isEnglish ? "Projects" : "Projets" },
+    { href: sectionHref("#skills"), label: "Stack" },
+    { href: `${import.meta.env.BASE_URL}freelance`, label: isEnglish ? "Freelance" : "Freelance" },
+    { href: sectionHref("#devnotes"), label: "Dev Notes" },
+    { href: sectionHref("#contact"), label: isEnglish ? "Contact" : "Contact" },
   ];
 
   const socialLinks = [
@@ -156,7 +161,7 @@ const Navbar = () => {
         <div className="relative flex items-center justify-between h-16 xl:h-20">
           {/* Logo */}
           <a
-            href="#hero"
+            href={location.pathname === "/" ? "#hero" : import.meta.env.BASE_URL}
             className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity"
           >
             Bastien Lopez
@@ -192,7 +197,7 @@ const Navbar = () => {
               </a>
             ))}
             <Button asChild className="bg-cta hover:bg-cta/90 text-cta-foreground ml-2">
-              <a href="#contact">{isEnglish ? 'Contact me' : 'Me contacter'}</a>
+              <a href={sectionHref("#contact")}>{isEnglish ? 'Contact me' : 'Me contacter'}</a>
             </Button>
           </div>
 
@@ -238,7 +243,7 @@ const Navbar = () => {
                 ))}
               </div>
               <Button asChild className="bg-cta hover:bg-cta/90 text-cta-foreground w-full mt-4">
-                <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+                <a href={sectionHref("#contact")} onClick={() => setIsMobileMenuOpen(false)}>
                   {isEnglish ? 'Contact me' : 'Me contacter'}
                 </a>
               </Button>

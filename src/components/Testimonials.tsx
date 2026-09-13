@@ -1,169 +1,167 @@
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import testimonialsData, { Testimonial } from "@/data/testimonials";
+import { Testimonial } from "@/data/testimonials";
+import testimonialsData from "@/data/testimonials";
 import { useLanguage } from "@/lib/i18n";
-
-// Lightweight testimonials horizontal scroller.
-// - gentle auto-scroll via requestAnimationFrame
-// - pauses on hover / pointer interaction
-// - respects prefers-reduced-motion
 
 const Avatar = ({ name, image }: { name: string; image?: string | null }) => {
   const resolveImage = (img?: string | null) => {
     if (!img) return undefined;
     if (img.startsWith("http") || img.startsWith("data:")) return img;
     const normalized = img.replace(/^\/+/, "");
-    return `${import.meta.env.BASE_URL}${normalized}`;
+    return import.meta.env.BASE_URL + normalized;
   };
 
   const resolved = resolveImage(image ?? undefined);
   if (resolved) {
-    return <img src={resolved} alt="" className="w-20 h-20 rounded-full object-cover" />;
+    return <img src={resolved} alt="" className="h-20 w-20 rounded-full object-cover" />;
   }
 
   const initials = name
     .split(" ")
-    .map((n) => n[0])
+    .map((part) => part[0])
     .slice(0, 2)
     .join("");
-  return <div className="w-20 h-20 rounded-full bg-primary/15 text-primary flex items-center justify-center font-semibold" aria-hidden="true">{initials}</div>;
+
+  return (
+    <div
+      className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/15 font-semibold text-primary"
+      aria-hidden="true"
+    >
+      {initials}
+    </div>
+  );
 };
 
 export default function Testimonials(): JSX.Element {
   const { isEnglish } = useLanguage();
-  const listRef = useRef<HTMLDivElement | null>(null);
-  const trackRef = useRef<HTMLDivElement | null>(null);
   const tickerRef = useRef<HTMLDivElement | null>(null);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
   const [isManuallyPaused, setIsManuallyPaused] = useState(false);
+  const isPaused = isReducedMotion || isManuallyPaused;
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setIsReducedMotion(mq.matches);
-    const handler = () => setIsReducedMotion(mq.matches);
-    mq.addEventListener?.("change", handler);
-    return () => mq.removeEventListener?.("change", handler);
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotionPreference = () => setIsReducedMotion(motionQuery.matches);
+
+    updateMotionPreference();
+    motionQuery.addEventListener?.("change", updateMotionPreference);
+    return () => motionQuery.removeEventListener?.("change", updateMotionPreference);
   }, []);
 
-  // Use CSS animation for a more reliable continuous ticker
   useEffect(() => {
-    const track = trackRef.current;
     const ticker = tickerRef.current;
-    if (!track || !ticker) return;
-    if (isReducedMotion) {
-      ticker.style.animation = "none";
-      return;
-    }
+    if (!ticker) return;
 
-    ticker.style.animation = "";
+    const updateDuration = () => {
+      const sequenceWidth = ticker.scrollWidth / 2;
+      if (!sequenceWidth) return;
 
-    const speed = 45; // px per second (slower, smoother)
-    // compute width of one sequence (half of duplicated content)
-    const seqWidth = track.scrollWidth / 2 || 0;
-    const duration = Math.max(10, seqWidth / speed); // ensure a minimum duration for elegance
-    ticker.style.setProperty("--ticker-duration", `${duration}s`);
-  }, [isReducedMotion]);
+      const speed = 45;
+      const duration = Math.max(20, sequenceWidth / speed);
+      ticker.style.setProperty("--ticker-duration", `${duration}s`);
+    };
+
+    const frame = window.requestAnimationFrame(updateDuration);
+    const resizeObserver = typeof ResizeObserver === "undefined"
+      ? null
+      : new ResizeObserver(updateDuration);
+
+    resizeObserver?.observe(ticker);
+    window.addEventListener("load", updateDuration);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      resizeObserver?.disconnect();
+      window.removeEventListener("load", updateDuration);
+    };
+  }, [isEnglish]);
 
   const loopedTestimonials = [...testimonialsData, ...testimonialsData];
+  const pauseLabel = isReducedMotion
+    ? (isEnglish ? "Automatic scrolling disabled" : "Défilement automatique désactivé")
+    : isManuallyPaused
+      ? (isEnglish ? "Resume testimonial scrolling" : "Reprendre le défilement des témoignages")
+      : (isEnglish ? "Pause testimonial scrolling" : "Mettre en pause le défilement des témoignages");
 
   return (
-    <section id="testimonials" className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden py-16 md:py-24">
-      {/* background full width + subtle grid like hero */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10"></div>
-      <div className="absolute inset-0 opacity-20">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)`,
-            backgroundSize: "50px 50px",
-          }}
-        ></div>
-      </div>
-
-      <div className="relative z-10">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto mb-6">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <h2 className="text-3xl md:text-4xl font-bold">{isEnglish ? 'Client and anonymised user feedback' : 'Retours clients et utilisateurs anonymisés'}</h2>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setIsManuallyPaused((paused) => !paused)}
-                aria-label={isManuallyPaused ? (isEnglish ? 'Resume testimonial scrolling' : 'Reprendre le défilement des témoignages') : (isEnglish ? 'Pause testimonial scrolling' : 'Mettre en pause le défilement des témoignages')}
-              >
-                {isManuallyPaused ? <Play className="mr-2 h-4 w-4" aria-hidden="true" /> : <Pause className="mr-2 h-4 w-4" aria-hidden="true" />}
-                {isManuallyPaused ? (isEnglish ? 'Resume' : 'Reprendre le défilement') : (isEnglish ? 'Pause' : 'Mettre en pause')}
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full">
-          <div className="relative overflow-hidden">
-            <div
-              ref={listRef}
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-              onFocus={() => setIsPaused(true)}
-              onBlur={(event) => {
-                if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false);
-              }}
-              className="relative overflow-hidden px-4 md:px-8"
-              aria-label={isEnglish ? 'Testimonials list' : 'Liste de témoignages'}
-              tabIndex={0}
+    <section
+      id="testimonials"
+      className="section-odd relative w-full overflow-hidden py-16 md:py-24"
+    >
+      <div className="relative z-10 w-full">
+        <div className="container mx-auto w-full px-4">
+          <div className="mx-auto mb-5 flex w-full flex-wrap items-end justify-between gap-4">
+            <h2 className="text-3xl font-bold md:text-4xl">
+              {isEnglish ? "Client and anonymised user feedback" : "Retours clients et utilisateurs anonymisés"}
+            </h2>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setIsManuallyPaused((paused) => !paused)}
+              disabled={isReducedMotion}
+              aria-label={pauseLabel}
             >
-              <div ref={trackRef} className="w-max">
-                <div
-                  ref={tickerRef}
-                  className={`ticker flex gap-6 md:gap-8 items-stretch py-4 pr-6 md:pr-10 ${isPaused || isManuallyPaused || isReducedMotion ? " paused" : ""}`}
-                >
-                  {loopedTestimonials.map((t: Testimonial, idx) => (
-                        <article
-                          key={`${t.id}-${idx}`}
-                          aria-hidden={idx >= testimonialsData.length}
-                          className="w-[340px] min-w-[340px] md:w-[420px] md:min-w-[420px] bg-card/95 border border-border rounded-2xl p-6 flex-shrink-0 shadow-lg"
-                        >
-                          <div className="mb-3 text-center">
-                            <div className="text-sm text-foreground/70 uppercase tracking-wide font-medium">{t.service}</div>
-                          </div>
+              {isPaused ? <Play className="mr-2 h-4 w-4" aria-hidden="true" /> : <Pause className="mr-2 h-4 w-4" aria-hidden="true" />}
+              {isReducedMotion
+                ? (isEnglish ? "Reduced motion" : "Mouvement réduit")
+                : isManuallyPaused
+                  ? (isEnglish ? "Resume" : "Reprendre")
+                  : (isEnglish ? "Pause" : "Mettre en pause")}
+            </Button>
+          </div>
+        </div>
 
-                          <div className="grid grid-cols-12 gap-4 items-center">
-                            <div className="col-span-3 flex flex-col items-center">
-                              <Avatar name={t.name} image={t.image} />
-                              <div className="mt-3 text-center">
-                                <div className="font-semibold text-sm leading-tight">{t.name}</div>
-                                <div className="text-xs text-foreground/70 leading-5">{t.role}{t.company ? ` · ${t.company}` : ""}</div>
-                              </div>
-                            </div>
+        <div
+          className="testimonials-viewport relative left-1/2 w-screen -translate-x-1/2 overflow-hidden"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label={isEnglish ? "Client testimonials" : "Témoignages clients"}
+        >
+          <div className="w-max px-4 md:px-8">
+            <div
+              ref={tickerRef}
+              className={`ticker flex items-stretch gap-6 py-4 pr-6 md:gap-8 md:pr-10${isPaused ? " paused" : ""}`}
+            >
+              {loopedTestimonials.map((testimonial: Testimonial, index) => {
+                const isClone = index >= testimonialsData.length;
+                const service = isEnglish ? testimonial.serviceEn : testimonial.service;
+                const role = isEnglish ? testimonial.roleEn : testimonial.role;
+                const text = isEnglish ? testimonial.textEn : testimonial.text;
 
-                            <div className="col-span-9 flex items-center justify-start pl-6">
-                              <div className="max-w-[40ch]">
-                                <p className="text-sm md:text-base text-foreground/85 leading-7 text-left">{t.text}</p>
-                              </div>
-                            </div>
-                          </div>
-                        </article>
-              ))}
-                </div>
-              </div>
+                return (
+                  <article
+                    key={`${testimonial.id}-${index}`}
+                    data-testimonial-slide={!isClone ? "true" : undefined}
+                    aria-hidden={isClone ? "true" : undefined}
+                    aria-roledescription={isClone ? undefined : "slide"}
+                    aria-label={isClone ? undefined : `${index + 1} / ${testimonialsData.length}`}
+                    className="testimonial-slide flex min-h-[240px] flex-shrink-0 flex-col rounded-2xl border border-border bg-card/95 p-6 shadow-none"
+                  >
+                    <div className="mb-3 text-center text-sm font-medium uppercase tracking-wide text-foreground/70">
+                      {service}
+                    </div>
+
+                    <div className="grid flex-1 grid-cols-[6rem_minmax(0,1fr)] items-start gap-4">
+                      <div className="flex flex-col items-center">
+                        <Avatar name={testimonial.name} image={testimonial.image} />
+                        <div className="mt-3 w-full text-center">
+                          <div className="text-sm font-semibold leading-tight">{testimonial.name}</div>
+                          <div className="text-xs leading-4 text-foreground/70">{role}</div>
+                        </div>
+                      </div>
+
+                      <p className="text-left text-sm leading-6 text-foreground/85 md:text-base">{text}</p>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
-
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background/95 via-background/50 to-transparent"></div>
-      <div className="hero-grid-fade pointer-events-none absolute inset-x-0 bottom-0 h-20"></div>
-
-      <style>{`
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .ticker { display: flex; align-items: stretch; animation: ticker var(--ticker-duration, 20s) linear infinite; }
-        .ticker.paused { animation-play-state: paused; }
-        @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-      `}</style>
     </section>
   );
 }

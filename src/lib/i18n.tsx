@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
 export type Locale = 'fr' | 'en';
+export type PageId = 'home' | 'freelance' | 'legal' | 'notFound';
 
 type LanguageContextValue = {
   locale: Locale;
@@ -36,32 +37,90 @@ const getInitialLocale = (): Locale => {
   return readStoredLocale();
 };
 
+const SITE_ORIGIN = 'https://bastienlopez.fr';
+
+type PageMetadata = {
+  title: string;
+  description: string;
+  path: string;
+  robots: string;
+};
+
+const PAGE_METADATA: Record<PageId, Record<Locale, PageMetadata>> = {
+  home: {
+    fr: {
+      title: 'Bastien Lopez — Développeur Full-Stack IA & Automatisation',
+      description: 'Sites internet, applications métier, APIs internes et automatisations IA/n8n par Bastien Lopez. Disponible pour CDI remote ou missions freelance.',
+      path: '/',
+      robots: 'index, follow',
+    },
+    en: {
+      title: 'Bastien Lopez — Full-Stack AI & Automation Developer',
+      description: 'Websites, business applications, internal APIs and AI/n8n automations by Bastien Lopez. Available for remote roles and freelance projects.',
+      path: '/',
+      robots: 'index, follow',
+    },
+  },
+  freelance: {
+    fr: {
+      title: 'Freelance — Développement web, IA et automatisation | Bastien Lopez',
+      description: 'Sites internet, applications métier, APIs internes, workflows IA et automatisations n8n pour des missions freelance ciblées.',
+      path: '/freelance',
+      robots: 'index, follow',
+    },
+    en: {
+      title: 'Freelance — Web development, AI and automation | Bastien Lopez',
+      description: 'Websites, business applications, internal APIs, AI workflows and n8n automation for focused freelance engagements.',
+      path: '/freelance',
+      robots: 'index, follow',
+    },
+  },
+  legal: {
+    fr: {
+      title: 'Mentions légales — Bastien Lopez',
+      description: 'Informations légales, hébergement et mesure d’audience du portfolio de Bastien Lopez.',
+      path: '/mentions-legales',
+      robots: 'index, follow',
+    },
+    en: {
+      title: 'Legal notice — Bastien Lopez',
+      description: 'Legal, hosting and audience measurement information for Bastien Lopez’s portfolio.',
+      path: '/mentions-legales',
+      robots: 'index, follow',
+    },
+  },
+  notFound: {
+    fr: {
+      title: 'Page introuvable — Bastien Lopez',
+      description: 'La page demandée n’existe pas dans le portfolio de Bastien Lopez.',
+      path: '/',
+      robots: 'noindex, follow',
+    },
+    en: {
+      title: 'Page not found — Bastien Lopez',
+      description: 'The requested page does not exist in Bastien Lopez’s portfolio.',
+      path: '/',
+      robots: 'noindex, follow',
+    },
+  },
+};
+
+const setMetaContent = (selector: string, content: string) => {
+  document.head.querySelector<HTMLMetaElement>(selector)?.setAttribute('content', content);
+};
+
+const setLinkHref = (selector: string, href: string) => {
+  document.head.querySelector<HTMLLinkElement>(selector)?.setAttribute('href', href);
+};
+
+const toCanonicalUrl = (path: string) => SITE_ORIGIN + (path === '/' ? '/' : path);
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>(getInitialLocale);
 
   useEffect(() => {
     persistLocale(locale);
     document.documentElement.lang = locale;
-
-    const metadata = locale === 'en'
-      ? {
-          title: 'Bastien Lopez — Full-Stack AI & Automation Developer',
-          description: 'Full-stack developer specialising in business applications, AI and n8n automation. Available for remote/full-remote roles and freelance projects.',
-          locale: 'en_US',
-        }
-      : {
-          title: 'Bastien Lopez — Développeur Full-Stack IA & Automatisation',
-          description: 'Développeur Full-Stack spécialisé en applications métier, IA et automatisation n8n. Disponible pour CDI remote/full remote et missions freelance.',
-          locale: 'fr_FR',
-        };
-
-    document.title = metadata.title;
-    document.querySelector('meta[name="description"]')?.setAttribute('content', metadata.description);
-    document.querySelector('meta[property="og:title"]')?.setAttribute('content', metadata.title);
-    document.querySelector('meta[property="og:description"]')?.setAttribute('content', metadata.description);
-    document.querySelector('meta[property="og:locale"]')?.setAttribute('content', metadata.locale);
-    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', metadata.title);
-    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', metadata.description);
   }, [locale]);
 
   const value = useMemo(
@@ -70,6 +129,32 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
+}
+
+export function usePageMetadata(page: PageId) {
+  const { locale } = useLanguage();
+
+  useEffect(() => {
+    const metadata = PAGE_METADATA[page][locale];
+    const canonicalUrl = toCanonicalUrl(metadata.path);
+
+    document.documentElement.lang = locale;
+    document.title = metadata.title;
+    setMetaContent('meta[name="description"]', metadata.description);
+    setMetaContent('meta[name="robots"]', metadata.robots);
+    setMetaContent('meta[property="og:title"]', metadata.title);
+    setMetaContent('meta[property="og:description"]', metadata.description);
+    setMetaContent('meta[property="og:locale"]', locale === 'en' ? 'en_US' : 'fr_FR');
+    setMetaContent('meta[property="og:locale:alternate"]', locale === 'en' ? 'fr_FR' : 'en_US');
+    setMetaContent('meta[property="og:url"]', canonicalUrl);
+    setMetaContent('meta[name="twitter:title"]', metadata.title);
+    setMetaContent('meta[name="twitter:description"]', metadata.description);
+    setMetaContent('meta[name="twitter:url"]', canonicalUrl);
+    setLinkHref('link[rel="canonical"]', canonicalUrl);
+    setLinkHref('link[rel="alternate"][hreflang="fr-FR"]', toCanonicalUrl(metadata.path));
+    setLinkHref('link[rel="alternate"][hreflang="en-US"]', toCanonicalUrl(metadata.path));
+    setLinkHref('link[rel="alternate"][hreflang="x-default"]', toCanonicalUrl(metadata.path));
+  }, [locale, page]);
 }
 
 export function useLanguage() {
