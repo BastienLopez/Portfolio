@@ -5,16 +5,19 @@ import {
   Code2,
   GitBranch,
   Layers3,
+  MapPin,
   Workflow,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
 import { useLanguage } from "@/lib/i18n";
+import { Link } from "react-router-dom";
 
 type Icon = typeof BriefcaseBusiness;
 
 type Service = {
   number: string;
+  slug?: string;
   title: string;
   description: string;
   deliverables: string;
@@ -35,6 +38,7 @@ const pageCopy = {
       "Je conçois des sites vitrines, applications métier, des automatisations n8n et des APIs internes qui enlèvent les tâches répétitives et rendent le travail quotidien plus simple.",
     note:
       "J’interviens du cadrage à la mise en production, avec une documentation que votre équipe peut reprendre.",
+    location: "Basé à Reims, j’interviens à distance partout en France.",
     primaryCta: "Parler du projet",
     secondaryCta: "Voir les réalisations",
     servicesTitle: "Ce que je prends en charge",
@@ -43,6 +47,7 @@ const pageCopy = {
     services: [
       {
         number: "01",
+        slug: "sites-vitrines",
         title: "Sites vitrines & présence en ligne",
         description:
           "Je crée des sites vitrines clairs, rapides et responsive pour présenter une activité, ses services et ses réalisations.",
@@ -51,6 +56,7 @@ const pageCopy = {
       },
       {
         number: "02",
+        slug: "applications-metier",
         title: "Applications métier",
         description:
           "ERP, back-office, portail interne ou tableau de bord : je transforme vos règles métier en parcours simples et utilisables.",
@@ -59,6 +65,7 @@ const pageCopy = {
       },
       {
         number: "03",
+        slug: "automatisations-n8n",
         title: "Automatisations & intégrations",
         description:
           "Je relie vos outils et vos données avec n8n, des APIs et des traitements documentés pour supprimer les ressaisies.",
@@ -113,6 +120,7 @@ const pageCopy = {
       "I mainly build showcase websites, along with business applications, n8n automations and internal APIs that remove repetitive work and make daily operations easier.",
     note:
       "Showcase websites represent around 90% of my freelance work. I work from scoping to production, with documentation your team can take over.",
+    location: "Based in Reims, I work remotely with teams across France.",
     primaryCta: "Discuss the project",
     secondaryCta: "See selected work",
     servicesTitle: "What I can take on",
@@ -121,6 +129,7 @@ const pageCopy = {
     services: [
       {
         number: "01",
+        slug: "sites-vitrines",
         title: "Showcase websites & online presence",
         description:
           "I build clear, fast and responsive showcase websites that present a business, its services and its work.",
@@ -129,6 +138,7 @@ const pageCopy = {
       },
       {
         number: "02",
+        slug: "applications-metier",
         title: "Business applications",
         description:
           "ERP, back office, internal portal or dashboard: I turn business rules into clear, usable journeys.",
@@ -137,6 +147,7 @@ const pageCopy = {
       },
       {
         number: "03",
+        slug: "automatisations-n8n",
         title: "Automation & integrations",
         description:
           "I connect tools and data with n8n, APIs and documented processing to remove rekeying and repetitive work.",
@@ -226,6 +237,10 @@ const Freelance = () => {
             <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">
               {copy.note}
             </p>
+            <p className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary">
+              <MapPin className="h-4 w-4" aria-hidden="true" />
+              {copy.location}
+            </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button asChild size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90">
                 <a
@@ -302,7 +317,12 @@ const Freelance = () => {
                       </span>
                     </div>
                     <h3 className="text-xl font-semibold md:text-2xl">
-                      {service.title}
+                      {service.slug ? (
+                        <Link to={`/services/${service.slug}`} className="transition-colors hover:text-primary">
+                          {service.title}
+                          <ArrowRight className="ml-2 inline-block h-4 w-4" aria-hidden="true" />
+                        </Link>
+                      ) : service.title}
                     </h3>
                     <div className="max-w-2xl">
                       <p className="text-base leading-7 text-foreground/85">

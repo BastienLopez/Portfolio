@@ -9,10 +9,52 @@ const distRoot = path.join(projectRoot, "dist");
 const port = 4179;
 const baseUrl = `http://127.0.0.1:${port}`;
 
+// Keep this list aligned with src/data/site-pages.ts. The prerenderer is a
+// plain Node script and cannot import the TypeScript data module directly.
+const projectSlugs = [
+  "altme-wallet-provider",
+  "automatisations-n8n-reporting",
+  "automatisations-n8n-derush-video",
+  "altme-wallet-platform",
+  "altme-documentation",
+  "teams-bot-mastra",
+  "seo-geo-optimization",
+  "eloi-coachsteo",
+  "erp-micro-creches",
+  "luxury-auto-detailing",
+  "cledevoute",
+  "berserk-universe",
+  "codex-limits-usage",
+  "pokemon-binder",
+  "ia-trading",
+  "patripro",
+  "ats-filter-resume",
+  "novotel-roue-chance",
+  "aqualis",
+  "nolvus-mod-automation",
+  "bloodborne-shadps4",
+  "demons-souls-rpcs3",
+];
+const serviceSlugs = [
+  "sites-vitrines",
+  "applications-metier",
+  "automatisations-n8n",
+];
+
 const routes = [
   { path: "/", output: "index.html", allowNotFound: false },
   { path: "/freelance", output: path.join("freelance", "index.html"), allowNotFound: false },
   { path: "/mentions-legales", output: path.join("mentions-legales", "index.html"), allowNotFound: false },
+  ...projectSlugs.map((slug) => ({
+    path: `/projets/${slug}`,
+    output: path.join("projets", slug, "index.html"),
+    allowNotFound: false,
+  })),
+  ...serviceSlugs.map((slug) => ({
+    path: `/services/${slug}`,
+    output: path.join("services", slug, "index.html"),
+    allowNotFound: false,
+  })),
   { path: "/__prerender-not-found__", output: "404.html", allowNotFound: true },
 ];
 

@@ -6,6 +6,9 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Nom: Bastien Lopez
 - Site officiel: https://bastienlopez.fr/
 - Page dédiée aux services freelance: https://bastienlopez.fr/freelance
+- Services — sites vitrines: https://bastienlopez.fr/services/sites-vitrines
+- Services — applications métier: https://bastienlopez.fr/services/applications-metier
+- Services — automatisations n8n: https://bastienlopez.fr/services/automatisations-n8n
 - Langues du site: français et anglais
 - Localisation déclarée: Reims, France; interventions à distance en France et en Europe
 
@@ -42,6 +45,30 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Compétences: https://bastienlopez.fr/#skills
 - Dev Notes: https://bastienlopez.fr/#devnotes
 - Contact: https://bastienlopez.fr/#contact
+
+## Études de cas et fiches projet
+- Altme Wallet Provider: https://bastienlopez.fr/projets/altme-wallet-provider
+- Automatisations n8n — Reporting: https://bastienlopez.fr/projets/automatisations-n8n-reporting
+- Automatisations n8n — Dérush vidéo: https://bastienlopez.fr/projets/automatisations-n8n-derush-video
+- Altme Wallet Platform: https://bastienlopez.fr/projets/altme-wallet-platform
+- Altme Documentation: https://bastienlopez.fr/projets/altme-documentation
+- Teams Bot & Mastra Agents: https://bastienlopez.fr/projets/teams-bot-mastra
+- SEO & optimisation GEO: https://bastienlopez.fr/projets/seo-geo-optimization
+- Eloi CoachStéo: https://bastienlopez.fr/projets/eloi-coachsteo
+- ERP Micro-Crèches: https://bastienlopez.fr/projets/erp-micro-creches
+- Luxury Auto Detailing: https://bastienlopez.fr/projets/luxury-auto-detailing
+- Clé de Voûte: https://bastienlopez.fr/projets/cledevoute
+- Berserk Universe: https://bastienlopez.fr/projets/berserk-universe
+- Codex Limits Usage: https://bastienlopez.fr/projets/codex-limits-usage
+- Pokémon Binder: https://bastienlopez.fr/projets/pokemon-binder
+- IA Trading: https://bastienlopez.fr/projets/ia-trading
+- PatriPro: https://bastienlopez.fr/projets/patripro
+- ATS Filter Resume: https://bastienlopez.fr/projets/ats-filter-resume
+- NOVOTEL — Roue de la chance: https://bastienlopez.fr/projets/novotel-roue-chance
+- Aqualis: https://bastienlopez.fr/projets/aqualis
+- Nolvus Mod Automation: https://bastienlopez.fr/projets/nolvus-mod-automation
+- Bloodborne shadPS4: https://bastienlopez.fr/projets/bloodborne-shadps4
+- Demon's Souls RPCS3: https://bastienlopez.fr/projets/demons-souls-rpcs3
 
 ## Contact et profils
 - Email: bastien.lopez40@gmail.com

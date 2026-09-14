@@ -18,6 +18,43 @@ const requiredFiles = [
   "CV_LOPEZ_BASTIEN_FREELANCE.pdf",
 ];
 
+const projectRoutes = [
+  "altme-wallet-provider",
+  "automatisations-n8n-reporting",
+  "automatisations-n8n-derush-video",
+  "altme-wallet-platform",
+  "altme-documentation",
+  "teams-bot-mastra",
+  "seo-geo-optimization",
+  "eloi-coachsteo",
+  "erp-micro-creches",
+  "luxury-auto-detailing",
+  "cledevoute",
+  "berserk-universe",
+  "codex-limits-usage",
+  "pokemon-binder",
+  "ia-trading",
+  "patripro",
+  "ats-filter-resume",
+  "novotel-roue-chance",
+  "aqualis",
+  "nolvus-mod-automation",
+  "bloodborne-shadps4",
+  "demons-souls-rpcs3",
+];
+const serviceRoutes = [
+  "sites-vitrines",
+  "applications-metier",
+  "automatisations-n8n",
+];
+
+for (const slug of projectRoutes) {
+  requiredFiles.push(path.join("projets", slug, "index.html"));
+}
+for (const slug of serviceRoutes) {
+  requiredFiles.push(path.join("services", slug, "index.html"));
+}
+
 if (!existsSync(distDirectory) || !statSync(distDirectory).isDirectory()) {
   failures.push("dist/ does not exist.");
 }
@@ -51,8 +88,24 @@ if (existsSync(path.join(distDirectory, "index.html"))) {
     failures.push("twitter:url does not use bastienlopez.fr.");
   }
 
-  if (!/<h2[^>]*>[\s\S]*Développeur Full-Stack IA &amp; Automatisation\s+Applications métier, APIs et workflows n8n[\s\S]*<\/h2>/.test(indexHtml)) {
-    failures.push("The prerendered home page does not contain the complete hero heading.");
+  if (!/<h1[^>]*>[\s\S]*Développeur Full-Stack IA &amp; Automatisation[\s\S]*<\/h1>/.test(indexHtml)) {
+    failures.push("The prerendered home page does not contain the profession in its H1.");
+  }
+
+  if (!/<h2[^>]*>[\s\S]*Applications métier, APIs et workflows n8n[\s\S]*<\/h2>/.test(indexHtml)) {
+    failures.push("The prerendered home page does not contain the supporting hero line.");
+  }
+
+  if (!/Plus de 7 ans d’expérience|Over 7 years of experience/.test(indexHtml)) {
+    failures.push("The prerendered home page does not contain the verified 7+ years claim.");
+  }
+
+  if (/5\+\s+(?:ans|years)/i.test(indexHtml)) {
+    failures.push("The prerendered home page still contains the obsolete 5+ years claim.");
+  }
+
+  if (!indexHtml.includes('"@type": "ProfilePage"')) {
+    failures.push("The prerendered home page does not contain ProfilePage structured data.");
   }
 }
 
@@ -96,10 +149,48 @@ for (const route of prerenderedRoutes) {
   }
 }
 
+for (const slug of projectRoutes) {
+  const relativePath = path.join("projets", slug, "index.html");
+  const routePath = path.join(distDirectory, relativePath);
+  if (!existsSync(routePath)) continue;
+  const html = readText(relativePath);
+  if (!html.includes("Étude de cas") && !html.includes("Case study")) {
+    failures.push(`Prerendered ${relativePath} does not contain its case-study heading.`);
+  }
+  if (!html.includes("data-contextual-cta")) {
+    failures.push(`Prerendered ${relativePath} does not contain a contextual CTA.`);
+  }
+  if (!html.includes('data-back-to-projects')) {
+    failures.push(`Prerendered ${relativePath} does not contain the bottom projects return link.`);
+  }
+  if (!html.includes(`https://bastienlopez.fr/projets/${slug}`)) {
+    failures.push(`Prerendered ${relativePath} does not contain its canonical production URL.`);
+  }
+}
+
+for (const slug of serviceRoutes) {
+  const relativePath = path.join("services", slug, "index.html");
+  const routePath = path.join(distDirectory, relativePath);
+  if (!existsSync(routePath)) continue;
+  const html = readText(relativePath);
+  if (!html.includes("Freelance service") && !html.includes("Service freelance")) {
+    failures.push(`Prerendered ${relativePath} does not contain its service heading.`);
+  }
+  if (!html.includes("FAQPage")) {
+    failures.push(`Prerendered ${relativePath} does not contain its FAQ structured data.`);
+  }
+  if (!html.includes(`https://bastienlopez.fr/services/${slug}`)) {
+    failures.push(`Prerendered ${relativePath} does not contain its canonical production URL.`);
+  }
+}
+
 if (existsSync(path.join(distDirectory, "robots.txt"))) {
   const robots = readText("robots.txt");
   if (!robots.includes("Sitemap: https://bastienlopez.fr/sitemap.xml")) {
     failures.push("robots.txt does not reference the production sitemap.");
+  }
+  if (!/User-agent:\s*OAI-SearchBot[\s\S]*Allow:\s*\//i.test(robots)) {
+    failures.push("robots.txt does not explicitly allow OAI-SearchBot.");
   }
 }
 
@@ -110,6 +201,20 @@ if (existsSync(path.join(distDirectory, "sitemap.xml"))) {
   }
   if (!sitemap.includes("https://bastienlopez.fr/freelance")) {
     failures.push("sitemap.xml does not contain the public freelance route.");
+  }
+  for (const slug of [...projectRoutes.map((value) => `projets/${value}`), ...serviceRoutes.map((value) => `services/${value}`)]) {
+    if (!sitemap.includes(`https://bastienlopez.fr/${slug}`)) {
+      failures.push(`sitemap.xml does not contain https://bastienlopez.fr/${slug}.`);
+    }
+  }
+}
+
+if (existsSync(path.join(distDirectory, "llms.txt"))) {
+  const llms = readText("llms.txt");
+  for (const slug of projectRoutes) {
+    if (!llms.includes(`https://bastienlopez.fr/projets/${slug}`)) {
+      failures.push(`llms.txt does not contain https://bastienlopez.fr/projets/${slug}.`);
+    }
   }
 }
 

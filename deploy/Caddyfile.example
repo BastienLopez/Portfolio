@@ -1,6 +1,6 @@
 # Configuration Caddy de référence pour le déploiement VPS.
 #
-# Le bloc handle_errors sert index.html avec le statut d'erreur conservé :
+# Le bloc handle_errors sert 404.html avec le statut d'erreur conservé :
 # une route inconnue affiche la page React NotFound tout en répondant 404.
 
 {
@@ -44,10 +44,16 @@ bastienlopez.fr {
 	respond @badmethod 405
 	respond @probe 404
 
-	# Ces routes sont gérées par React et doivent rester en 200.
-	@spa path / /mentions-legales /freelance
-	handle @spa {
-		try_files {path} /index.html
+	# La racine et les pages prérendues sont servies directement afin que
+	# chaque URL conserve son HTML et ses métadonnées propres.
+	@root path /
+	handle @root {
+		file_server
+	}
+
+	@prerendered path /freelance /freelance/ /mentions-legales /mentions-legales/ /projets/altme-wallet-provider /projets/altme-wallet-provider/ /projets/automatisations-n8n-reporting /projets/automatisations-n8n-reporting/ /projets/automatisations-n8n-derush-video /projets/automatisations-n8n-derush-video/ /projets/altme-wallet-platform /projets/altme-wallet-platform/ /projets/altme-documentation /projets/altme-documentation/ /projets/teams-bot-mastra /projets/teams-bot-mastra/ /projets/seo-geo-optimization /projets/seo-geo-optimization/ /projets/eloi-coachsteo /projets/eloi-coachsteo/ /projets/erp-micro-creches /projets/erp-micro-creches/ /projets/luxury-auto-detailing /projets/luxury-auto-detailing/ /projets/cledevoute /projets/cledevoute/ /projets/berserk-universe /projets/berserk-universe/ /projets/codex-limits-usage /projets/codex-limits-usage/ /projets/pokemon-binder /projets/pokemon-binder/ /projets/ia-trading /projets/ia-trading/ /projets/patripro /projets/patripro/ /projets/ats-filter-resume /projets/ats-filter-resume/ /projets/novotel-roue-chance /projets/novotel-roue-chance/ /projets/aqualis /projets/aqualis/ /projets/nolvus-mod-automation /projets/nolvus-mod-automation/ /projets/bloodborne-shadps4 /projets/bloodborne-shadps4/ /projets/demons-souls-rpcs3 /projets/demons-souls-rpcs3/ /services/sites-vitrines /services/sites-vitrines/ /services/applications-metier /services/applications-metier/ /services/automatisations-n8n /services/automatisations-n8n/
+	handle @prerendered {
+		try_files {path}/index.html {path}index.html
 		file_server
 	}
 
@@ -58,10 +64,10 @@ bastienlopez.fr {
 		file_server
 	}
 
-	# Caddy conserve le statut 404 tout en servant l'UI React NotFound.
+	# Caddy conserve le statut 404 tout en servant l'UI React NotFound prérendue.
 	handle_errors 404 {
 		import security_headers
-		rewrite * /index.html
+		rewrite * /404.html
 		file_server
 	}
 

@@ -22,15 +22,15 @@ test("keeps project history, gallery, and language navigation usable", async ({ 
   await page.goto("/#projects");
   await page.getByRole("button", { name: /GAMING \/ MOBILE/ }).click();
   await page
-    .getByRole("button", {
+    .getByRole("link", {
       name: /Voir le cas ERP|Explorer l’automatisation|Découvrir le projet/,
     })
     .first()
     .click();
-  await expect(page).toHaveURL(/#project=/);
-  await expect(page.getByRole("button", { name: /Retour aux projets/ })).toBeVisible();
+  await expect(page).toHaveURL(/\/projets\//);
+  await expect(page.getByRole("link", { name: "Retour aux projets", exact: true })).toBeVisible();
 
-  await page.goBack();
+  await page.getByRole("link", { name: "Retour aux projets", exact: true }).click();
   await expect(page).toHaveURL(/#projects$/);
   await expect(page.getByRole("button", { name: /GAMING \/ MOBILE/ })).toBeVisible();
 
@@ -209,4 +209,135 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
   await page.goto("/__metadata-does-not-exist__");
   await expect(page).toHaveTitle(/Page not found — Bastien Lopez/);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, follow");
+});
+
+test("publishes crawlable project and service pages without changing the three hero CTAs", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("[data-hero-title]")).toHaveAttribute(
+    "aria-label",
+    /Développeur Full-Stack IA & Automatisation/,
+  );
+  const hero = page.locator("#hero");
+  await expect(hero.getByRole("link", { name: "Voir mes projets clés", exact: true })).toHaveCount(1);
+  await expect(hero.getByRole("link", { name: "Me contacter", exact: true })).toHaveCount(1);
+  await expect(hero.getByRole("link", { name: "Mes services freelance", exact: true })).toHaveCount(1);
+
+  const projectRoutes = [
+    "/projets/altme-wallet-provider",
+    "/projets/automatisations-n8n-reporting",
+    "/projets/automatisations-n8n-derush-video",
+    "/projets/altme-wallet-platform",
+    "/projets/altme-documentation",
+    "/projets/teams-bot-mastra",
+    "/projets/seo-geo-optimization",
+    "/projets/eloi-coachsteo",
+    "/projets/erp-micro-creches",
+    "/projets/luxury-auto-detailing",
+    "/projets/cledevoute",
+    "/projets/berserk-universe",
+    "/projets/codex-limits-usage",
+    "/projets/pokemon-binder",
+    "/projets/ia-trading",
+    "/projets/patripro",
+    "/projets/ats-filter-resume",
+    "/projets/novotel-roue-chance",
+    "/projets/aqualis",
+    "/projets/nolvus-mod-automation",
+    "/projets/bloodborne-shadps4",
+    "/projets/demons-souls-rpcs3",
+  ] as const;
+
+  for (const route of projectRoutes) {
+    await page.goto(route);
+    await expect(page.locator("h1")).toHaveCount(1);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "index, follow");
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://bastienlopez.fr${route}`);
+    await expect(page.locator("[data-contextual-cta]")).toHaveCount(1);
+    await expect(page.getByRole("link", { name: "Retour aux projets", exact: true })).toHaveCount(1);
+    await expect(page.locator("[data-back-to-projects]")).toHaveAttribute("href", "/#projects");
+    const projectSchemaTypes = await page.locator('script[type="application/ld+json"]').evaluateAll((elements) =>
+      elements.flatMap((element) => {
+        try {
+          const value = JSON.parse(element.textContent ?? "{}");
+          return value["@graph"]?.map((entry: { "@type"?: string }) => entry["@type"]) ?? [value["@type"]];
+        } catch {
+          return [];
+        }
+      }),
+    );
+    expect(projectSchemaTypes).toContain("CreativeWork");
+  }
+
+  await page.goto(projectRoutes[0]);
+  await page.getByRole("link", { name: "Retour aux projets", exact: true }).click();
+  await expect(page).toHaveURL(/\/#projects$/);
+  await expect(page.locator("#projects")).toBeVisible();
+
+  const serviceRoutes = [
+    ["/services/sites-vitrines", "Sites vitrines et présence en ligne"],
+    ["/services/applications-metier", "Applications métier sur mesure"],
+    ["/services/automatisations-n8n", "Automatisations n8n et workflows IA"],
+  ] as const;
+
+  for (const [route, heading] of serviceRoutes) {
+    await page.goto(route);
+    await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "index, follow");
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://bastienlopez.fr${route}`);
+    const serviceSchemaTypes = await page.locator('script[type="application/ld+json"]').evaluateAll((elements) =>
+      elements.flatMap((element) => {
+        try {
+          const value = JSON.parse(element.textContent ?? "{}");
+          return value["@graph"]?.map((entry: { "@type"?: string }) => entry["@type"]) ?? [value["@type"]];
+        } catch {
+          return [];
+        }
+      }),
+    );
+    expect(serviceSchemaTypes).toContain("FAQPage");
+    await expect(page.getByText(/Reims/).first()).toBeVisible();
+  }
+
+  await page.goto("/freelance");
+  await expect(page.getByRole("link", { name: /Sites vitrines & présence en ligne/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Applications métier/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Automatisations & intégrations/ })).toBeVisible();
+
+  await page.goto("/#projects");
+  await expect(page.getByRole("link", { name: "Ouvrir l’étude de cas dédiée", exact: true })).toHaveCount(4);
+});
+
+test("keeps project pills aligned inside cards", async ({ page }) => {
+  await page.goto("/#projects");
+  const cards = page.locator("#projects [data-project-card]");
+  await expect(cards.first()).toBeVisible();
+
+  const measurements = await cards.evaluateAll((elements) =>
+    elements.map((element) => {
+      const card = element.getBoundingClientRect();
+      const tech = element.querySelector("[data-project-tech]")?.getBoundingClientRect();
+      return {
+        techHeight: tech ? Math.round(tech.height) : 0,
+        techOffset: tech ? Math.round(tech.top - card.top) : 0,
+      };
+    }),
+  );
+
+  expect(measurements.every(({ techHeight }) => techHeight > 0)).toBe(true);
+  expect(new Set(measurements.map(({ techHeight }) => techHeight)).size).toBe(1);
+  expect(Math.max(...measurements.map(({ techOffset }) => techOffset)) - Math.min(...measurements.map(({ techOffset }) => techOffset))).toBeLessThanOrEqual(1);
+});
+
+test("returns to the freelance projects section from a freelance project page", async ({ page }) => {
+  await page.goto("/freelance");
+  const projectLink = page.locator('a[href^="/projets/"]').first();
+  await expect(projectLink).toBeVisible();
+  await expect(projectLink).toHaveAttribute("href", /\?from=freelance$/);
+  await projectLink.click();
+
+  await expect(page).toHaveURL(/\/projets\/[^?]+\?from=freelance$/);
+  await expect(page.locator("[data-back-to-projects]")).toHaveAttribute("href", "/freelance#projects");
+  await page.getByRole("button", { name: "Retour aux projets", exact: true }).click();
+  await expect(page).toHaveURL(/\/freelance#projects$/);
+  await expect(page.locator("#projects")).toBeVisible();
 });

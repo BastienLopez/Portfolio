@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { allProjects, Project, ProjectGalleryItem } from "@/data/projects";
 import { getEnglishDetailedContent } from "@/data/projects/englishDetails";
+import { getProjectPagePath } from "@/data/site-pages";
 import { ProjectDetail } from "@/components/projects/ProjectDetail";
 import { ProjectGallery } from "@/components/projects/ProjectGallery";
 import { useLanguage } from "@/lib/i18n";
@@ -334,6 +335,12 @@ const getProjectDetailCta = (project: DisplayProject, isEnglish: boolean) => {
   }
 
   return isEnglish ? "Discover the project →" : "Découvrir le projet →";
+};
+
+const getProjectLink = (projectId: string, fromFreelance = false) => {
+  const path = getProjectPagePath(projectId);
+  if (!path) return undefined;
+  return fromFreelance ? `${path}?from=freelance` : path;
 };
 
 const resolveImage = (img?: string | null) => {
@@ -990,12 +997,6 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
     );
   };
 
-  const handleFeaturedProjectClick = (projectId: string) => {
-    const project = projectsForView.find((entry) => entry.id === projectId);
-    if (!project) return;
-    handleProjectClick(project);
-  };
-
   const handleBackToList = () => {
     const historyState = getHistoryState();
     const hashProjectId = getProjectIdFromHash(window.location.hash);
@@ -1213,47 +1214,57 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
               {visibleFeaturedCaseStudies.map((item) => {
                 const config = featuredProjectConfig[item.id];
                 const isSelected = selectedFeaturedProjectId === item.id;
+                const projectPath = getProjectLink(item.id, isFreelancePage);
                 const splitTitle =
                   item.id === "n8n-reporting" || item.id === "n8n-video-derush"
                     ? item.title.split(" — ")
                     : null;
 
                 return (
-                  <Button
-                    key={item.id}
-                    type="button"
-                    variant={isSelected ? "default" : "outline"}
-                    onClick={() =>
-                      setSelectedFeaturedProjectId((currentId) =>
-                        currentId === item.id ? null : item.id,
-                      )
-                    }
-                    aria-expanded={isSelected}
-                    aria-controls="featured-case-study"
-                      className={`h-auto min-h-20 whitespace-normal px-3 py-4 text-center text-xs transition-colors sm:text-sm md:text-base ${
-                      isSelected
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border hover:border-primary hover:bg-primary/5"
-                    }`}
-                  >
-                    <config.icon className="mr-2 h-5 w-5 shrink-0" aria-hidden="true" />
-                    <span
-                      className={
-                        splitTitle
-                          ? "flex flex-col text-center leading-6"
-                          : undefined
+                  <div key={item.id} className="flex min-w-0 flex-col gap-1">
+                    <Button
+                      type="button"
+                      variant={isSelected ? "default" : "outline"}
+                      onClick={() =>
+                        setSelectedFeaturedProjectId((currentId) =>
+                          currentId === item.id ? null : item.id,
+                        )
                       }
+                      aria-expanded={isSelected}
+                      aria-controls="featured-case-study"
+                      className={`h-auto min-h-20 whitespace-normal px-3 py-4 text-center text-xs transition-colors sm:text-sm md:text-base ${
+                        isSelected
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border hover:border-primary hover:bg-primary/5"
+                      }`}
                     >
-                      {splitTitle ? (
-                        <>
-                          <span>{splitTitle[0]}</span>
-                          <span>— {splitTitle.slice(1).join(" — ")}</span>
-                        </>
-                      ) : (
-                        item.title
-                      )}
-                    </span>
-                  </Button>
+                      <config.icon className="mr-2 h-5 w-5 shrink-0" aria-hidden="true" />
+                      <span
+                        className={
+                          splitTitle
+                            ? "flex flex-col text-center leading-6"
+                            : undefined
+                        }
+                      >
+                        {splitTitle ? (
+                          <>
+                            <span>{splitTitle[0]}</span>
+                            <span>— {splitTitle.slice(1).join(" — ")}</span>
+                          </>
+                        ) : (
+                          item.title
+                        )}
+                      </span>
+                    </Button>
+                    {projectPath ? (
+                      <a
+                        href={projectPath}
+                        className="text-center text-xs font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-primary hover:underline"
+                      >
+                        {isEnglish ? "Open dedicated case study" : "Ouvrir l’étude de cas dédiée"}
+                      </a>
+                    ) : null}
+                  </div>
                 );
               })}
             </div>
@@ -1390,12 +1401,19 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                 <Button
                   variant="link"
                   className="mt-6 h-auto w-fit justify-start gap-2 px-0 text-primary"
-                  onClick={() =>
-                    handleFeaturedProjectClick(selectedFeaturedCaseStudy.id)
-                  }
+                  asChild={Boolean(getProjectLink(selectedFeaturedCaseStudy.id, isFreelancePage))}
                 >
-                  {isEnglish ? "View full project" : "Voir la fiche complète"}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  {getProjectLink(selectedFeaturedCaseStudy.id, isFreelancePage) ? (
+                    <a href={getProjectLink(selectedFeaturedCaseStudy.id, isFreelancePage)}>
+                      {isEnglish ? "View full project" : "Voir la fiche complète"}
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </a>
+                  ) : (
+                    <>
+                      {isEnglish ? "View full project" : "Voir la fiche complète"}
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </>
+                  )}
                 </Button>
               </Card>
             )}
@@ -1526,21 +1544,37 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                         </p>
                         <div className="mt-7 flex flex-wrap gap-3">
                           {group.projects.map((detailProject) => (
-                            <Button
-                              key={detailProject.id}
-                              variant="outline"
-                              onClick={() => handleProjectClick(detailProject)}
-                            >
-                              {group.projects.length > 1
-                                ? detailProject.id === "n8n-reporting"
-                                  ? isEnglish
-                                    ? "Explore reporting →"
-                                    : "Explorer le reporting →"
-                                  : isEnglish
-                                    ? "Explore video editing →"
-                                    : "Explorer le dérush →"
-                                : getProjectDetailCta(detailProject, isEnglish)}
-                            </Button>
+                            getProjectLink(detailProject.id, isFreelancePage) ? (
+                              <Button key={detailProject.id} asChild variant="outline">
+                                <a href={getProjectLink(detailProject.id, isFreelancePage)}>
+                                  {group.projects.length > 1
+                                    ? detailProject.id === "n8n-reporting"
+                                      ? isEnglish
+                                        ? "Explore reporting →"
+                                        : "Explorer le reporting →"
+                                      : isEnglish
+                                        ? "Explore video editing →"
+                                        : "Explorer le dérush →"
+                                    : getProjectDetailCta(detailProject, isEnglish)}
+                                </a>
+                              </Button>
+                            ) : (
+                              <Button
+                                key={detailProject.id}
+                                variant="outline"
+                                onClick={() => handleProjectClick(detailProject)}
+                              >
+                                {group.projects.length > 1
+                                  ? detailProject.id === "n8n-reporting"
+                                    ? isEnglish
+                                      ? "Explore reporting →"
+                                      : "Explorer le reporting →"
+                                    : isEnglish
+                                      ? "Explore video editing →"
+                                      : "Explorer le dérush →"
+                                  : getProjectDetailCta(detailProject, isEnglish)}
+                              </Button>
+                            )
                           ))}
                           {project.github && (
                             <Button
@@ -1599,10 +1633,12 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
               <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
                 {filteredProjects.map((project) => {
                   const localizedProject = localizeProject(project);
+                  const projectPath = getProjectLink(project.id, isFreelancePage);
 
                   return (
                     <Card
                       key={project.id}
+                      data-project-card={project.id}
                       className="group flex h-full flex-col overflow-hidden border-border bg-card shadow-none transition-colors duration-200 hover:border-primary/60"
                     >
                       <div className="relative flex h-48 items-center justify-center overflow-hidden bg-secondary md:h-56 lg:h-52">
@@ -1620,14 +1656,17 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                             : "h-full w-full object-cover"}
                         />
                       </div>
-                      <div className="flex flex-1 flex-col justify-between space-y-4 p-6">
-                        <h3 className="text-xl font-bold text-foreground">
+                      <div className="flex flex-1 flex-col p-6">
+                        <h3 className="min-h-14 text-xl font-bold leading-7 text-foreground">
                           {localizedProject.title}
                         </h3>
-                        <p className="text-sm leading-relaxed text-muted-foreground">
+                        <p className="mt-4 min-h-[7rem] text-sm leading-relaxed text-muted-foreground">
                           {localizedProject.description}
                         </p>
-                        <div className="flex min-w-0 flex-nowrap gap-2 overflow-hidden">
+                        <div
+                          data-project-tech
+                          className="mt-4 flex min-h-10 min-w-0 flex-nowrap items-start gap-2 overflow-hidden"
+                        >
                           {getProjectTechHighlights(project).map((tech) => (
                             <span
                               key={tech}
@@ -1638,16 +1677,29 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                             </span>
                           ))}
                         </div>
-                        <div className="space-y-3 pt-2">
+                        <div className="mt-auto space-y-3 pt-6">
                           <div className={`grid gap-3 ${project.github ? "grid-cols-2" : "grid-cols-1"}`}>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="w-full min-w-0 border-border px-2 text-xs text-foreground hover:border-primary hover:text-primary sm:text-sm"
-                              onClick={() => handleProjectClick(project)}
-                            >
-                              {getProjectDetailCta(project, isEnglish)}
-                            </Button>
+                            {projectPath ? (
+                              <Button
+                                asChild
+                                variant="outline"
+                                size="sm"
+                                className="w-full min-w-0 border-border px-2 text-xs text-foreground hover:border-primary hover:text-primary sm:text-sm"
+                              >
+                                <a href={projectPath}>
+                                  {getProjectDetailCta(project, isEnglish)}
+                                </a>
+                              </Button>
+                            ) : (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="w-full min-w-0 border-border px-2 text-xs text-foreground hover:border-primary hover:text-primary sm:text-sm"
+                                onClick={() => handleProjectClick(project)}
+                              >
+                                {getProjectDetailCta(project, isEnglish)}
+                              </Button>
+                            )}
                             {project.github && (
                               <Button
                                 asChild

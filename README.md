@@ -60,7 +60,7 @@ Vérifier le contenu généré :
 npm run verify:build
 ```
 
-Le hero reste lisible sur les hauteurs courtes : les CTA et l'indicateur de défilement restent dans le flux, et le titre complet est conservé dans le prérendu malgré son effet de frappe. Les parcours responsive couvrent notamment 320, 375, 430, 768, 1280 et 1920 px de large, ainsi que les hauteurs desktop courtes.
+Le hero reste lisible sur les hauteurs courtes : les **3 CTA** et l'indicateur de défilement restent dans le flux, et le titre complet est conservé dans le prérendu malgré son effet de frappe. Les parcours responsive couvrent notamment 320, 375, 430, 768, 1280 et 1920 px de large, ainsi que les hauteurs desktop courtes.
 
 Vérifier les variantes d’images :
 
@@ -104,9 +104,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\deploy-vps.ps1 `
 
 Les paramètres `VpsUser` et `RemotePath` peuvent être personnalisés. Leurs valeurs par défaut sont `bl_ovh` et `/var/www/bastienlopez.fr`.
 
-Caddy, installé séparément sur le VPS, servira directement `/var/www/bastienlopez.fr`. La configuration de référence est [`deploy/Caddyfile.example`](deploy/Caddyfile.example). Elle garde les routes SPA connues (`/`, `/freelance` et `/mentions-legales`) en 200, sert les fichiers existants et affiche la page React NotFound avec un vrai statut 404 pour les chemins inconnus. Caddy gérera automatiquement HTTPS ; aucun cron Certbot n'est nécessaire.
+Caddy, installé séparément sur le VPS, servira directement `/var/www/bastienlopez.fr`. La configuration de référence est [`deploy/Caddyfile.example`](deploy/Caddyfile.example). Elle sert directement les pages prérendues (`/`, `/freelance`, `/mentions-legales`, les études de cas `/projets/...` et les services `/services/...`) afin de conserver leurs métadonnées propres, sert les fichiers existants et affiche la page React NotFound avec un vrai statut 404 pour les chemins inconnus. Caddy gérera automatiquement HTTPS ; aucun cron Certbot n'est nécessaire.
 
-La même configuration redirige `www.bastienlopez.fr` vers le domaine canonique, conserve `/`, `/freelance` et `/mentions-legales` en 200, sert les fichiers existants et affiche la page React NotFound avec un vrai statut 404 pour les chemins inconnus. Elle active les headers de sécurité et une CSP en `Content-Security-Policy`. Vérifier dans Chrome le domaine canonique, `/freelance`, `/mentions-legales`, une route inconnue, un asset existant et le sous-domaine `www`. L'application ne charge pas de script de mesure d'audience côté client ; `connect-src 'self'` et `img-src 'self' data:` restent donc volontairement bornés.
+La même configuration redirige `www.bastienlopez.fr` vers le domaine canonique, conserve les pages prérendues en 200, sert les fichiers existants et affiche la page React NotFound avec un vrai statut 404 pour les chemins inconnus. Elle active les headers de sécurité et une CSP en `Content-Security-Policy`. Vérifier dans Chrome le domaine canonique, `/freelance`, `/mentions-legales`, une étude de cas, un service, une route inconnue, un asset existant et le sous-domaine `www`. L'application ne charge pas de script de mesure d'audience côté client ; `connect-src 'self'` et `img-src 'self' data:` restent donc volontairement bornés.
 
 Le déploiement de production reste manuel pour le moment. Aucune CI ne se connecte au VPS.
 
@@ -120,7 +120,7 @@ Le SEO principal est géré dans [index.html](index.html) :
 
 - title, meta description, canonical et hreflang
 - Open Graph / Twitter cards
-- JSON-LD (WebSite, WebPage, Person, ProfessionalService, FAQPage)
+- JSON-LD (WebSite, WebPage, ProfilePage, Person, ProfessionalService, Service et FAQPage sur les pages concernées)
 
 Fichiers publics SEO :
 
@@ -134,6 +134,36 @@ Image sociale Open Graph : [public/og-image.svg](public/og-image.svg). Pour la r
 Après la mise en ligne du domaine, une nouvelle validation Search Console pourra être effectuée si nécessaire.
 
 Après chaque déploiement qui modifie les routes publiques, vérifier que `/freelance` répond en 200, que `/sitemap.xml` contient cette URL et que `/robots.txt` référence le sitemap, puis resoumettre `sitemap.xml` dans Search Console.
+
+Chaque fiche projet dispose d’une URL dédiée `/projets/<id-ou-slug>` et d’un lien de retour vers `/#projects`. Les quatre études de cas principales sont accessibles directement :
+
+- `/projets/altme-wallet-provider`
+- `/projets/automatisations-n8n-reporting`
+- `/projets/automatisations-n8n-derush-video`
+- `/projets/altme-wallet-platform`
+
+Les autres fiches sont également prérendues et accessibles directement :
+
+- `/projets/altme-documentation`
+- `/projets/teams-bot-mastra`
+- `/projets/seo-geo-optimization`
+- `/projets/eloi-coachsteo`
+- `/projets/erp-micro-creches`
+- `/projets/luxury-auto-detailing`
+- `/projets/cledevoute`
+- `/projets/berserk-universe`
+- `/projets/codex-limits-usage`
+- `/projets/pokemon-binder`
+- `/projets/ia-trading`
+- `/projets/patripro`
+- `/projets/ats-filter-resume`
+- `/projets/novotel-roue-chance`
+- `/projets/aqualis`
+- `/projets/nolvus-mod-automation`
+- `/projets/bloodborne-shadps4`
+- `/projets/demons-souls-rpcs3`
+
+Les pages services dédiées sont `/services/sites-vitrines`, `/services/applications-metier` et `/services/automatisations-n8n`. Le fichier `robots.txt` autorise explicitement `OAI-SearchBot`.
 
 ## Contact
 

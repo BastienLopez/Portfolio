@@ -37,9 +37,9 @@ const getInitialLocale = (): Locale => {
   return readStoredLocale();
 };
 
-const SITE_ORIGIN = 'https://bastienlopez.fr';
+export const SITE_ORIGIN = 'https://bastienlopez.fr';
 
-type PageMetadata = {
+export type PageMetadata = {
   title: string;
   description: string;
   path: string;
@@ -115,6 +115,27 @@ const setLinkHref = (selector: string, href: string) => {
 
 const toCanonicalUrl = (path: string) => SITE_ORIGIN + (path === '/' ? '/' : path);
 
+const applyPageMetadata = (metadata: PageMetadata, locale: Locale) => {
+  const canonicalUrl = toCanonicalUrl(metadata.path);
+
+  document.documentElement.lang = locale;
+  document.title = metadata.title;
+  setMetaContent('meta[name="description"]', metadata.description);
+  setMetaContent('meta[name="robots"]', metadata.robots);
+  setMetaContent('meta[property="og:title"]', metadata.title);
+  setMetaContent('meta[property="og:description"]', metadata.description);
+  setMetaContent('meta[property="og:locale"]', locale === 'en' ? 'en_US' : 'fr_FR');
+  setMetaContent('meta[property="og:locale:alternate"]', locale === 'en' ? 'fr_FR' : 'en_US');
+  setMetaContent('meta[property="og:url"]', canonicalUrl);
+  setMetaContent('meta[name="twitter:title"]', metadata.title);
+  setMetaContent('meta[name="twitter:description"]', metadata.description);
+  setMetaContent('meta[name="twitter:url"]', canonicalUrl);
+  setLinkHref('link[rel="canonical"]', canonicalUrl);
+  setLinkHref('link[rel="alternate"][hreflang="fr-FR"]', toCanonicalUrl(metadata.path));
+  setLinkHref('link[rel="alternate"][hreflang="en-US"]', toCanonicalUrl(metadata.path));
+  setLinkHref('link[rel="alternate"][hreflang="x-default"]', toCanonicalUrl(metadata.path));
+};
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>(getInitialLocale);
 
@@ -135,26 +156,17 @@ export function usePageMetadata(page: PageId) {
   const { locale } = useLanguage();
 
   useEffect(() => {
-    const metadata = PAGE_METADATA[page][locale];
-    const canonicalUrl = toCanonicalUrl(metadata.path);
-
-    document.documentElement.lang = locale;
-    document.title = metadata.title;
-    setMetaContent('meta[name="description"]', metadata.description);
-    setMetaContent('meta[name="robots"]', metadata.robots);
-    setMetaContent('meta[property="og:title"]', metadata.title);
-    setMetaContent('meta[property="og:description"]', metadata.description);
-    setMetaContent('meta[property="og:locale"]', locale === 'en' ? 'en_US' : 'fr_FR');
-    setMetaContent('meta[property="og:locale:alternate"]', locale === 'en' ? 'fr_FR' : 'en_US');
-    setMetaContent('meta[property="og:url"]', canonicalUrl);
-    setMetaContent('meta[name="twitter:title"]', metadata.title);
-    setMetaContent('meta[name="twitter:description"]', metadata.description);
-    setMetaContent('meta[name="twitter:url"]', canonicalUrl);
-    setLinkHref('link[rel="canonical"]', canonicalUrl);
-    setLinkHref('link[rel="alternate"][hreflang="fr-FR"]', toCanonicalUrl(metadata.path));
-    setLinkHref('link[rel="alternate"][hreflang="en-US"]', toCanonicalUrl(metadata.path));
-    setLinkHref('link[rel="alternate"][hreflang="x-default"]', toCanonicalUrl(metadata.path));
+    applyPageMetadata(PAGE_METADATA[page][locale], locale);
   }, [locale, page]);
+}
+
+/** Apply metadata for a route whose title and description come from page data. */
+export function useRouteMetadata(metadataByLocale: Record<Locale, PageMetadata>) {
+  const { locale } = useLanguage();
+
+  useEffect(() => {
+    applyPageMetadata(metadataByLocale[locale], locale);
+  }, [locale, metadataByLocale]);
 }
 
 export function useLanguage() {
