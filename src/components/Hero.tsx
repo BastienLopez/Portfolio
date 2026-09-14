@@ -6,16 +6,20 @@ import { useLanguage } from "@/lib/i18n";
 
 const Hero = () => {
   const { isEnglish } = useLanguage();
-  const fullText = isEnglish
-    ? "Full-Stack AI & Automation Developer\nBusiness applications, APIs and n8n workflows"
-    : "Développeur Full-Stack IA & Automatisation\nApplications métier, APIs et workflows n8n";
-  const [typedText, setTypedText] = useState(fullText);
+  const profession = isEnglish
+    ? "Full-Stack AI & Automation Developer"
+    : "Développeur Full-Stack IA & Automatisation";
+  const supportingText = isEnglish
+    ? "Business applications, APIs and n8n workflows"
+    : "Applications métier, APIs et workflows n8n";
+  const animatedText = `${profession}\n${supportingText}`;
+  const [typedText, setTypedText] = useState(animatedText);
   const [typingComplete, setTypingComplete] = useState(false);
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (motionQuery.matches) {
-      setTypedText(fullText);
+      setTypedText(animatedText);
       setTypingComplete(true);
       return;
     }
@@ -27,16 +31,21 @@ const Hero = () => {
 
     const timer = window.setInterval(() => {
       index += 1;
-      setTypedText(fullText.slice(0, index));
+      setTypedText(animatedText.slice(0, index));
 
-      if (index >= fullText.length) {
+      if (index >= animatedText.length) {
         window.clearInterval(timer);
         setTypingComplete(true);
       }
     }, TYPING_INTERVAL);
 
     return () => window.clearInterval(timer);
-  }, [fullText]);
+  }, [animatedText]);
+
+  const typedProfession = typedText.slice(0, profession.length);
+  const typedSupportingText = typedText.startsWith(`${profession}\n`)
+    ? typedText.slice(profession.length + 1)
+    : "";
 
   return (
     <section id="hero" className="hero-section relative flex items-start justify-center overflow-hidden lg:items-center">
@@ -56,16 +65,19 @@ const Hero = () => {
           {/* Title with typing effect */}
           <div className="space-y-4">
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-              Bastien Lopez
+              <span className="block">Bastien Lopez</span>
+              <span className="mt-3 block bg-[length:200%_auto] text-2xl font-medium leading-tight text-primary supports-[background-clip:text]:bg-gradient-to-r supports-[background-clip:text]:from-primary supports-[background-clip:text]:via-accent supports-[background-clip:text]:to-primary supports-[background-clip:text]:bg-clip-text supports-[background-clip:text]:text-transparent md:text-4xl lg:text-5xl">
+                {typedProfession}
+              </span>
             </h1>
-            <div className="flex min-h-[96px] items-start justify-center md:min-h-[128px]">
+            <div className="flex items-start justify-center">
               <h2
                 data-hero-title
                 data-typing-complete={typingComplete ? "true" : "false"}
-                aria-label={fullText.replaceAll("\n", " ")}
+                aria-label={supportingText}
                 className="bg-[length:200%_auto] text-2xl font-medium leading-tight text-primary supports-[background-clip:text]:bg-gradient-to-r supports-[background-clip:text]:from-primary supports-[background-clip:text]:via-accent supports-[background-clip:text]:to-primary supports-[background-clip:text]:bg-clip-text supports-[background-clip:text]:text-transparent md:text-3xl lg:text-4xl whitespace-pre-line animate-[shimmer_3s_linear_infinite]"
               >
-                <span aria-hidden="true">{typedText}</span>
+                <span aria-hidden="true">{typedSupportingText}</span>
                 {!typingComplete && <span className="animate-pulse" aria-hidden="true">|</span>}
               </h2>
             </div>

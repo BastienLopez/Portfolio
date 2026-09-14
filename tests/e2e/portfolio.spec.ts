@@ -213,9 +213,12 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
 
 test("publishes crawlable project and service pages without changing the three hero CTAs", async ({ page }) => {
   await page.goto("/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    /Bastien Lopez.*Développeur Full-Stack IA & Automatisation/,
+  );
   await expect(page.locator("[data-hero-title]")).toHaveAttribute(
     "aria-label",
-    /Développeur Full-Stack IA & Automatisation/,
+    "Applications métier, APIs et workflows n8n",
   );
   const hero = page.locator("#hero");
   await expect(hero.getByRole("link", { name: "Voir mes projets clés", exact: true })).toHaveCount(1);
