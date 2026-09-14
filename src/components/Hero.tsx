@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
@@ -12,73 +11,41 @@ const Hero = () => {
   const supportingText = isEnglish
     ? "Business applications, APIs and n8n workflows"
     : "Applications métier, APIs et workflows n8n";
-  const animatedText = `${profession}\n${supportingText}`;
-  const [typedText, setTypedText] = useState(animatedText);
-  const [typingComplete, setTypingComplete] = useState(false);
-
-  useEffect(() => {
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (motionQuery.matches) {
-      setTypedText(animatedText);
-      setTypingComplete(true);
-      return;
-    }
-
-    let index = 0;
-    setTypedText("");
-    setTypingComplete(false);
-    const TYPING_INTERVAL = 50;
-
-    const timer = window.setInterval(() => {
-      index += 1;
-      setTypedText(animatedText.slice(0, index));
-
-      if (index >= animatedText.length) {
-        window.clearInterval(timer);
-        setTypingComplete(true);
-      }
-    }, TYPING_INTERVAL);
-
-    return () => window.clearInterval(timer);
-  }, [animatedText]);
-
-  const typedProfession = typedText.slice(0, profession.length);
-  const typedSupportingText = typedText.startsWith(`${profession}\n`)
-    ? typedText.slice(profession.length + 1)
-    : "";
-
   return (
     <section id="hero" className="hero-section relative flex items-start justify-center overflow-hidden lg:items-center">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10"></div>
-      
-      {/* Animated grid */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px'
-        }}></div>
+
+      {/* Subtle grid: a static visual anchor for the hero composition. */}
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-20" aria-hidden="true">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "50px 50px",
+          }}
+        />
       </div>
 
       <div className="container relative z-10 mx-auto px-4 pb-8 pt-24 sm:pb-10 sm:pt-28 lg:translate-y-7 lg:pb-0 lg:pt-20">
         <div className="mx-auto max-w-4xl space-y-8 text-center">
-          {/* Title with typing effect */}
+          {/* Keep the positioning message visible in the initial HTML. */}
           <div className="space-y-4">
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               <span className="block">Bastien Lopez</span>
               <span className="mt-3 block bg-[length:200%_auto] text-2xl font-medium leading-tight text-primary supports-[background-clip:text]:bg-gradient-to-r supports-[background-clip:text]:from-primary supports-[background-clip:text]:via-accent supports-[background-clip:text]:to-primary supports-[background-clip:text]:bg-clip-text supports-[background-clip:text]:text-transparent md:text-4xl lg:text-5xl">
-                {typedProfession}
+                {profession}
               </span>
             </h1>
             <div className="flex items-start justify-center">
               <h2
                 data-hero-title
-                data-typing-complete={typingComplete ? "true" : "false"}
+                data-typing-complete="true"
                 aria-label={supportingText}
-                className="bg-[length:200%_auto] text-2xl font-medium leading-tight text-primary supports-[background-clip:text]:bg-gradient-to-r supports-[background-clip:text]:from-primary supports-[background-clip:text]:via-accent supports-[background-clip:text]:to-primary supports-[background-clip:text]:bg-clip-text supports-[background-clip:text]:text-transparent md:text-3xl lg:text-4xl whitespace-pre-line animate-[shimmer_3s_linear_infinite]"
+                className="text-2xl font-medium leading-tight text-primary md:text-3xl lg:text-4xl"
               >
-                <span aria-hidden="true">{typedSupportingText}</span>
-                {!typingComplete && <span className="animate-pulse" aria-hidden="true">|</span>}
+                {supportingText}
               </h2>
             </div>
           </div>
@@ -141,7 +108,7 @@ const Hero = () => {
 
           {/* Keep the scroll affordance in the document flow so it cannot cover the CTAs. */}
           <div className="mt-8 flex justify-center sm:mt-10 lg:mt-8">
-            <a href="#about" className="animate-bounce text-muted-foreground transition-colors hover:text-primary" aria-label={isEnglish ? 'Go to the about section' : 'Aller à la section à propos'}>
+            <a href="#about" className="text-muted-foreground transition-colors hover:text-primary" aria-label={isEnglish ? 'Go to the about section' : 'Aller à la section à propos'}>
               <ChevronDown className="h-8 w-8" />
             </a>
           </div>
@@ -151,18 +118,6 @@ const Hero = () => {
       {/* Bottom fade to blend hero into next section */}
       <div className="hero-grid-fade" />
 
-      <style>{`
-        @keyframes shimmer {
-          0% { background-position: 200% center; }
-          100% { background-position: -200% center; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .animate-bounce, .animate-fade-in, .animate-pulse {
-            animation: none !important;
-          }
-        }
-      `}</style>
     </section>
   );
 };

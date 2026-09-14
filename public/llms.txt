@@ -68,7 +68,17 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Aqualis: https://bastienlopez.fr/projets/aqualis
 - Nolvus Mod Automation: https://bastienlopez.fr/projets/nolvus-mod-automation
 - Bloodborne shadPS4: https://bastienlopez.fr/projets/bloodborne-shadps4
-- Demon's Souls RPCS3: https://bastienlopez.fr/projets/demons-souls-rpcs3
+- Demon’s Souls RPCS3: https://bastienlopez.fr/projets/demons-souls-rpcs3
+
+## Dev Notes indexables
+- Pipeline CI/CD GitHub Actions: https://bastienlopez.fr/notes/pipeline-ci-cd-github-actions
+- Docker pour débutants: https://bastienlopez.fr/notes/docker-pour-debutants
+- Monitoring après déploiement: https://bastienlopez.fr/notes/monitorer-une-application-apres-deploiement
+- Architecture hexagonale: https://bastienlopez.fr/notes/architecture-hexagonale
+- Check-list de déploiement en production: https://bastienlopez.fr/notes/deploiement-production-checklist
+- Secrets et clés API en local: https://bastienlopez.fr/notes/gerer-secrets-cles-api-local
+- Refactoring progressif: https://bastienlopez.fr/notes/refactoring-sans-tout-casser
+- Estimation d’un projet freelance: https://bastienlopez.fr/notes/estimer-un-projet-freelance
 
 ## Contact et profils
 - Email: bastien.lopez40@gmail.com

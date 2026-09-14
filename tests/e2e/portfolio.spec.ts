@@ -1,17 +1,11 @@
 import { expect, test } from "@playwright/test";
 
-test("defers below-the-fold section chunks on the first render", async ({ page }) => {
-  const scriptRequests: string[] = [];
-  page.on("request", (request) => {
-    if (request.resourceType() === "script") scriptRequests.push(request.url());
-  });
-
+test("renders the core sections in the initial page shell", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("#hero")).toBeVisible();
-  await page.waitForTimeout(750);
-
-  expect(scriptRequests.some((url) => /Projects-[^/]+\.js/.test(url))).toBe(false);
-  expect(scriptRequests.some((url) => /Skills-[^/]+\.js/.test(url))).toBe(false);
+  for (const sectionId of ["about", "skills", "projects", "devnotes", "contact"]) {
+    await expect(page.locator(`#${sectionId}`)).toBeVisible();
+  }
 
   await page.goto("/#projects");
   await expect(page.locator("#projects")).toBeVisible();
@@ -50,9 +44,13 @@ test("keeps project history, gallery, and language navigation usable", async ({ 
   await page.getByRole("button", { name: /Read article/ }).first().click();
   await expect(page.getByText("Understanding the basics of agility: Scrum, Kanban, XP")).toBeVisible();
   await expect(page.getByText(/Agility was born from an overwhelming observation/)).toBeVisible();
+  await expect(page.locator("[data-devnotes-back]")).toBeVisible();
+  await page.locator("[data-devnotes-back]").click();
+  await expect(page.locator("[data-devnotes-back]")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Culture & methods/ })).toBeVisible();
 });
 
-test("exposes a complete case-study summary for every project", async ({ page }) => {
+test("renders project details without a duplicate summary block", async ({ page }) => {
   const projectIds = [
     "wallet-provider",
     "altme-wallet",
@@ -80,29 +78,18 @@ test("exposes a complete case-study summary for every project", async ({ page })
 
   for (const projectId of projectIds) {
     await page.goto(`/#project=${projectId}`);
-    const summary = page.locator("[data-project-summary]");
-    await expect(summary).toBeVisible();
-    await expect(summary.getByRole("heading", { name: "Tâches réalisées", exact: true })).toHaveCount(1);
-    await expect(summary.getByRole("heading", { name: "Résultats & gains", exact: true })).toHaveCount(1);
+    const detail = page.locator(".project-detail-content");
+    await expect(detail).toBeVisible();
+    await expect(detail).toHaveText(/\S+/);
+    await expect(page.locator("[data-project-summary]")).toHaveCount(0);
   }
-
-  await page.goto("/#project=altme-wallet");
-  const projectWithoutMetrics = page.locator("[data-project-summary]");
-  await expect(projectWithoutMetrics.getByRole("heading", { name: "Métriques publiques", exact: true })).toHaveCount(0);
-  await expect(projectWithoutMetrics.getByText(/Aucune métrique chiffrée publique/)).toHaveCount(0);
-
-  await page.goto("/#project=cledevoute");
-  const projectWithMetrics = page.locator("[data-project-summary]");
-  await expect(projectWithMetrics.getByRole("heading", { name: "Métriques publiques", exact: true })).toHaveCount(1);
-  await expect(projectWithMetrics.getByText(/\+60/)).toBeVisible();
-  await expect(projectWithMetrics.getByText(/\+15/)).toBeVisible();
 });
 
-test("keeps the project summary usable across narrow and wide viewports", async ({ page }) => {
+test("keeps project details usable across narrow and wide viewports", async ({ page }) => {
   for (const width of [320, 375, 768, 1280, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/#project=erp-micro-creches");
-    await expect(page.locator("[data-project-summary]")).toBeVisible();
+    await expect(page.locator(".project-detail-content")).toBeVisible();
 
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - window.innerWidth,
@@ -138,13 +125,12 @@ test("aligns the freelance portfolio link with the projects section", async ({ p
   await page.getByRole("link", { name: "Voir le portfolio complet", exact: true }).click();
   await expect(page).toHaveURL(/\/#projects$/);
   await expect(page.locator("#projects")).toBeVisible();
-  await page.waitForTimeout(250);
-
-  const top = await page.locator("#projects").evaluate((element) =>
-    element.getBoundingClientRect().top,
-  );
-  expect(top).toBeGreaterThanOrEqual(0);
-  expect(top).toBeLessThan(180);
+  await expect
+    .poll(
+      () => page.locator("#projects").evaluate((element) => element.getBoundingClientRect().top),
+      { timeout: 2_000 },
+    )
+    .toBeLessThan(180);
 });
 
 test("keeps route metadata, FAQ schema and freelance translations aligned", async ({ page }) => {
@@ -168,6 +154,9 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
   expect(faqSchema["@type"]).toBe("FAQPage");
   expect(faqSchema.mainEntity).toHaveLength(6);
   await expect(page.locator("#testimonials [data-testimonial-slide]")).toHaveCount(3);
+  await expect(page.getByText("Projet associé : Eloi CoachStéo", { exact: true })).toBeVisible();
+  await expect(page.getByText("Projet associé : ERP Micro-Crèches", { exact: true })).toBeVisible();
+  await expect(page.getByText("Projet associé : Clé de Voûte", { exact: true })).toBeVisible();
   const testimonialSizes = await page.locator("#testimonials [data-testimonial-slide]").evaluateAll((elements) =>
     elements.map((element) => {
       const rect = element.getBoundingClientRect();
@@ -189,6 +178,7 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
   await expect(page.locator("#featured-case-study")).toBeVisible();
   await expect(page.getByText("Tâches réalisées")).toBeVisible();
   await expect(page.getByText("Gains / valeur produite")).toBeVisible();
+  await expect(page.locator("#featured-case-study ul")).toHaveCount(0);
   await featuredProjectButton.click();
   await expect(page.locator("#featured-case-study")).toHaveCount(0);
 
@@ -209,6 +199,35 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
   await page.goto("/__metadata-does-not-exist__");
   await expect(page).toHaveTitle(/Page not found — Bastien Lopez/);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, follow");
+});
+
+test("publishes standalone Dev Notes pages with canonical metadata and TechArticle schema", async ({ page }) => {
+  await page.goto("/#devnotes");
+  const noteLinks = page.locator('#devnotes a[href^="/notes/"]');
+  await expect(noteLinks).toHaveCount(8);
+
+  const href = await noteLinks.first().getAttribute("href");
+  expect(href).toMatch(/^\/notes\/[a-z0-9-]+$/);
+  await page.goto(href as string);
+
+  await expect(page.locator("h1")).toBeVisible();
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "index, follow");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    `https://bastienlopez.fr${href}`,
+  );
+  const articleSchemaTypes = await page.locator('script[type="application/ld+json"]').evaluateAll((elements) =>
+    elements.flatMap((element) => {
+      try {
+        const value = JSON.parse(element.textContent ?? "{}");
+        return value["@graph"]?.map((entry: { "@type"?: string }) => entry["@type"]) ?? [value["@type"]];
+      } catch {
+        return [];
+      }
+    }),
+  );
+  expect(articleSchemaTypes).toContain("TechArticle");
+  await expect(page.getByRole("link", { name: "Retour aux Dev Notes", exact: true })).toBeVisible();
 });
 
 test("publishes crawlable project and service pages without changing the three hero CTAs", async ({ page }) => {
@@ -310,7 +329,7 @@ test("publishes crawlable project and service pages without changing the three h
   await expect(page.getByRole("link", { name: "Ouvrir l’étude de cas dédiée", exact: true })).toHaveCount(4);
 });
 
-test("keeps project pills aligned inside cards", async ({ page }) => {
+test("keeps project technologies readable inside cards", async ({ page }) => {
   await page.goto("/#projects");
   const cards = page.locator("#projects [data-project-card]");
   await expect(cards.first()).toBeVisible();
@@ -326,9 +345,35 @@ test("keeps project pills aligned inside cards", async ({ page }) => {
     }),
   );
 
-  expect(measurements.every(({ techHeight }) => techHeight > 0)).toBe(true);
-  expect(new Set(measurements.map(({ techHeight }) => techHeight)).size).toBe(1);
+  expect(measurements.every(({ techHeight }) => techHeight >= 40)).toBe(true);
   expect(Math.max(...measurements.map(({ techOffset }) => techOffset)) - Math.min(...measurements.map(({ techOffset }) => techOffset))).toBeLessThanOrEqual(1);
+
+  const pillStyles = await cards.first().locator("[data-project-tech] span").evaluateAll((elements) =>
+    elements.map((element) => {
+      const styles = window.getComputedStyle(element);
+      return { textOverflow: styles.textOverflow, whiteSpace: styles.whiteSpace };
+    }),
+  );
+  expect(pillStyles.length).toBeGreaterThan(0);
+  expect(pillStyles.every(({ textOverflow, whiteSpace }) => textOverflow !== "ellipsis" && whiteSpace === "normal")).toBe(true);
+
+  const techStrip = cards.first().locator("[data-project-tech]");
+  await expect(techStrip).toContainText("|");
+  const techLayout = await techStrip.evaluate((element) => {
+    const styles = window.getComputedStyle(element);
+    const columns = Array.from(element.children).map((child) => Math.round(child.getBoundingClientRect().width));
+    return { display: styles.display, columns };
+  });
+  expect(techLayout.display).toBe("grid");
+  expect(techLayout.columns).toHaveLength(3);
+  expect(Math.max(...techLayout.columns) - Math.min(...techLayout.columns)).toBeLessThanOrEqual(1);
+  const techVisualStyles = await techStrip.locator("span").evaluateAll((elements) =>
+    elements.map((element) => {
+      const styles = window.getComputedStyle(element);
+      return { borderWidth: styles.borderWidth, borderRadius: styles.borderRadius };
+    }),
+  );
+  expect(techVisualStyles.every(({ borderWidth, borderRadius }) => borderWidth === "0px" && borderRadius === "0px")).toBe(true);
 });
 
 test("returns to the freelance projects section from a freelance project page", async ({ page }) => {

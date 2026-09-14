@@ -97,7 +97,7 @@ const Freelance = () => {
           <Projects mode="freelance" />
           <Testimonials />
           <FreelanceFaq />
-          <Contact />
+          <Contact variant="freelance" />
       </main>
       <Footer />
     </div>

@@ -1,11 +1,11 @@
 import {
   ArrowRight,
   BarChart3,
+  BriefcaseBusiness,
   CheckCircle,
   Clock,
   FileText,
   Github,
-  Layers3,
   Linkedin,
   Mail,
 } from "lucide-react";
@@ -19,12 +19,12 @@ const About = () => {
     ? [
         { label: "Years of experience", value: "7+", icon: Clock },
         { label: "Projects and builds", value: "30+", icon: BarChart3 },
-        { label: "Industries and contexts covered", value: "10+", icon: Layers3 },
+        { label: "Working modes", value: "Permanent & freelance", icon: BriefcaseBusiness },
       ]
     : [
         { label: "Années d'expérience", value: "7+", icon: Clock },
         { label: "Projets et réalisations", value: "30+", icon: BarChart3 },
-        { label: "Secteurs et contextes traités", value: "10+", icon: Layers3 },
+        { label: "Modes d’intervention", value: "CDI & freelance", icon: BriefcaseBusiness },
       ];
 
   const trustPoints = isEnglish

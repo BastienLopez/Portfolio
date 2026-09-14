@@ -40,6 +40,16 @@ const serviceSlugs = [
   "applications-metier",
   "automatisations-n8n",
 ];
+const articleSlugs = [
+  "pipeline-ci-cd-github-actions",
+  "docker-pour-debutants",
+  "monitorer-une-application-apres-deploiement",
+  "architecture-hexagonale",
+  "deploiement-production-checklist",
+  "gerer-secrets-cles-api-local",
+  "refactoring-sans-tout-casser",
+  "estimer-un-projet-freelance",
+];
 
 const routes = [
   { path: "/", output: "index.html", allowNotFound: false },
@@ -53,6 +63,11 @@ const routes = [
   ...serviceSlugs.map((slug) => ({
     path: `/services/${slug}`,
     output: path.join("services", slug, "index.html"),
+    allowNotFound: false,
+  })),
+  ...articleSlugs.map((slug) => ({
+    path: `/notes/${slug}`,
+    output: path.join("notes", slug, "index.html"),
     allowNotFound: false,
   })),
   { path: "/__prerender-not-found__", output: "404.html", allowNotFound: true },
@@ -75,20 +90,9 @@ const waitForPreview = async () => {
   throw new Error(`Preview server did not start on ${baseUrl}`);
 };
 
-const waitForStablePage = async (page, routePath) => {
+const waitForStablePage = async (page) => {
   await page.waitForSelector("main", { state: "attached" });
   await page.evaluate(() => document.fonts?.ready);
-
-  if (routePath === "/") {
-    await page.waitForFunction(
-      () => document.querySelector("[data-hero-title]")?.getAttribute("data-typing-complete") === "true",
-      null,
-      { timeout: 10000 },
-    );
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await sleep(350);
-    await page.evaluate(() => window.scrollTo(0, 0));
-  }
 
   await sleep(250);
 };
@@ -130,7 +134,7 @@ const prerender = async () => {
           throw new Error(`Could not render ${route.path}: HTTP ${response?.status() ?? "unknown"}`);
         }
 
-        await waitForStablePage(page, route.path);
+        await waitForStablePage(page);
         const outputPath = path.join(distRoot, route.output);
         await mkdir(path.dirname(outputPath), { recursive: true });
         const renderedHtml = stripPrerenderRuntimePreloads(await page.content());

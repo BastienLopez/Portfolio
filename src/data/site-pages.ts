@@ -122,6 +122,81 @@ const featuredProjectIds = new Set(
   featuredProjectPageDefinitions.flatMap((definition) => definition.projectIds),
 );
 
+const projectIntros: Record<string, LocalizedText> = {
+  "altme-documentation": {
+    fr: "Documentation technique publiée en versions GitBook et Docusaurus pour guider l’intégration d’Altme Wallet Provider.",
+    en: "Technical documentation published in GitBook and Docusaurus versions to guide Altme Wallet Provider integrations.",
+  },
+  "teams-bot-mastra": {
+    fr: "Bot Microsoft Teams relié à Mastra pour agréger des flux RSS, préparer une synthèse NLP et la rendre exploitable dans l’équipe.",
+    en: "A Microsoft Teams bot connected to Mastra to aggregate RSS feeds, prepare an NLP summary and make it useful to the team.",
+  },
+  "seo-geo-optimization": {
+    fr: "Mission d’optimisation SEO et de référencement local centrée sur l’audit, les données structurées, le contenu et le suivi.",
+    en: "An SEO and local-search engagement focused on audits, structured data, content and performance follow-up.",
+  },
+  "eloi-coachsteo": {
+    fr: "Site vitrine pour présenter les accompagnements d’un coach sportif et ostéopathe, avec une galerie avant/après et un parcours de contact direct.",
+    en: "A showcase website for a sports coach and osteopath, with a before-and-after gallery and a direct contact journey.",
+  },
+  "erp-micro-creches": {
+    fr: "ERP métier pour centraliser le suivi de plusieurs micro-crèches, les comptes familles, les documents et les parcours d’administration.",
+    en: "A business ERP for centralising multi-nursery operations, family accounts, documents and administration workflows.",
+  },
+  "luxury-auto-detailing": {
+    fr: "Site vitrine orienté prestations pour présenter une activité de detailing automobile et faciliter la demande de rendez-vous.",
+    en: "A service-led showcase website presenting an auto-detailing business and making appointment requests easier.",
+  },
+  cledevoute: {
+    fr: "Site vitrine de maçonnerie conçu pour présenter les prestations, les réalisations et un accès rapide au contact.",
+    en: "A masonry showcase website built to present services, completed work and a clear route to contact.",
+  },
+  "berserk-universe": {
+    fr: "Plateforme open source consacrée à l’univers de Berserk, avec fiches de personnages, analyses et carte interactive.",
+    en: "An open-source platform about Berserk, combining character profiles, analysis and an interactive map.",
+  },
+  "codex-limits-usage": {
+    fr: "Application Windows locale pour suivre la consommation des quotas Codex et estimer leur épuisement selon le rythme de travail.",
+    en: "A local Windows application for tracking Codex quota usage and estimating exhaustion from the current work pace.",
+  },
+  "pokemon-binder": {
+    fr: "Application web de collection pour ajouter, classer, rechercher et visualiser des cartes Pokémon TCG dans un classeur virtuel.",
+    en: "A collection web app for adding, organising, searching and viewing Pokémon TCG cards in a virtual binder.",
+  },
+  "ia-trading": {
+    fr: "Projet expérimental de collecte de données, backtesting et analyse de signaux de marché avec IA, sans promesse de performance financière.",
+    en: "An experimental project for market-data collection, backtesting and AI-assisted signal analysis, with no financial-performance claim.",
+  },
+  patripro: {
+    fr: "Tableau de bord pour centraliser le suivi des comptes, placements, budgets et emprunts dans une même interface.",
+    en: "A dashboard for centralising accounts, investments, budgets and loans in one interface.",
+  },
+  "ats-filter-resume": {
+    fr: "Outil d’analyse ATS qui transforme un CV et une offre en retour lisible sur les correspondances, les écarts et les améliorations possibles.",
+    en: "An explainable ATS analysis tool that turns a CV and a job offer into readable matches, gaps and improvement suggestions.",
+  },
+  "novotel-roue-chance": {
+    fr: "Parcours mobile accessible par QR code pour recueillir un retour restaurant et animer une roue promotionnelle au NOVOTEL Reims Tinqueux.",
+    en: "A QR-accessible mobile journey for restaurant feedback and a promotional prize wheel at NOVOTEL Reims Tinqueux.",
+  },
+  aqualis: {
+    fr: "Projet mobile complet conservé dans la catégorie gaming, avec sa fiche, ses visuels et son contenu détaillé.",
+    en: "A complete mobile project kept in the gaming category with its full record, visuals and detailed content.",
+  },
+  "nolvus-mod-automation": {
+    fr: "Script AutoHotkey qui automatise les clics répétitifs nécessaires au téléchargement de mods Nolvus sans compte premium.",
+    en: "An AutoHotkey script automating repetitive clicks required to download Nolvus mods without a premium account.",
+  },
+  "bloodborne-shadps4": {
+    fr: "Guide d’installation de Bloodborne via l’émulateur ShadPS4, avec mods graphiques et corrections de compatibilité documentées.",
+    en: "An installation guide for Bloodborne through the ShadPS4 emulator, with documented graphics mods and compatibility fixes.",
+  },
+  "demons-souls-rpcs3": {
+    fr: "Guide d’installation de Demon’s Souls via RPCS3, avec réglages graphiques et corrections utiles pour jouer sur PC.",
+    en: "An installation guide for Demon’s Souls through RPCS3, with graphics settings and useful PC fixes.",
+  },
+};
+
 const genericProjectPageDefinition = (project: Project): ProjectPageDefinition => {
   const englishProject = project.translations?.en;
   const title = project.title;
@@ -134,10 +209,7 @@ const genericProjectPageDefinition = (project: Project): ProjectPageDefinition =
     projectIds: [project.id],
     title: { fr: title, en: englishTitle },
     description: { fr: description, en: englishDescription },
-    intro: {
-      fr: "Fiche projet avec le contexte, la solution, la stack et les éléments documentés dans le portfolio.",
-      en: "A project page covering the context, solution, stack and documented work in the portfolio.",
-    },
+    intro: projectIntros[project.id] ?? { fr: description, en: englishDescription },
     cta: {
       fr: "Discuter d’un projet similaire",
       en: "Discuss a similar project",
@@ -166,8 +238,8 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
       en: "Clear, fast and responsive showcase websites that present a business and make contact easier.",
     },
     intro: {
-      fr: "Les sites vitrines représentent environ 90 % de mes missions freelance. Je prends en charge la structure, l’intégration, le responsive, le SEO de base et la mise en ligne.",
-      en: "Showcase websites represent around 90% of my freelance work. I handle structure, implementation, responsive behaviour, baseline SEO and release.",
+      fr: "Une grande partie de mes missions freelance concerne des sites vitrines. Je prends en charge la structure, l’intégration, le responsive, le SEO de base et la mise en ligne.",
+      en: "A large part of my freelance work concerns showcase websites. I handle structure, implementation, responsive behaviour, baseline SEO and release.",
     },
     audience: {
       fr: "Entreprises locales, indépendants et petites équipes qui ont besoin d’une vitrine crédible, lisible sur mobile et simple à faire évoluer.",

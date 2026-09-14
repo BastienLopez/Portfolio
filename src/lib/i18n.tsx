@@ -132,7 +132,6 @@ const applyPageMetadata = (metadata: PageMetadata, locale: Locale) => {
   setMetaContent('meta[name="twitter:url"]', canonicalUrl);
   setLinkHref('link[rel="canonical"]', canonicalUrl);
   setLinkHref('link[rel="alternate"][hreflang="fr-FR"]', toCanonicalUrl(metadata.path));
-  setLinkHref('link[rel="alternate"][hreflang="en-US"]', toCanonicalUrl(metadata.path));
   setLinkHref('link[rel="alternate"][hreflang="x-default"]', toCanonicalUrl(metadata.path));
 };
 

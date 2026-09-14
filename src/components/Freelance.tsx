@@ -43,7 +43,7 @@ const pageCopy = {
     secondaryCta: "Voir les réalisations",
     servicesTitle: "Ce que je prends en charge",
     servicesIntro:
-      "Les sites vitrines représentent environ 90 % de mes missions. Pour le reste, je prends en charge des outils métier et des automatisations avec un périmètre clair et un livrable utilisable.",
+      "Une grande partie de mes missions concerne des sites vitrines. Je prends aussi en charge des outils métier et des automatisations avec un périmètre clair et un livrable utilisable.",
     services: [
       {
         number: "01",
@@ -119,13 +119,13 @@ const pageCopy = {
     description:
       "I mainly build showcase websites, along with business applications, n8n automations and internal APIs that remove repetitive work and make daily operations easier.",
     note:
-      "Showcase websites represent around 90% of my freelance work. I work from scoping to production, with documentation your team can take over.",
+      "A large part of my freelance work concerns showcase websites. I work from scoping to production, with documentation your team can take over.",
     location: "Based in Reims, I work remotely with teams across France.",
     primaryCta: "Discuss the project",
     secondaryCta: "See selected work",
     servicesTitle: "What I can take on",
     servicesIntro:
-      "Showcase websites represent around 90% of my engagements. I also take on business tools and automations with a clear scope and a usable deliverable.",
+      "A large part of my engagements concerns showcase websites. I also take on business tools and automations with a clear scope and a usable deliverable.",
     services: [
       {
         number: "01",

@@ -129,7 +129,7 @@ Fichiers publics SEO :
 - [public/llms.txt](public/llms.txt)
 - [public/site.webmanifest](public/site.webmanifest)
 
-Image sociale Open Graph : [public/og-image.svg](public/og-image.svg). Pour la remplacer, conserver un format 1200x630 et mettre à jour les URL `og:image` et `twitter:image` dans [index.html](index.html) si le nom change.
+Image sociale Open Graph : [public/og-image.png](public/og-image.png). Pour la remplacer, conserver un format 1200x630 et mettre à jour les URL `og:image` et `twitter:image` dans [index.html](index.html) si le nom change.
 
 Après la mise en ligne du domaine, une nouvelle validation Search Console pourra être effectuée si nécessaire.
 

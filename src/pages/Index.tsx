@@ -1,15 +1,12 @@
-import { lazy } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import About from "@/components/About";
+import Skills from "@/components/Skills";
+import Projects from "@/components/Projects";
+import DevNotes from "@/components/DevNotes";
+import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import DeferredSection from "@/components/DeferredSection";
 import { useLanguage, usePageMetadata } from "@/lib/i18n";
-
-const About = lazy(() => import("@/components/About"));
-const Skills = lazy(() => import("@/components/Skills"));
-const Projects = lazy(() => import("@/components/Projects"));
-const DevNotes = lazy(() => import("@/components/DevNotes"));
-const Contact = lazy(() => import("@/components/Contact"));
 
 const Index = () => {
   const { isEnglish } = useLanguage();
@@ -26,21 +23,11 @@ const Index = () => {
       <Navbar />
       <main id="main-content">
         <Hero />
-        <DeferredSection sectionId="about" loadingLabel={isEnglish ? "Loading about section..." : "Chargement de la présentation..."}>
-          <About />
-        </DeferredSection>
-        <DeferredSection sectionId="projects" loadingLabel={isEnglish ? "Loading projects..." : "Chargement des projets..."}>
-          <Projects />
-        </DeferredSection>
-        <DeferredSection sectionId="skills" loadingLabel={isEnglish ? "Loading skills..." : "Chargement des compétences..."}>
-          <Skills />
-        </DeferredSection>
-        <DeferredSection sectionId="devnotes" loadingLabel={isEnglish ? "Loading notes..." : "Chargement des notes..."}>
-          <DevNotes />
-        </DeferredSection>
-        <DeferredSection sectionId="contact" loadingLabel={isEnglish ? "Loading contact..." : "Chargement du contact..."}>
-          <Contact />
-        </DeferredSection>
+        <About />
+        <Projects />
+        <Skills />
+        <DevNotes />
+        <Contact />
         <Footer />
       </main>
     </div>

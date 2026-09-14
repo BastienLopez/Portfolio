@@ -14,7 +14,10 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import type { Article, ArticleCategory, ArticleTranslation } from '../data/articles';
+import { articlePageDefinitions, getArticlePageDefinitionById } from '../data/articles/pages';
+import { renderArticleContent } from '@/lib/article-content';
 import { useLanguage } from '@/lib/i18n';
+import { Link } from 'react-router-dom';
 
 type SelectableCategory = Exclude<ArticleCategory, never>;
 type LocalizedArticle = Article & { titleEn: string; contentEn: string };
@@ -66,24 +69,6 @@ const articleLoaders: Record<SelectableCategory, () => Promise<LocalizedArticle[
     return mergeTranslations(freelanceArticles, translations);
   },
 };
-
-const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (character) => ({
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  "'": '&#039;',
-})[character] ?? character);
-
-const removeDecorativeEmoji = (content: string) =>
-  content
-    .replace(/[0-9#*]\uFE0F?\u20E3\s*/gu, '')
-    .replace(/[\p{Extended_Pictographic}\uFE0F]+\s*/gu, '');
-
-const renderArticleContent = (content: string) => removeDecorativeEmoji(content).replace(
-  /```([\w+-]+)?\r?\n([\s\S]*?)```/g,
-  (_match, language = '', code: string) => `<pre><code${language ? ` class="language-${language}"` : ''}>${escapeHtml(code.trim())}</code></pre>`,
-);
 
 const DevNotes = () => {
   const { isEnglish } = useLanguage();
@@ -164,6 +149,12 @@ const DevNotes = () => {
 
   const handleBackToList = () => {
     setSelectedArticle(null);
+    window.requestAnimationFrame(() => {
+      document.getElementById("devnotes")?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start",
+      });
+    });
   };
 
   const SelectedCategoryIcon = selectedArticle
@@ -191,14 +182,17 @@ const DevNotes = () => {
         {/* Article Detail View */}
         {selectedArticle ? (
           <div className="max-w-4xl mx-auto w-full">
-            <Button 
-              onClick={handleBackToList}
-              variant="outline"
-              className="mb-6"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
-              {isEnglish ? 'Back to articles' : 'Retour aux articles'}
-            </Button>
+            <div className="sticky top-20 z-20 mb-6 flex border-y border-border bg-background/95 py-3 backdrop-blur-sm">
+              <Button
+                data-devnotes-back
+                onClick={handleBackToList}
+                variant="ghost"
+                className="h-auto rounded-none px-0 text-sm text-muted-foreground hover:bg-transparent hover:text-foreground"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+                {isEnglish ? 'Back to Dev Notes' : 'Retour aux Dev Notes'}
+              </Button>
+            </div>
             
             <Card className="border-border bg-transparent shadow-none">
               <CardHeader>
@@ -246,6 +240,33 @@ const DevNotes = () => {
           </div>
         ) : (
           <>
+            <section className="mb-12 border-y border-border py-6" aria-labelledby="featured-notes-title">
+              <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 id="featured-notes-title" className="text-xl font-semibold text-foreground">
+                  {isEnglish ? "Browse the standalone notes" : "Lire les notes en page dédiée"}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {isEnglish ? "Stable URLs with the full article and related work." : "Des URLs stables avec l’article complet et les réalisations liées."}
+                </p>
+              </div>
+              <div className="grid gap-3 md:grid-cols-2">
+                {articlePageDefinitions.map((definition) => (
+                  <Link
+                    key={definition.slug}
+                    to={`/notes/${definition.slug}`}
+                    className="group rounded-md border border-border bg-card/20 p-4 transition-colors hover:border-primary/70"
+                  >
+                    <span className="block text-sm font-semibold leading-6 text-foreground group-hover:text-primary">
+                      {isEnglish ? definition.title.en : definition.title.fr}
+                    </span>
+                    <span className="mt-2 block text-sm leading-6 text-muted-foreground">
+                      {isEnglish ? definition.description.en : definition.description.fr}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
             {/* Category Buttons */}
             <div className="w-full flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 mb-12 px-2">
               {Object.entries(categoryConfig).map(([key, config]) => (
@@ -292,10 +313,19 @@ const DevNotes = () => {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <Button variant="link" className="px-0" onClick={() => handleArticleClick(article)}>
-                        {isEnglish ? 'Read article' : "Lire l'article"}
-                        <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
-                      </Button>
+                      {getArticlePageDefinitionById(article.id) ? (
+                        <Button asChild variant="link" className="px-0">
+                          <Link to={`/notes/${getArticlePageDefinitionById(article.id)?.slug}`}>
+                            {isEnglish ? 'Open standalone page' : "Ouvrir la page dédiée"}
+                            <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+                          </Link>
+                        </Button>
+                      ) : (
+                        <Button variant="link" className="px-0" onClick={() => handleArticleClick(article)}>
+                          {isEnglish ? 'Read article' : "Lire l'article"}
+                          <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+                        </Button>
+                      )}
                     </CardContent>
                   </Card>
                 ))}

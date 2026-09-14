@@ -362,14 +362,6 @@ export const freelanceProjects: Project[] = [
           </ul>
         </div>
 
-        <div class="section project-metrics">
-          <h3 class="section-title">📊 Résultats chiffrés</h3>
-          <div class="metrics-grid">
-            <div><strong>+60&nbsp;%</strong><span>de trafic sur le site grâce au SEO et au GEO</span></div>
-            <div><strong>+15&nbsp;%</strong><span>de demandes de devis hebdomadaires</span></div>
-          </div>
-        </div>
-
         <div class="section results">
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">

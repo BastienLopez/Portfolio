@@ -109,7 +109,7 @@ All colors MUST be HSL.
   background-repeat: no-repeat;
 }
 
-/* Hero: fade the grid pattern at the bottom to progressively hide squares when scrolling */
+/* Hero: fade the lower edge into the first content section. */
 .hero-grid-fade {
   pointer-events: none;
   position: absolute;
@@ -291,55 +291,6 @@ All colors MUST be HSL.
 
   .highlight {
     @apply border-l-2 border-primary/60 bg-transparent py-1 pl-4 text-base font-medium leading-7 text-foreground md:text-lg;
-  }
-
-  .project-case-summary {
-    @apply mb-8 rounded-md border border-border bg-secondary/15 p-4 md:p-6;
-  }
-
-  .project-case-summary__overview {
-    @apply border-b border-border pb-5;
-  }
-
-  .project-case-summary__eyebrow {
-    @apply mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary;
-  }
-
-  .project-case-summary__overview-copy {
-    @apply space-y-2;
-  }
-
-  .project-case-summary__overview-copy p {
-    @apply text-base leading-7 text-foreground/85 md:text-lg;
-  }
-
-  .project-case-summary__grid {
-    @apply mt-5 grid gap-4 md:grid-cols-2;
-  }
-
-  .project-case-summary__grid.has-metrics {
-    @apply lg:grid-cols-3;
-  }
-
-  .project-case-summary__section {
-    @apply min-w-0 rounded-sm border border-border/80 bg-card/60 p-4;
-  }
-
-  .project-case-summary__heading {
-    @apply mb-3 text-base font-semibold tracking-tight text-foreground md:text-lg;
-  }
-
-  .project-case-summary__list {
-    @apply m-0 grid list-none gap-2 p-0;
-  }
-
-  .project-case-summary__list li {
-    @apply relative pl-4 text-sm leading-6 text-foreground/75;
-  }
-
-  .project-case-summary__list li::before {
-    content: '';
-    @apply absolute left-0 top-[0.65rem] h-1 w-1 rounded-full bg-primary/70;
   }
 
   .tech-grid {

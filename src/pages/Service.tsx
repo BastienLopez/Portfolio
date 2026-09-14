@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { ArrowRight, Check, MapPin } from "lucide-react";
+import { ArrowRight, Check, Database, LayoutTemplate, MapPin, Workflow } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -112,6 +112,42 @@ const serviceSchema = (definition: ServicePageDefinition, isEnglish: boolean) =>
   };
 };
 
+const serviceSignature = {
+  "sites-vitrines": {
+    icon: LayoutTemplate,
+    fr: {
+      label: "Un site qui se lit comme votre activité",
+      items: ["Structure", "Mobile", "Performance", "Publication"],
+    },
+    en: {
+      label: "A site that reads like your business",
+      items: ["Structure", "Mobile", "Performance", "Release"],
+    },
+  },
+  "applications-metier": {
+    icon: Database,
+    fr: {
+      label: "Un outil construit autour des règles de l’équipe",
+      items: ["Rôles", "Données", "Parcours", "Transmission"],
+    },
+    en: {
+      label: "A tool built around the team’s rules",
+      items: ["Roles", "Data", "Journeys", "Handover"],
+    },
+  },
+  "automatisations-n8n": {
+    icon: Workflow,
+    fr: {
+      label: "Un flux visible de l’entrée à la reprise",
+      items: ["Source", "n8n", "Contrôles", "Sortie", "Reprise"],
+    },
+    en: {
+      label: "A visible flow from intake to recovery",
+      items: ["Source", "n8n", "Checks", "Output", "Recovery"],
+    },
+  },
+} as const;
+
 const Service = () => {
   const { slug } = useParams<{ slug: string }>();
   const { isEnglish } = useLanguage();
@@ -131,6 +167,9 @@ const Service = () => {
   const description = isEnglish ? definition.description.en : definition.description.fr;
   const intro = isEnglish ? definition.intro.en : definition.intro.fr;
   const audience = isEnglish ? definition.audience.en : definition.audience.fr;
+  const signature = serviceSignature[definition.slug as keyof typeof serviceSignature];
+  const signatureCopy = signature?.[isEnglish ? "en" : "fr"];
+  const SignatureIcon = signature?.icon;
 
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
@@ -165,6 +204,25 @@ const Service = () => {
                 {isEnglish ? "Based in Reims · remote across France" : "Basé à Reims · interventions à distance partout en France"}
               </p>
             </header>
+
+            {signature && signatureCopy && SignatureIcon ? (
+              <section className="mt-12 border-y border-border py-6" aria-labelledby="service-signature-title">
+                <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between md:gap-10">
+                  <div className="flex items-center gap-3">
+                    <SignatureIcon className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                    <h2 id="service-signature-title" className="text-lg font-semibold">{signatureCopy.label}</h2>
+                  </div>
+                  <ol className="grid flex-1 gap-2 sm:grid-cols-4 lg:grid-cols-5">
+                    {signatureCopy.items.map((item, index) => (
+                      <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span className="text-xs font-semibold tracking-[0.16em] text-primary">{String(index + 1).padStart(2, "0")}</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </section>
+            ) : null}
 
             <div className="mt-16 grid gap-6 lg:grid-cols-2">
               <section className="rounded-xl border border-border bg-card p-6 md:p-8" aria-labelledby="service-audience-title">

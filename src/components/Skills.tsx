@@ -28,7 +28,14 @@ const Skills = () => {
     {
       title: isEnglish ? "AI & Machine Learning" : "IA & Machine Learning",
       icon: Brain,
-      skills: [isEnglish ? "AI agents / Mastra" : "Agents IA / Mastra", "PyTorch", "TensorFlow", "NLP", "Reinforcement Learning", "CUDA"],
+      skills: [
+        isEnglish ? "AI agents / Mastra" : "Agents IA / Mastra",
+        "PyTorch",
+        "TensorFlow",
+        "NLP",
+        "Reinforcement Learning",
+        "CUDA",
+      ],
     },
     {
       title: "DevOps & Engineering",
@@ -53,7 +60,7 @@ const Skills = () => {
           </div>
 
           {/* Skills Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {skillCategories.map((category) => (
               <Card
                 key={category.title}
@@ -84,6 +91,7 @@ const Skills = () => {
               </Card>
             ))}
           </div>
+
         </div>
       </div>
     </section>

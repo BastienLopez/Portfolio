@@ -883,6 +883,9 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
   const selectedFeaturedCaseStudy = visibleFeaturedCaseStudies.find(
     (item) => item.id === selectedFeaturedProjectId,
   );
+  const selectedFeaturedCaseStudyIndex = selectedFeaturedProjectId
+    ? visibleFeaturedCaseStudies.findIndex((item) => item.id === selectedFeaturedProjectId)
+    : -1;
 
   const categoryDefinitions = {
     emploi: {
@@ -1270,69 +1273,105 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
             </div>
 
             {selectedFeaturedCaseStudy && (
-              <Card
+              <article
                 id="featured-case-study"
-                className="mx-auto flex w-full max-w-none flex-col border-border bg-card p-6 md:p-8"
+                className="mx-auto w-full border-y border-border bg-transparent py-6 md:py-8"
               >
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <h3 className="text-2xl font-semibold">
+                <header className="border-b border-border pb-6 md:pb-8">
+                  <div className="flex items-center justify-between gap-6">
+                    <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                      <span>
+                        {String(selectedFeaturedCaseStudyIndex + 1).padStart(2, "0")}
+                      </span>
+                      <span className="h-px w-8 bg-primary" aria-hidden="true" />
+                      <span>{isEnglish ? "Project" : "Projet"}</span>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSelectedFeaturedProjectId(null)}
+                      aria-label={isEnglish ? "Close case study" : "Fermer l’étude de cas"}
+                      className="h-auto rounded-none px-0 text-sm font-medium text-muted-foreground hover:bg-transparent hover:text-foreground"
+                    >
+                      <span className="mr-2 h-px w-8 bg-primary" aria-hidden="true" />
+                      {isEnglish ? "Close" : "Fermer"}
+                    </Button>
+                  </div>
+                  <h3 className="mt-4 max-w-5xl text-2xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl">
                     {selectedFeaturedCaseStudy.title}
                   </h3>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedFeaturedProjectId(null)}
-                    aria-label={isEnglish ? "Close case study" : "Fermer l’étude de cas"}
-                  >
-                    {isEnglish ? "Close" : "Fermer"}
-                  </Button>
-                </div>
-                <div className="mt-5 grid flex-1 gap-x-10 gap-y-4 text-sm leading-7 text-foreground/80 md:grid-cols-2 md:text-base">
-                  <p>
-                    <span className="font-medium text-foreground">
-                      {isEnglish ? "Context:" : "Contexte:"}
-                    </span>{" "}
-                    {selectedFeaturedCaseStudy.context}
-                  </p>
-                  <p>
-                    <span className="font-medium text-foreground">
-                      {isEnglish ? "Need:" : "Besoin:"}
-                    </span>{" "}
-                    {selectedFeaturedCaseStudy.need}
-                  </p>
-                  <p>
-                    <span className="font-medium text-foreground">
-                      {isEnglish ? "Solution:" : "Solution:"}
-                    </span>{" "}
-                    {selectedFeaturedCaseStudy.solution}
-                  </p>
-                  <p>
-                    <span className="font-medium text-foreground">Stack:</span>{" "}
-                    {selectedFeaturedCaseStudy.stack}
-                  </p>
-                  <p>
-                    <span className="font-medium text-foreground">
-                      {isEnglish ? "Result:" : "Résultat:"}
-                    </span>{" "}
-                    {selectedFeaturedCaseStudy.result}
-                  </p>
-                  <p>
-                    <span className="font-medium text-foreground">
-                      {isEnglish ? "My role:" : "Mon rôle:"}
-                    </span>{" "}
-                    {selectedFeaturedCaseStudy.role}
-                  </p>
+                  <div className="mt-4 flex max-w-4xl items-start gap-4">
+                    <span className="mt-2.5 h-px w-8 shrink-0 bg-primary" aria-hidden="true" />
+                    <p className="text-sm leading-6 text-foreground/80 md:text-base md:leading-7">
+                      {selectedFeaturedCaseStudy.context}
+                    </p>
+                  </div>
+                </header>
+
+                <div className="grid border-b border-border md:grid-cols-2">
+                  {[
+                    {
+                      label: isEnglish ? "Context" : "Contexte",
+                      value: selectedFeaturedCaseStudy.context,
+                    },
+                    {
+                      label: isEnglish ? "Need" : "Besoin",
+                      value: selectedFeaturedCaseStudy.need,
+                    },
+                    {
+                      label: isEnglish ? "Solution" : "Solution",
+                      value: selectedFeaturedCaseStudy.solution,
+                    },
+                    {
+                      label: "Stack",
+                      value: selectedFeaturedCaseStudy.stack,
+                    },
+                    {
+                      label: isEnglish ? "Result" : "Résultat",
+                      value: selectedFeaturedCaseStudy.result,
+                    },
+                    {
+                      label: isEnglish ? "My role" : "Mon rôle",
+                      value: selectedFeaturedCaseStudy.role,
+                    },
+                  ].map((item, index) => (
+                    <div
+                      key={item.label}
+                      className={[
+                        "py-4 md:py-5",
+                        index % 2 === 0 ? "md:pr-10" : "md:border-l md:border-border md:pl-10",
+                        index > 0 ? "border-t border-border md:border-t-0" : "",
+                        index > 1 ? "md:border-t md:border-border" : "",
+                      ].join(" ")}
+                    >
+                      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                        {item.label}
+                      </p>
+                      <p className="mt-2 text-xs leading-6 text-foreground/80 md:text-sm md:leading-7">
+                        {item.value}
+                      </p>
+                    </div>
+                  ))}
                 </div>
 
                 {selectedFeaturedCaseStudy.metrics?.length ? (
-                  <div className="mt-6 grid gap-3 border-y border-border py-5 sm:grid-cols-3">
-                    {selectedFeaturedCaseStudy.metrics.map((metric) => (
-                      <div key={`${metric.value}-${metric.label}`} className="min-w-0">
-                        <p className="truncate text-xl font-semibold text-primary md:text-2xl">
+                  <div className="grid border-b border-border py-3 sm:grid-cols-3">
+                    {selectedFeaturedCaseStudy.metrics.map((metric, index) => (
+                      <div
+                        key={`${metric.value}-${metric.label}`}
+                        className={[
+                          "py-3 sm:py-2",
+                          index > 0 ? "border-t border-border sm:border-l sm:border-t-0 sm:pl-8" : "",
+                        ].join(" ")}
+                      >
+                        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                          {String(index + 1).padStart(2, "0")}
+                        </p>
+                        <p className="mt-1 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
                           {metric.value}
                         </p>
-                        <p className="text-xs text-muted-foreground md:text-sm">
+                        <p className="mt-1 text-xs text-muted-foreground md:text-sm">
                           {metric.label}
                         </p>
                       </div>
@@ -1340,82 +1379,65 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                   </div>
                 ) : null}
 
-                <div className="mt-8 grid gap-4 border-t border-border pt-6 md:grid-cols-2">
-                  <div className="rounded-lg border border-border bg-secondary/20 p-4">
-                    <h4 className="mb-3 font-semibold text-foreground">
-                      {isEnglish ? "Tasks delivered" : "Tâches réalisées"}
-                    </h4>
-                    <ul className="space-y-2 text-sm leading-6 text-foreground/75">
-                      {selectedFeaturedCaseStudy.tasks.map((task) => (
-                        <li key={task} className="flex gap-2">
-                          <span
-                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
-                            aria-hidden="true"
-                          />
-                          {task}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="rounded-lg border border-border bg-secondary/20 p-4">
-                    <h4 className="mb-3 font-semibold text-foreground">
-                      {isEnglish ? "Value delivered" : "Gains / valeur produite"}
-                    </h4>
-                    <ul className="space-y-2 text-sm leading-6 text-foreground/75">
-                      {selectedFeaturedCaseStudy.gains.map((gain) => (
-                        <li key={gain} className="flex gap-2">
-                          <span
-                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                            aria-hidden="true"
-                          />
-                          {gain}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-8 grid gap-4 border-t border-border pt-6 md:grid-cols-3">
-                  {selectedFeaturedCaseStudy.sections.map((section) => (
-                    <div
+                <div className="grid border-b border-border md:grid-cols-3">
+                  {[
+                    {
+                      title: isEnglish ? "Tasks delivered" : "Tâches réalisées",
+                      items: selectedFeaturedCaseStudy.tasks,
+                    },
+                    {
+                      title: isEnglish ? "Value delivered" : "Gains / valeur produite",
+                      items: selectedFeaturedCaseStudy.gains,
+                    },
+                    ...selectedFeaturedCaseStudy.sections,
+                  ].map((section, index) => (
+                    <section
                       key={section.title}
-                      className="rounded-lg border border-border bg-secondary/20 p-4"
+                      className={[
+                        "py-5 md:py-6 md:pr-8",
+                        index % 3 !== 0 ? "md:border-l md:border-border md:pl-8" : "",
+                        index >= 3 ? "border-t border-border" : "",
+                      ].join(" ")}
                     >
-                      <h4 className="mb-3 font-semibold text-foreground">
-                        {section.title}
-                      </h4>
-                      <ul className="space-y-2 text-sm leading-6 text-foreground/75">
+                      <div className="flex items-baseline gap-4">
+                        <span className="text-xs font-semibold tracking-[0.18em] text-primary">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                          {section.title}
+                        </h4>
+                      </div>
+                      <div className="mt-4 space-y-2">
                         {section.items.map((item) => (
-                          <li key={item} className="flex gap-2">
-                            <span
-                              className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
-                              aria-hidden="true"
-                            />
+                          <p key={item} className="text-xs leading-6 text-foreground/80 md:text-sm md:leading-7">
                             {item}
-                          </li>
+                          </p>
                         ))}
-                      </ul>
-                    </div>
+                      </div>
+                    </section>
                   ))}
                 </div>
-                <Button
-                  variant="link"
-                  className="mt-6 h-auto w-fit justify-start gap-2 px-0 text-primary"
-                  asChild={Boolean(getProjectLink(selectedFeaturedCaseStudy.id, isFreelancePage))}
-                >
-                  {getProjectLink(selectedFeaturedCaseStudy.id, isFreelancePage) ? (
-                    <a href={getProjectLink(selectedFeaturedCaseStudy.id, isFreelancePage)}>
-                      {isEnglish ? "View full project" : "Voir la fiche complète"}
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </a>
-                  ) : (
-                    <>
-                      {isEnglish ? "View full project" : "Voir la fiche complète"}
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </>
-                  )}
-                </Button>
-              </Card>
+
+                <div className="flex justify-end pt-5 md:pt-6">
+                  <Button
+                    variant="link"
+                    className="h-auto gap-3 rounded-none px-0 text-primary"
+                    asChild={Boolean(getProjectLink(selectedFeaturedCaseStudy.id, isFreelancePage))}
+                  >
+                    {getProjectLink(selectedFeaturedCaseStudy.id, isFreelancePage) ? (
+                      <a href={getProjectLink(selectedFeaturedCaseStudy.id, isFreelancePage)}>
+                        {isEnglish ? "View full project" : "Voir la fiche complète"}
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    ) : (
+                      <>
+                        {isEnglish ? "View full project" : "Voir la fiche complète"}
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </article>
             )}
           </div>
         )}
@@ -1665,15 +1687,22 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                         </p>
                         <div
                           data-project-tech
-                          className="mt-4 flex min-h-10 min-w-0 flex-nowrap items-start gap-2 overflow-hidden"
+                          className="mt-4 grid min-h-10 min-w-0 grid-cols-3 items-stretch text-center text-sm font-semibold leading-6 text-foreground/75"
                         >
-                          {getProjectTechHighlights(project).map((tech) => (
+                          {getProjectTechHighlights(project).map((tech, index) => (
                             <span
                               key={tech}
-                              title={tech}
-                              className="min-w-0 flex-1 truncate rounded-full border border-border/80 bg-secondary/70 px-3 py-1.5 text-center text-xs font-medium leading-5 text-foreground/75 transition-colors hover:border-primary/60 sm:text-sm"
+                              className="relative flex min-h-10 min-w-0 items-center justify-center break-words whitespace-normal px-2"
                             >
-                              {tech}
+                              {index > 0 ? (
+                                <span
+                                  className="absolute left-0 top-1/2 -translate-y-1/2 text-primary/70"
+                                  aria-hidden="true"
+                                >
+                                  |
+                                </span>
+                              ) : null}
+                              <span title={tech}>{tech}</span>
                             </span>
                           ))}
                         </div>

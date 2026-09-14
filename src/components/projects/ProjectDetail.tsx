@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import type { Project, ProjectGalleryItem } from "@/data/projects";
 import { getImageManifestEntry, getImageSrcSet } from "@/lib/image-variants";
-import { ProjectCaseStudySummary } from "./ProjectCaseStudySummary";
 import { ProjectNavigation } from "./ProjectNavigation";
 
 type ProjectDetailProps = {
@@ -138,12 +137,6 @@ export const ProjectDetail = ({
               </span>
             ))}
           </div>
-
-          <ProjectCaseStudySummary
-            contentHtml={detailedContentHtml}
-            description={project.description}
-            isEnglish={isEnglish}
-          />
 
           <div className="project-detail-content" onClick={handleDetailedContentClick}>
             {detailedContentHtml ? (

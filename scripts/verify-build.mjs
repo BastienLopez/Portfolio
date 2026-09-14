@@ -15,6 +15,7 @@ const requiredFiles = [
   "sitemap.xml",
   "llms.txt",
   "site.webmanifest",
+  "og-image.png",
   "CV_LOPEZ_BASTIEN_FREELANCE.pdf",
 ];
 
@@ -47,12 +48,25 @@ const serviceRoutes = [
   "applications-metier",
   "automatisations-n8n",
 ];
+const articleRoutes = [
+  "pipeline-ci-cd-github-actions",
+  "docker-pour-debutants",
+  "monitorer-une-application-apres-deploiement",
+  "architecture-hexagonale",
+  "deploiement-production-checklist",
+  "gerer-secrets-cles-api-local",
+  "refactoring-sans-tout-casser",
+  "estimer-un-projet-freelance",
+];
 
 for (const slug of projectRoutes) {
   requiredFiles.push(path.join("projets", slug, "index.html"));
 }
 for (const slug of serviceRoutes) {
   requiredFiles.push(path.join("services", slug, "index.html"));
+}
+for (const slug of articleRoutes) {
+  requiredFiles.push(path.join("notes", slug, "index.html"));
 }
 
 if (!existsSync(distDirectory) || !statSync(distDirectory).isDirectory()) {
@@ -88,6 +102,10 @@ if (existsSync(path.join(distDirectory, "index.html"))) {
     failures.push("twitter:url does not use bastienlopez.fr.");
   }
 
+  if (!indexHtml.includes('og:image" content="https://bastienlopez.fr/og-image.png"')) {
+    failures.push("The prerendered home page does not reference the PNG Open Graph image.");
+  }
+
   if (!/<h1[^>]*>[\s\S]*Développeur Full-Stack IA &amp; Automatisation[\s\S]*<\/h1>/.test(indexHtml)) {
     failures.push("The prerendered home page does not contain the profession in its H1.");
   }
@@ -107,6 +125,18 @@ if (existsSync(path.join(distDirectory, "index.html"))) {
   if (!indexHtml.includes('"@type": "ProfilePage"')) {
     failures.push("The prerendered home page does not contain ProfilePage structured data.");
   }
+
+  for (const marker of [
+    'id="about"',
+    'id="projects"',
+    'id="skills"',
+    'id="devnotes"',
+    'id="contact"',
+  ]) {
+    if (!indexHtml.includes(marker)) {
+      failures.push(`The prerendered home page is missing the essential section ${marker}.`);
+    }
+  }
 }
 
 const prerenderedRoutes = [
@@ -117,7 +147,7 @@ const prerenderedRoutes = [
   },
   {
     file: path.join("freelance", "index.html"),
-    marker: "Pour un poste",
+    marker: "Parlons de ce qui doit avancer",
     title: "Freelance —",
   },
   {
@@ -184,6 +214,19 @@ for (const slug of serviceRoutes) {
   }
 }
 
+for (const slug of articleRoutes) {
+  const relativePath = path.join("notes", slug, "index.html");
+  const routePath = path.join(distDirectory, relativePath);
+  if (!existsSync(routePath)) continue;
+  const html = readText(relativePath);
+  if (!html.includes('"@type":"TechArticle"') && !html.includes('"@type": "TechArticle"')) {
+    failures.push(`Prerendered ${relativePath} does not contain TechArticle structured data.`);
+  }
+  if (!html.includes(`https://bastienlopez.fr/notes/${slug}`)) {
+    failures.push(`Prerendered ${relativePath} does not contain its canonical production URL.`);
+  }
+}
+
 if (existsSync(path.join(distDirectory, "robots.txt"))) {
   const robots = readText("robots.txt");
   if (!robots.includes("Sitemap: https://bastienlopez.fr/sitemap.xml")) {
@@ -202,7 +245,11 @@ if (existsSync(path.join(distDirectory, "sitemap.xml"))) {
   if (!sitemap.includes("https://bastienlopez.fr/freelance")) {
     failures.push("sitemap.xml does not contain the public freelance route.");
   }
-  for (const slug of [...projectRoutes.map((value) => `projets/${value}`), ...serviceRoutes.map((value) => `services/${value}`)]) {
+  for (const slug of [
+    ...projectRoutes.map((value) => `projets/${value}`),
+    ...serviceRoutes.map((value) => `services/${value}`),
+    ...articleRoutes.map((value) => `notes/${value}`),
+  ]) {
     if (!sitemap.includes(`https://bastienlopez.fr/${slug}`)) {
       failures.push(`sitemap.xml does not contain https://bastienlopez.fr/${slug}.`);
     }
@@ -214,6 +261,11 @@ if (existsSync(path.join(distDirectory, "llms.txt"))) {
   for (const slug of projectRoutes) {
     if (!llms.includes(`https://bastienlopez.fr/projets/${slug}`)) {
       failures.push(`llms.txt does not contain https://bastienlopez.fr/projets/${slug}.`);
+    }
+  }
+  for (const slug of articleRoutes) {
+    if (!llms.includes(`https://bastienlopez.fr/notes/${slug}`)) {
+      failures.push(`llms.txt does not contain https://bastienlopez.fr/notes/${slug}.`);
     }
   }
 }

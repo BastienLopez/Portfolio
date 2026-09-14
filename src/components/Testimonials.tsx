@@ -11,6 +11,12 @@ const testimonialProjectLinks: Record<string, string> = {
   "t-4": "/freelance#project=cledevoute",
 };
 
+const testimonialProjectLabels: Record<string, { fr: string; en: string }> = {
+  "t-1": { fr: "Projet associé : Eloi CoachStéo", en: "Related project: Eloi CoachSteo" },
+  "t-3": { fr: "Projet associé : ERP Micro-Crèches", en: "Related project: Multi-Nursery ERP" },
+  "t-4": { fr: "Projet associé : Clé de Voûte", en: "Related project: Clé de Voûte" },
+};
+
 const Avatar = ({ name, image }: { name: string; image?: string | null }) => {
   const resolveImage = (img?: string | null) => {
     if (!img) return undefined;
@@ -81,6 +87,7 @@ export default function Testimonials(): JSX.Element {
             const role = isEnglish ? testimonial.roleEn : testimonial.role;
             const text = isEnglish ? testimonial.textEn : testimonial.text;
             const projectLink = testimonialProjectLinks[testimonial.id];
+            const projectLabel = testimonialProjectLabels[testimonial.id]?.[isEnglish ? "en" : "fr"];
 
             return (
               <article
@@ -92,6 +99,9 @@ export default function Testimonials(): JSX.Element {
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                   {service}
                 </p>
+                {projectLabel && (
+                  <p className="mt-2 text-xs text-muted-foreground">{projectLabel}</p>
+                )}
                 <div className="mt-6 flex items-start gap-4">
                   <Avatar name={testimonial.name} image={testimonial.image} />
                   <div>

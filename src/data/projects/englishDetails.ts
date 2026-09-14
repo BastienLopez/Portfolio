@@ -140,7 +140,6 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     technologies: ["React", "Tailwind CSS", "JavaScript", "Vite", "GitHub Pages"],
     sections: [
       { title: "Implementation", items: ["Service and portfolio presentation", "Mobile-first reusable components", "Image optimisation and lazy loading", "Clear calls to action and contact form"] },
-      { title: "Public metrics", items: ["+60% site traffic attributed to SEO and GEO improvements", "+15% weekly quote requests"] },
     ],
     results: ["Deployed public website with responsive navigation and contact actions suited to mobile use."],
   },
