@@ -1,5 +1,232 @@
 import { Project } from './types';
 
+export const n8nReportingProject: Project = {
+  id: 'n8n-reporting',
+  title: 'Automatisations n8n — Reporting',
+  description: 'Workflow n8n qui transforme les rapports PDF SocialPilot en reportings social media clairs et prêts à relire pour les clients CM : collecte, KPI, analyse, génération et contrôle qualité.',
+  category: 'emploi',
+  image: 'img_projects/n8n.png',
+  tech: ['n8n', 'SocialPilot', 'Gmail API', 'Google Drive', 'PDF', 'OCR', 'Discord'],
+  detailedContent: `
+    <div class="project-detail">
+      <h2 class="project-title">Automatisations n8n — Reporting</h2>
+
+      <div class="section">
+        <h3 class="section-title">Contexte du projet</h3>
+        <p class="description">
+          Conception d’un workflow n8n dédié au reporting social media. Le point de départ est le rapport PDF exporté
+          par SocialPilot ; le point d’arrivée est un rapport CM client structuré, analysé, contrôlé et prêt à être relu
+          puis livré. L’automatisation relie les outils déjà utilisés et garde une trace des étapes de traitement.
+        </p>
+        <p class="description">
+          L’objectif n’est pas de déposer un PDF brut : les données sont récupérées, normalisées par réseau,
+          interprétées dans leur contexte, puis regroupées dans un livrable lisible avec les KPI, les tableaux,
+          les analyses, les recommandations et les visuels utiles au suivi du client.
+        </p>
+      </div>
+
+      <div class="section info-box">
+        <h3 class="section-title">Ma contribution</h3>
+        <ul class="features-list">
+          <li class="feature-item"><strong>Analyse des processus</strong> — cartographie de la réception des rapports, des contrôles et de la livraison CM.</li>
+          <li class="feature-item"><strong>Architecture n8n</strong> — déclencheurs, branches, transformations, reprises sur erreur et sorties documentées.</li>
+          <li class="feature-item"><strong>Intégrations</strong> — connexion Gmail, Google Drive, SocialPilot, Notion et Discord avec des données JSON normalisées.</li>
+          <li class="feature-item"><strong>Qualité des données</strong> — contrôles de pièces jointes, doublons, KPI attendus et cohérence des informations par réseau.</li>
+          <li class="feature-item"><strong>Livrable client</strong> — génération d’un rapport CM personnalisé et contrôles avant dépôt ou notification.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">Technologies et outils</h3>
+        <div class="tech-grid">
+          <div class="tech-item"><span class="tech-name">n8n</span><p class="tech-desc">Orchestration des étapes et supervision du scénario</p></div>
+          <div class="tech-item"><span class="tech-name">SocialPilot</span><p class="tech-desc">Source des rapports et des indicateurs sociaux</p></div>
+          <div class="tech-item"><span class="tech-name">Gmail API</span><p class="tech-desc">Réception et récupération des pièces jointes</p></div>
+          <div class="tech-item"><span class="tech-name">Google Drive</span><p class="tech-desc">Archivage des sources et des livrables</p></div>
+          <div class="tech-item"><span class="tech-name">JSON, PDF et OCR</span><p class="tech-desc">Normalisation, génération et récupération ciblée des données visuelles</p></div>
+          <div class="tech-item"><span class="tech-name">Discord / Notion</span><p class="tech-desc">Suivi, notifications et association du rapport au contexte client</p></div>
+        </div>
+      </div>
+
+      <div class="section project-metrics">
+        <h3 class="section-title">Entrées, traitement et sortie</h3>
+        <div class="metrics-grid">
+          <div><strong>Entrée</strong><span>Rapport PDF exporté par SocialPilot</span></div>
+          <div><strong>Traitement</strong><span>KPI normalisés, analyse et contrôle qualité</span></div>
+          <div><strong>Sortie</strong><span>Rapport CM client personnalisé prêt à livrer</span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">Workflow complet de reporting</h3>
+        <div class="workflow-steps">
+          <div class="workflow-step">
+            <h4>1. Réception et sécurisation</h4>
+            <p>Le scénario surveille les nouveaux rapports reçus par email selon une planification définie. Les pièces jointes PDF sont contrôlées, identifiées et comparées aux archives existantes pour éviter les doublons avant tout traitement.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>2. Archivage des sources</h4>
+            <p>Chaque rapport validé est archivé dans Google Drive avec les métadonnées utiles. Les fichiers sources restent disponibles pour la traçabilité et pour relire l’origine des indicateurs utilisés dans le document final.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>3. Extraction et normalisation des KPI</h4>
+            <p>Les informations sont extraites puis regroupées réseau par réseau. Les formats différents sont transformés en une structure JSON commune, tout en conservant les spécificités propres à chaque canal. Des validations vérifient la présence et la cohérence des KPI attendus.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>4. OCR et données visuelles ciblées</h4>
+            <p>Quand une valeur est uniquement visible dans un graphique ou un élément visuel, le workflow déclenche un OCR ciblé sur la zone utile. Les informations récupérées sont normalisées puis réintégrées sans appliquer inutilement l’OCR à tout le document.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>5. Analyse et recommandations CM</h4>
+            <p>Les données consolidées alimentent une lecture synthétique : évolution de l’audience, engagement, performance des formats, signaux d’alerte et recommandations. Les conclusions restent bornées aux informations réellement présentes dans les rapports SocialPilot.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>6. Génération du rapport client</h4>
+            <p>Le workflow assemble les KPI par réseau, tableaux de performance, analyses, recommandations et visuels dans un PDF client. L’objectif est de transformer une exportation technique en support de suivi compréhensible par le client et l’équipe de community management.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>7. Contrôle qualité et livraison</h4>
+            <p>Un contrôle de contenu vérifie les données et les sections attendues. Un second contrôle visuel recherche les pages coupées, les éléments manquants ou les problèmes de mise en page. Le rapport reçoit son statut final avant dépôt dans Drive, association éventuelle à Notion et notification Discord.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section info-box">
+        <h3 class="section-title">Valeur produite</h3>
+        <ul class="features-list">
+          <li class="feature-item">Un rapport SocialPilot brut devient un livrable CM client homogène et exploitable.</li>
+          <li class="feature-item">Les étapes répétitives de collecte, de mise en forme et de vérification sont orchestrées dans un même workflow.</li>
+          <li class="feature-item">Les sources, contrôles et notifications rendent la production plus traçable et plus simple à reprendre.</li>
+          <li class="feature-item">Les données client, paramètres exacts et résultats chiffrés restent confidentiels.</li>
+        </ul>
+      </div>
+
+      <div class="section results">
+        <h3 class="section-title">Périmètre et confidentialité</h3>
+        <div class="result-box success">
+          <p class="result-text">Le périmètre couvre la chaîne complète : rapport SocialPilot reçu, données contrôlées, analyse bornée, PDF CM généré, QA et livraison.</p>
+          <p class="result-text">Aucun pourcentage de gain n’est publié ici sans mesure client vérifiable.</p>
+        </div>
+      </div>
+    </div>
+  `,
+  gallery: ['img_projects/n8n1.png', 'img_projects/n8n2.png'],
+};
+
+export const n8nVideoDerushProject: Project = {
+  id: 'n8n-video-derush',
+  title: 'Automatisations n8n — Dérush vidéo',
+  description: 'Pipeline n8n qui transforme des rushes bruts en séquences sélectionnées, pré-montage, sous-titres, preview et livrables prêts pour la production de formats Instagram et TikTok.',
+  category: 'emploi',
+  image: 'img_projects/n8n.png',
+  tech: ['n8n', 'Google Drive API', 'FFmpeg', 'Whisper', 'EDL', 'SRT / ASS', 'JavaScript'],
+  detailedContent: `
+    <div class="project-detail">
+      <h2 class="project-title">Automatisations n8n — Dérush vidéo</h2>
+
+      <div class="section">
+        <h3 class="section-title">Contexte du projet</h3>
+        <p class="description">
+          Conception d’un pipeline n8n qui part de rushes vidéo bruts et prépare des contenus courts pour les réseaux
+          sociaux. Le workflow organise la matière, transcrit les échanges, repère les passages utiles et produit les
+          fichiers nécessaires pour passer du tournage au pré-montage puis à la production Instagram ou TikTok.
+        </p>
+        <p class="description">
+          Le but est de livrer une base de montage exploitable plutôt qu’une simple transcription : séquences retenues,
+          timestamps fiables, hook, questions-réponses, micro-coupes, sous-titres, preview et timeline sont rassemblés
+          dans une arborescence claire. La validation éditoriale humaine reste possible à chaque étape.
+        </p>
+      </div>
+
+      <div class="section info-box">
+        <h3 class="section-title">Ma contribution</h3>
+        <ul class="features-list">
+          <li class="feature-item"><strong>Architecture du pipeline</strong> — ingestion, préparation, analyse, sélection et livraison dans n8n.</li>
+          <li class="feature-item"><strong>Traitement média</strong> — extraction audio, conversion, contrôle des fichiers et préparation des espaces de travail.</li>
+          <li class="feature-item"><strong>Analyse assistée par IA</strong> — transcription horodatée, scoring éditorial et détection des blocs questions-réponses.</li>
+          <li class="feature-item"><strong>Pré-montage technique</strong> — génération EDL, sous-titres, preview MP4 et livrables orientés montage.</li>
+          <li class="feature-item"><strong>Contrôles et documentation</strong> — doublons, timestamps, coupures, dossiers de sortie et règles de reprise.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">Technologies et outils</h3>
+        <div class="tech-grid">
+          <div class="tech-item"><span class="tech-name">n8n</span><p class="tech-desc">Orchestration des étapes et automatisation du pipeline</p></div>
+          <div class="tech-item"><span class="tech-name">Google Drive API</span><p class="tech-desc">Ingestion, organisation et livraison des médias</p></div>
+          <div class="tech-item"><span class="tech-name">FFmpeg</span><p class="tech-desc">Extraction audio, conversions et génération de previews</p></div>
+          <div class="tech-item"><span class="tech-name">Whisper</span><p class="tech-desc">Transcription avec timestamps et langue détectée</p></div>
+          <div class="tech-item"><span class="tech-name">EDL / SRT / ASS</span><p class="tech-desc">Timeline de pré-montage et sous-titres exploitables</p></div>
+          <div class="tech-item"><span class="tech-name">JavaScript et IA</span><p class="tech-desc">Transformations, analyse éditoriale et contrôles métier</p></div>
+        </div>
+      </div>
+
+      <div class="section project-metrics">
+        <h3 class="section-title">De l’entrée aux livrables</h3>
+        <div class="metrics-grid">
+          <div><strong>Entrée</strong><span>Rush vidéo brut et métadonnées de tournage</span></div>
+          <div><strong>Pré-montage</strong><span>Séquences, hook, Q/R et timestamps sélectionnés</span></div>
+          <div><strong>Sorties</strong><span>EDL, SRT/ASS, preview MP4 et dossiers prêts pour la production</span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">Pipeline complet de dérush</h3>
+        <div class="workflow-steps">
+          <div class="workflow-step">
+            <h4>1. Ingestion et préparation</h4>
+            <p>Les nouvelles vidéos sont récupérées depuis Google Drive. Le workflow vérifie qu’elles n’ont pas déjà été traitées, crée l’espace de travail, prépare les chemins et applique les paramètres de durée ou de format nécessaires à la suite du traitement.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>2. Extraction audio et transcription</h4>
+            <p>FFmpeg extrait l’audio puis Whisper produit une transcription horodatée. La langue est détectée, le texte est nettoyé et découpé en blocs afin de retrouver rapidement chaque phrase dans le rush original.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>3. Analyse éditoriale</h4>
+            <p>Les séquences sont analysées selon le sujet, le potentiel d’accroche, la densité d’information, l’énergie, l’émotion, la qualité audio, les répétitions et l’autonomie de l’extrait. Les passages utiles sont classés et scorés pour préparer la sélection.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>4. Questions, réponses et timestamps</h4>
+            <p>Pour les interviews, le workflow repère les questions et leurs réponses. Les timestamps sont ajustés pour éviter les silences inutiles, les débuts trop tôt et les coupes au milieu d’une phrase. Les blocs validés peuvent former une séquence structurée question puis réponse.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>5. Construction du pré-montage</h4>
+            <p>Les meilleurs passages sont assemblés dans une EDL compatible avec une reprise dans Adobe Premiere. La timeline peut intégrer le hook d’ouverture, les blocs Q/R, les micro-coupes techniques et les extraits sélectionnés, avec des contrôles contre les doublons et les mauvaises jonctions.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>6. Sous-titres et preview</h4>
+            <p>Le pipeline génère les fichiers SRT ou ASS et une preview MP4 pour visualiser l’enchaînement avant le montage définitif. Les sorties sont préparées pour des formats courts verticaux adaptés à Instagram, TikTok, Facebook et autres plateformes sociales.</p>
+          </div>
+          <div class="workflow-step">
+            <h4>7. Livraison prête pour la production</h4>
+            <p>Les rushes sélectionnés, la timeline, les sous-titres, la preview et les rapports de contrôle sont rangés dans une arborescence Google Drive dédiée. Le monteur retrouve la matière et les repères nécessaires pour finaliser rapidement chaque contenu.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section info-box">
+        <h3 class="section-title">Valeur produite</h3>
+        <ul class="features-list">
+          <li class="feature-item">Un rush long devient une sélection éditoriale structurée et exploitable pour les formats courts.</li>
+          <li class="feature-item">Le monteur reçoit une timeline, des sous-titres, une preview et des repères temporels plutôt qu’un dossier non trié.</li>
+          <li class="feature-item">Les contrôles de doublons, de coupures et de timestamps sécurisent les étapes avant production.</li>
+          <li class="feature-item">La sélection assistée par IA accélère la préparation tout en laissant la décision éditoriale finale à l’équipe.</li>
+        </ul>
+      </div>
+
+      <div class="section results">
+        <h3 class="section-title">Périmètre et confidentialité</h3>
+        <div class="result-box success">
+          <p class="result-text">Le périmètre couvre le passage du rush brut aux livrables de pré-montage prêts à être repris pour produire les formats Instagram et TikTok.</p>
+          <p class="result-text">Les données de tournage, paramètres exacts et résultats chiffrés restent confidentiels.</p>
+        </div>
+      </div>
+    </div>
+  `,
+  gallery: ['img_projects/n8n1.png', 'img_projects/n8n2.png'],
+};
+
+
 export const emploiProjects: Project[] = [
   {
     id: 'wallet-provider',
@@ -475,6 +702,8 @@ export const emploiProjects: Project[] = [
     `,
     gallery: ['img_projects/altme_doc.png']
   },
+  n8nReportingProject,
+  n8nVideoDerushProject,
   {
     id: 'teams-bot-mastra',
     title: 'Teams Bot & Mastra Agents',
@@ -757,238 +986,4 @@ export const emploiProjects: Project[] = [
     `,
     gallery: ['img_projects/seo_geo.png']
   },
-  {
-    id: 'n8n-workflow-automation',
-    title: 'Automatisations n8n — Reporting, derush video & prospection',
-    description: "Workflows n8n pour automatiser la génération de rapports SocialPilot en PDF, l'adaptation de vidéos aux formats réseaux sociaux et la préparation de prospects depuis Google Maps.",
-    category: 'emploi',
-    image: 'img_projects/n8n.png',
-    tech: ['n8n', 'SocialPilot', 'Google Maps', 'PDF', 'Automatisation de workflows'],
-    detailedContent: `
-      <div class="project-detail">
-        <h2 class="project-title">⚙️ Automatisations n8n — reporting, derush video & prospection</h2>
-
-        <div class="section">
-          <h3 class="section-title">📋 Contexte du projet</h3>
-          <p class="description">
-            Conception de workflows <strong>n8n</strong> pour automatiser des opérations récurrentes autour
-            du reporting réseaux sociaux, de la préparation de contenus vidéo et de la prospection.
-            L'objectif : relier les outils existants, fiabiliser les étapes de traitement et produire des
-            livrables réutilisables pour le client.
-          </p>
-        </div>
-
-        <div class="section info-box">
-          <h3 class="section-title">👤 Ma contribution</h3>
-          <ul class="features-list">
-            <li class="feature-item"><span class="feature-icon">🔎</span><strong>Analyse des processus</strong> — identification des tâches répétitives et des sources de données.</li>
-            <li class="feature-item"><span class="feature-icon">🧩</span><strong>Architecture des workflows</strong> — découpage des étapes, déclencheurs, conditions et sorties.</li>
-            <li class="feature-item"><span class="feature-icon">🔌</span><strong>Intégrations</strong> — connexion d'API et de services tiers, transformation des données JSON.</li>
-            <li class="feature-item"><span class="feature-icon">🛡️</span><strong>Fiabilité</strong> — gestion des erreurs, contrôle des données et amélioration continue des scénarios.</li>
-          </ul>
-        </div>
-
-        <div class="section">
-          <h3 class="section-title">⚙️ Technologies et outils</h3>
-          <div class="tech-grid">
-            <div class="tech-item"><span class="tech-icon">🔄</span><span class="tech-name">n8n</span><p class="tech-desc">Orchestration et automatisation visuelle</p></div>
-            <div class="tech-item"><span class="tech-icon">🔌</span><span class="tech-name">API REST & Webhooks</span><p class="tech-desc">Connexion des outils et déclenchements</p></div>
-            <div class="tech-item"><span class="tech-icon">🧾</span><span class="tech-name">JSON & PDF</span><p class="tech-desc">Transformation de données et génération de livrables</p></div>
-            <div class="tech-item"><span class="tech-icon">🤖</span><span class="tech-name">IA & automatisation</span><p class="tech-desc">Analyse et enrichissement de certains traitements</p></div>
-            <div class="tech-item"><span class="tech-icon">📊</span><span class="tech-name">SocialPilot</span><p class="tech-desc">Données et rapports de réseaux sociaux</p></div>
-            <div class="tech-item"><span class="tech-icon">🎬</span><span class="tech-name">Traitement vidéo</span><p class="tech-desc">Préparation de contenus pour les réseaux sociaux</p></div>
-          </div>
-        </div>
-
-        <div class="section project-metrics">
-          <h3 class="section-title">Périmètre traité</h3>
-          <div class="metrics-grid">
-            <div><strong>Rapports</strong><span>Génération et contrôle qualité</span></div>
-            <div><strong>Rush vidéo</strong><span>Préparation et dérushage assistés</span></div>
-            <div><strong>Workflows</strong><span>Automatisations n8n documentées</span></div>
-          </div>
-        </div>
-
-        <div class="section">
-          <h3 class="section-title">📊 Workflow 1 — Reporting SocialPilot</h3>
-          <p class="description">
-            Conception d’un workflow n8n capable d’automatiser la production complète de reportings social media
-            à partir des rapports PDF générés par SocialPilot.
-          </p>
-          <p class="description">
-            Le système prend en charge l’ensemble du processus : récupération des fichiers sources, extraction et
-            structuration des données, contrôle des KPI, analyse des performances, génération d’un rapport client
-            personnalisé et vérification finale du document avant livraison.
-          </p>
-          <div class="workflow-steps">
-            <div class="workflow-step">
-              <h4>Collecte et sécurisation des données</h4>
-              <p>Le workflow se déclenche automatiquement selon une planification définie et surveille les nouveaux rapports reçus par email. Les pièces jointes PDF sont récupérées, contrôlées puis comparées aux fichiers déjà présents dans Google Drive afin d’éviter les doublons et les traitements inutiles. Chaque nouveau rapport est ensuite archivé avant de poursuivre son traitement.</p>
-            </div>
-            <div class="workflow-step">
-              <h4>Extraction et structuration des KPI</h4>
-              <p>Les données contenues dans les rapports SocialPilot sont extraites puis analysées réseau par réseau. Le workflow transforme les informations issues des différents formats de rapports en une structure JSON commune et normalisée, tout en conservant les spécificités propres à chaque réseau. Une couche de validation contrôle ensuite la présence et la cohérence des indicateurs attendus.</p>
-            </div>
-            <div class="workflow-step">
-              <h4>OCR et récupération des données visuelles</h4>
-              <p>Lorsque certaines informations ne sont accessibles que dans des graphiques ou éléments visuels, le workflow identifie les données manquantes et déclenche un traitement OCR ciblé. Les informations récupérées sont structurées, normalisées puis réintégrées au jeu de données principal, sans appliquer inutilement l’OCR à l’ensemble du document.</p>
-            </div>
-            <div class="workflow-step">
-              <h4>Analyse automatisée des performances</h4>
-              <p>À partir des données consolidées, une couche d’analyse génère une lecture synthétique des performances sociales : évolution de l’audience, engagement, performances des formats de contenu et signaux d’alerte. Des règles de contrôle maintiennent les conclusions et recommandations dans le périmètre des données réellement disponibles.</p>
-            </div>
-            <div class="workflow-step">
-              <h4>Génération du rapport client</h4>
-              <p>Une fois les données validées et enrichies, le workflow construit le contexte nécessaire au rapport final. Le PDF regroupe les KPI par réseau, les tableaux de performance, les analyses, les recommandations et les éléments visuels issus des rapports sources pour produire un livrable unique et exploitable par le client.</p>
-            </div>
-            <div class="workflow-step">
-              <h4>Contrôle qualité, livraison et supervision</h4>
-              <p>Un premier audit vérifie le contenu du document, puis un second contrôle analyse visuellement les pages générées afin de détecter les problèmes de mise en page, les contenus coupés ou les visuels manquants. Le rapport reçoit un statut final avant son dépôt dans Google Drive et son éventuelle association à Notion. Les notifications Discord suivent l’exécution, la couverture des données, le contrôle qualité et les erreurs techniques.</p>
-            </div>
-          </div>
-          <p class="workflow-services"><strong>Technologies et services utilisés :</strong> n8n, SocialPilot, Gmail API, Google Drive, Notion, OCR, analyse IA, génération PDF et Discord.</p>
-        </div>
-
-        <div class="section">
-          <h3 class="section-title">🎬 Workflow 2 — Dérushage et pré-montage vidéo assistés par IA</h3>
-          <p class="description">
-            Conception d’un pipeline n8n dédié à l’analyse et à la préparation automatisée de vidéos longues pour la
-            création de contenus courts destinés aux réseaux sociaux.
-          </p>
-          <p class="description">
-            Le workflow transforme une vidéo brute en livrables exploitables pour le montage : transcription
-            structurée, sélection des meilleurs passages, organisation des séquences, sous-titres, timeline,
-            preview vidéo et fichiers techniques. L’objectif est de réduire le travail manuel avant le montage tout
-            en conservant un contrôle éditorial et technique sur les séquences sélectionnées.
-          </p>
-          <div class="workflow-steps">
-            <div class="workflow-step">
-              <h4>Ingestion et préparation des médias</h4>
-              <p>Le workflow récupère les nouvelles vidéos depuis Google Drive et vérifie automatiquement qu’elles n’ont pas déjà été traitées. Pour chaque fichier, un environnement de travail est créé avec les chemins, dossiers et paramètres nécessaires. La durée cible peut aussi être définie afin d’adapter la sélection des séquences au format final attendu.</p>
-            </div>
-            <div class="workflow-step">
-              <h4>Extraction audio et transcription</h4>
-              <p>L’audio est extrait puis envoyé dans une chaîne de transcription basée sur Whisper. La transcription conserve les informations temporelles nécessaires pour retrouver chaque phrase dans la vidéo originale. Le workflow détecte aussi la langue, nettoie et découpe le texte en blocs exploitables, puis applique des contrôles avant l’analyse.</p>
-            </div>
-            <div class="workflow-step">
-              <h4>Analyse éditoriale des rushes</h4>
-              <p>La transcription sert à identifier les passages les plus intéressants selon la pertinence du sujet, le potentiel de rétention, l’énergie, l’émotion, la qualité audio, la densité d’information, les répétitions et l’autonomie de l’extrait. Les séquences sont classées et scorées pour préparer la sélection de montage.</p>
-            </div>
-            <div class="workflow-step">
-              <h4>Détection des questions et réponses</h4>
-              <p>Pour les interviews, le workflow analyse la structure de la conversation afin d’identifier les questions et leurs réponses. Les timestamps sont contrôlés pour éviter les silences inutiles, les débuts trop précoces et les coupures au milieu d’une phrase. Les blocs validés peuvent former des séquences structurées avec une carte question suivie de la réponse correspondante.</p>
-            </div>
-            <div class="workflow-step">
-              <h4>Construction automatique du pré-montage</h4>
-              <p>À partir des meilleures séquences, le workflow génère une EDL — Edit Decision List — qui décrit précisément la structure du futur montage. La timeline peut intégrer un hook d’ouverture, des blocs question-réponse, des micro-coupes techniques et les extraits retenus, avec des contrôles contre les doublons et les mauvaises coupures.</p>
-            </div>
-            <div class="workflow-step">
-              <h4>Sous-titres, preview et livraison</h4>
-              <p>Le pipeline génère les sous-titres et informations temporelles, ainsi qu’une timeline compatible avec Adobe Premiere. Une preview MP4 peut visualiser l’enchaînement proposé avant le montage définitif. Les livrables et rapports de contrôle sont organisés dans une arborescence Google Drive dédiée, pour préparer des formats verticaux adaptés à Instagram, TikTok, Facebook et aux autres plateformes sociales.</p>
-            </div>
-          </div>
-          <p class="workflow-services"><strong>Technologies et services utilisés :</strong> n8n, Google Drive API, FFmpeg, Whisper, JavaScript, microservices vidéo, analyse IA, génération EDL, sous-titres SRT/ASS et export de timeline pour le montage.</p>
-        </div>
-
-        <div class="section">
-          <h3 class="section-title">📍 Workflow 3 — Préparation de prospection</h3>
-          <p class="description">
-            Collecte et structuration de prospects à partir de Google Maps pour préparer des listes exploitables
-            dans un processus commercial, avec les informations disponibles et les contrôles nécessaires.
-          </p>
-        </div>
-
-        <div class="section info-box">
-          <h3 class="section-title">🧱 Architecture commune</h3>
-          <p class="description">
-            Les automatisations reposent sur des déclencheurs planifiés ou à la demande, des connexions API,
-            des transformations de données, des branches conditionnelles et une sortie adaptée au besoin :
-            rapport, fichier, notification ou liste structurée.
-          </p>
-        </div>
-
-        <div class="section results">
-          <h3 class="section-title">🎯 Objectif et confidentialité</h3>
-          <div class="result-box success">
-            <p class="result-text">
-              ✅ Des workflows centralisés pour limiter les manipulations manuelles et rendre les livrables plus reproductibles.
-            </p>
-            <p class="result-text">
-              🔒 Projet client : les données, paramètres précis et résultats chiffrés ne sont pas publiés pour des raisons de confidentialité.
-            </p>
-          </div>
-        </div>
-      </div>
-    `,
-    gallery: ['img_projects/n8n1.png', 'img_projects/n8n2.png']
-    ,
-    translations: {
-      en: {
-        title: 'n8n Automations — reporting, content & prospecting',
-        description: 'n8n workflows that automate SocialPilot PDF reports, video adaptation for social media formats, and prospect-list preparation from Google Maps.',
-        detailedContent: `
-          <div class="project-detail">
-            <h2 class="project-title">⚙️ n8n automations — reporting, content & prospecting</h2>
-            <div class="section">
-              <h3 class="section-title">📋 Project context</h3>
-              <p class="description">Design of <strong>n8n</strong> workflows to automate recurring operations around social-media reporting, video-content preparation and prospecting. The aim is to connect existing tools, make processing steps reliable and create reusable client deliverables.</p>
-            </div>
-            <div class="section info-box">
-              <h3 class="section-title">👤 My contribution</h3>
-              <ul class="features-list">
-                <li class="feature-item"><span class="feature-icon">🔎</span><strong>Process analysis</strong> — identifying repetitive tasks and data sources.</li>
-                <li class="feature-item"><span class="feature-icon">🧩</span><strong>Workflow architecture</strong> — defining steps, triggers, conditions and outputs.</li>
-                <li class="feature-item"><span class="feature-icon">🔌</span><strong>Integrations</strong> — connecting APIs and third-party services, transforming JSON data.</li>
-                <li class="feature-item"><span class="feature-icon">🛡️</span><strong>Reliability</strong> — error handling, data checks and continuous scenario improvement.</li>
-              </ul>
-            </div>
-            <div class="section">
-              <h3 class="section-title">⚙️ Technologies and tools</h3>
-              <div class="tech-grid">
-                <div class="tech-item"><span class="tech-icon">🔄</span><span class="tech-name">n8n</span><p class="tech-desc">Visual orchestration and automation</p></div>
-                <div class="tech-item"><span class="tech-icon">🔌</span><span class="tech-name">REST APIs & Webhooks</span><p class="tech-desc">Tool connections and triggers</p></div>
-                <div class="tech-item"><span class="tech-icon">🧾</span><span class="tech-name">JSON & PDF</span><p class="tech-desc">Data transformation and document generation</p></div>
-                <div class="tech-item"><span class="tech-icon">🤖</span><span class="tech-name">AI & automation</span><p class="tech-desc">Analysis and enrichment of selected processing steps</p></div>
-                <div class="tech-item"><span class="tech-icon">📊</span><span class="tech-name">SocialPilot</span><p class="tech-desc">Social media data and reports</p></div>
-                <div class="tech-item"><span class="tech-icon">🎬</span><span class="tech-name">Video processing</span><p class="tech-desc">Preparing content for social platforms</p></div>
-              </div>
-            </div>
-            <div class="section">
-              <h3 class="section-title">📊 Workflow 1 — SocialPilot reporting</h3>
-              <p class="description">An automated scenario retrieves available data, prepares it and produces a PDF follow-up report. The result can then be sent to the client through the chosen channel.</p>
-              <ul class="features-list">
-                <li class="feature-item"><span class="feature-icon">📥</span><strong>Collection and normalisation</strong> — retrieving, cleaning and formatting SocialPilot data.</li>
-                <li class="feature-item"><span class="feature-icon">📄</span><strong>PDF report</strong> — assembling a clear deliverable for social-performance follow-up.</li>
-                <li class="feature-item"><span class="feature-icon">📤</span><strong>Distribution</strong> — preparing report delivery or storage for the client.</li>
-              </ul>
-            </div>
-            <div class="section">
-              <h3 class="section-title">🎬 Workflow 2 — Video derush and preparation</h3>
-              <p class="description">The workflow organises raw-video processing to support adaptations for Instagram, Facebook, TikTok and other social-media formats. It can chain media intake, data extraction, transcription, analysis and organisation of useful sequences.</p>
-              <ul class="features-list">
-                <li class="feature-item"><span class="feature-icon">🎥</span><strong>Intake and preparation</strong> — centralising media and metadata.</li>
-                <li class="feature-item"><span class="feature-icon">📝</span><strong>Transcription and analysis</strong> — reading content to identify useful excerpts.</li>
-                <li class="feature-item"><span class="feature-icon">⏱️</span><strong>Sequencing</strong> — locating timestamps and organising material for editing.</li>
-              </ul>
-            </div>
-            <div class="section">
-              <h3 class="section-title">📍 Workflow 3 — Prospecting preparation</h3>
-              <p class="description">Collecting and structuring prospects from Google Maps to prepare usable commercial lists, using available information and the required checks.</p>
-            </div>
-            <div class="section info-box">
-              <h3 class="section-title">🧱 Shared architecture</h3>
-              <p class="description">The automations rely on scheduled or on-demand triggers, API connections, data transformations, conditional branches and an output suited to the need: report, file, notification or structured list.</p>
-            </div>
-            <div class="section results">
-              <h3 class="section-title">🎯 Objective and confidentiality</h3>
-              <div class="result-box success">
-                <p class="result-text">✅ Centralised workflows reduce manual handling and make deliverables more reproducible.</p>
-                <p class="result-text">🔒 Client project: data, precise configuration and quantified results are not published for confidentiality reasons.</p>
-              </div>
-            </div>
-          </div>
-        `,
-      },
-    },
-  }
 ];

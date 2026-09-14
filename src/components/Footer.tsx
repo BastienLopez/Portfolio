@@ -28,7 +28,7 @@ const Footer = () => {
                 ) : (
                   <>
                     <span className="block">Site internet, applications métier,</span>
-                    <span className="block">APIs internes et workflows.</span>
+                    <span className="block"> APIs internes et workflows.</span>
                   </>
                 )}
               </p>

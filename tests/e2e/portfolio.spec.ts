@@ -21,7 +21,12 @@ test("defers below-the-fold section chunks on the first render", async ({ page }
 test("keeps project history, gallery, and language navigation usable", async ({ page }) => {
   await page.goto("/#projects");
   await page.getByRole("button", { name: /GAMING \/ MOBILE/ }).click();
-  await page.getByRole("button", { name: "En savoir plus" }).first().click();
+  await page
+    .getByRole("button", {
+      name: /Voir le cas ERP|Explorer l’automatisation|Découvrir le projet/,
+    })
+    .first()
+    .click();
   await expect(page).toHaveURL(/#project=/);
   await expect(page.getByRole("button", { name: /Retour aux projets/ })).toBeVisible();
 
@@ -54,7 +59,8 @@ test("exposes a complete case-study summary for every project", async ({ page })
     "altme-documentation",
     "teams-bot-mastra",
     "seo-geo-optimization",
-    "n8n-workflow-automation",
+    "n8n-reporting",
+    "n8n-video-derush",
     "eloi-coachsteo",
     "erp-micro-creches",
     "luxury-auto-detailing",
@@ -127,6 +133,20 @@ test("keeps the critical routes and responsive shell stable", async ({ page }) =
   }
 });
 
+test("aligns the freelance portfolio link with the projects section", async ({ page }) => {
+  await page.goto("/freelance");
+  await page.getByRole("link", { name: "Voir le portfolio complet", exact: true }).click();
+  await expect(page).toHaveURL(/\/#projects$/);
+  await expect(page.locator("#projects")).toBeVisible();
+  await page.waitForTimeout(250);
+
+  const top = await page.locator("#projects").evaluate((element) =>
+    element.getBoundingClientRect().top,
+  );
+  expect(top).toBeGreaterThanOrEqual(0);
+  expect(top).toBeLessThan(180);
+});
+
 test("keeps route metadata, FAQ schema and freelance translations aligned", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveTitle(/Bastien Lopez — Développeur Full-Stack IA & Automatisation/);
@@ -140,13 +160,15 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://bastienlopez.fr/freelance");
   await expect(page.locator('meta[property="og:url"]')).toHaveAttribute("content", "https://bastienlopez.fr/freelance");
   expect(await page.locator('meta[name="description"]').getAttribute("content")).not.toBe(homeDescription);
+  await expect(page.getByRole("heading", { name: "Clé de Voûte", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Eloi CoachStéo", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Automatisations n8n — Dérush vidéo & reporting", exact: true })).toBeVisible();
   await expect(page.locator("#freelance-faq-schema")).toHaveCount(1);
   const faqSchema = await page.locator("#freelance-faq-schema").evaluate((element) => JSON.parse(element.textContent ?? "{}"));
   expect(faqSchema["@type"]).toBe("FAQPage");
   expect(faqSchema.mainEntity).toHaveLength(6);
-  await expect(page.locator("#testimonials .testimonial-slide")).toHaveCount(10);
-  await expect(page.locator("#testimonials [data-testimonial-slide]")).toHaveCount(5);
-  const testimonialSizes = await page.locator("#testimonials .testimonial-slide").evaluateAll((elements) =>
+  await expect(page.locator("#testimonials [data-testimonial-slide]")).toHaveCount(3);
+  const testimonialSizes = await page.locator("#testimonials [data-testimonial-slide]").evaluateAll((elements) =>
     elements.map((element) => {
       const rect = element.getBoundingClientRect();
       return { width: Math.round(rect.width), height: Math.round(rect.height) };
@@ -154,19 +176,15 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
   );
   expect(new Set(testimonialSizes.map(({ width }) => width)).size).toBe(1);
   expect(new Set(testimonialSizes.map(({ height }) => height)).size).toBe(1);
-  const pauseTestimonialsButton = page.getByRole("button", { name: "Mettre en pause le défilement des témoignages" });
-  await expect(pauseTestimonialsButton).toBeVisible();
-  const ticker = page.locator("#testimonials .ticker");
-  const initialTickerTransform = await ticker.evaluate((element) => getComputedStyle(element).transform);
-  await page.waitForTimeout(750);
-  const movingTickerTransform = await ticker.evaluate((element) => getComputedStyle(element).transform);
-  expect(movingTickerTransform).not.toBe(initialTickerTransform);
-  await pauseTestimonialsButton.click();
-  await expect(page.getByRole("button", { name: "Reprendre le défilement des témoignages" })).toBeVisible();
 
   await page.goto("/#projects");
   await expect(page.locator("#featured-case-study")).toHaveCount(0);
-  const featuredProjectButton = page.getByRole("button", { name: /ERP Micro-Crèches/ });
+  await expect(page.getByRole("heading", { name: "4 projets clés" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Altme Wallet Provider", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Automatisations n8n.*Reporting/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Automatisations n8n.*Dérush vidéo/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Altme Wallet Platform", exact: true })).toBeVisible();
+  const featuredProjectButton = page.getByRole("button", { name: /Altme Wallet Provider/ });
   await featuredProjectButton.click();
   await expect(page.locator("#featured-case-study")).toBeVisible();
   await expect(page.getByText("Tâches réalisées")).toBeVisible();
@@ -178,6 +196,9 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
   await page.getByRole("button", { name: "Choisir la langue" }).click();
   await page.getByRole("option", { name: "EN" }).click();
   await expect(page).toHaveTitle(/Freelance — Web development, AI and automation/);
+  await expect(page.getByRole("heading", { name: "Clé de Voûte", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Eloi CoachStéo", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "n8n automations — Video editing & reporting", exact: true })).toBeVisible();
   await expect(page.getByText("Showcase website & SEO optimisation").first()).toBeVisible();
   await expect(page.getByText(/The website matches the need exactly/).first()).toBeVisible();
 

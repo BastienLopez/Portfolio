@@ -1,5 +1,16 @@
 import { useRef, useState } from 'react';
 import DOMPurify from 'dompurify';
+import {
+  ArrowLeft,
+  ArrowRight,
+  Brain,
+  Briefcase,
+  FileText,
+  Puzzle,
+  Settings2,
+  Wrench,
+  type LucideIcon,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import type { Article, ArticleCategory, ArticleTranslation } from '../data/articles';
@@ -64,7 +75,12 @@ const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (character) => (
   "'": '&#039;',
 })[character] ?? character);
 
-const renderArticleContent = (content: string) => content.replace(
+const removeDecorativeEmoji = (content: string) =>
+  content
+    .replace(/[0-9#*]\uFE0F?\u20E3\s*/gu, '')
+    .replace(/[\p{Extended_Pictographic}\uFE0F]+\s*/gu, '');
+
+const renderArticleContent = (content: string) => removeDecorativeEmoji(content).replace(
   /```([\w+-]+)?\r?\n([\s\S]*?)```/g,
   (_match, language = '', code: string) => `<pre><code${language ? ` class="language-${language}"` : ''}>${escapeHtml(code.trim())}</code></pre>`,
 );
@@ -78,25 +94,25 @@ const DevNotes = () => {
   const [loadError, setLoadError] = useState(false);
   const loadRequestRef = useRef(0);
 
-  const categoryConfig = {
+  const categoryConfig: Record<SelectableCategory, { icon: LucideIcon; title: string }> = {
     culture: {
-      emoji: '🧠',
+      icon: Brain,
       title: isEnglish ? 'Culture & methods' : 'Culture & Méthodes',
     },
     devops: {
-      emoji: '⚙️',
+      icon: Settings2,
       title: 'CI/CD & DevOps',
     },
     tools: {
-      emoji: '🧩',
+      icon: Puzzle,
       title: isEnglish ? 'Tools & productivity' : 'Outils & Productivité',
     },
     architecture: {
-      emoji: '🧰',
+      icon: Wrench,
       title: isEnglish ? 'Architecture & best practices' : 'Architecture & Bonnes pratiques',
     },
     freelance: {
-      emoji: '💼',
+      icon: Briefcase,
       title: isEnglish ? 'Project management & freelance' : 'Gestion de projet & Freelance',
     }
   };
@@ -142,7 +158,7 @@ const DevNotes = () => {
     if (selectedCategory) void loadArticles(selectedCategory);
   };
 
-  const handleArticleClick = (article: Article) => {
+  const handleArticleClick = (article: LocalizedArticle) => {
     setSelectedArticle(article);
   };
 
@@ -150,11 +166,18 @@ const DevNotes = () => {
     setSelectedArticle(null);
   };
 
+  const SelectedCategoryIcon = selectedArticle
+    ? categoryConfig[selectedArticle.category].icon
+    : null;
+
   return (
     <section id="devnotes" className="py-20 px-4 w-full overflow-x-hidden section-even">
       <div className="container mx-auto max-w-6xl w-full">
         <div className="text-center mb-12 w-full">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{isEnglish ? 'Selected dev notes 📝' : 'Dev Notes sélectionnées 📝'}</h2>
+          <h2 className="flex items-center justify-center gap-2 text-3xl md:text-4xl font-bold mb-4">
+            <FileText className="h-7 w-7 text-primary md:h-8 md:w-8" aria-hidden="true" />
+            <span>{isEnglish ? 'Selected dev notes' : 'Dev Notes sélectionnées'}</span>
+          </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-2 px-4">
             {isEnglish ? 'Technical notes on automation, AI, architecture and deployment, with access to all notes by topic.' : "Retours techniques autour de l'automatisation, de l'IA, de l'architecture et du déploiement, avec un accès à l'ensemble des notes par thème."}
           </p>
@@ -173,14 +196,17 @@ const DevNotes = () => {
               variant="outline"
               className="mb-6"
             >
-              ← {isEnglish ? 'Back to articles' : 'Retour aux articles'}
+              <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+              {isEnglish ? 'Back to articles' : 'Retour aux articles'}
             </Button>
             
             <Card className="border-border bg-transparent shadow-none">
               <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-2xl" aria-hidden="true">
-                    {categoryConfig[selectedArticle.category].emoji}
+                    {SelectedCategoryIcon ? (
+                      <SelectedCategoryIcon className="h-5 w-5 text-primary" aria-hidden="true" />
+                    ) : null}
                   </span>
                   <span className="text-sm font-medium text-muted-foreground">
                     {categoryConfig[selectedArticle.category].title}
@@ -233,7 +259,7 @@ const DevNotes = () => {
                       : 'border-border text-foreground hover:border-primary hover:text-primary'
                   }`}
                 >
-                  <span className="mr-2 text-lg" aria-hidden="true">{config.emoji}</span>
+                  <config.icon className="mr-2 h-5 w-5" aria-hidden="true" />
                   <span>{config.title}</span>
                 </Button>
               ))}
@@ -267,7 +293,8 @@ const DevNotes = () => {
                     </CardHeader>
                     <CardContent>
                       <Button variant="link" className="px-0" onClick={() => handleArticleClick(article)}>
-                        {isEnglish ? 'Read article →' : "Lire l'article →"}
+                        {isEnglish ? 'Read article' : "Lire l'article"}
+                        <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
                       </Button>
                     </CardContent>
                   </Card>

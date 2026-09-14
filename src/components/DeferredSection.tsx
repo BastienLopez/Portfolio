@@ -13,8 +13,7 @@ const hashTargetsSection = (sectionId: string) => {
   if (hash === `#${sectionId}`) return true;
 
   return (
-    (sectionId === "projects" && hash.startsWith("#project=")) ||
-    (sectionId === "freelance" && hash === "#freelance-cases")
+    sectionId === "projects" && hash.startsWith("#project=")
   );
 };
 
@@ -57,11 +56,29 @@ const DeferredSection = ({ sectionId, children, loadingLabel }: DeferredSectionP
   useEffect(() => {
     if (!isLoaded || !hashTargetsSection(sectionId)) return;
 
+    const scrollToTarget = () => {
+      const target = wrapperRef.current;
+      if (!target) return;
+
+      const root = document.documentElement;
+      const previousScrollBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      target.scrollIntoView({ block: "start" });
+      root.style.scrollBehavior = previousScrollBehavior;
+    };
+    let secondFrame = 0;
+    let settleTimer = 0;
     const frame = window.requestAnimationFrame(() => {
-      wrapperRef.current?.scrollIntoView({ block: "start" });
+      scrollToTarget();
+      secondFrame = window.requestAnimationFrame(scrollToTarget);
+      settleTimer = window.setTimeout(scrollToTarget, 180);
     });
 
-    return () => window.cancelAnimationFrame(frame);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.cancelAnimationFrame(secondFrame);
+      window.clearTimeout(settleTimer);
+    };
   }, [isLoaded, sectionId]);
 
   return (

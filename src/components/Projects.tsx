@@ -1,6 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import DOMPurify from "dompurify";
-import { ExternalLink, Github } from "lucide-react";
+import {
+  ArrowRight,
+  Briefcase,
+  ExternalLink,
+  Film,
+  Gamepad2,
+  Github,
+  Rocket,
+  ShieldCheck,
+  Star,
+  WalletCards,
+  Workflow,
+  type LucideIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { allProjects, Project, ProjectGalleryItem } from "@/data/projects";
@@ -23,6 +36,11 @@ type FeaturedCaseStudySection = {
   items: string[];
 };
 
+type FeaturedCaseStudyMetric = {
+  value: string;
+  label: string;
+};
+
 type FeaturedCaseStudy = {
   id: string;
   title: string;
@@ -35,12 +53,15 @@ type FeaturedCaseStudy = {
   tasks: string[];
   gains: string[];
   sections: FeaturedCaseStudySection[];
+  metrics?: FeaturedCaseStudyMetric[];
 };
 
 const portfolioProjects: DisplayProject[] = allProjects;
 const freelancePageProjectIds = new Set([
   "ats-filter-resume",
-  "n8n-workflow-automation",
+  "erp-micro-creches",
+  "n8n-reporting",
+  "n8n-video-derush",
   "seo-geo-optimization",
 ]);
 const freelanceProjects: DisplayProject[] = allProjects.filter(
@@ -48,14 +69,91 @@ const freelanceProjects: DisplayProject[] = allProjects.filter(
     project.category === "freelance" || freelancePageProjectIds.has(project.id),
 );
 
+type FreelanceSelectedWorkGroup = {
+  key: string;
+  projectIds: readonly string[];
+  title: { fr: string; en: string };
+  description: { fr: string; en: string };
+  role: { fr: string; en: string };
+  outcome: { fr: string; en: string };
+};
+
+const freelanceSelectedWorkGroups: FreelanceSelectedWorkGroup[] = [
+  {
+    key: "cledevoute",
+    projectIds: ["cledevoute"],
+    title: {
+      fr: "Clé de Voûte",
+      en: "Clé de Voûte",
+    },
+    description: {
+      fr: "Site vitrine pour une entreprise de maçonnerie : services, réalisations et prise de contact réunis dans une présentation claire.",
+      en: "Showcase website for a masonry company, bringing services, completed work and contact into one clear presentation.",
+    },
+    role: {
+      fr: "Conception et intégration frontend, UI design léger, optimisation des performances et déploiement sur GitHub Pages.",
+      en: "Frontend design and integration, light UI design, performance work and GitHub Pages deployment.",
+    },
+    outcome: {
+      fr: "Une vitrine responsive qui présente l’activité et facilite la demande de contact.",
+      en: "A responsive showcase that presents the business and makes it easier to get in touch.",
+    },
+  },
+  {
+    key: "eloi-coachsteo",
+    projectIds: ["eloi-coachsteo"],
+    title: {
+      fr: "Eloi CoachStéo",
+      en: "Eloi CoachStéo",
+    },
+    description: {
+      fr: "Site vitrine one-page pour un coach sportif et ostéopathe, avec ses services de remise en forme, de préparation physique et ses programmes HYROX.",
+      en: "One-page showcase website for a sports coach and osteopath, presenting fitness, physical preparation and HYROX programmes.",
+    },
+    role: {
+      fr: "Conception du site, intégration React et Tailwind CSS, mise en page responsive, structuration des contenus et mise en ligne.",
+      en: "Website design, React and Tailwind CSS integration, responsive layout, content structure and release.",
+    },
+    outcome: {
+      fr: "Une page unique qui rend les prestations lisibles et donne un accès direct à la prise de contact.",
+      en: "A single page that makes the services easy to understand and gives visitors a direct path to contact.",
+    },
+  },
+  {
+    key: "n8n-automation",
+    projectIds: ["n8n-reporting", "n8n-video-derush"],
+    title: {
+      fr: "Automatisations n8n — Dérush vidéo & reporting",
+      en: "n8n automations — Video editing & reporting",
+    },
+    description: {
+      fr: "Deux workflows complets : un export PDF SocialPilot devient un rapport CM client relisible, tandis que des rushes bruts sont transcrits, sélectionnés et préparés en livrables Instagram/TikTok prêts pour la production.",
+      en: "Two complete workflows: a SocialPilot PDF export becomes a reviewable client CM report, while raw footage is transcribed, selected and prepared as Instagram/TikTok deliverables ready for production.",
+    },
+    role: {
+      fr: "Architecture n8n, intégrations, normalisation des données, traitement média, transcription, génération des livrables et contrôles qualité.",
+      en: "n8n architecture, integrations, data normalisation, media processing, transcription, deliverable generation and quality checks.",
+    },
+    outcome: {
+      fr: "Le reporting et le pré-montage partent de sources brutes pour aboutir à des livrables structurés, traçables et prêts à relire ou produire.",
+      en: "Reporting and pre-editing start from raw sources and end with structured, traceable deliverables ready for review or production.",
+    },
+  },
+];
+
+const freelanceSelectedWorkProjectIds = new Set(
+  freelanceSelectedWorkGroups.flatMap((group) => group.projectIds),
+);
+
 const freelanceDisplayOrder = [
-  "eloi-coachsteo",
   "cledevoute",
+  "eloi-coachsteo",
   "luxury-auto-detailing",
   "ats-filter-resume",
   "erp-micro-creches",
+  "n8n-reporting",
+  "n8n-video-derush",
   "seo-geo-optimization",
-  "n8n-workflow-automation",
 ];
 
 const freelanceDisplayOrderIndex = new Map(
@@ -99,10 +197,15 @@ const englishProjectSummaries: Record<
     description:
       "SEO and local-search work for business websites: audit, structured data, content and performance monitoring.",
   },
-  "n8n-workflow-automation": {
-    title: "n8n Automations — Reporting, Video Derush & Prospecting",
+  "n8n-reporting": {
+    title: "n8n Automations — Reporting",
     description:
-      "n8n workflows for social-media reporting, social-video preparation and prospect-list preparation from Google Maps.",
+      "n8n workflow that turns SocialPilot PDF exports into structured client reports for community-management follow-up.",
+  },
+  "n8n-video-derush": {
+    title: "n8n Automations — Video Derush",
+    description:
+      "n8n pipeline that turns raw footage into selected sequences, subtitles, previews and edit-ready deliverables for Instagram and TikTok.",
   },
   "eloi-coachsteo": {
     title: "Eloi CoachSteo — Sport Trainer",
@@ -191,13 +294,47 @@ const englishProjectSummaries: Record<
   },
 };
 
-const featuredProjectConfig: Record<string, { emoji: string }> =
-  {
-    "erp-micro-creches": { emoji: "💼" },
-    "teams-bot-mastra": { emoji: "🤖" },
-    "n8n-workflow-automation": { emoji: "⚙️" },
-    "wallet-provider": { emoji: "🌐" },
-  };
+const featuredProjectConfig: Record<string, { icon: LucideIcon }> = {
+  "wallet-provider": { icon: ShieldCheck },
+  "n8n-reporting": { icon: Workflow },
+  "n8n-video-derush": { icon: Film },
+  "altme-wallet": { icon: WalletCards },
+};
+
+const projectTechHighlights: Record<string, string[]> = {
+  "wallet-provider": ["Identity Wallet", "eIDAS 2.0", "OIDC4VC"],
+  "n8n-reporting": ["n8n", "SocialPilot", "PDF"],
+  "n8n-video-derush": ["n8n", "FFmpeg", "Whisper"],
+  "altme-wallet": ["HTML / CSS", "Python", "Coingecko API"],
+  "erp-micro-creches": ["React", "Node.js", "MongoDB"],
+  "teams-bot-mastra": ["TypeScript", "Azure Bot Framework", "Mastra"],
+  "altme-documentation": ["GitBook", "Docusaurus", "Markdown"],
+  "ats-filter-resume": ["Next.js", "React", "TypeScript"],
+};
+
+const getProjectTechHighlights = (project: DisplayProject) =>
+  projectTechHighlights[project.id] ?? project.tech.slice(0, 3);
+
+const getProjectDetailCta = (project: DisplayProject, isEnglish: boolean) => {
+  const projectContext = `${project.id} ${project.title}`.toLowerCase();
+
+  if (
+    projectContext.includes("erp") ||
+    projectContext.includes("micro-creche")
+  ) {
+    return isEnglish ? "View the ERP case →" : "Voir le cas ERP →";
+  }
+
+  if (
+    projectContext.includes("n8n") ||
+    projectContext.includes("automation") ||
+    projectContext.includes("automatisation")
+  ) {
+    return isEnglish ? "Explore the automation →" : "Explorer l’automatisation →";
+  }
+
+  return isEnglish ? "Discover the project →" : "Découvrir le projet →";
+};
 
 const resolveImage = (img?: string | null) => {
   if (!img) return "";
@@ -244,8 +381,8 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
     null,
   );
   const projectsHeadingRef = useRef<HTMLHeadingElement | null>(null);
-  const projectDetailRef = useRef<HTMLDivElement | null>(null);
-  const galleryViewerRef = useRef<HTMLDivElement | null>(null);
+  const projectDetailRef = useRef<HTMLDivElement>(null);
+  const galleryViewerRef = useRef<HTMLDivElement>(null);
   const hadProjectSelectionRef = useRef(false);
   const localizeProject = (project: DisplayProject) => {
     const englishDetailedContent = getEnglishDetailedContent(project.id);
@@ -269,169 +406,33 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
   const featuredCaseStudies: FeaturedCaseStudy[] = isEnglish
     ? [
         {
-          id: "erp-micro-creches",
-          title: "Micro-nursery ERP",
-          context:
-            "A network of micro-nurseries with administration spread across multiple tools.",
-          need: "Centralise operations and make multi-site management more reliable.",
-          solution:
-            "A complete business application with back office, tracking, permissions and dashboards.",
-          stack: "React, Node.js, MongoDB, Docker, CI/CD",
-          result:
-            "Clearer processes and better day-to-day operational control.",
-          role: "Full-stack design and development, plus delivery structuring.",
-          tasks: [
-            "Analyse the multi-site operating model and translate it into business modules.",
-            "Build the React interfaces, Node.js services, MongoDB model and role-based access.",
-            "Set up Docker, CI/CD, tests and delivery documentation.",
-          ],
-          gains: [
-            "Five micro-nurseries can be managed from one shared workspace.",
-            "Dashboards and role-based access make day-to-day follow-up easier to read.",
-            "Historical data and documented delivery support continuity after handover.",
-          ],
-          sections: [
-            {
-              title: "Functional scope",
-              items: [
-                "Centralised multi-site management from one interface.",
-                "Records, registrations, attendance and planning.",
-                "Dashboards and granular access rights by role.",
-              ],
-            },
-            {
-              title: "Implementation",
-              items: [
-                "React frontend, Node.js services and MongoDB data model.",
-                "Business modules and back office designed around operational needs.",
-                "Docker, CI/CD and TDD included in the delivery approach.",
-              ],
-            },
-            {
-              title: "Project constraints",
-              items: [
-                "Sensitive records and role-based access require careful handling.",
-                "Functional details remain partly anonymised for confidentiality.",
-              ],
-            },
-          ],
-        },
-        {
-          id: "teams-bot-mastra",
-          title: "Teams Bot & Mastra Agents",
-          context:
-            "Technology monitoring to centralise within the team communication tool.",
-          need: "Collect sources and make information usable without scattered manual monitoring.",
-          solution:
-            "RSS workflow → AI/Mastra summaries → Microsoft Teams → targeted alerts.",
-          stack: "TypeScript, Azure Bot Framework, Mastra, OpenAI API",
-          result:
-            "Centralised monitoring and faster notifications on tracked topics.",
-          role: "Workflow design, Teams integration and bot development.",
-          tasks: [
-            "Select RSS sources and define the monitoring and alerting workflow.",
-            "Connect Mastra agents for summaries and prioritisation, then deliver through Teams.",
-            "Develop the TypeScript bot with Azure Bot Framework and configurable rules.",
-          ],
-          gains: [
-            "Technology monitoring is available in the team's existing communication space.",
-            "Summaries prepare the signal before it reaches the people concerned.",
-            "Adjustable sources and alerts keep the workflow focused on relevant topics.",
-          ],
-          sections: [
-            {
-              title: "Workflow",
-              items: [
-                "Collection of selected RSS sources.",
-                "AI-assisted summaries and prioritisation with Mastra agents.",
-                "Delivery into Microsoft Teams with targeted alerts.",
-              ],
-            },
-            {
-              title: "Implementation",
-              items: [
-                "TypeScript bot integrated through Azure Bot Framework.",
-                "Teams used as the team-facing interface for monitoring.",
-                "Sources and alerting rules can be adjusted to tracked subjects.",
-              ],
-            },
-            {
-              title: "Value delivered",
-              items: [
-                "Monitoring is consolidated in the team communication channel.",
-                "Information is prepared before it reaches the people concerned.",
-              ],
-            },
-          ],
-        },
-        {
-          id: "n8n-workflow-automation",
-          title: "n8n Automations",
-          context:
-            "Recurring reporting, video-preparation and prospecting operations.",
-          need: "Reduce manual handoffs while keeping workflows traceable and repeatable.",
-          solution:
-            "n8n workflows for SocialPilot PDF reports, social-video preparation and Google Maps prospect lists.",
-          stack: "n8n, REST APIs, Webhooks, JSON, PDF",
-          result: "Centralised workflows and reproducible deliverables.",
-          role: "Process analysis, workflow design and integrations.",
-          tasks: [
-            "Model SocialPilot reporting, video preparation and Google Maps prospecting flows.",
-            "Wire APIs, webhooks, JSON transformations, branches and output formats in n8n.",
-            "Add data checks, error handling and delivery documentation to each scenario.",
-          ],
-          gains: [
-            "Reports, files, notifications and prospect lists follow repeatable paths.",
-            "Fewer manual handoffs are needed between intake, processing and delivery.",
-            "Traceable scenarios make later review and maintenance easier.",
-          ],
-          sections: [
-            {
-              title: "Automated workflows",
-              items: [
-                "SocialPilot data preparation and PDF reporting.",
-                "Raw-video intake, transcription and preparation for social formats.",
-                "Google Maps prospect collection and list structuring.",
-              ],
-            },
-            {
-              title: "Workflow design",
-              items: [
-                "Scheduled or on-demand triggers, APIs and webhooks.",
-                "JSON transformations, conditional branches and suitable outputs.",
-                "Data checks and error handling integrated into the scenarios.",
-              ],
-            },
-            {
-              title: "Delivery context",
-              items: [
-                "Outputs can be reports, files, notifications or structured lists.",
-                "Client data and exact configuration remain confidential.",
-              ],
-            },
-          ],
-        },
-        {
           id: "wallet-provider",
           title: "Altme Wallet Provider",
           context:
-            "A digital-identity wallet product for organisations and end users.",
-          need: "Support a clear, maintainable product and documentation ecosystem.",
+            "A digital-identity wallet product for organisations and end users, built around verifiable data and European interoperability.",
+          need:
+            "Support secure wallet journeys, verifiable credentials and a developer-facing ecosystem without exposing confidential implementation details.",
           solution:
-            "Contribution to developer documentation, including the move from GitBook to Docusaurus, alongside wallet product work.",
-          stack: "eIDAS 2.0, Verifiable Credentials, OIDC4VC, EBSI",
+            "Product-team contribution across wallet topics, verifiable-credential journeys, standards and the associated developer ecosystem.",
+          stack: "Identity Wallet, eIDAS 2.0, Verifiable Credentials, OIDC4VC",
           result:
-            "A more structured base for product and developer information.",
-          role: "Team contribution on wallet-ecosystem topics, documentation content and migration work.",
+            "A structured product foundation aligned with European wallet and credential interoperability.",
+          role:
+            "Product-team contribution on wallet topics, identity standards, user journeys and technical documentation.",
           tasks: [
-            "Contribute to wallet-product topics involving credentials, identity and interoperability.",
-            "Write and reorganise developer guidance during the GitBook to Docusaurus migration.",
-            "Document user paths while keeping confidential implementation details out of the public case study.",
+            "Work on wallet use cases involving credentials, identity and interoperability.",
+            "Document user and developer journeys around verifiable data and secure sharing.",
+            "Keep the public case study precise while protecting confidential implementation details.",
           ],
           gains: [
-            "Developers have a clearer, more maintainable documentation entry point.",
-            "The migration provides a structured base for continued product documentation.",
-            "Standards context helps teams understand wallet and credential interoperability.",
+            "The product is positioned for eIDAS 2.0 and EUDI Wallet interoperability.",
+            "Verifiable credentials give organisations and users a reusable way to prove information.",
+            "The standards context makes the wallet ecosystem easier for developers to understand.",
+          ],
+          metrics: [
+            { value: "2.0", label: "eIDAS" },
+            { value: "OIDC4VC", label: "protocol" },
+            { value: "EUDI", label: "wallet context" },
           ],
           sections: [
             {
@@ -439,23 +440,199 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
               items: [
                 "Digital identity wallet for organisations and individuals.",
                 "Management, sharing and verification of verifiable credentials.",
-                "European eIDAS 2.0 and EUDI Wallet interoperability context.",
+                "Secure use cases around identity, business data and attestations.",
               ],
             },
             {
-              title: "Standards & ecosystem",
+              title: "Standards",
               items: [
-                "eIDAS 2.0, Verifiable Credentials, OIDC4VC and SSI.",
-                "Technical ecosystem covering secure digital-identity use cases.",
-                "Developer documentation maintained through GitBook then Docusaurus.",
+                "eIDAS 2.0 and EUDI Wallet interoperability context.",
+                "Verifiable Credentials, OIDC4VC and SSI.",
+                "European ecosystem and developer-facing integration topics.",
               ],
             },
             {
-              title: "My contribution",
+              title: "Contribution",
               items: [
-                "Contribution within the product team on wallet-related topics.",
-                "Documentation content, user paths and migration work.",
-                "Implementation details are deliberately limited for confidentiality.",
+                "Wallet-product topics and user journeys.",
+                "Technical content and developer guidance.",
+                "Implementation details deliberately limited for confidentiality.",
+              ],
+            },
+          ],
+        },
+        {
+          id: "n8n-reporting",
+          title: "n8n Automations — Reporting",
+          context:
+            "A complete n8n reporting pipeline that starts with SocialPilot PDF exports and turns them into structured client-facing community-management reports.",
+          need:
+            "Move from a technical social-media export to a consistent CM deliverable while keeping sources, KPI checks and visual QA traceable.",
+          solution:
+            "Email and Drive intake, deduplication, KPI extraction and normalisation, targeted OCR, bounded analysis, client-PDF generation, QA and delivery notifications.",
+          stack: "n8n, SocialPilot, Gmail API, Google Drive, JSON/PDF, OCR, Discord",
+          result:
+            "A repeatable reporting chain that gives the CM team a clear report to review and send to the client.",
+          role:
+            "Process analysis, workflow architecture, API integrations, JSON transformation, report generation and quality controls.",
+          tasks: [
+            "Receive SocialPilot exports, verify the expected attachment and archive the source in Google Drive.",
+            "Detect duplicates and keep each reporting period linked to its source file and processing status.",
+            "Extract and normalise KPIs by social network, with targeted OCR when a value is only available in a visual.",
+            "Prepare the analysis, highlights and recommendations that turn raw metrics into a CM client narrative.",
+            "Generate the client PDF with tables, charts and selected visuals, then run content and layout checks.",
+            "Notify the delivery channel and preserve the traceability needed for a manual final review.",
+          ],
+          gains: [
+            "A raw SocialPilot export becomes a homogeneous client-reporting base for the CM team.",
+            "Sources, KPI transformations and generated files remain linked and easier to audit.",
+            "The workflow removes repeated preparation steps while keeping the final editorial review in human hands.",
+            "No percentage or traffic gain is claimed here without a source that can be published.",
+          ],
+          metrics: [
+            { value: "PDF", label: "SocialPilot input/output" },
+            { value: "KPI", label: "normalised per network" },
+            { value: "QA", label: "content and visual checks" },
+          ],
+          sections: [
+            {
+              title: "Intake & archive",
+              items: [
+                "Receive and validate the SocialPilot PDF by email or Drive.",
+                "Archive the source, reject duplicates and track the reporting period.",
+                "Keep processing status and delivery notifications visible to the team.",
+              ],
+            },
+            {
+              title: "Analysis & report generation",
+              items: [
+                "Extract, normalise and cross-check KPIs for each social network.",
+                "Use OCR only for values that are not available as selectable text.",
+                "Generate the client PDF with analysis, recommendations, tables and visuals.",
+              ],
+            },
+            {
+              title: "QA & delivery",
+              items: [
+                "Check figures, labels, missing sections and report consistency.",
+                "Run a visual pass on page breaks, charts and readable typography.",
+                "Deliver the report with its source and processing trace available for review.",
+              ],
+            },
+          ],
+        },
+        {
+          id: "n8n-video-derush",
+          title: "n8n Automations — Video Derush",
+          context:
+            "A complete n8n video pipeline that starts with raw footage and prepares short-form deliverables for Instagram and TikTok production.",
+          need:
+            "Turn long, unstructured rushes into selected, timestamped and technically organised material that a video team can take into production.",
+          solution:
+            "Drive intake and duplicate checks, FFmpeg and Whisper processing, editorial scoring, Q&A detection, EDL/subtitle/preview generation and organised delivery.",
+          stack: "n8n, Google Drive API, FFmpeg, Whisper, EDL, SRT/ASS, JavaScript",
+          result:
+            "Raw footage becomes a documented pre-edit package ready to be reviewed and taken into final production.",
+          role:
+            "Pipeline architecture, media processing, AI-assisted editorial analysis, timeline/subtitle generation and QA.",
+          tasks: [
+            "Receive the raw rushes, check duplicates and prepare a traceable working folder for each production.",
+            "Extract audio and create timestamped transcripts with FFmpeg and Whisper.",
+            "Identify useful hooks, sequences, questions and answers, then score them against the editorial brief.",
+            "Keep timestamps and source references attached to every selected excerpt for a reliable handoff.",
+            "Generate an EDL-oriented timeline, subtitles and preview exports for the social formats under review.",
+            "Organise the pre-edit package so the editor can review, adjust and continue production without hunting through raw files.",
+          ],
+          gains: [
+            "Unsorted rushes become a documented selection that can be reviewed before the final edit.",
+            "Timestamps, transcript, EDL and subtitle files reduce repeated pre-edit handling.",
+            "Instagram and TikTok deliverables start from the same traceable source material.",
+            "The editor keeps the final editorial decision; no performance percentage is claimed without published evidence.",
+          ],
+          metrics: [
+            { value: "Rush", label: "raw video input" },
+            { value: "EDL", label: "edit-ready timeline" },
+            { value: "SRT/ASS", label: "subtitle outputs" },
+          ],
+          sections: [
+            {
+              title: "Ingestion & transcription",
+              items: [
+                "Prepare the Drive workspace and validate the incoming rushes.",
+                "Extract audio, transcribe with timestamps and preserve source references.",
+                "Record processing status and isolate failures for review.",
+              ],
+            },
+            {
+              title: "Editorial selection",
+              items: [
+                "Detect hooks, questions, answers and usable sequences.",
+                "Score and group excerpts against the intended social format.",
+                "Keep the rationale and timestamps visible for the editor.",
+              ],
+            },
+            {
+              title: "Production package",
+              items: [
+                "Generate EDL-oriented timelines, SRT/ASS subtitles and previews.",
+                "Check file naming, durations, readability and source linkage.",
+                "Deliver an organised package ready for the final Instagram/TikTok edit.",
+              ],
+            },
+          ],
+        },
+        {
+          id: "altme-wallet",
+          title: "Altme Wallet Platform",
+          context:
+            "A Discover platform combining wallet data, verifiable credentials, NFTs and cryptocurrency information.",
+          need:
+            "Improve the product building blocks and connect user-facing views to reliable data sources.",
+          solution:
+            "Contribution to Discover interfaces and backend integrations, including CoinGecko data and responsive wallet journeys.",
+          stack: "HTML / CSS, Python, CoinGecko API, Verifiable Credentials",
+          result:
+            "A clearer platform experience for managing wallet information and exploring connected digital-asset data.",
+          role:
+            "Team contribution on interface, backend and data-integration work within the Discover product.",
+          tasks: [
+            "Develop and improve product views for wallet and credential-related journeys.",
+            "Connect CoinGecko data to display cryptocurrency information.",
+            "Support NFT and crypto views while keeping the interface responsive across devices.",
+          ],
+          gains: [
+            "Two product domains are brought together: NFTs and cryptocurrencies.",
+            "CoinGecko provides a dedicated source for live crypto information.",
+            "Responsive views make the same product journeys usable on different screen sizes.",
+          ],
+          metrics: [
+            { value: "2", label: "domains: NFTs + crypto" },
+            { value: "API", label: "CoinGecko data" },
+            { value: "DID", label: "credential context" },
+          ],
+          sections: [
+            {
+              title: "Platform scope",
+              items: [
+                "Wallet management and digital-asset discovery.",
+                "NFT collections, cryptocurrency information and credentials.",
+                "Responsive views for the Discover experience.",
+              ],
+            },
+            {
+              title: "Integrations",
+              items: [
+                "Python backend contribution.",
+                "CoinGecko API for cryptocurrency data.",
+                "Verifiable credentials and decentralised-identity context.",
+              ],
+            },
+            {
+              title: "Contribution",
+              items: [
+                "Interface improvements and product integration work.",
+                "Data display and connected user journeys.",
+                "Delivery completed as part of a wider product team.",
               ],
             },
           ],
@@ -463,193 +640,233 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
       ]
     : [
         {
-          id: "erp-micro-creches",
-          title: "ERP Micro-Crèches",
-          context:
-            "ERP web conçu pour centraliser la gestion de cinq micro-crèches, de leurs équipes et des informations liées aux familles.",
-          need: "Remplacer des outils et fichiers dispersés par une interface unique avec des droits différenciés selon les rôles.",
-          solution:
-            "Application métier multi-établissements : dossiers, présences, planning, documents, facturation, tableaux de bord et permissions.",
-          stack: "React, Node.js, MongoDB, Docker, CI/CD",
-          result:
-            "Gestion de cinq micro-crèches centralisée dans une interface unique, avec supervision multi-établissements et accès différenciés selon les rôles.",
-          role: "Conception et développement full-stack : architecture fonctionnelle, interfaces, backend, données, droits d’accès, conteneurisation et préparation du déploiement.",
-          tasks: [
-            "Analyser le fonctionnement multi-établissements et le traduire en modules métier.",
-            "Développer les interfaces React, les services Node.js, le modèle MongoDB et les droits par rôle.",
-            "Mettre en place Docker, CI/CD, tests et documentation de livraison.",
-          ],
-          gains: [
-            "Les cinq micro-crèches sont suivies depuis un espace de travail partagé.",
-            "Les tableaux de bord et droits d’accès rendent le suivi quotidien plus lisible.",
-            "Les données historiques et la documentation facilitent la continuité après la livraison.",
-          ],
-          sections: [
-            {
-              title: "Périmètre fonctionnel",
-              items: [
-                "Gestion multi-établissements depuis une interface centralisée.",
-                "Enfants, parents, personnel, présences, planning, documents et facturation.",
-                "Tableaux de bord et droits d’accès différenciés par rôle.",
-              ],
-            },
-            {
-              title: "Architecture",
-              items: [
-                "Frontend React, services Node.js et modèle de données MongoDB.",
-                "Docker, CI/CD et TDD intégrés à l’approche de livraison.",
-                "Séparation des données et contrôles d’accès selon l’établissement et le profil.",
-              ],
-            },
-            {
-              title: "Contraintes",
-              items: [
-                "Données sensibles liées aux enfants, parents et personnel.",
-                "Détails fonctionnels partiellement anonymisés pour préserver la confidentialité.",
-              ],
-            },
-          ],
-        },
-        {
-          id: "teams-bot-mastra",
-          title: "Teams Bot & Mastra Agents",
-          context:
-            "Veille à centraliser dans l'outil de communication des équipes.",
-          need: "Collecter les sources et rendre l'information exploitable sans veille manuelle dispersée.",
-          solution:
-            "Workflow RSS → synthèse IA/Mastra → Microsoft Teams → alertes ciblées.",
-          stack: "TypeScript, Azure Bot Framework, Mastra, OpenAI API",
-          result:
-            "Veille centralisée et notifications plus rapides sur les sujets suivis.",
-          role: "Conception du workflow, intégration Teams et développement du bot.",
-          tasks: [
-            "Sélectionner les sources RSS et définir le workflow de veille et d’alertes.",
-            "Connecter les agents Mastra pour les synthèses et la priorisation, puis diffuser dans Teams.",
-            "Développer le bot TypeScript avec Azure Bot Framework et des règles configurables.",
-          ],
-          gains: [
-            "La veille technologique est disponible dans l’espace de communication déjà utilisé par l’équipe.",
-            "Les synthèses préparent l’information avant sa transmission aux personnes concernées.",
-            "Les sources et alertes ajustables gardent le workflow centré sur les sujets utiles.",
-          ],
-          sections: [
-            {
-              title: "Workflow",
-              items: [
-                "Collecte de sources RSS sélectionnées.",
-                "Synthèses et priorisation assistées par IA avec agents Mastra.",
-                "Diffusion dans Microsoft Teams avec alertes ciblées.",
-              ],
-            },
-            {
-              title: "Réalisation",
-              items: [
-                "Bot TypeScript intégré via Azure Bot Framework.",
-                "Teams utilisé comme interface de veille pour l’équipe.",
-                "Sources et règles d’alerte ajustables selon les sujets suivis.",
-              ],
-            },
-            {
-              title: "Valeur apportée",
-              items: [
-                "Veille regroupée dans le canal de communication de l’équipe.",
-                "Information préparée avant d’être transmise aux personnes concernées.",
-              ],
-            },
-          ],
-        },
-        {
-          id: "n8n-workflow-automation",
-          title: "Automatisations n8n",
-          context:
-            "Opérations récurrentes de reporting, préparation vidéo et prospection.",
-          need: "Réduire les manipulations manuelles tout en gardant des workflows traçables et reproductibles.",
-          solution:
-            "Workflows n8n pour rapports PDF SocialPilot, préparation de vidéos sociales et listes de prospects Google Maps.",
-          stack: "n8n, API REST, Webhooks, JSON, PDF",
-          result: "Workflows centralisés et livrables reproductibles.",
-          role: "Analyse des processus, conception des workflows et intégrations.",
-          tasks: [
-            "Modéliser les flux de reporting SocialPilot, de préparation vidéo et de prospection Google Maps.",
-            "Relier API, webhooks, transformations JSON, branches et formats de sortie dans n8n.",
-            "Ajouter contrôles de données, gestion des erreurs et documentation de livraison à chaque scénario.",
-          ],
-          gains: [
-            "Rapports, fichiers, notifications et listes de prospects suivent des parcours reproductibles.",
-            "Les passages manuels diminuent entre la réception, le traitement et la livraison.",
-            "Des scénarios traçables facilitent la relecture et la maintenance.",
-          ],
-          sections: [
-            {
-              title: "Workflows automatisés",
-              items: [
-                "Préparation des données SocialPilot et génération de rapports PDF.",
-                "Réception de vidéos brutes, transcription et préparation pour les formats sociaux.",
-                "Collecte Google Maps et structuration de listes de prospects.",
-              ],
-            },
-            {
-              title: "Conception des scénarios",
-              items: [
-                "Déclencheurs planifiés ou à la demande, API et webhooks.",
-                "Transformations JSON, branches conditionnelles et sorties adaptées.",
-                "Contrôles de données et gestion des erreurs intégrés aux scénarios.",
-              ],
-            },
-            {
-              title: "Cadre de livraison",
-              items: [
-                "Sorties possibles : rapport, fichier, notification ou liste structurée.",
-                "Données client et paramétrages précis conservés confidentiels.",
-              ],
-            },
-          ],
-        },
-        {
           id: "wallet-provider",
           title: "Altme Wallet Provider",
           context:
-            "Produit de portefeuille d’identité numérique pour organisations et utilisateurs.",
-          need: "Soutenir un écosystème produit et documentaire clair, maintenable.",
+            "Produit de wallet d’identité numérique pour organisations et particuliers, fondé sur les données vérifiables et l’interopérabilité européenne.",
+          need:
+            "Soutenir des parcours wallet sécurisés, des credentials vérifiables et un écosystème développeur sans exposer les détails confidentiels.",
           solution:
-            "Contribution à la documentation développeur, notamment à la migration de GitBook vers Docusaurus, en parallèle des sujets produit wallet.",
-          stack: "eIDAS 2.0, Verifiable Credentials, OIDC4VC, EBSI",
+            "Contribution au sein de l’équipe produit sur les sujets wallet, les parcours de credentials, les standards et l’écosystème développeur associé.",
+          stack: "Identity Wallet, eIDAS 2.0, Verifiable Credentials, OIDC4VC",
           result:
-            "Base plus structurée pour les informations produit et développeur.",
-          role: "Contribution en équipe sur l’écosystème wallet, les contenus de documentation et les travaux de migration.",
+            "Une base produit structurée, alignée avec l’interopérabilité européenne des wallets et credentials.",
+          role:
+            "Contribution produit sur les sujets wallet, les standards d’identité, les parcours utilisateurs et la documentation technique.",
           tasks: [
-            "Contribuer aux sujets wallet liés aux credentials, à l’identité et à l’interopérabilité.",
-            "Rédiger et réorganiser les guides développeur pendant la migration de GitBook vers Docusaurus.",
-            "Documenter les parcours tout en gardant les détails d’implémentation confidentiels hors du cas public.",
+            "Contribuer aux cas d’usage wallet liés aux credentials, à l’identité et à l’interopérabilité.",
+            "Documenter les parcours utilisateurs et développeurs autour des données vérifiables.",
+            "Rester précis dans le cas public tout en protégeant les détails d’implémentation confidentiels.",
           ],
           gains: [
-            "Les développeurs disposent d’un point d’entrée documentaire plus clair et maintenable.",
-            "La migration fournit une base structurée pour poursuivre la documentation produit.",
-            "Le contexte des standards aide à comprendre l’interopérabilité des wallets et credentials.",
+            "Le produit s’inscrit dans le contexte eIDAS 2.0 et de l’interopérabilité EUDI Wallet.",
+            "Les credentials vérifiables offrent aux organisations et aux utilisateurs un moyen réutilisable de prouver une information.",
+            "Le contexte des standards facilite la compréhension de l’écosystème par les développeurs.",
+          ],
+          metrics: [
+            { value: "2.0", label: "eIDAS" },
+            { value: "OIDC4VC", label: "protocole" },
+            { value: "EUDI", label: "contexte wallet" },
           ],
           sections: [
             {
               title: "Périmètre produit",
               items: [
                 "Wallet d’identité numérique pour organisations et particuliers.",
-                "Gestion, partage et vérification de données vérifiables.",
-                "Contexte européen eIDAS 2.0 et interopérabilité EUDI Wallet.",
+                "Gestion, partage et vérification de credentials vérifiables.",
+                "Cas d’usage sécurisés autour de l’identité, des données métier et des attestations.",
               ],
             },
             {
-              title: "Standards & écosystème",
+              title: "Standards",
               items: [
-                "eIDAS 2.0, Verifiable Credentials, OIDC4VC et SSI.",
-                "Écosystème technique dédié à des cas d’usage d’identité numérique sécurisée.",
-                "Documentation développeur maintenue avec GitBook puis Docusaurus.",
+                "Contexte eIDAS 2.0 et interopérabilité EUDI Wallet.",
+                "Verifiable Credentials, OIDC4VC et SSI.",
+                "Écosystème européen et sujets d’intégration développeur.",
               ],
             },
             {
-              title: "Ma contribution",
+              title: "Contribution",
               items: [
-                "Contribution au sein de l’équipe produit sur des sujets wallet.",
-                "Contenus, parcours de documentation et travaux de migration.",
+                "Sujets produit et parcours wallet.",
+                "Contenus techniques et guides développeurs.",
                 "Détails d’implémentation volontairement limités pour confidentialité.",
+              ],
+            },
+          ],
+        },
+        {
+          id: "n8n-reporting",
+          title: "Automatisations n8n — Reporting",
+          context:
+            "Workflow n8n complet qui part des rapports PDF exportés par SocialPilot et les transforme en reportings CM clients structurés, analysés, contrôlés et prêts à livrer.",
+          need:
+            "Passer d’un export technique à un support de suivi client homogène, tout en gardant les sources, contrôles KPI et QA visuelle traçables.",
+          solution:
+            "Réception email/Drive, anti-doublon, extraction et normalisation des KPI, OCR ciblé, analyse bornée, génération PDF client, QA et notifications.",
+          stack: "n8n, SocialPilot, Gmail API, Google Drive, JSON/PDF, OCR, Discord",
+          result:
+            "Une chaîne reproductible qui donne à l’équipe CM un rapport clair à relire puis transmettre au client.",
+          role:
+            "Analyse des processus, architecture des workflows, intégrations API, transformations JSON, génération du rapport et contrôles qualité.",
+          tasks: [
+            "Recevoir les exports SocialPilot, vérifier la pièce jointe attendue et archiver la source dans Google Drive.",
+            "Détecter les doublons et relier chaque période de reporting à son fichier source et à son statut de traitement.",
+            "Extraire et normaliser les KPI par réseau, avec OCR ciblé lorsqu’une valeur n’est disponible que dans un visuel.",
+            "Préparer l’analyse, les faits marquants et les recommandations qui transforment les métriques brutes en récit CM client.",
+            "Générer le PDF client avec tableaux, graphiques et visuels sélectionnés, puis contrôler le contenu et la mise en page.",
+            "Notifier le canal de livraison et conserver la traçabilité nécessaire à la relecture humaine finale.",
+          ],
+          gains: [
+            "Un export SocialPilot brut devient une base homogène de reporting client pour l’équipe CM.",
+            "Les sources, transformations KPI et fichiers générés restent liés et plus faciles à contrôler.",
+            "Le workflow supprime les préparations répétitives tout en laissant la validation éditoriale finale à l’humain.",
+            "Aucun pourcentage de hausse n’est annoncé sans source publiable dans cette fiche.",
+          ],
+          metrics: [
+            { value: "PDF", label: "entrée/sortie SocialPilot" },
+            { value: "KPI", label: "normalisés par réseau" },
+            { value: "QA", label: "contrôles contenu et visuels" },
+          ],
+          sections: [
+            {
+              title: "Réception et archivage",
+              items: [
+                "Recevoir et valider le PDF SocialPilot par email ou Drive.",
+                "Archiver la source, rejeter les doublons et suivre la période de reporting.",
+                "Garder le statut de traitement et les notifications de livraison visibles pour l’équipe.",
+              ],
+            },
+            {
+              title: "Analyse et génération du rapport",
+              items: [
+                "Extraire, normaliser et recouper les KPI de chaque réseau social.",
+                "Utiliser l’OCR uniquement pour les valeurs non disponibles en texte sélectionnable.",
+                "Générer le PDF client avec analyse, recommandations, tableaux et visuels.",
+              ],
+            },
+            {
+              title: "Contrôle qualité et livraison",
+              items: [
+                "Vérifier les chiffres, libellés, sections manquantes et cohérence du rapport.",
+                "Relire la mise en page : sauts de page, graphiques et lisibilité des textes.",
+                "Livrer le rapport avec sa source et sa trace de traitement disponibles pour relecture.",
+              ],
+            },
+          ],
+        },
+        {
+          id: "n8n-video-derush",
+          title: "Automatisations n8n — Dérush vidéo",
+          context:
+            "Pipeline n8n complet qui part de rushes bruts et prépare des livrables courts pour la production Instagram et TikTok.",
+          need:
+            "Transformer une matière longue et non triée en séquences sélectionnées, horodatées et organisées pour le montage.",
+          solution:
+            "Ingestion Drive et anti-doublon, traitement FFmpeg/Whisper, analyse éditoriale, détection Q/R, génération EDL/sous-titres/preview et livraison organisée.",
+          stack: "n8n, Google Drive API, FFmpeg, Whisper, EDL, SRT/ASS, JavaScript",
+          result:
+            "Les rushes deviennent un package de pré-montage documenté, prêt à être relu puis repris en production.",
+          role:
+            "Architecture du pipeline, traitement média, analyse éditoriale assistée par IA, génération de timelines/sous-titres et QA.",
+          tasks: [
+            "Recevoir les rushes bruts, vérifier les doublons et préparer un dossier de travail traçable par production.",
+            "Extraire l’audio et produire des transcriptions horodatées avec FFmpeg et Whisper.",
+            "Repérer les accroches, séquences, questions et réponses utiles, puis les scorer selon le brief éditorial.",
+            "Conserver les timecodes et références source de chaque extrait sélectionné pour fiabiliser le passage au montage.",
+            "Générer une timeline orientée EDL, les sous-titres et des previews pour les formats sociaux examinés.",
+            "Organiser le package de pré-montage afin que le monteur puisse relire, ajuster et poursuivre la production sans rechercher dans les rushes.",
+          ],
+          gains: [
+            "Les rushes non triés deviennent une sélection documentée, relisible avant le montage final.",
+            "Les timecodes, transcriptions, fichiers EDL et sous-titres réduisent les manipulations de pré-montage.",
+            "Les livrables Instagram et TikTok partent d’une même matière source traçable.",
+            "Le monteur garde la décision éditoriale finale ; aucun pourcentage de performance n’est annoncé sans preuve publiable.",
+          ],
+          metrics: [
+            { value: "Rush", label: "entrée vidéo brute" },
+            { value: "EDL", label: "timeline prête au montage" },
+            { value: "SRT/ASS", label: "sorties sous-titres" },
+          ],
+          sections: [
+            {
+              title: "Ingestion et transcription",
+              items: [
+                "Préparer l’espace Drive et valider les rushes entrants.",
+                "Extraire l’audio, transcrire avec timecodes et conserver les références source.",
+                "Tracer le statut de traitement et isoler les erreurs pour relecture.",
+              ],
+            },
+            {
+              title: "Sélection éditoriale",
+              items: [
+                "Détecter les accroches, questions, réponses et séquences exploitables.",
+                "Scorer et regrouper les extraits selon le format social visé.",
+                "Garder le raisonnement et les timecodes visibles pour le monteur.",
+              ],
+            },
+            {
+              title: "Package de production",
+              items: [
+                "Générer des timelines orientées EDL, des sous-titres SRT/ASS et des previews.",
+                "Contrôler les noms de fichiers, durées, lisibilité et liens vers les sources.",
+                "Livrer un package organisé, prêt pour le montage Instagram/TikTok final.",
+              ],
+            },
+          ],
+        },
+        {
+          id: "altme-wallet",
+          title: "Altme Wallet Platform",
+          context:
+            "Plateforme Discover réunissant données wallet, credentials vérifiables, NFTs et informations liées aux cryptomonnaies.",
+          need:
+            "Améliorer les briques produit et relier les vues utilisateur à des sources de données fiables.",
+          solution:
+            "Contribution aux interfaces et intégrations backend de Discover, dont les données CoinGecko et les parcours wallet responsive.",
+          stack: "HTML / CSS, Python, API CoinGecko, Verifiable Credentials",
+          result:
+            "Une expérience plus lisible pour gérer les informations wallet et explorer les données d’actifs numériques connectées.",
+          role:
+            "Contribution en équipe sur l’interface, le backend et les intégrations de données du produit Discover.",
+          tasks: [
+            "Développer et améliorer les vues produit pour les parcours wallet et credentials.",
+            "Connecter les données CoinGecko pour afficher les informations liées aux cryptomonnaies.",
+            "Accompagner les vues NFTs et crypto tout en gardant une interface responsive.",
+          ],
+          gains: [
+            "Deux domaines produit sont réunis : NFTs et cryptomonnaies.",
+            "CoinGecko fournit une source dédiée aux informations crypto en temps réel.",
+            "Les vues responsive rendent les parcours utilisables sur différentes tailles d’écran.",
+          ],
+          metrics: [
+            { value: "2", label: "domaines : NFTs + crypto" },
+            { value: "API", label: "données CoinGecko" },
+            { value: "DID", label: "contexte credentials" },
+          ],
+          sections: [
+            {
+              title: "Périmètre plateforme",
+              items: [
+                "Gestion de wallet et découverte d’actifs numériques.",
+                "Collections NFT, informations crypto et credentials.",
+                "Vues responsive pour l’expérience Discover.",
+              ],
+            },
+            {
+              title: "Intégrations",
+              items: [
+                "Contribution backend Python.",
+                "API CoinGecko pour les données de cryptomonnaies.",
+                "Credentials vérifiables et contexte d’identité décentralisée.",
+              ],
+            },
+            {
+              title: "Contribution",
+              items: [
+                "Améliorations d’interface et intégration produit.",
+                "Affichage des données et parcours connectés.",
+                "Livraison réalisée au sein d’une équipe produit plus large.",
               ],
             },
           ],
@@ -662,19 +879,19 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
 
   const categoryDefinitions = {
     emploi: {
-      emoji: "💼",
+      icon: Briefcase,
       title: isEnglish ? "PROFESSIONAL PROJECTS" : "PROJETS PRO",
     },
     freelance: {
-      emoji: "🚀",
+      icon: Rocket,
       title: isEnglish ? "FREELANCE PROJECTS" : "MISSIONS FREELANCE",
     },
     opensource: {
-      emoji: "🌟",
+      icon: Star,
       title: "OPEN SOURCE",
     },
     gaming: {
-      emoji: "🎮",
+      icon: Gamepad2,
       title: "GAMING / MOBILE",
     },
   };
@@ -696,9 +913,11 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
   };
 
   const filteredProjects = selectedCategory
-    ? (isFreelancePage
-        ? projectsForView
-        : projectsForView.filter((project) => project.category === selectedCategory))
+    ? [...(isFreelancePage
+        ? projectsForView.filter((project) =>
+            freelanceSelectedWorkProjectIds.has(project.id),
+          )
+        : projectsForView.filter((project) => project.category === selectedCategory))]
         .sort((a, b) => {
           const displayOrderIndex =
             selectedCategory === "freelance"
@@ -715,6 +934,19 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
           const bOrder = displayOrderIndex.get(b.id) ?? Number.MAX_SAFE_INTEGER;
           return aOrder - bOrder;
         })
+    : [];
+
+  const selectedFreelanceWorkGroups = isFreelancePage
+    ? freelanceSelectedWorkGroups
+        .map((group) => ({
+          ...group,
+          projects: group.projectIds
+            .map((projectId) =>
+              filteredProjects.find((project) => project.id === projectId),
+            )
+            .filter((project): project is DisplayProject => Boolean(project)),
+        }))
+        .filter((group) => group.projects.length > 0)
     : [];
 
   const handleCategoryClick = (category: DisplayProjectCategory) => {
@@ -766,11 +998,11 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
 
   const handleBackToList = () => {
     const historyState = getHistoryState();
-    const projectId = getProjectIdFromHash(window.location.hash);
+    const hashProjectId = getProjectIdFromHash(window.location.hash);
 
     if (
-      projectId &&
-      historyState.portfolioProjectId === projectId &&
+      hashProjectId &&
+      historyState.portfolioProjectId === hashProjectId &&
       historyState.portfolioProjectNavigation === "push"
     ) {
       window.history.back();
@@ -948,15 +1180,15 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
             className="text-3xl md:text-4xl font-bold mb-4 focus-visible:outline-none"
           >
             {isFreelancePage
-              ? (isEnglish ? "Freelance projects" : "Projets freelance")
+              ? (isEnglish ? "Selected freelance work" : "Réalisations freelance sélectionnées")
               : (isEnglish ? "Case studies & work" : "Études de cas et réalisations")}
           </h2>
           <div className="mx-auto mb-6 h-1 w-20 bg-primary"></div>
           <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto mb-8 px-4">
             {isFreelancePage
               ? (isEnglish
-                ? "Websites, business applications and tailored tools delivered for freelance clients."
-                : "Sites vitrines, applications métier et outils sur mesure réalisés pour des clients freelance.")
+                ? "Three representative projects, with the role, deliverables and value made explicit."
+                : "Trois réalisations représentatives, avec le rôle, les livrables et la valeur produite.")
               : (isEnglish
                 ? "Business applications, APIs, AI workflows and automations: a selection of concrete projects, followed by access to all work and explorations."
                 : "Applications métier, APIs, workflows IA et automatisations : une sélection de projets concrets, puis accès à l'ensemble des réalisations et explorations.")}
@@ -973,14 +1205,18 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
               </h3>
               <p className="text-sm md:text-base text-muted-foreground">
                 {isEnglish
-                  ? "Context, need, role, solution and value delivered — for a role or a client project. ↓ Click to view my key projects below. ↓"
-                  : "Contexte, besoin, rôle, solution et valeur produite — pour un recrutement comme pour une mission. ↓ Cliquez pour voir mes projets clés ci-dessous. ↓"}
+                  ? "Context, need, role, solution and value delivered. Select a project to open its case study."
+                  : "Contexte, besoin, rôle, solution et valeur produite. Sélectionnez un projet pour ouvrir son étude de cas."}
               </p>
             </div>
-            <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {visibleFeaturedCaseStudies.map((item) => {
                 const config = featuredProjectConfig[item.id];
                 const isSelected = selectedFeaturedProjectId === item.id;
+                const splitTitle =
+                  item.id === "n8n-reporting" || item.id === "n8n-video-derush"
+                    ? item.title.split(" — ")
+                    : null;
 
                 return (
                   <Button
@@ -1000,18 +1236,23 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                         : "border-border hover:border-primary hover:bg-primary/5"
                     }`}
                   >
-                    <span className="mr-2 text-lg" aria-hidden="true">
-                      {config.emoji}
+                    <config.icon className="mr-2 h-5 w-5 shrink-0" aria-hidden="true" />
+                    <span
+                      className={
+                        splitTitle
+                          ? "flex flex-col text-center leading-6"
+                          : undefined
+                      }
+                    >
+                      {splitTitle ? (
+                        <>
+                          <span>{splitTitle[0]}</span>
+                          <span>— {splitTitle.slice(1).join(" — ")}</span>
+                        </>
+                      ) : (
+                        item.title
+                      )}
                     </span>
-                    {item.id === "teams-bot-mastra" ? (
-                      <span className="leading-5">
-                        <span className="block">Teams Bot</span>
-                        <span className="block">&amp;</span>
-                        <span className="block">Mastra Agents</span>
-                      </span>
-                    ) : (
-                      <span>{item.title}</span>
-                    )}
                   </Button>
                 );
               })}
@@ -1073,6 +1314,21 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                   </p>
                 </div>
 
+                {selectedFeaturedCaseStudy.metrics?.length ? (
+                  <div className="mt-6 grid gap-3 border-y border-border py-5 sm:grid-cols-3">
+                    {selectedFeaturedCaseStudy.metrics.map((metric) => (
+                      <div key={`${metric.value}-${metric.label}`} className="min-w-0">
+                        <p className="truncate text-xl font-semibold text-primary md:text-2xl">
+                          {metric.value}
+                        </p>
+                        <p className="text-xs text-muted-foreground md:text-sm">
+                          {metric.label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+
                 <div className="mt-8 grid gap-4 border-t border-border pt-6 md:grid-cols-2">
                   <div className="rounded-lg border border-border bg-secondary/20 p-4">
                     <h4 className="mb-3 font-semibold text-foreground">
@@ -1133,12 +1389,13 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                 </div>
                 <Button
                   variant="link"
-                  className="mt-6 h-auto w-fit justify-start px-0 text-primary"
+                  className="mt-6 h-auto w-fit justify-start gap-2 px-0 text-primary"
                   onClick={() =>
                     handleFeaturedProjectClick(selectedFeaturedCaseStudy.id)
                   }
                 >
-                  {isEnglish ? "View full project →" : "Voir la fiche complète →"}
+                  {isEnglish ? "View full project" : "Voir la fiche complète"}
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Button>
               </Card>
             )}
@@ -1148,6 +1405,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
         {localizedSelectedProject ? (
           <ProjectDetail
             project={localizedSelectedProject}
+            techHighlights={getProjectTechHighlights(localizedSelectedProject)}
             categoryLabel={categoryLabels[localizedSelectedProject.category]}
             galleryImages={galleryImages}
             isEnglish={isEnglish}
@@ -1161,13 +1419,15 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
         ) : (
           <>
             {/* Category Buttons */}
-            <div className="mb-4 text-center">
-              <p className="text-sm text-muted-foreground">
-                {isEnglish
-                  ? "A selection of recent work, from frontend to backend."
-                  : "Une sélection de mes réalisations récentes, du frontend au backend."}
-              </p>
-            </div>
+            {!isFreelancePage && (
+              <div className="mb-4 text-center">
+                <p className="text-sm text-muted-foreground">
+                  {isEnglish
+                    ? "A selection of recent work, from frontend to backend."
+                    : "Une sélection de mes réalisations récentes, du frontend au backend."}
+                </p>
+              </div>
+            )}
             {!isFreelancePage && (
               <div className="mx-auto mb-12 grid w-full max-w-5xl grid-cols-2 gap-3 px-2 lg:grid-cols-4">
                 {Object.entries(categoryConfig).map(([key, config]) => (
@@ -1183,9 +1443,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                         : "border-border text-foreground hover:border-primary/60 hover:bg-primary/5"
                     }`}
                   >
-                    <span className="mr-2 text-lg" aria-hidden="true">
-                      {config.emoji}
-                    </span>
+                    <config.icon className="mr-2 h-5 w-5 shrink-0" aria-hidden="true" />
                     <span>{categoryLabels[key as DisplayProjectCategory]}</span>
                   </Button>
                 ))}
@@ -1193,8 +1451,152 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
             )}
 
             {/* Projects Grid */}
-            {selectedCategory && (
-              <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 animate-in fade-in duration-500">
+            {selectedCategory && isFreelancePage && (
+              <div className="space-y-10 md:space-y-14">
+                {selectedFreelanceWorkGroups.map((group, index) => {
+                  const project = group.projects[0];
+                  if (!project) return null;
+
+                  const title = isEnglish ? group.title.en : group.title.fr;
+                  const description = isEnglish
+                    ? group.description.en
+                    : group.description.fr;
+                  const stack = Array.from(
+                    new Set(
+                      group.projects.flatMap((entry) =>
+                        getProjectTechHighlights(entry),
+                      ),
+                    ),
+                  ).slice(0, 5);
+
+                  return (
+                    <article
+                      key={group.key}
+                      className="grid gap-8 border-y border-border py-8 md:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)] md:gap-12 md:py-10 lg:gap-16"
+                    >
+                      <div
+                        className={`relative aspect-video w-full self-center overflow-hidden ${
+                          project.image === "img_projects/n8n.png" ? "bg-[#17060a]" : ""
+                        }`}
+                      >
+                        <img
+                          src={resolveImage(project.image)}
+                          srcSet={getImageSrcSet(project.image, resolveImage)}
+                          alt={title}
+                          loading="lazy"
+                          decoding="async"
+                          sizes="(max-width: 768px) 100vw, 55vw"
+                          width={getImageManifestEntry(project.image)?.width}
+                          height={getImageManifestEntry(project.image)?.height}
+                          className="relative block h-full w-full rounded-none object-contain"
+                        />
+                      </div>
+
+                      <div className="flex flex-col justify-center">
+                        <p className="text-sm font-semibold tracking-[0.18em] text-primary">
+                          {String(index + 1).padStart(2, "0")}
+                        </p>
+                        <h3 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
+                          {title}
+                        </h3>
+                        <p className="mt-4 text-base leading-7 text-foreground/85">
+                          {description}
+                        </p>
+                        <dl className="mt-6 space-y-4 border-y border-border py-5 text-sm leading-6">
+                          <div>
+                            <dt className="font-semibold text-foreground">
+                              {isEnglish ? "Intervention" : "Intervention"}
+                            </dt>
+                            <dd className="mt-1 text-muted-foreground">
+                              {isEnglish ? group.role.en : group.role.fr}
+                            </dd>
+                          </div>
+                          <div>
+                            <dt className="font-semibold text-foreground">
+                              {isEnglish ? "Value delivered" : "Valeur produite"}
+                            </dt>
+                            <dd className="mt-1 text-muted-foreground">
+                              {isEnglish ? group.outcome.en : group.outcome.fr}
+                            </dd>
+                          </div>
+                        </dl>
+                        <p className="mt-5 text-sm text-muted-foreground">
+                          <span className="font-semibold text-foreground">Stack :</span>{" "}
+                          {stack.join(" · ")}
+                        </p>
+                        <div className="mt-7 flex flex-wrap gap-3">
+                          {group.projects.map((detailProject) => (
+                            <Button
+                              key={detailProject.id}
+                              variant="outline"
+                              onClick={() => handleProjectClick(detailProject)}
+                            >
+                              {group.projects.length > 1
+                                ? detailProject.id === "n8n-reporting"
+                                  ? isEnglish
+                                    ? "Explore reporting →"
+                                    : "Explorer le reporting →"
+                                  : isEnglish
+                                    ? "Explore video editing →"
+                                    : "Explorer le dérush →"
+                                : getProjectDetailCta(detailProject, isEnglish)}
+                            </Button>
+                          ))}
+                          {project.github && (
+                            <Button
+                              asChild
+                              variant="outline"
+                              className="border-border text-foreground/85 hover:border-primary hover:bg-primary/5 hover:text-primary"
+                            >
+                              <a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Github className="mr-2 h-4 w-4" aria-hidden="true" />
+                                {isEnglish ? "Source code" : "Code source"}
+                              </a>
+                            </Button>
+                          )}
+                          {project.demo && (
+                            <Button
+                              asChild
+                              variant="outline"
+                              className="border-border text-foreground/85 hover:border-primary hover:bg-primary/5 hover:text-primary"
+                            >
+                              <a
+                                href={project.demo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <ExternalLink className="mr-2 h-4 w-4" aria-hidden="true" />
+                                {isEnglish ? "Open the live site" : "Voir le site en production"}
+                              </a>
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
+                <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
+                  <p className="text-sm text-muted-foreground">
+                    {isEnglish
+                      ? "Other project fiches and explorations are available from the full portfolio."
+                      : "Les autres fiches et explorations restent accessibles dans le portfolio complet."}
+                  </p>
+                  <Button asChild variant="link" className="h-auto gap-2 px-0 text-primary">
+                    <a href="/#projects">
+                      {isEnglish ? "View the full portfolio" : "Voir le portfolio complet"}
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {selectedCategory && !isFreelancePage && (
+              <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
                 {filteredProjects.map((project) => {
                   const localizedProject = localizeProject(project);
 
@@ -1203,8 +1605,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                       key={project.id}
                       className="group flex h-full flex-col overflow-hidden border-border bg-card shadow-none transition-colors duration-200 hover:border-primary/60"
                     >
-                      {/* Project Image */}
-                      <div className="relative h-48 md:h-56 lg:h-52 overflow-hidden bg-secondary flex items-center justify-center">
+                      <div className="relative flex h-48 items-center justify-center overflow-hidden bg-secondary md:h-56 lg:h-52">
                         <img
                           src={resolveImage(project.image)}
                           srcSet={getImageSrcSet(project.image, resolveImage)}
@@ -1219,43 +1620,34 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                             : "h-full w-full object-cover"}
                         />
                       </div>
-
-                      {/* Project Info */}
-                      <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                      <div className="flex flex-1 flex-col justify-between space-y-4 p-6">
                         <h3 className="text-xl font-bold text-foreground">
                           {localizedProject.title}
                         </h3>
-
-                        <p className="text-sm text-muted-foreground leading-relaxed">
+                        <p className="text-sm leading-relaxed text-muted-foreground">
                           {localizedProject.description}
                         </p>
-
-                        {/* Tech Stack */}
-                        <div className="flex flex-wrap gap-2">
-                          {project.tech.map((tech) => (
+                        <div className="flex min-w-0 flex-nowrap gap-2 overflow-hidden">
+                          {getProjectTechHighlights(project).map((tech) => (
                             <span
                               key={tech}
-                              className="rounded-md border border-border bg-secondary px-3 py-1 text-xs font-medium text-foreground/75"
+                              title={tech}
+                              className="min-w-0 flex-1 truncate rounded-full border border-border/80 bg-secondary/70 px-3 py-1.5 text-center text-xs font-medium leading-5 text-foreground/75 transition-colors hover:border-primary/60 sm:text-sm"
                             >
                               {tech}
                             </span>
                           ))}
                         </div>
-
-                        {/* Links */}
                         <div className="space-y-3 pt-2">
-                          <div
-                            className={`grid gap-3 ${project.github ? "grid-cols-2" : "grid-cols-1"}`}
-                          >
+                          <div className={`grid gap-3 ${project.github ? "grid-cols-2" : "grid-cols-1"}`}>
                             <Button
                               variant="outline"
                               size="sm"
                               className="w-full min-w-0 border-border px-2 text-xs text-foreground hover:border-primary hover:text-primary sm:text-sm"
                               onClick={() => handleProjectClick(project)}
                             >
-                              {isEnglish ? "Learn more" : "En savoir plus"}
+                              {getProjectDetailCta(project, isEnglish)}
                             </Button>
-
                             {project.github && (
                               <Button
                                 asChild
@@ -1263,29 +1655,16 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                                 variant="outline"
                                 className="w-full min-w-0 border-border px-2 text-xs text-foreground hover:border-primary hover:text-primary sm:text-sm"
                               >
-                                <a
-                                  href={project.github}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
+                                <a href={project.github} target="_blank" rel="noopener noreferrer">
                                   <Github className="mr-2 h-4 w-4 shrink-0" aria-hidden="true" />
                                   Code
                                 </a>
                               </Button>
                             )}
                           </div>
-
                           {project.demo && (
-                            <Button
-                              asChild
-                              size="lg"
-                              className="w-full bg-cta text-cta-foreground hover:bg-cta/90"
-                            >
-                              <a
-                                href={project.demo}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
+                            <Button asChild size="lg" className="w-full bg-cta text-cta-foreground hover:bg-cta/90">
+                              <a href={project.demo} target="_blank" rel="noopener noreferrer">
                                 <ExternalLink className="mr-2 h-4 w-4" aria-hidden="true" />
                                 {isEnglish ? "View project" : "Voir le projet"}
                               </a>

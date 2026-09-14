@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/i18n";
 
 const FreelanceFaq = () => {
@@ -101,31 +100,36 @@ const FreelanceFaq = () => {
   }, [faqItems, isEnglish]);
 
   return (
-    <section className="section-odd relative overflow-hidden px-4 py-12 md:py-16" aria-labelledby="freelance-faq-title">
-      <div className="relative z-10 mx-auto max-w-6xl">
-        <Card className="border-border bg-card p-5 md:p-6">
-          <div className="mb-5 flex items-center gap-3">
-            <HelpCircle className="h-5 w-5 text-primary" />
-            <h2 id="freelance-faq-title" className="text-2xl font-bold">
-              {isEnglish ? "Frequently asked questions" : "Mini FAQ Freelance"}
+    <section
+      id="freelance-faq"
+      className="section-odd relative overflow-hidden px-4 py-20 md:py-28"
+      aria-labelledby="freelance-faq-title"
+    >
+      <div className="relative z-10 mx-auto max-w-5xl">
+        <header className="mb-8 flex items-start gap-4">
+          <HelpCircle className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+              {isEnglish ? "Before we start" : "Avant de commencer"}
+            </p>
+            <h2 id="freelance-faq-title" className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
+              {isEnglish ? "Frequently asked questions" : "Questions fréquentes"}
             </h2>
           </div>
-          <div className="space-y-3">
-            {faqItems.map((item, index) => (
-              <details
-                key={item.question}
-                open={index === 0}
-                className="group rounded-lg border border-border bg-secondary/20 px-4 py-3"
-              >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-medium text-foreground">
-                  {item.question}
-                  <ChevronDown className="h-4 w-4 text-primary transition-transform group-open:rotate-180" />
-                </summary>
-                <p className="mt-3 text-sm leading-6 text-foreground/75">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </Card>
+        </header>
+        <div className="divide-y divide-border border-y border-border">
+          {faqItems.map((item, index) => (
+            <details key={item.question} open={index === 0} className="group py-5 md:py-6">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-base font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background md:text-lg">
+                <span>{item.question}</span>
+                <ChevronDown className="h-5 w-5 shrink-0 text-primary transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+              </summary>
+              <p className="mt-4 max-w-3xl pr-8 text-sm leading-7 text-foreground/75 md:text-base">
+                {item.answer}
+              </p>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
   );

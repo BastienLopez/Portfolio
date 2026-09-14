@@ -1,7 +1,9 @@
 import { getImageManifestEntry, getImageSrcSet } from "@/lib/image-variants";
 
 const removeDecorativeEmoji = (content: string) =>
-  content.replace(/[\p{Extended_Pictographic}\uFE0F]+\s*/gu, "");
+  content
+    .replace(/[0-9#*]\uFE0F?\u20E3\s*/gu, "")
+    .replace(/[\p{Extended_Pictographic}\uFE0F]+\s*/gu, "");
 
 const addResponsiveImageSources = (content: string) =>
   content.replace(

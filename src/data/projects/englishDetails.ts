@@ -314,18 +314,29 @@ const englishCaseStudies: Record<string, CaseStudy> = {
     sections: [{ title: "Scope", items: ["On-page, off-page and technical SEO", "Structured data and URL structure", "Image optimisation and mobile-first implementation", "Local presence and Search Console / Analytics monitoring"] }],
     results: ["Tracking foundations are configured through Search Console and Analytics. No traffic, ranking or conversion gains are claimed without source data."],
   },
-  "n8n-workflow-automation": {
-    title: "n8n Automations — Reporting, Video Derush & Prospecting",
-    context: ["n8n workflows automate recurring social-media reporting, raw-video preparation and prospecting tasks. They connect existing tools, make processing traceable and produce reusable client deliverables."],
-    role: "Process analysis, workflow architecture, API and third-party integrations, data transformation, error handling and continuous scenario improvement.",
-    technologies: ["n8n", "REST APIs & Webhooks", "JSON & PDF", "SocialPilot", "Google Drive", "Whisper", "FFmpeg", "EDL / SRT / ASS"],
+  "n8n-reporting": {
+    title: "n8n Automations — Reporting",
+    context: ["A complete n8n reporting pipeline starts with SocialPilot PDF exports and turns them into structured client-facing community-management reports. The workflow links intake, KPI processing, analysis, PDF generation and quality checks while keeping the original source traceable."],
+    role: "Reporting-process analysis, n8n workflow architecture, Gmail and Drive integrations, KPI normalisation, report generation and content/visual QA.",
+    technologies: ["n8n", "SocialPilot", "Gmail API", "Google Drive", "JSON / PDF", "OCR", "Discord"],
     sections: [
-      { title: "SocialPilot reporting workflow", items: ["Scheduled email intake, attachment checks and Google Drive archive", "KPI extraction, normalisation and validation by social network", "Targeted OCR when information is only available in visuals", "Performance analysis, client-PDF generation, content and visual QA, delivery and Discord supervision"] },
-      { title: "AI-assisted video derush workflow", items: ["Raw-video intake, workspace preparation and duplicate checks", "Audio extraction, Whisper transcription and timestamped content", "Editorial analysis of useful sequences, questions and answers", "EDL generation for Premiere-oriented pre-editing, subtitles, preview and organised deliverables for social formats"] },
-      { title: "Prospecting workflow", items: ["Google Maps collection and structured prospect-list preparation", "Checks around available information and the expected commercial output"] },
-      { title: "Scope handled", items: ["Report generation and quality checks", "Raw-footage preparation and AI-assisted derush", "Documented n8n automation workflows"] },
+      { title: "Intake and archive", items: ["Receive SocialPilot exports by email or Drive and validate the expected PDF", "Reject duplicates, archive the source and track the reporting period", "Keep processing status and delivery notifications visible to the CM team"] },
+      { title: "KPI analysis and client report", items: ["Extract, normalise and cross-check KPIs by social network", "Use targeted OCR only when a value is available in a visual", "Turn raw metrics into highlights, analysis and recommendations", "Generate the client PDF with tables, charts and selected visuals"] },
+      { title: "QA and delivery", items: ["Check figures, labels and missing sections before delivery", "Run a visual pass on page breaks, charts and readable typography", "Deliver the report with its source and processing trace for human review"] },
     ],
-    results: ["Centralised workflows reduce manual handoffs and make deliverables more reproducible.", "Client data, exact settings and unconfirmed results remain confidential."],
+    results: ["A raw SocialPilot export becomes a homogeneous CM reporting base that the team can review and send to the client.", "The workflow removes repeated preparation steps while preserving editorial validation and source traceability.", "No percentage or traffic gain is claimed without a publishable source."],
+  },
+  "n8n-video-derush": {
+    title: "n8n Automations — Video Derush",
+    context: ["A complete n8n video pipeline starts with raw footage and prepares a documented pre-edit package for Instagram and TikTok production. It combines media processing, transcription, editorial selection and production-file generation."],
+    role: "Pipeline architecture, Drive intake, FFmpeg and Whisper processing, AI-assisted editorial analysis, EDL/subtitle generation and final QA.",
+    technologies: ["n8n", "Google Drive API", "FFmpeg", "Whisper", "EDL", "SRT / ASS", "JavaScript"],
+    sections: [
+      { title: "Ingestion and transcription", items: ["Prepare a traceable Drive workspace and check incoming rushes", "Extract audio and produce timestamped Whisper transcripts", "Track processing status and isolate failures for review"] },
+      { title: "Editorial selection", items: ["Identify hooks, questions, answers and useful sequences", "Score and group excerpts against the intended social format", "Keep timestamps and source references visible for the editor"] },
+      { title: "Production package", items: ["Generate EDL-oriented timelines, SRT/ASS subtitles and previews", "Check naming, durations, readability and source linkage", "Deliver organised, edit-ready material for the final Instagram/TikTok production"] },
+    ],
+    results: ["Unsorted rushes become a documented selection that can be reviewed before the final edit.", "Transcripts, timestamps, EDL and subtitle files reduce repeated pre-edit handling while leaving the final editorial decision to the editor.", "No performance percentage is claimed without a publishable source."],
   },
 };
 

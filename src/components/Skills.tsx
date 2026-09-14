@@ -1,4 +1,4 @@
-import { Code2, Database, Server, Cloud, GitBranch, Blocks, Brain, Workflow } from "lucide-react";
+import { Brain, Cloud, Code2, Database, Server, Workflow } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/i18n";
 
@@ -8,42 +8,32 @@ const Skills = () => {
     {
       title: "Frontend",
       icon: Code2,
-      skills: ["React", "TypeScript", "Next.js", "JavaScript", "HTML5 / CSS3", "Webflow"],
+      skills: ["React", "TypeScript", "Next.js", "JavaScript", "HTML/CSS"],
     },
     {
       title: "Backend & APIs",
       icon: Server,
-      skills: ["Node.js", "Python", "FastAPI", "Express", "REST APIs", "Web3"],
+      skills: ["Node.js", "Python", "FastAPI", "Express", "REST APIs"],
     },
     {
       title: isEnglish ? "Databases" : "Bases de données",
       icon: Database,
-      skills: ["MongoDB", "PostgreSQL", "SQL", "MySQL", "Vector DB"],
-    },
-    {
-      title: isEnglish ? "AI & Machine Learning" : "IA & Machine Learning",
-      icon: Brain,
-      skills: [isEnglish ? "AI agents / Mastra" : "Agents IA / Mastra", "TensorFlow", "PyTorch", "CUDA", "Reinforcement Learning", "NLP"],
+      skills: ["PostgreSQL", "MongoDB", "SQL", "MySQL", "Vector DB"],
     },
     {
       title: isEnglish ? "Automation" : "Automatisation",
       icon: Workflow,
-      skills: ["n8n", "Python Scripts", "JavaScript/Node.js", "Workflow Automation", "API Integration"],
+      skills: ["n8n", "Python Scripts", "Workflow Automation", "API Integration"],
     },
     {
-      title: "DevOps",
+      title: isEnglish ? "AI & Machine Learning" : "IA & Machine Learning",
+      icon: Brain,
+      skills: [isEnglish ? "AI agents / Mastra" : "Agents IA / Mastra", "PyTorch", "TensorFlow", "NLP", "Reinforcement Learning", "CUDA"],
+    },
+    {
+      title: "DevOps & Engineering",
       icon: Cloud,
-      skills: ["Docker", "CI/CD", "GitHub Actions", isEnglish ? "Self-hosting" : "Auto-hébergement", isEnglish ? "Static VPS hosting" : "Hébergement statique sur VPS"],
-    },
-    {
-      title: isEnglish ? "Git & documentation" : "Git & documentation",
-      icon: GitBranch,
-      skills: ["Git", "GitHub", "Code Review", "Branching", "GitBook"],
-    },
-    {
-      title: isEnglish ? "Architecture & quality" : "Architecture & qualité",
-      icon: Blocks,
-      skills: ["Microservices", "Clean Code", "Design Patterns", isEnglish ? "TDD / Testing" : "TDD / tests"],
+      skills: ["Docker", "CI/CD", "GitHub Actions", "Git", "Tests / TDD", "Self-hosting / VPS"],
     },
   ];
 
@@ -63,7 +53,7 @@ const Skills = () => {
           </div>
 
           {/* Skills Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skillCategories.map((category) => (
               <Card
                 key={category.title}

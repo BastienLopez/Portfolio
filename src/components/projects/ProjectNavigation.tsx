@@ -1,3 +1,4 @@
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type ProjectNavigationProps = {
@@ -14,6 +15,7 @@ export const ProjectNavigation = ({
     variant="outline"
     className="mb-6 border-border text-foreground hover:border-primary hover:bg-secondary"
   >
-    ← {isEnglish ? "Back to projects" : "Retour aux projets"}
+    <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+    {isEnglish ? "Back to projects" : "Retour aux projets"}
   </Button>
 );

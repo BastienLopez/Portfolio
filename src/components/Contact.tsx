@@ -4,12 +4,66 @@ import { Card } from "@/components/ui/card";
 import { trackEvent } from "@/lib/analytics";
 import { useLanguage } from "@/lib/i18n";
 
-const Contact = () => {
+type ContactProps = {
+  variant?: "default" | "freelance";
+};
+
+const Contact = ({ variant = "default" }: ContactProps) => {
   const { isEnglish } = useLanguage();
   const email = "bastien.lopez40@gmail.com";
   const linkedin = "https://www.linkedin.com/in/bastien-lopez-fullstack/";
   const github = "https://github.com/BastienLopez";
   const mailtoLink = `mailto:${email}?subject=${isEnglish ? 'Contact%20-%20role%20or%20project' : 'Contact%20-%20poste%20ou%20mission'}`;
+
+  if (variant === "freelance") {
+    return (
+      <section id="contact" className="relative bg-secondary/30 section-even py-20 md:py-28">
+        <div className="container mx-auto w-full px-4">
+          <div className="mx-auto max-w-7xl border-y border-border py-10 md:flex md:items-end md:justify-between md:gap-12 md:py-14">
+            <div className="max-w-3xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+                {isEnglish ? "Next step" : "Prochaine étape"}
+              </p>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-5xl">
+                {isEnglish ? "Tell me what needs to move forward." : "Parlons de ce qui doit avancer."}
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
+                {isEnglish
+                  ? "Share the current situation, the useful scope and the expected timing. I will reply with the next concrete step."
+                  : "Partagez le contexte actuel, le périmètre utile et le délai souhaité. Je vous répondrai avec une prochaine étape concrète."}
+              </p>
+            </div>
+            <div className="mt-8 flex shrink-0 flex-col items-start gap-4 md:mt-0 md:items-end">
+              <Button asChild size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90">
+                <a
+                  href={mailtoLink}
+                  onClick={() => trackEvent("cta_click", { location: "freelance-contact", cta: "email" })}
+                >
+                  <Mail className="mr-2 h-4 w-4" aria-hidden="true" />
+                  {isEnglish ? "Start a conversation" : "Démarrer la conversation"}
+                </a>
+              </Button>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                <a href={`mailto:${email}`} className="text-muted-foreground underline-offset-4 hover:text-primary hover:underline">
+                  {email}
+                </a>
+                <a
+                  href={linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary"
+                  onClick={() => trackEvent("cta_click", { location: "freelance-contact", cta: "linkedin" })}
+                >
+                  <Linkedin className="h-4 w-4" aria-hidden="true" />
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="contact" className="py-20 md:py-32 relative bg-secondary/30 section-even">

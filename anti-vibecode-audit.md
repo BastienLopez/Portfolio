@@ -1,244 +1,212 @@
-# Audit complet du portfolio — anti-vibecode, design, SEO, GEO et qualité
+# Audit complet du portfolio — Bastien Lopez
 
-Date : 13 septembre 2026  
-Dépôt audité : Portfolio Bastien Lopez  
-Stack observée : React, TypeScript, Vite, React Router, Tailwind CSS  
-Référentiel : anti-vibecode-slop (94 contrôles) et design-taste-codex
-Statut des 94 contrôles : **43 PASS, 16 FAIL, 15 JUSTIFIÉ, 18 N/A, 2 UNKNOWN**
+Date de l’audit : 14 septembre 2026
 
-## Verdict
+## Summary
 
-La passe ciblée demandée est corrigée localement : contraste des titres Dev Notes, relecture et couverture anglaise des 60 articles, métadonnées par route, FAQ JSON-LD, sitemap/llms.txt, ticker continu des témoignages, résumés structurés pour les 21 fiches projet, prérendu statique des routes publiques, compression de Bloodborne, mesure Lighthouse et hiérarchie des actions projet. Les visuels larges remplissent maintenant leur carte, les visuels carrés/portrait restent contenus, les pastilles de stack sont uniformément grises, les ronds de la section Compétences sont orange, les boutons À propos occupent la largeur disponible, les quatre points de « Ma façon de travailler » sont régulièrement espacés et le contact freelance suit la largeur du contenu. Le ticker occupe maintenant 100 % de la fenêtre, utilise deux séquences identiques, des cartes de taille commune, un mouvement linéaire permanent et un bouton pause/reprise. Les contrôles Chromium, Axe, E2E, liens, traductions, assets et build passent.
+- **Dépôt audité :** Portfolio React/Vite local, avec le build généré dans dist/ et une lecture HTTP de https://bastienlopez.fr.
+- **Périmètre :** accueil, page freelance, projets et fiches détaillées, navigation, responsive, accessibilité, SEO/GEO, assets, contact, routes légales/404, configuration Caddy de référence et hygiène de release.
+- **Mode :** audit seul. Aucun correctif de code, commit, push ou déploiement n’a été effectué.
+- **Framework :** React + TypeScript + Vite + Tailwind/shadcn-ui.
+- **Preuve :** statique, build-tested, rendu Playwright/Lighthouse et readback HTTP production.
+- **Couverture :** 94/94 contrôles.
+- **Comptage :** PASS 50 / FAIL 5 / JUSTIFIED 16 / N/A 20 / UNKNOWN 3.
+- **Verdict : NO-GO avant push final.** Le code local est techniquement sain, mais la production actuelle ne sert pas les routes prerenderisées attendues et plusieurs affirmations chiffrées ou témoignages attendent une validation propriétaire.
 
-La refonte visuelle du hero reste volontairement hors périmètre. Le hero conserve donc ses effets de texte, sa grille et ses emojis ; quelques répétitions de cartes, d’ombres et de cyan restent à traiter dans cette passe séparée. Les routes publiques disposent désormais de fichiers HTML prérendus contenant leur contenu et leurs métadonnées pour les crawlers sans JavaScript. La vérification du domaine public révèle toutefois un déploiement antérieur : `/freelance` répond 404, le sitemap public ne contient pas cette route et `/mentions-legales` sert encore les métadonnées de la racine. Le code local est prêt, mais le déploiement doit être actualisé.
+Le build local est cohérent : npm run check passe, les 4 tests unitaires passent, les 11 parcours E2E passent, les deux pages obtiennent 100/100 en accessibilité, bonnes pratiques et SEO dans Lighthouse, et la vérification des dépendances de production ne trouve aucune vulnérabilité de niveau high ou supérieur. Ce résultat ne prouve pas que le VPS serve déjà ce build.
 
-Les seules modifications encore à décider sont formulées en clair dans la section « Modifications restantes ». La matrice technique complète reste conservée plus bas pour assurer la traçabilité de l’audit.
+La lecture de production montre que /mentions-legales/ fonctionne, alors que /mentions-legales renvoie la homepage. Une route inconnue répond bien HTTP 404 mais reçoit le HTML de la homepage, avec son titre et ses robots index/follow, au lieu de la page NotFound prérenderisée. La page /freelance redirige vers /freelance/, puis fonctionne. Le contenu live de /freelance/ correspond à une version antérieure et contient encore l’ancien libellé de projet. Il faut donc corriger ou vérifier la configuration Caddy, publier le build voulu, puis refaire le readback.
 
-## Périmètre et méthode
+## Findings to fix
 
-L’audit couvre le code source, les données projets, les routes, les métadonnées, les fichiers robots/sitemap/llms, la configuration de build et CI, les dépendances de production, le rendu Chromium, l’accessibilité Axe, les interactions principales, Lighthouse et les signatures visuelles anti-slop.
+| Priorité | ID | Zone | Statut | Preuve | Pourquoi | Action |
+|---|---|---|---|---|---|---|
+| P1 | L01, L03, L04 | Routes légales et 404 en production | FAIL | Readback du 14/09 : /mentions-legales = 200 avec titre/corps homepage ; route inconnue = 404 avec corps homepage. dist/mentions-legales/index.html et dist/404.html sont corrects localement. | Mauvaise page et métadonnées indexables possibles pour une URL légale ou inconnue. | Servir mentions-legales/index.html pour la forme publiée choisie et 404.html dans handle_errors 404, puis vérifier les statuts, titres, canonical et robots sur le domaine. |
+| P1 | P15 | Chiffres et résultats | FAIL | Claims présents dans About.tsx, Freelance.tsx et les fiches : 7+, 30+, 10+, environ 90 %, +60 %, +15 %, volumes/profils de projets. Aucun justificatif ou source de mesure n’est versionné. | Une preuve chiffrée non sourcée peut dégrader la confiance et constituer un signal de contenu fabriqué. | Confirmer chaque chiffre avec une source propriétaire ou retirer/nuancer le chiffre avant publication. |
+| P1 | P04 | Témoignages | UNKNOWN | src/data/testimonials.ts contient noms, avatars et citations ; aucune preuve de consentement, source ou validation n’est présente dans le dépôt. | Un témoignage non authentifié doit être retiré plutôt que présenté comme preuve client. | Confirmer l’authenticité, l’autorisation d’usage et l’anonymisation, ou retirer l’élément concerné. |
+| P1 | L15 | Mentions légales / confidentialité | UNKNOWN | src/pages/Legal.tsx décrit Bastien, OVHcloud, Search Console et l’absence de formulaire/script côté client, mais reporte les informations d’immatriculation au devis/facture. | La conformité et l’exactitude des informations de l’éditeur restent une décision du propriétaire et du conseil compétent. | Valider les mentions obligatoires, l’adresse/immatriculation et la description réelle des traitements avant mise en ligne. |
+| P2 | L05 | Image sociale | UNKNOWN | index.html référence og-image.svg et Twitter avec 1200×630 ; l’asset est servi, mais aucun test de rendu par crawler social n’a été fait. | Certains crawlers ou plateformes peuvent traiter différemment un SVG Open Graph. | Tester une URL partagée sur les plateformes visées ; fournir un PNG 1200×630 si nécessaire. |
+| P2 | Release | Écart dépôt/build/live | FAIL de processus | Working tree non propre : nombreuses modifications, suppressions de documents historiques et nouvel asset non suivi. Le live contient une copie plus ancienne que dist/. | Un push sans sélection explicite peut inclure ou omettre des changements non liés ; le résultat publié ne serait pas traçable. | Revoir le diff, sélectionner les fichiers voulus, créer le commit de release, puis déployer explicitement. Aucun nettoyage automatique n’a été fait par cet audit. |
+| P3 | D21 | Flèche de défilement | FAIL | src/components/Hero.tsx applique animate-bounce à la flèche #about. | Une animation en boucle sur une action de simple défilement est un résidu visuel dispensable. | Facultatif : supprimer le rebond ou le limiter à une animation non continue, en conservant l’accès clavier. |
 
-Le domaine public, les redirections HTTP→HTTPS et les en-têtes réellement servis ont été vérifiés le 13 septembre 2026. Les navigateurs non Chromium, l’historique Git complet, les droits d’utilisation des témoignages et photos, la suffisance juridique des mentions et les preuves historiques des claims restent des décisions ou pièces du propriétaire.
+## Fixes applied
 
-## Findings prioritaires
+| ID | Fichiers changés | Changement | Vérification |
+|---|---|---|---|
+| — | Aucun fichier applicatif | Audit uniquement ; aucun correctif n’a été appliqué. | Les commandes et preuves sont listées ci-dessous. |
 
-| ID | Priorité | État | Preuve actuelle | Limite ou suite |
-| --- | --- | --- | --- | --- |
-| A11Y-001 | P1 | RÉSOLU | Les h3/h4 Dev Notes ont une couleur claire explicite ; le test ciblé vérifie le style calculé sur l’article ouvert. | Refaire une vérification visuelle lors de la prochaine passe UI. |
-| I18N-001 | P1 | RÉSOLU LOCALEMENT | Les 60 identifiants sont couverts, les contenus sont non vides et la relecture ciblée a supprimé les résidus français explicites dans les exemples anglais ; Freelance et témoignages ont leurs textes anglais. | Une validation du sens métier par le propriétaire reste possible avant publication éditoriale. |
-| SEO-001 | P1 | RÉSOLU AU RUNTIME ET AU BUILD | `usePageMetadata` définit title, description, robots, canonical, hreflang et URLs OG/Twitter par route et locale ; le test E2E et les quatre fichiers HTML prérendus couvrent `/`, `/freelance`, `/mentions-legales` et la 404. | Relire les métadonnées sur le domaine public après déploiement. |
-| SEO-002 | P1 | RÉSOLU | Le JSON-LD FAQPage est créé uniquement par `FreelanceFaq` sur `/freelance` et retiré au démontage ; la racine n’en contient plus. | Relire le schéma sur le domaine public après déploiement. |
-| GEO-001 | P1 | RÉSOLU | `sitemap.xml` déclare la racine, `/freelance` et `/mentions-legales` ; `llms.txt` pointe vers `/freelance`. | Vérifier les réponses HTTP live lors de la mise en production. |
-| VIS-001 | P2 | OUVERT | Le hero conserve machine à écrire, shimmer, curseur, flèche et grille. | Passe visuelle hero prévue séparément. |
-| VIS-002 | P2 | PARTIELLEMENT RÉSOLU LOCALEMENT | Les gradients de catégories, les ombres et plusieurs répétitions de cartes ont été retirés ou aplatis dans About, Skills, Projects, Testimonials, Freelance et Dev Notes. Les cartes projet utilisent maintenant une image pleine largeur pour les captures larges, un rendu contenu pour les visuels carrés/portrait, des pastilles de stack grises et une hiérarchie détail/code puis projet. Le hero, ses emojis et certains panneaux gardent encore des motifs répétitifs. | À reprendre pendant la refonte visuelle du hero. |
-| UX-001 | P2 | RÉSOLU | Les cinq témoignages validés composent deux séquences identiques dans un ticker CSS continu. La piste occupe 100 % de la fenêtre, les cartes font 340 px sous 768 px et 420 px à partir de 768 px, avec une hauteur commune. Le mouvement est linéaire et permanent, avec un bouton pause/reprise explicite ; `prefers-reduced-motion` désactive l’animation. Mesures Chromium : viewport du carrousel = viewport de la fenêtre à 375, 1500 et 2524 px, sans overflow horizontal. | Contrôle manuel des très petites largeurs à maintenir. |
-| SEO-003 | P2 | RÉSOLU LOCALEMENT | `DeferredSection` reste différé pour l’exécution interactive, mais le build génère `dist/index.html`, `dist/freelance/index.html`, `dist/mentions-legales/index.html` et `dist/404.html` avec contenu, H1 et métadonnées route-specific ; `verify:build` les contrôle. | Vérifier que le serveur public distribue bien ces fichiers après déploiement. |
-| PERF-001 | P2 | RÉSOLU LOCALEMENT | `bloodborne-1440.webp` est passé de 919 410 octets (898 KiB) à 625 256 octets (611 KiB), dimensions 1440×2160 conservées ; le budget CI est fixé à 750 KiB. | Contrôler le poids réellement servi par le CDN/VPS après déploiement. |
-| QA-001 | P2 | RÉSOLU LOCALEMENT | `npm run audit:lighthouse` mesure `/` et `/freelance` ; un job CI dédié est configuré. Derniers scores locaux : 89/100/100/100 et 87/98/100/100 (performance/accessibilité/bonnes pratiques/SEO). | Aucun run GitHub Actions ni artefact CI n’est encore relu depuis ce checkout. |
-| CONTENT-001 | P1 | RÉSOLU LOCALEMENT | Les 21 fiches affichent désormais un résumé commun avec contexte, tâches réalisées et résultats/gains. Le bloc métriques n’est rendu que lorsqu’un chiffre existe ; Clé de Voûte affiche les deux valeurs fournies par le propriétaire. | Relecture éditoriale humaine recommandée pour préciser d’éventuels gains non encore documentés. |
-| DEPLOY-001 | P1 | FAIL PUBLIC / PASS LOCAL | Le build local prérend `/freelance`, `/mentions-legales` et la 404, mais `https://bastienlopez.fr/freelance` répond 404 le 13 septembre 2026. Le sitemap public ne contient pas `/freelance` et `/mentions-legales` renvoie encore le titre/description de la racine avec FAQ JSON-LD. | Publier le build courant sur le VPS/Caddy, puis relire les trois routes, le sitemap et les métadonnées depuis le domaine public. |
-| DEPLOY-002 | P2 | FAIL PUBLIC | `https://www.bastienlopez.fr/` répond 200 au lieu de rediriger vers `https://bastienlopez.fr/`, même si sa balise canonical pointe vers le domaine racine. | Activer et vérifier la redirection HTTPS de `www` vers le domaine canonique. |
+## Justified choices
 
-## Matrice anti-vibecode-slop — 94 contrôles
+| ID | Preuve | Décision |
+|---|---|---|
+| W01, W03, W09 | Titres de projets et CTA utilisent une ponctuation et des verbes liés au contenu ; les emojis décoratifs des fiches/notes sont retirés au rendu par removeDecorativeEmoji. | Conserver. Les tirets servent la hiérarchie des intitulés ; les mots comme « Explorer » sont des CTA contextualisés. |
+| P02, P08, P20 | Palette sombre cyan/verte, grille néon et wordmark textuel cohérents avec le portfolio ; pas de badge générateur visible. | Conserver comme système de marque, sans l’interpréter comme un défaut de template. |
+| D06, D07, D08, D12, D15 | Cartes, blur de navigation/visionneuse, typographie sans-serif et icônes de méthode ont une fonction identifiable et une échelle de composants. | Conserver ; usage limité et cohérent. |
+| D18, D19, D23 | Glow et grille sont présents dans le hero et la page freelance comme signature visuelle, avec une palette tokenisée ; ils ne sont pas disséminés dans chaque bloc. | Conserver ; surveiller la densité sur les futures pages. |
+| D20 | Star représente la catégorie Open Source, pas une action IA répétée. | Conserver. |
+| S15 | DOMPurify.sanitize protège le contenu HTML des articles/projets et les blocs de code passent par échappement. | Conserver ; le scanner textuel qui signale dangerouslySetInnerHTML est un faux positif traité par la chaîne de sanitation. |
 
-### Writing
+## Unknown / owner input needed
 
-| ID | Statut | Observation |
-| --- | --- | --- |
-| W01 | JUSTIFIÉ | Le tiret cadratin apparaît dans des titres ou phrases normales ; pas de répétition mécanique dominante. |
-| W02 | PASS | Pas de structure récurrente « ce n’est pas X, c’est Y » dans les textes principaux. |
-| W03 | FAIL | Emojis utilisés comme icônes de catégories dans Dev Notes et Projets. |
-| W04 | JUSTIFIÉ | Les listes et sous-sections servent la lecture de services et d’articles, malgré une densité élevée. |
-| W05 | JUSTIFIÉ | Plusieurs groupes de trois correspondent à des périmètres ou livrables réels. |
-| W06 | PASS | Pas de hedging automatique ou de promesses prudentes répétées. |
-| W07 | PASS | Le rythme des paragraphes principaux n’est pas uniformément généré. |
-| W08 | PASS | Les textes ne reformulent pas systématiquement la demande du lecteur. |
-| W09 | PASS | Le vocabulaire décrit les services et projets sans marqueurs creux récurrents. |
-| W10 | PASS | Pas de typographie de conversation artificielle dans l’interface. |
+| ID | Preuve manquante ou décision propriétaire |
+|---|---|
+| P04 | Validation de l’authenticité, du consentement et du niveau d’anonymisation des trois avis affichés. |
+| P15 | Source et date pour 7+ ans, 30+ projets, 10+ secteurs, environ 90 %, +60 %, +15 % et les métriques présentes dans les fiches. |
+| L05 | Validation du rendu des cartes sociales par les plateformes réellement utilisées ; le SVG 1200×630 est correct statiquement mais non testé par crawler. |
+| L15 | Validation des mentions légales, des informations d’éditeur et du périmètre réel de Search Console, hébergeur et journaux serveur. |
+| Déploiement | Confirmation de la configuration Caddy active et de la révision effectivement publiée sur le VPS. |
+| Assets | Confirmation des droits/provenance des captures et avatars utilisés sur le portfolio public. |
 
-### Product and credibility
+## Validation performed
 
-| ID | Statut | Observation |
-| --- | --- | --- |
-| P01 | PASS | Le site public utilise le domaine racine bastienlopez.fr. |
-| P02 | PASS | Le hero n’utilise pas de dégradé violet/bleu dominant. |
-| P03 | JUSTIFIÉ | Les visuels correspondent à des projets ou clients connus ; le propriétaire confirme que les droits d’utilisation des photos sont acquis. Aucune pièce de cession n’est stockée dans le dépôt. |
-| P04 | JUSTIFIÉ | Les cinq témoignages ont été validés par le propriétaire, qui confirme leur authenticité et l’autorisation d’affichage ; les pièces d’autorisation ne sont pas stockées dans le dépôt. |
-| P05 | PASS | Les boutons, menus, FAQ, détails projet, galerie et liens testés répondent ; les actions de chaque carte suivent une hiérarchie détail/code puis démo pleine largeur. |
-| P06 | FAIL | Animations d’entrée et effets de révélation s’accumulent dans Hero, Freelance, Projects et Dev Notes. |
-| P07 | JUSTIFIÉ | L’architecture comporte maintenant une page freelance, une page légale, une 404 et des détails projet. |
-| P08 | JUSTIFIÉ | Le nom Bastien Lopez est un wordmark textuel volontaire. |
-| P09 | PASS | Favicon et icônes manifest sont présents et référencés. |
-| P10 | FAIL | Machine à écrire, shimmer, curseur pulsé et flèche animée dans le hero. |
-| P11 | N/A | Il n’y a pas de page privacy séparée ; la page légale décrit la mesure actuelle. |
-| P12 | JUSTIFIÉ | La page mentions légales est réelle et contient les informations fournies ; une page terms séparée n’a pas été demandée. |
-| P13 | PASS | Aucun faux compteur de visiteurs en temps réel. |
-| P14 | PASS | Aucun faux compteur de clients/utilisateurs ; les métriques projet visibles ne se présentent pas comme des utilisateurs. |
-| P15 | JUSTIFIÉ | Le propriétaire confirme comme réels les claims 5+, 30+, 10+, les délais indicatifs et les métriques Clé de Voûte (+60 % de trafic SEO/GEO, +15 % de demandes de devis hebdomadaires) et autorise leur affichage. Les justificatifs externes ne sont pas versionnés dans le dépôt. |
-| P16 | FAIL | Emojis employés comme iconographie de produit et de catégories. |
-| P17 | PASS | Le hero précise activité, périmètre et publics visés. |
-| P18 | PASS | Aucune police manuscrite ou signature décorative. |
-| P19 | PASS | Aucun badge de builder ou watermark fournisseur. |
-| P20 | FAIL | Accumulation de patterns de site IA : gradients, cartes répétées, effets de texte et emojis ; la traduction visible ciblée est maintenant couverte. |
+- [x] Linter : npm run lint — PASS.
+- [x] Typecheck : npm run typecheck — PASS.
+- [x] Tests unitaires : npm test — 1 fichier, 4 tests PASS.
+- [x] Build production local : npm run build — PASS ; prérendu accueil, freelance, mentions légales et 404.
+- [x] Garde de build : npm run verify:build — PASS.
+- [x] Traductions : npm run verify:translations — 60/60 entrées PASS.
+- [x] Assets : npm run verify:performance-assets — 135 variantes WebP référencées PASS.
+- [x] Dépendances : npm audit --omit=dev --audit-level=high — 0 vulnérabilité signalée.
+- [x] Tests navigateur et axe : npm run test:e2e — 11/11 PASS, dont 320/375/768/1280/1920 px, navigation clavier, galerie et routes.
+- [x] Liens critiques : npm run check:links — 29 OK, 0 échec, 1 inconnu (LinkedIn anti-bot HTTP 999).
+- [x] Lighthouse local : accueil performance 89, accessibilité 100, bonnes pratiques 100, SEO 100 ; freelance performance 88, accessibilité 100, bonnes pratiques 100, SEO 100.
+- [x] Smoke rendu desktop : captures Playwright à 1920×1080 et 2560×1440 ; aucune largeur de document supérieure à la fenêtre.
+- [x] Smoke rendu mobile : captures Playwright à 375×812 ; aucune largeur de document supérieure à la fenêtre.
+- [x] Click-through CTA/routes : parcours E2E pour #projects, /freelance, 404, langue, galerie et CTA portfolio.
+- [x] Contact : vérification de la présence des liens mailto/GitHub/LinkedIn ; aucun formulaire ou transaction n’est exposé.
+- [x] Readback production : HTTPS, HSTS, CSP, X-Frame-Options, nosniff, referrer-policy et permissions-policy présents ; routes et contenu live comparés au build local.
+- [ ] Configuration Caddy validée localement : N/D, binaire Caddy absent du poste.
+- [ ] Crawler social réel : N/D.
+- [ ] Validation propriétaire des chiffres, avis, droits d’image et mentions légales : N/D.
 
-### Design
+## 94-control checklist matrix
 
-| ID | Statut | Observation |
-| --- | --- | --- |
-| D01 | FAIL | Le hero, le CTA principal et quelques éléments de shell conservent des gradients cyan/vert/orange à forte saturation ; les gradients de catégories ont été retirés. |
-| D02 | PASS | Pas de nuage d’icônes flottantes décoratives indépendant du contenu. |
-| D03 | JUSTIFIÉ | Le canvas sombre est cohérent avec le thème choisi et le contraste des éléments clairs. |
-| D04 | PASS | Les boutons de catégories utilisent maintenant un rôle visuel commun ; les anciennes variations violet/rose/vert/orange ont été retirées. |
-| D05 | FAIL | Les ombres répétitives ont été supprimées des blocs principaux, mais il reste des ombres fonctionnelles dans le menu, les toasts et la galerie ainsi que des effets du hero. |
-| D06 | FAIL | Répétition de rangées de cartes de même poids dans About, Skills et Freelance. |
-| D07 | JUSTIFIÉ | Le blur est limité aux overlays de navigation, menu et galerie ; il sert la profondeur fonctionnelle. |
-| D08 | PASS | Pas de police explicitement générateur type Inter/Geist/Space Grotesk imposée partout ; la pile système reste lisible. |
-| D09 | JUSTIFIÉ | Les bandes de transition pleine largeur servent les séparations de sections demandées. |
-| D10 | PASS | Pas de bento grid décoratif sans relation avec le contenu. |
-| D11 | PASS | Pas de faux terminal utilisé comme simple décoration. |
-| D12 | FAIL | Listes de bénéfices avec coches vertes répétées dans About et Freelance. |
-| D13 | JUSTIFIÉ | Les trois niveaux de prestation décrivent des périmètres réels et ne forment pas une grille de prix artificielle. |
-| D14 | PASS | Les projets disposent de captures, liens ou détails ; le site ne repose pas sur des placeholders. |
-| D15 | PASS | Les rayons ont été normalisés vers des valeurs plus sobres (`rounded-md`/`rounded-lg`) selon le rôle du composant ; les tags et cartes ne partagent plus un rayon surdimensionné. |
-| D16 | PASS | La palette de base est bleu-noir/cyan, pas une palette violet-noir dominante. |
-| D17 | PASS | Suspense, états de chargement et erreur Dev Notes sont prévus. |
-| D18 | PASS | Pas de blobs lumineux floutés omniprésents ; les tokens glow sont limités. |
-| D19 | FAIL | Une grille de lignes reste utilisée comme texture décorative dans le hero ; elle a été retirée du bloc témoignages. |
-| D20 | PASS | Pas de système sparkle universel pour toutes les fonctionnalités IA. |
-| D21 | FAIL | Flèche de scroll rebondissante dans le hero. |
-| D22 | PASS | Les `hover:scale` des cartes et catégories ont été retirés ; le seul zoom restant concerne l’image d’une fiche détail interactive. |
-| D23 | FAIL | Cyan néon sur fond sombre utilisé comme signature générale de site tech. |
-| D24 | PASS | Pas de palette pastel généralisée. |
+### Writing and copy
 
-### Launch, SEO, UX et accessibilité
+| ID | Statut | Preuve / commentaire |
+|---|---|---|
+| W01 | JUSTIFIED | Les tirets cadrent des titres de projets et de sections ; pas de dépendance dans chaque phrase. |
+| W02 | PASS | Pas de répétition de la formule « pas X mais Y » dans le copy principal. |
+| W03 | JUSTIFIED | Les emojis historiques sont supprimés au rendu des notes et fiches ; les rares contenus d’article restent du contenu éditorial source. |
+| W04 | PASS | Copy hero, services et fiches : paragraphes courts et listes limitées aux informations parallèles. |
+| W05 | PASS | Les groupes de services et étapes correspondent à des concepts distincts, pas à une cadence automatique. |
+| W06 | PASS | Les réserves sont limitées aux faits réellement conditionnels. |
+| W07 | PASS | Les longueurs de paragraphes varient entre hero, services, FAQ et fiches. |
+| W08 | PASS | Les sections commencent par une proposition ou une réponse, sans reformuler une question utilisateur. |
+| W09 | JUSTIFIED | « Explorer » est réservé aux CTA d’automatisation et reste descriptif ; aucun remplissage générique répété. |
+| W10 | PASS | Typographie sobre, lisible et cohérente avec un portfolio professionnel bilingue. |
 
-| ID | Statut | Observation |
-| --- | --- | --- |
-| L01 | PASS | 404 personnalisée affichée sur route inconnue ; la réponse live Caddy n’est pas rejouée dans cette passe. |
-| L02 | PASS | CTA principal visible tôt sur la page d’accueil et vérifié en rendu Chromium. |
-| L03 | FAIL | Le code local produit un title distinct pour la racine, `/freelance`, `/mentions-legales` et la 404, mais le domaine public sert le même title de racine sur `/mentions-legales` et `/freelance` répond 404. |
-| L04 | FAIL | Les descriptions sont distinctes dans le code local, mais la description de la racine est encore servie sur `/mentions-legales` en production ; `/freelance` n’est pas publié. |
-| L05 | FAIL | OG, Twitter, canonical et hreflang sont corrects dans les quatre sorties HTML locales, mais les métadonnées publiques de `/mentions-legales` sont celles de la racine et la route freelance est absente. |
-| L06 | PASS | Favicon, manifest et icônes 192/512 présents. |
-| L07 | PASS | robots.txt autorise l’exploration et référence le sitemap. |
-| L08 | FAIL | Le sitemap local déclare la racine, `/freelance` et `/mentions-legales`, mais le sitemap public relu le 13 septembre 2026 ne contient pas `/freelance`. |
-| L09 | JUSTIFIÉ | Les images projet ont des alt descriptifs ; les avatars témoignages ont alt vide car le nom et rôle sont déjà affichés à côté. |
-| L10 | PASS | 40 couples route/largeur Chromium de 320 à 1920 px sans overflow horizontal. |
-| L11 | PASS | Menu mobile, CTA, email et LinkedIn atteignables dans les tests. |
-| L12 | PASS | Suspense et états d’attente présents pour les sections différées. |
-| L13 | N/A | Aucun formulaire applicatif à valider sur ce périmètre. |
-| L14 | N/A | Aucun flux de soumission de formulaire ou paiement. |
-| L15 | PASS | La page légale indique l’absence de mesure client non nécessaire ; pas de script analytics tiers observé dans le build. |
-| L16 | UNKNOWN | La suffisance juridique finale, SIRET et adresse relèvent d’une validation propriétaire ou professionnelle. |
-| L17 | N/A | Aucun cookie non essentiel ni tracking client à consentir n’est activé dans le code audité. |
-| L18 | JUSTIFIÉ | La mesure client est volontairement absente ; Search Console n’est pas une preuve d’un script exécuté sur le site. |
-| L19 | PASS | Email, LinkedIn et GitHub sont visibles et testés comme destinations. |
-| L20 | PASS | 135 WebP, manifest de variantes, srcset et lazy loading sont présents ; `bloodborne-1440.webp` pèse maintenant 611 KiB et reste sous le budget de 750 KiB. |
+### Immediate generated-site signals
 
-### Security
+| ID | Statut | Preuve / commentaire |
+|---|---|---|
+| P01 | PASS | Les URLs canoniques et le site public utilisent bastienlopez.fr ; les sous-domaines GitHub sont limités aux démos de projets. |
+| P02 | JUSTIFIED | Le dégradé est sombre cyan/vert, tokenisé et cohérent avec la marque ; ce n’est pas un violet/bleu par défaut. |
+| P03 | PASS | Les visuels observés sont des captures de produits/projets ; aucun artefact synthétique évident dans les rendus contrôlés. |
+| P04 | UNKNOWN | Avis, avatars et citations présents dans src/data/testimonials.ts, mais preuve de consentement absente du dépôt. |
+| P05 | PASS | E2E et check de liens couvrent les CTA, routes, démos et boutons de fiches ; aucun contrôle principal sans comportement. |
+| P06 | PASS | Chargement différé ciblé par DeferredSection; pas d’animation d’entrée généralisée sur chaque bloc. |
+| P07 | JUSTIFIED | L’accueil est une présentation compacte, tandis que freelance, mentions légales et fiches ont des parcours distincts. |
+| P08 | JUSTIFIED | Le nom texte est un wordmark volontaire ; aucune fausse promesse d’un logo graphique n’est faite. |
+| P09 | PASS | favicon.ico, icônes 192/512 et manifest présents localement et servis en production. |
+| P10 | PASS | Le titre principal n’a pas de boucle de changement de couleur ; le shimmer est limité au titre et respecte reduced-motion pour la frappe. |
+| P11 | PASS | La page légale est remplie et cohérente avec l’absence de compte, formulaire et script d’audience côté client. |
+| P12 | N/A | Aucun tunnel commercial, abonnement ou condition d’utilisation produit ne rend une page de terms nécessaire à ce stade. |
+| P13 | PASS | Aucun compteur de visiteurs en direct simulé. |
+| P14 | PASS | Aucun compteur générique de clients/utilisateurs ; les volumes projet sont traités par P15. |
+| P15 | FAIL | Plusieurs métriques de preuve n’ont pas de source versionnée ou référence propriétaire. |
+| P16 | PASS | Les icônes d’interface sont Lucide ; les emojis décoratifs sont retirés dans les surfaces concernées. |
+| P17 | PASS | Le hero indique clairement le développeur, les applications métier, APIs et automatisations n8n. |
+| P18 | PASS | Aucune police manuscrite/cursive décorative. |
+| P19 | PASS | Aucun badge Lovable, Vercel, builder ou attribution de template visible. |
+| P20 | JUSTIFIED | Le copy reste spécifique aux services et projets ; les patterns détectés dans les articles sont du contenu éditorial, pas la voix globale du site. |
 
-| ID | Statut | Observation |
-| --- | --- | --- |
-| S01 | PASS | Aucun motif de secret n’a été trouvé dans src, public, index.html, vite.config.ts et package.json. |
-| S02 | UNKNOWN | Le scan complet de l’historique Git n’a pas été exécuté. |
-| S03 | N/A | Aucun serveur avec credentials ou secret runtime dans ce dépôt statique. |
-| S04 | N/A | Pas de base de données ni politique de lignes. |
-| S05 | N/A | Pas de stockage de données sensibles. |
-| S06 | N/A | Pas d’authentification applicative. |
-| S07 | N/A | Pas de ressource identifiée par un identifiant utilisateur côté serveur. |
-| S08 | N/A | Pas d’endpoint de mutation ou de mass assignment. |
-| S09 | N/A | Pas de session ou cookie applicatif. |
-| S10 | N/A | Pas de mot de passe à hacher. |
-| S11 | N/A | Pas de route d’authentification à limiter. |
-| S12 | N/A | Pas de formulaire serveur ou endpoint public à abuser. |
-| S13 | N/A | Pas de requête SQL runtime ; les exemples d’articles sont du contenu éditorial. |
-| S14 | N/A | Pas d’API métier runtime dans ce dépôt. |
-| S15 | PASS | DOMPurify protège le HTML détaillé et le Markdown est échappé avant rendu. |
-| S16 | N/A | Aucun upload utilisateur. |
-| S17 | N/A | Aucun endpoint exposant des champs de données. |
-| S18 | PASS | Le domaine public sert CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy et Permissions-Policy ; vérifié le 13 septembre 2026. |
-| S19 | PASS | HTTP redirige en 308 vers HTTPS et le domaine HTTPS sert HSTS ; vérifié avec les deux hôtes publics le 13 septembre 2026. |
-| S20 | PASS | npm audit production : zéro vulnérabilité high ou supérieure ; dépendances verrouillées et CI présentes. |
+### Generic design defaults
 
-## Modifications restantes
+| ID | Statut | Preuve / commentaire |
+|---|---|---|
+| D01 | PASS | Les dégradés sont limités au hero et aux surfaces de marque, sans collision multicolore agressive. |
+| D02 | PASS | Les icônes visibles sont dans des composants fonctionnels ou des marqueurs de section. |
+| D03 | PASS | Le canvas sombre est intentionnel et fournit un contraste stable avec les surfaces de carte. |
+| D04 | PASS | Palette cyan/vert/orange d’action définie par tokens et rôles sémantiques. |
+| D05 | PASS | Les cartes et boutons utilisent majoritairement shadow-none; les ombres sont réservées à la visionneuse/menu. |
+| D06 | JUSTIFIED | Les grilles de projets et avis regroupent des unités de contenu comparables et indépendantes. |
+| D07 | JUSTIFIED | Le blur sert la profondeur de la navbar et de la visionneuse, pas tous les composants. |
+| D08 | JUSTIFIED | Sans-serif système choisie pour la lisibilité du produit et des longues fiches ; aucune police décorative nécessaire. |
+| D09 | PASS | Aucun bandeau accent pleine largeur sans rôle de structure. |
+| D10 | PASS | Pas de bento irrégulier gratuit ; sections et grilles suivent la hiérarchie des données. |
+| D11 | PASS | Les blocs code appartiennent aux articles techniques ; aucune fausse fenêtre terminal dans le marketing. |
+| D12 | JUSTIFIED | Les checks cyan structurent les principes de travail et restent limités à cette section. |
+| D13 | N/A | Aucun prix ni architecture de trois offres. |
+| D14 | PASS | Captures, galeries, livrables et fiches détaillées démontrent les projets. |
+| D15 | JUSTIFIED | L’échelle rounded-sm/md/lg distingue fiches, boutons, badges et modales. |
+| D16 | PASS | Palette cyan/verte/orange sur fond bleu-noir, sans esthétique purple-on-black d’IA SaaS. |
+| D17 | PASS | DeferredSection, Suspense, états de chargement/erreur/retry des Dev Notes fournissent un état d’attente visible. |
+| D18 | JUSTIFIED | Glow utilisé comme signature du hero/grille, pas comme orbe répétée dans chaque section. |
+| D19 | JUSTIFIED | La grille carrée du hero est une signature visuelle et reste cantonnée aux zones prévues. |
+| D20 | JUSTIFIED | L’étoile est l’icône de catégorie Open Source, non un symbole universel d’action IA. |
+| D21 | FAIL | Flèche #about en animate-bounce ; polish P3 recommandé. |
+| D22 | PASS | Les états hover observés concernent des contrôles interactifs ; pas de transformation trompeuse sur texte statique. |
+| D23 | JUSTIFIED | Le néon est tokenisé et cohérent avec l’identité du portfolio, sans palette arbitraire par section. |
+| D24 | PASS | Pas de palette pastel uniforme. |
 
-La configuration locale VPS/Caddy/CI est documentée et les preuves externes de claims, témoignages et photos sont confirmées par le propriétaire. Le domaine public n’est pas à jour avec ce checkout ; voici chaque problème restant, avec l’action attendue :
+### Launch readiness and completeness
 
-1. **Emojis utilisés comme icônes** dans Dev Notes et certaines catégories projet : les remplacer par les icônes Lucide déjà utilisées dans le reste du site.
-2. **Animations d’entrée répétées** dans Hero, Freelance, Projects et Dev Notes : ne conserver que les transitions qui expliquent un changement d’état.
-3. **Titre du hero animé** (machine à écrire, shimmer et curseur pulsé) : afficher le message directement ou réduire l’animation à une entrée courte.
-4. **Formulations qui donnent une impression de texte généré** dans plusieurs titres, cartes et appels à l’action : relire ces textes avec une voix plus personnelle et plus concise.
-5. **Gradients cyan/vert/orange très saturés** dans le hero, le CTA principal et certains éléments du shell : les atténuer et réserver la couleur vive aux actions importantes.
-6. **Ombres répétées** sur les menus, toasts, galeries et plusieurs cartes : garder une ombre uniquement lorsqu’elle indique une élévation utile.
-7. **Rangées de cartes de même poids** dans About, Skills et Freelance : différencier la hiérarchie par la composition, la taille ou un regroupement plus éditorial.
-8. **Listes de bénéfices avec une coche devant chaque ligne** dans About et Freelance : varier la présentation ou réduire les coches aux points réellement prioritaires.
-9. **Grille décorative** en arrière-plan du hero : la retirer si elle n’apporte pas d’information au contenu.
-10. **Flèche de scroll qui rebondit** dans le hero : la supprimer ou la rendre statique.
-11. **Cyan néon comme signature générale** sur fond sombre : réduire sa fréquence et utiliser davantage les tons neutres du thème.
-12. **Déployer le build actuel sur le domaine public** : `/freelance` répond encore 404, le sitemap public est ancien et `/mentions-legales` sert encore les métadonnées de la racine.
-13. **Redirection HTTPS de `www`** : `https://www.bastienlopez.fr/` répond 200 au lieu de rediriger vers le domaine canonique.
-14. **Historique Git non audité pour les secrets** : lancer un scan complet de l’historique et révoquer toute clé trouvée avant publication.
-15. **Vérification juridique finale** : confirmer que les mentions légales contiennent toujours les informations obligatoires exactes (identité, adresse, hébergeur et statut).
+| ID | Statut | Preuve / commentaire |
+|---|---|---|
+| L01 | FAIL | Local 404.html correct, mais production route inconnue sert le corps homepage sous statut 404. |
+| L02 | PASS | CTA projets/contact visibles dans le hero accueil et CTA parler du projet/works dans le hero freelance. |
+| L03 | FAIL | Local titles uniques ; readback production de /mentions-legales sans slash utilise le titre homepage. |
+| L04 | FAIL | Local descriptions uniques ; même écart production pour /mentions-legales et les chemins inconnus. |
+| L05 | UNKNOWN | OG/Twitter et asset 1200×630 présents ; validation par crawler social non réalisée. |
+| L06 | PASS | Favicon, icônes plateforme et manifest présents et servis. |
+| L07 | PASS | public/robots.txt autorise le site public et référence le sitemap canonique. |
+| L08 | PASS | public/sitemap.xml contient les routes indexables /, /freelance et /mentions-legales; servi HTTP 200. |
+| L09 | PASS | Alt utiles sur captures/projets ; avatars décoratifs ont alt="" à côté du nom textuel. |
+| L10 | PASS | E2E et captures couvrent 320/375/768/1280/1920/2560 px sans débordement horizontal. |
+| L11 | PASS | CTA hero restent visibles et atteignables à 375 px ; click-through E2E. |
+| L12 | PASS | Suspense, chargement différé, retry Dev Notes et états de visionneuse couverts. |
+| L13 | N/A | Pas de formulaire public avec champs à valider. |
+| L14 | N/A | Pas de soumission/transaction côté navigateur ; contact par mailto et réseaux réels. |
+| L15 | UNKNOWN | Disclosure présente, mais validation juridique et inventaire complet des traitements restent à faire. |
+| L16 | N/A | Portfolio informatif sans tunnel de vente ni compte ; aucun terms flow applicable identifié. |
+| L17 | N/A | Aucun script d’audience côté client ni cookie non essentiel déclaré dans le build. |
+| L18 | N/A | Mesure client volontairement omise ; Search Console est externe et mentionné dans la page légale. |
+| L19 | PASS | Email, GitHub et LinkedIn sont présents dans navbar/footer/contact ; LinkedIn est le seul check externe anti-bot inconnu. |
+| L20 | PASS | Manifest de variantes WebP, srcSet, dimensions, lazy loading et check de 135 fichiers ; Lighthouse reste à 88/89. |
 
-## SEO et GEO — détail
+### Security smoke check
 
-Les fondamentaux présents sont robots.txt, sitemap.xml, manifest, JSON-LD de site/personne/service, une page légale, un fichier llms.txt et des coordonnées de contact. Les projets et services sont suffisamment explicites pour une compréhension humaine et machine.
+| ID | Statut | Preuve / commentaire |
+|---|---|---|
+| S01 | PASS | import.meta.env ne sert que BASE_URL dans l’application ; aucun secret privé dans le bundle ou les assets. |
+| S02 | PASS | Recherche historique redacted sur patterns de clés/mots de passe : exemples pédagogiques uniquement, aucun secret valide identifié. |
+| S03 | N/A | Site statique sans clé service/admin ou backend connecté au navigateur. |
+| S04 | N/A | Aucune base/table/collection exposée par ce dépôt. |
+| S05 | N/A | Aucune donnée sensible persistée par ce site statique. |
+| S06 | N/A | Aucune zone authentifiée. |
+| S07 | N/A | Aucun identifiant de ressource utilisateur ni endpoint de données. |
+| S08 | N/A | Aucun endpoint acceptant des champs privilégiés. |
+| S09 | N/A | Aucune session cookie applicative. |
+| S10 | N/A | Aucun mot de passe stocké. |
+| S11 | N/A | Aucun login ou endpoint sensible. |
+| S12 | N/A | Aucun formulaire public, inscription ou commentaire. |
+| S13 | PASS | Aucun SQL exécuté par l’application ; les snippets SQL présents sont éditoriaux et non exécutés. |
+| S14 | N/A | Aucune frontière serveur recevant une entrée utilisateur dans ce dépôt. |
+| S15 | PASS | DOMPurify protège HTML articles/projets ; escapeHtml protège les blocs code avant rendu. |
+| S16 | N/A | Aucun upload. |
+| S17 | N/A | Aucune réponse API ou sérialiseur de données. |
+| S18 | PASS | Production renvoie CSP, X-Frame-Options DENY, nosniff, HSTS, referrer-policy et permissions-policy. |
+| S19 | PASS | HTTP redirige en 308 vers HTTPS ; les routes publiques HTTPS répondent. |
+| S20 | PASS | npm audit --omit=dev --audit-level=high : 0 vulnérabilité ; la couverture ne remplace pas une revue de dépendances dev exhaustive. |
 
-Les métadonnées de route et de locale sont maintenant gérées par `usePageMetadata` : title, description, robots, canonical, hreflang et URLs OG/Twitter suivent la page courante. Le JSON-LD FAQPage est injecté uniquement lorsque `/freelance` affiche la FAQ dans le code local ; le domaine public sert encore une version antérieure où la FAQ apparaît sur la racine. Le sitemap et `llms.txt` pointent vers les routes publiques actuelles dans le checkout. Le script `scripts/prerender-routes.mjs`, appelé par `postbuild`, produit quatre fichiers HTML avec le contenu et les métadonnées de chaque route ; `scripts/verify-build.mjs` vérifie leur présence et leurs marqueurs.
+## Remaining issues
 
-La présence de Search Console ne prouve pas une mesure client ni un consentement nécessaire. Aucun script Google Analytics n’a été trouvé dans le code audité ; cette distinction doit rester documentée dans la page légale.
+1. **Bloquant avant push/deploy :** corriger le mapping Caddy des routes sans slash et servir la page 404 prérenderisée au lieu de la homepage.
+2. **Bloquant de crédibilité :** valider les métriques et les avis, ou retirer les éléments non justifiables.
+3. **Bloquant de conformité propriétaire :** faire relire les mentions légales et la réalité des traitements déclarés.
+4. **Gate de release :** revoir le diff non commité et confirmer exactement les fichiers à publier ; cet audit n’a fait aucun reset/nettoyage.
+5. **À vérifier après publication :** /, /freelance, /freelance/, /mentions-legales, /mentions-legales/, une route inconnue, robots.txt, sitemap.xml, favicon, PDF CV, www→canonique, titres/descriptions et liens de production.
+6. **Polish non bloquant :** remplacer l’animation animate-bounce de la flèche hero et recontrôler les scores Lighthouse après correction éventuelle.
 
-## Fonctionnement et expérience utilisateur
-
-Les scénarios principaux passent : navigation, menu mobile, changement de langue, détail projet, galerie, ticker continu des cinq témoignages, ouverture FAQ, liens email/LinkedIn/GitHub et 404. Aucun message console, erreur de page ou requête échouée n’est apparu pendant les parcours Chromium audités. Les cartes de témoignage ont une largeur et une hauteur communes sur les largeurs testées ; le mouvement avance seul et se fige avec le bouton pause/reprise. Le viewport du ticker prend toute la largeur de la fenêtre sans créer de scrollbar horizontale.
-
-Le principal risque UX vient de la hiérarchie visuelle et du mouvement, pas d’un crash : le hero retarde encore son message, les sections différées peuvent apparaître tardivement et la page freelance est longue avec plusieurs blocs de poids similaire. Le ticker de témoignages avance automatiquement en continu, boucle sans rupture grâce à ses deux séquences, respecte la réduction de mouvement et propose une pause/reprise explicite. La largeur responsive est correcte dans la campagne Chromium ; Safari, Edge, Opera et la parité VPS ne sont pas des preuves requises dans cette passe.
-
-## Preuves positives
-
-- 21 projets uniques dans les quatre sources de données ; aucun doublon d’identifiant détecté.
-- 5 témoignages actuels : Éloi V., Luxury Auto, J. DM, Marino et Utilisateur ATS anonymisé.
-- 60 articles français et 60 entrées anglaises partageant les mêmes identifiants.
-- Les 41 images projet/client référencées existent ; les variantes WebP sont générées et le contrôle assets passe.
-- Les quatre routes publiques disposent d’un HTML prérendu dans `dist/`, avec titre, H1 et contenu vérifiés pour une lecture sans JavaScript.
-- `bloodborne-1440.webp` conserve ses dimensions 1440×2160 tout en passant de 898 KiB à 611 KiB.
-- Les 21 fiches projet exposent un résumé « tâches / résultats & gains » avant leur contenu détaillé ; le bloc métriques est conditionnel et contient les valeurs documentées disponibles.
-- Clé de Voûte affiche ses métriques fournies (+60 % de trafic SEO/GEO et +15 % de demandes de devis hebdomadaires) en français comme en anglais ; une fiche sans métrique n’affiche aucun panneau ni texte de remplacement.
-- Les cartes projet remplissent la largeur avec les captures panoramiques, conservent un `object-contain` lisible pour les visuels carrés/portrait et placent « En savoir plus » et « Code » côte à côte avant la démo pleine largeur.
-- Le ticker de témoignages affiche deux séquences des cinq avis validés, des cartes de dimensions communes (340 px mobile, 420 px desktop), un défilement linéaire continu et un contrôle pause/reprise ; son viewport prend 100 % de la fenêtre. Les largeurs 320, 375, 430, 768, 1280 et 1920 px ne provoquent pas de débordement du document.
-- Les pastilles de stack restent neutres et lisibles ; les ronds de la section Compétences & Technologies utilisent l’orange d’accent ; le lien de projet ATS Filter Resume et le dépôt PatriPro sont vérifiés.
-- Le propriétaire atteste le 13 septembre 2026 que les claims et métriques publiés sont réels, que les témoignages sont authentiques et que les droits photo sont acquis. Cette attestation autorise l’affichage ; aucun justificatif contractuel ou export analytique n’est stocké dans le dépôt.
-- Les routes principales rendent un élément main ; la racine a un h1, les pages freelance et légale ont leur contenu principal.
-- Axe ne remonte aucune violation sur les routes principales ni sur l’article Dev Notes ouvert.
-- La CI exécute lint, typecheck, build, vérification build, traductions, assets, tests unitaires, Playwright, liens et un audit Lighthouse sur les routes publiques.
-
-## Vérifications exécutées
-
-| Vérification | Résultat |
-| --- | --- |
-| npm.cmd run check | PASS : lint, typecheck, build Vite, verify:build, verify:translations, verify:performance-assets |
-| npm.cmd test | PASS : 1 fichier, 4 tests |
-| npm.cmd run test:axe | PASS : 3 tests |
-| npm.cmd run test:e2e | PASS : 9 tests |
-| npm.cmd run check:links | PASS : 30 OK, 1 UNKNOWN LinkedIn externe, 0 échec ; ATS Filter Resume et PatriPro répondent 200 |
-| npm.cmd audit --omit=dev --audit-level=high --json | PASS : 0 vulnérabilité de production |
-| Responsive Chromium | PASS : 40 cas, 320 à 1920 px, 0 overflow et 0 erreur ; contrôle supplémentaire du carousel pleine largeur à 375, 1500 et 2524 px |
-| Parcours Chromium | PASS : navigation, langue, projet, galerie, ticker continu des témoignages, pause/reprise, FAQ, menu mobile et liens |
-| Axe complémentaire | PASS : 3 tests ; aucune violation sérieuse/critique et test de contraste Dev Notes ciblé |
-| JSON-LD | PASS syntaxique : WebSite, WebPage, Person, ProfessionalService ; FAQPage présent uniquement sur `/freelance` |
-| Relecture anglaise | PASS local : 60/60 identifiants, 60 contenus non vides et aucun token accentué français restant dans les fichiers EN ; exemples/commentaires résiduels traduits |
-| Scanner statique anti-slop | TRIAGE : quelques détections heuristiques et deux faux négatifs de présence ; aucune conclusion automatique sans relecture |
-| Lighthouse | PASS : `npm run audit:lighthouse`, `/` = 89/100/100/100 et `/freelance` = 87/98/100/100 (performance/accessibilité/bonnes pratiques/SEO) |
-| Prérendu SEO | PASS : `postbuild` génère quatre HTML route-specific ; `verify:build` contrôle titres, H1 et marqueurs de contenu |
-| Domaine public | PARTIEL : racine et mentions légales répondent 200, route inconnue 404, HTTP→HTTPS 308 et headers de sécurité présents ; `/freelance` répond 404, sitemap public ancien et `www` HTTPS ne redirige pas |
-| Historique Git pour secrets | NON EXÉCUTÉ |
-
-Le contrôle Axe ne détectait pas A11Y-001 ; le test ciblé ajouté mesure désormais la couleur calculée des h3/h4 après correction. La prochaine passe visuelle devra confirmer la perception sur les différents écrans.
-
-## Points à traiter avant de déclarer la refonte terminée
-
-Les actions 1 à 11 concernent la passe visuelle anti-slop. Les actions 12 à 15 concernent le déploiement, le domaine, les contrôles juridiques et l’historique Git. Les preuves de claims, témoignages et photos sont déjà confirmées par le propriétaire et restent conservées hors dépôt.
-
-## Limites de preuve
-
-Cet audit est une photographie du checkout local et du domaine public observés le 13 septembre 2026. Les headers live et la redirection HTTP→HTTPS ont été contrôlés, mais le certificat n’a pas fait l’objet d’une analyse TLS exhaustive, les navigateurs non Chromium n’ont pas été testés et aucun run GitHub Actions n’est relu depuis ce checkout. Les droits photo, témoignages et claims sont confirmés par le propriétaire mais leurs justificatifs restent hors dépôt ; la suffisance juridique finale et l’historique Git restent à valider. Le domaine public n’est pas aligné avec le build local : un déploiement reste nécessaire. Les modifications déjà présentes dans le dépôt n’ont pas été annulées ; ce fichier ne constitue ni un commit ni un déploiement.
+Tant que les points 1 à 4 ne sont pas levés et relus sur le domaine public, le portfolio ne doit pas être annoncé comme prêt pour la production.

@@ -74,8 +74,13 @@ const Hero = () => {
           {/* Subtitle */}
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
             {isEnglish
-              ? 'I create internal tools and automations that simplify day-to-day work. 7+ years of experience, 30+ projects.'
-              : 'Je crée des outils internes et des automatisations qui simplifient le travail quotidien. 7+ ans d’expérience, 30+ projets.'}
+              ? 'I create internal tools and automations that simplify day-to-day work.'
+              : 'Je crée des outils internes et des automatisations qui simplifient le travail quotidien.'}
+          </p>
+          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+            {isEnglish
+              ? 'Over 7 years of experience and more than 30 projects completed.'
+              : 'Plus de 7 ans d’expérience et plus de 30 projets réalisés.'}
           </p>
 
           {/* Reassurance line */}
@@ -119,6 +124,7 @@ const Hero = () => {
             >
               <a href="/freelance" onClick={() => trackEvent("cta_click", { location: "hero", cta: "freelance" })}>{isEnglish ? 'My freelance services' : 'Mes services freelance'}</a>
             </Button>
+
           </div>
 
           {/* Keep the scroll affordance in the document flow so it cannot cover the CTAs. */}

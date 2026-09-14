@@ -9,7 +9,7 @@ export const freelanceProjects: Project[] = [
     category: "freelance",
     image: "img_projects/eloi_sport.png",
     tech: ["React", "Tailwind CSS", "JavaScript"],
-    github: "https://github.com/BastienLopez/Eloi_Coaching",
+    github: "",
     demo: "https://bastienlopez.github.io/Eloi_Coaching/",
     detailedContent: `
       <div class="project-detail">

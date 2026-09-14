@@ -14,6 +14,7 @@ import { ProjectNavigation } from "./ProjectNavigation";
 
 type ProjectDetailProps = {
   project: Project;
+  techHighlights: string[];
   categoryLabel: string;
   galleryImages: ProjectGalleryItem[];
   isEnglish: boolean;
@@ -27,6 +28,7 @@ type ProjectDetailProps = {
 
 export const ProjectDetail = ({
   project,
+  techHighlights,
   categoryLabel,
   galleryImages,
   isEnglish,
@@ -125,11 +127,12 @@ export const ProjectDetail = ({
             </div>
           )}
 
-          <div className="mb-8 flex flex-wrap gap-2 border-y border-border py-4">
-            {project.tech.map((tech) => (
+          <div className="mb-8 flex min-w-0 flex-nowrap gap-2 overflow-hidden border-y border-border py-4">
+            {techHighlights.map((tech) => (
               <span
                 key={tech}
-                className="rounded-sm border border-border bg-secondary/30 px-2.5 py-1 text-xs font-medium text-foreground/80"
+                title={tech}
+                className="min-w-0 flex-1 truncate rounded-full border border-border/80 bg-secondary/70 px-3 py-1.5 text-center text-xs font-medium leading-5 text-foreground/80"
               >
                 {tech}
               </span>

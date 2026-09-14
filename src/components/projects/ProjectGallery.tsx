@@ -8,7 +8,7 @@ type ProjectGalleryProps = {
   activeGalleryIndex: number;
   projectTitle?: string;
   isEnglish: boolean;
-  galleryViewerRef: RefObject<HTMLDivElement | null>;
+  galleryViewerRef: RefObject<HTMLDivElement>;
   resolveImage: (image?: string | null) => string;
   onClose: () => void;
   onPrevious: () => void;
