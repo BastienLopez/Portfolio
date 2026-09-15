@@ -272,6 +272,9 @@ test("publishes crawlable project and service pages without changing the three h
   for (const route of projectRoutes) {
     await page.goto(route);
     await expect(page.locator("h1")).toHaveCount(1);
+    await expect(page.locator("[data-project-detail]")).toHaveCount(1);
+    await expect(page.locator("[data-project-detail-hero]")).toBeVisible();
+    await expect(page.locator("[data-project-detail-stack]")).toBeVisible();
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "index, follow");
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://bastienlopez.fr${route}`);
     await expect(page.locator("[data-contextual-cta]")).toHaveCount(1);

@@ -1,0 +1,65 @@
+.skills-grid {
+  display: grid;
+  row-gap: 2.5rem;
+}
+
+.skills-category {
+  position: relative;
+  min-width: 0;
+  padding: 0.5rem 1rem;
+}
+
+/* Horizontal rules sit halfway between rows, with no outer frame. */
+.skills-category::before {
+  position: absolute;
+  inset: -1.25rem 0 auto;
+  height: 1px;
+  background: hsl(var(--primary) / 0.3);
+  content: "";
+}
+
+.skills-category:first-child::before {
+  content: none;
+}
+
+@media (min-width: 768px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .skills-category {
+    padding: 0.5rem 1.75rem 1rem;
+  }
+
+  .skills-category:nth-child(even) {
+    border-left: 1px solid hsl(var(--primary) / 0.3);
+  }
+
+  .skills-category:nth-child(-n + 2)::before {
+    content: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .skills-category:nth-child(n) {
+    border-left: 0;
+  }
+
+  .skills-category:not(:nth-child(3n + 1)) {
+    border-left: 1px solid hsl(var(--primary) / 0.3);
+  }
+
+  .skills-category:nth-child(-n + 3)::before {
+    content: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .skills-category {
+    padding-inline: 2rem;
+  }
+}

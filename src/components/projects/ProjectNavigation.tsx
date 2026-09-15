@@ -12,8 +12,8 @@ export const ProjectNavigation = ({
 }: ProjectNavigationProps) => (
   <Button
     onClick={onBack}
-    variant="outline"
-    className="mb-6 border-border text-foreground hover:border-primary hover:bg-secondary"
+    variant="ghost"
+    className="project-detail-back h-auto rounded-none px-0 text-sm text-muted-foreground hover:bg-transparent hover:text-foreground"
   >
     <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
     {isEnglish ? "Back to projects" : "Retour aux projets"}

@@ -1,6 +1,6 @@
 import { Brain, Cloud, Code2, Database, Server, Workflow } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/i18n";
+import "./Skills.css";
 
 const Skills = () => {
   const { isEnglish } = useLanguage();
@@ -45,50 +45,48 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-20 md:py-32 relative section-odd">
+    <section id="skills" aria-labelledby="skills-title" className="py-20 md:py-24 relative section-odd">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 id="skills-title" className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5">
               {isEnglish ? 'Skills & technologies' : 'Compétences & Technologies'}
             </h2>
-            <div className="mx-auto mb-6 h-1 w-20 bg-primary"></div>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <div className="mx-auto mb-7 h-1 w-24 bg-primary" aria-hidden="true"></div>
+            <p className="text-base leading-relaxed md:text-lg text-muted-foreground max-w-3xl mx-auto">
               {isEnglish ? 'A focused stack for building robust, maintainable, team-ready business applications, APIs and AI/n8n automations.' : 'Stack ciblée pour construire des applications métier, APIs et automatisations IA/n8n robustes, maintenables et exploitables en équipe.'}
             </p>
           </div>
 
           {/* Skills Grid */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="skills-grid">
             {skillCategories.map((category) => (
-              <Card
+              <div
                 key={category.title}
-                className="border-border bg-transparent p-5 shadow-none transition-colors duration-200 hover:border-primary/60 md:p-6"
+                className="skills-category"
               >
-                <div className="mb-4 flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-secondary/50">
-                    <category.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+                <div className="mb-7 flex min-h-10 items-center gap-5">
+                  <div className="shrink-0 border-r border-muted-foreground/70 pr-5">
+                    <category.icon className="h-8 w-8 text-primary" strokeWidth={1.8} aria-hidden="true" />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-foreground mb-1">
-                      {category.title}
-                    </h3>
-                  </div>
+                  <h3 className="text-xl xl:text-2xl font-bold leading-tight text-foreground">
+                    {category.title}
+                  </h3>
                 </div>
                 
-                <ul className="space-y-2">
+                <ul className="space-y-2.5">
                   {category.skills.map((skill) => (
                     <li
                       key={skill}
-                      className="flex items-center gap-2 text-sm text-muted-foreground"
+                      className="flex items-baseline gap-4 text-base leading-relaxed xl:text-lg text-muted-foreground"
                     >
-                      <div className="h-1.5 w-1.5 rounded-full bg-cta" aria-hidden="true"></div>
-                      {skill}
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-cta" aria-hidden="true"></span>
+                      <span>{skill}</span>
                     </li>
                   ))}
                 </ul>
-              </Card>
+              </div>
             ))}
           </div>
 

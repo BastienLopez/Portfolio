@@ -2,17 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import DOMPurify from "dompurify";
 import {
   ArrowRight,
-  Briefcase,
   ExternalLink,
-  Film,
-  Gamepad2,
   Github,
-  Rocket,
-  ShieldCheck,
-  Star,
-  WalletCards,
-  Workflow,
-  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -295,13 +286,6 @@ const englishProjectSummaries: Record<
   },
 };
 
-const featuredProjectConfig: Record<string, { icon: LucideIcon }> = {
-  "wallet-provider": { icon: ShieldCheck },
-  "n8n-reporting": { icon: Workflow },
-  "n8n-video-derush": { icon: Film },
-  "altme-wallet": { icon: WalletCards },
-};
-
 const projectTechHighlights: Record<string, string[]> = {
   "wallet-provider": ["Identity Wallet", "eIDAS 2.0", "OIDC4VC"],
   "n8n-reporting": ["n8n", "SocialPilot", "PDF"],
@@ -337,6 +321,9 @@ const getProjectDetailCta = (project: DisplayProject, isEnglish: boolean) => {
   return isEnglish ? "Discover the project →" : "Découvrir le projet →";
 };
 
+const getProjectCardLabel = (project: DisplayProject, isEnglish: boolean) =>
+  getProjectDetailCta(project, isEnglish).replace(/\s*→\s*$/, "");
+
 const getProjectLink = (projectId: string, fromFreelance = false) => {
   const path = getProjectPagePath(projectId);
   if (!path) return undefined;
@@ -354,9 +341,11 @@ const shouldContainProjectImage = (project: DisplayProject) => {
   const entry = getImageManifestEntry(project.image);
   if (!entry) return false;
 
-  // Preserve square/portrait artwork (wallet screens, documentation covers,
-  // desktop screenshots) while letting wide project captures fill the card.
-  return entry.width / entry.height < 1.35;
+  const aspectRatio = entry.width / entry.height;
+
+  // Keep the shared banner frame for regular captures, while preserving
+  // unusually wide, square, and portrait artwork in full.
+  return aspectRatio < 2 || aspectRatio > 2.6;
 };
 
 const prepareDetailedContent = (content: string) => {
@@ -889,19 +878,15 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
 
   const categoryDefinitions = {
     emploi: {
-      icon: Briefcase,
       title: isEnglish ? "PROFESSIONAL PROJECTS" : "PROJETS PRO",
     },
     freelance: {
-      icon: Rocket,
       title: isEnglish ? "FREELANCE PROJECTS" : "MISSIONS FREELANCE",
     },
     opensource: {
-      icon: Star,
       title: "OPEN SOURCE",
     },
     gaming: {
-      icon: Gamepad2,
       title: "GAMING / MOBILE",
     },
   };
@@ -1169,65 +1154,72 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
   return (
     <section
       id="projects"
-      className={`px-4 w-full overflow-x-hidden section-even ${
+      className={`project-list-section px-4 w-full overflow-x-hidden section-even ${
         isFreelancePage
           ? "pb-20 pt-8 md:pb-20 md:pt-12"
           : "py-20"
       }`}
     >
-      <div className="container mx-auto max-w-7xl w-full">
+      <div className="project-list-container container mx-auto max-w-7xl w-full">
         {/* Section Header */}
-        <div className="text-center mb-12 w-full">
-          <h2
+      <div className="project-section-header mb-12 w-full">
+        <div>
+        <h2
             ref={projectsHeadingRef}
             tabIndex={-1}
-            className="text-3xl md:text-4xl font-bold mb-4 focus-visible:outline-none"
+            className="project-section-title focus-visible:outline-none"
           >
             {isFreelancePage
-              ? (isEnglish ? "Selected freelance work" : "Réalisations freelance sélectionnées")
-              : (isEnglish ? "Case studies & work" : "Études de cas et réalisations")}
+              ? (isEnglish ? "Selected freelance work." : "Réalisations freelance sélectionnées.")
+              : (isEnglish ? "Selected projects." : "Projets sélectionnés.")}
           </h2>
-          <div className="mx-auto mb-6 h-1 w-20 bg-primary"></div>
-          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto mb-8 px-4">
+          <p className="project-section-description">
             {isFreelancePage
               ? (isEnglish
                 ? "Three representative projects, with the role, deliverables and value made explicit."
                 : "Trois réalisations représentatives, avec le rôle, les livrables et la valeur produite.")
               : (isEnglish
-                ? "Business applications, APIs, AI workflows and automations: a selection of concrete projects, followed by access to all work and explorations."
-                : "Applications métier, APIs, workflows IA et automatisations : une sélection de projets concrets, puis accès à l'ensemble des réalisations et explorations.")}
+                ? "Context, role, solution and value delivered through selected professional work."
+                : "Contexte, rôle, solution et valeur produite à travers une sélection de réalisations professionnelles.")}
           </p>
+        </div>
+          {!isFreelancePage ? (
+            <a className="project-section-all-link" href="#projects-list">
+              {isEnglish ? "View all projects" : "Voir tous les projets"}
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
+            </a>
+          ) : null}
         </div>
 
         {!selectedProject && !isFreelancePage && (
-          <div className="mb-12">
-            <div className="mb-5">
-              <h3 className="text-2xl md:text-3xl font-bold mb-2">
+          <div className="project-featured-section mb-12">
+            <div className="sr-only">
+              <h3>
                 {isEnglish
                   ? `${visibleFeaturedCaseStudies.length} key projects`
                   : `${visibleFeaturedCaseStudies.length} projets clés`}
               </h3>
-              <p className="text-sm md:text-base text-muted-foreground">
+              <p>
                 {isEnglish
                   ? "Context, need, role, solution and value delivered. Select a project to open its case study."
                   : "Contexte, besoin, rôle, solution et valeur produite. Sélectionnez un projet pour ouvrir son étude de cas."}
               </p>
             </div>
-            <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {visibleFeaturedCaseStudies.map((item) => {
-                const config = featuredProjectConfig[item.id];
+            <div className="project-featured-grid mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {visibleFeaturedCaseStudies.map((item, index) => {
                 const isSelected = selectedFeaturedProjectId === item.id;
                 const projectPath = getProjectLink(item.id, isFreelancePage);
-                const splitTitle =
-                  item.id === "n8n-reporting" || item.id === "n8n-video-derush"
-                    ? item.title.split(" — ")
-                    : null;
 
                 return (
-                  <div key={item.id} className="flex min-w-0 flex-col gap-1">
+                  <div key={item.id} className="project-featured-item flex min-w-0 flex-col gap-1">
+                    <p className="project-featured-eyebrow">
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                      <span className="project-featured-eyebrow-line" aria-hidden="true" />
+                      <span>{isEnglish ? "PROJECT" : "PROJET PRO"}</span>
+                    </p>
                     <Button
                       type="button"
-                      variant={isSelected ? "default" : "outline"}
+                      variant="ghost"
                       onClick={() =>
                         setSelectedFeaturedProjectId((currentId) =>
                           currentId === item.id ? null : item.id,
@@ -1235,36 +1227,22 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                       }
                       aria-expanded={isSelected}
                       aria-controls="featured-case-study"
-                      className={`h-auto min-h-20 whitespace-normal px-3 py-4 text-center text-xs transition-colors sm:text-sm md:text-base ${
+                      className={`project-featured-title h-auto min-h-0 whitespace-normal px-0 py-1 text-left text-base transition-colors md:text-lg ${
                         isSelected
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-border hover:border-primary hover:bg-primary/5"
+                          ? "text-primary"
+                          : "text-foreground hover:bg-transparent hover:text-primary"
                       }`}
                     >
-                      <config.icon className="mr-2 h-5 w-5 shrink-0" aria-hidden="true" />
-                      <span
-                        className={
-                          splitTitle
-                            ? "flex flex-col text-center leading-6"
-                            : undefined
-                        }
-                      >
-                        {splitTitle ? (
-                          <>
-                            <span>{splitTitle[0]}</span>
-                            <span>— {splitTitle.slice(1).join(" — ")}</span>
-                          </>
-                        ) : (
-                          item.title
-                        )}
-                      </span>
+                      {item.title}
                     </Button>
                     {projectPath ? (
                       <a
                         href={projectPath}
-                        className="text-center text-xs font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-primary hover:underline"
+                        aria-label={isEnglish ? "Open dedicated case study" : "Ouvrir l’étude de cas dédiée"}
+                        className="project-featured-link"
                       >
-                        {isEnglish ? "Open dedicated case study" : "Ouvrir l’étude de cas dédiée"}
+                        {isEnglish ? "Open the case study" : "Ouvrir l’étude de cas"}
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </a>
                     ) : null}
                   </div>
@@ -1460,30 +1438,20 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
           <>
             {/* Category Buttons */}
             {!isFreelancePage && (
-              <div className="mb-4 text-center">
-                <p className="text-sm text-muted-foreground">
-                  {isEnglish
-                    ? "A selection of recent work, from frontend to backend."
-                    : "Une sélection de mes réalisations récentes, du frontend au backend."}
-                </p>
-              </div>
-            )}
-            {!isFreelancePage && (
-              <div className="mx-auto mb-12 grid w-full max-w-5xl grid-cols-2 gap-3 px-2 lg:grid-cols-4">
-                {Object.entries(categoryConfig).map(([key, config]) => (
+              <div id="projects-list" className="project-category-tabs mx-auto mb-12 grid w-full grid-cols-2 gap-3 px-2 lg:grid-cols-4">
+                {Object.entries(categoryConfig).map(([key]) => (
                   <Button
                     key={key}
                     onClick={() =>
                       handleCategoryClick(key as DisplayProjectCategory)
                     }
-                    variant={selectedCategory === key ? "default" : "outline"}
-                      className={`w-full px-2 py-3 text-xs transition-colors sm:px-4 sm:text-sm md:px-5 md:py-4 md:text-base lg:px-6 lg:py-5 lg:text-lg ${
+                    variant="ghost"
+                    className={`project-category-tab w-full px-2 py-3 text-xs transition-colors sm:px-4 sm:text-sm md:px-5 md:py-4 md:text-base lg:px-6 lg:py-5 lg:text-lg ${
                       selectedCategory === key
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border text-foreground hover:border-primary/60 hover:bg-primary/5"
+                        ? "is-active text-primary"
+                        : "text-foreground/80 hover:bg-transparent hover:text-primary"
                     }`}
                   >
-                    <config.icon className="mr-2 h-5 w-5 shrink-0" aria-hidden="true" />
                     <span>{categoryLabels[key as DisplayProjectCategory]}</span>
                   </Button>
                 ))}
@@ -1516,7 +1484,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                     >
                       <div
                         className={`relative aspect-video w-full self-center overflow-hidden ${
-                          project.image === "img_projects/n8n.png" ? "bg-[#17060a]" : ""
+                          project.image.startsWith("img_projects/n8n_") ? "bg-[#17060a]" : ""
                         }`}
                       >
                         <img
@@ -1652,7 +1620,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
             )}
 
             {selectedCategory && !isFreelancePage && (
-              <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+              <div className="project-cards-grid grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
                 {filteredProjects.map((project) => {
                   const localizedProject = localizeProject(project);
                   const projectPath = getProjectLink(project.id, isFreelancePage);
@@ -1661,9 +1629,15 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                     <Card
                       key={project.id}
                       data-project-card={project.id}
-                      className="group flex h-full flex-col overflow-hidden border-border bg-card shadow-none transition-colors duration-200 hover:border-primary/60"
+                      className="project-card-editorial group flex h-full flex-col overflow-hidden rounded-none border-border bg-card shadow-none transition-colors duration-200 hover:border-primary/60"
                     >
-                      <div className="relative flex h-48 items-center justify-center overflow-hidden bg-secondary md:h-56 lg:h-52">
+                      <div
+                        className={`project-card-media relative flex aspect-[16/7] w-full items-center justify-center overflow-hidden ${
+                          project.image === "img_projects/wallet_provider-phones.png"
+                            ? "bg-white"
+                            : "bg-card"
+                        }`}
+                      >
                         <img
                           src={resolveImage(project.image)}
                           srcSet={getImageSrcSet(project.image, resolveImage)}
@@ -1674,25 +1648,25 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                           width={getImageManifestEntry(project.image)?.width}
                           height={getImageManifestEntry(project.image)?.height}
                           className={shouldContainProjectImage(project)
-                            ? "max-h-full max-w-full rounded-[5px] object-contain"
-                            : "h-full w-full object-cover"}
+                            ? "block h-full w-full object-contain"
+                            : "block h-full w-full object-cover"}
                         />
                       </div>
-                      <div className="flex flex-1 flex-col p-6">
-                        <h3 className="min-h-14 text-xl font-bold leading-7 text-foreground">
+                      <div className="project-card-content flex flex-1 flex-col p-4 md:p-5">
+                        <h3 className="min-h-[3rem] text-lg font-semibold leading-6 text-foreground md:text-xl md:leading-6">
                           {localizedProject.title}
                         </h3>
-                        <p className="mt-4 min-h-[7rem] text-sm leading-relaxed text-muted-foreground">
+                        <p className="mt-2 min-h-[6rem] text-sm leading-6 text-muted-foreground">
                           {localizedProject.description}
                         </p>
                         <div
                           data-project-tech
-                          className="mt-4 grid min-h-10 min-w-0 grid-cols-3 items-stretch text-center text-sm font-semibold leading-6 text-foreground/75"
+                          className="project-card-tech mt-4 grid min-h-10 min-w-0 grid-cols-3 items-stretch text-center text-xs font-semibold leading-5 text-foreground/75 md:text-sm"
                         >
                           {getProjectTechHighlights(project).map((tech, index) => (
                             <span
                               key={tech}
-                              className="relative flex min-h-10 min-w-0 items-center justify-center break-words whitespace-normal px-2"
+                              className="relative flex min-h-10 min-w-0 items-center justify-center break-words whitespace-normal px-1"
                             >
                               {index > 0 ? (
                                 <span
@@ -1706,50 +1680,49 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                             </span>
                           ))}
                         </div>
-                        <div className="mt-auto space-y-3 pt-6">
-                          <div className={`grid gap-3 ${project.github ? "grid-cols-2" : "grid-cols-1"}`}>
+                        <div className="project-card-actions mt-auto space-y-3 pt-5">
+                          <div
+                            className={`project-card-action-row grid gap-3 ${
+                              project.github ? "grid-cols-2" : "grid-cols-1"
+                            }`}
+                          >
                             {projectPath ? (
-                              <Button
-                                asChild
-                                variant="outline"
-                                size="sm"
-                                className="w-full min-w-0 border-border px-2 text-xs text-foreground hover:border-primary hover:text-primary sm:text-sm"
-                              >
-                                <a href={projectPath}>
-                                  {getProjectDetailCta(project, isEnglish)}
-                                </a>
-                              </Button>
+                              <a className="project-card-link" href={projectPath}>
+                                {getProjectCardLabel(project, isEnglish)}
+                                <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                              </a>
                             ) : (
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="w-full min-w-0 border-border px-2 text-xs text-foreground hover:border-primary hover:text-primary sm:text-sm"
+                              <button
+                                type="button"
+                                className="project-card-link"
                                 onClick={() => handleProjectClick(project)}
                               >
-                                {getProjectDetailCta(project, isEnglish)}
-                              </Button>
+                                {getProjectCardLabel(project, isEnglish)}
+                                <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                              </button>
                             )}
                             {project.github && (
-                              <Button
-                                asChild
-                                size="sm"
-                                variant="outline"
-                                className="w-full min-w-0 border-border px-2 text-xs text-foreground hover:border-primary hover:text-primary sm:text-sm"
+                              <a
+                                className="project-card-link"
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
                               >
-                                <a href={project.github} target="_blank" rel="noopener noreferrer">
-                                  <Github className="mr-2 h-4 w-4 shrink-0" aria-hidden="true" />
-                                  Code
-                                </a>
-                              </Button>
+                                <Github className="h-4 w-4 shrink-0" aria-hidden="true" />
+                                {isEnglish ? "Source code" : "Code"}
+                              </a>
                             )}
                           </div>
                           {project.demo && (
-                            <Button asChild size="lg" className="w-full bg-cta text-cta-foreground hover:bg-cta/90">
-                              <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="mr-2 h-4 w-4" aria-hidden="true" />
-                                {isEnglish ? "View project" : "Voir le projet"}
-                              </a>
-                            </Button>
+                            <a
+                              className="project-card-link project-card-demo"
+                              href={project.demo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {isEnglish ? "View project" : "Voir le projet"}
+                              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden="true" />
+                            </a>
                           )}
                         </div>
                       </div>

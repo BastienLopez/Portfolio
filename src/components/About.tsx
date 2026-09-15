@@ -82,7 +82,7 @@ const About = () => {
                       } ${index === stats.length - 1 ? "pb-0 sm:pr-0" : ""}`}
                     >
                       <Icon className="mb-5 h-7 w-7 text-primary" aria-hidden="true" />
-                      <p className="text-5xl font-semibold tracking-tight text-foreground md:text-6xl">
+                      <p className="break-words text-5xl font-semibold tracking-tight text-foreground md:text-6xl">
                         {stat.value}
                       </p>
                       <p className="mt-2 max-w-[12rem] text-sm leading-6 text-muted-foreground">

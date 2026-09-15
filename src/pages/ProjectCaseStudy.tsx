@@ -196,9 +196,7 @@ const ProjectCaseStudy = () => {
     return <NotFound />;
   }
 
-  const title = isEnglish ? definition.title.en : definition.title.fr;
   const intro = isEnglish ? definition.intro.en : definition.intro.fr;
-  const description = isEnglish ? definition.description.en : definition.description.fr;
   const activeProject = activeGallery
     ? localizedProjects.find((project) => project.id === activeGallery.projectId)
     : undefined;
@@ -231,30 +229,12 @@ const ProjectCaseStudy = () => {
         <script type="application/ld+json">
           {JSON.stringify(projectSchema(definition, localizedProjects, isEnglish))}
         </script>
-        <article className="section-even px-4 py-20 md:py-28">
+        <article className="section-even px-4 py-16 md:py-20">
           <div className="mx-auto w-full max-w-7xl">
-            <nav aria-label={isEnglish ? "Breadcrumb" : "Fil d’Ariane"} className="mb-10 text-sm text-muted-foreground">
-              <Link to="/" className="transition-colors hover:text-primary">Bastien Lopez</Link>
-              <span className="mx-2" aria-hidden="true">/</span>
-              <Link to={projectsReturnPath} className="transition-colors hover:text-primary">{isEnglish ? "Projects" : "Projets"}</Link>
-              <span className="mx-2" aria-hidden="true">/</span>
-              <span className="text-foreground/80">{title}</span>
-            </nav>
-
-            <header className="mx-auto mb-14 max-w-4xl text-center">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                {isEnglish ? "Project case study" : "Étude de cas projet"}
-              </p>
-              <h1 className="text-4xl font-bold tracking-tight md:text-6xl">{title}</h1>
-              <div className="mx-auto mt-6 h-1 w-20 bg-primary" aria-hidden="true" />
-              <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-foreground/85">{description}</p>
-              <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-muted-foreground">{intro}</p>
-            </header>
-
-            <div className="space-y-16">
+            <div className="space-y-20 md:space-y-28">
               {localizedProjects.map((project) => {
                 const galleryImages = getGalleryImages(project);
-                const techHighlights = project.tech.slice(0, 3);
+                const techHighlights = project.tech;
 
                 return (
                   <section key={project.id} aria-labelledby={`${project.id}-title`}>
@@ -268,6 +248,7 @@ const ProjectCaseStudy = () => {
                       galleryImages={galleryImages}
                       isEnglish={isEnglish}
                       isErpCaseStudy={false}
+                      intro={intro}
                       resolveImage={resolveImage}
                       prepareDetailedContent={prepareDetailedContent}
                       onBack={() => navigate(projectsReturnPath)}

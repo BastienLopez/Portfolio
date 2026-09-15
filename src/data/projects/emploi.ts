@@ -5,7 +5,7 @@ export const n8nReportingProject: Project = {
   title: 'Automatisations n8n — Reporting',
   description: 'Workflow n8n qui transforme les rapports PDF SocialPilot en reportings social media clairs et prêts à relire pour les clients CM : collecte, KPI, analyse, génération et contrôle qualité.',
   category: 'emploi',
-  image: 'img_projects/n8n.png',
+  image: 'img_projects/n8n_reporting.png',
   tech: ['n8n', 'SocialPilot', 'Gmail API', 'Google Drive', 'PDF', 'OCR', 'Discord'],
   detailedContent: `
     <div class="project-detail">
@@ -118,7 +118,7 @@ export const n8nVideoDerushProject: Project = {
   title: 'Automatisations n8n — Dérush vidéo',
   description: 'Pipeline n8n qui transforme des rushes bruts en séquences sélectionnées, pré-montage, sous-titres, preview et livrables prêts pour la production de formats Instagram et TikTok.',
   category: 'emploi',
-  image: 'img_projects/n8n.png',
+  image: 'img_projects/n8n_derush.png',
   tech: ['n8n', 'Google Drive API', 'FFmpeg', 'Whisper', 'EDL', 'SRT / ASS', 'JavaScript'],
   detailedContent: `
     <div class="project-detail">
@@ -233,7 +233,7 @@ export const emploiProjects: Project[] = [
     title: 'Altme Wallet Provider',
     description: "Solution de Wallet d'identité numérique pour entreprises et particuliers. Gestion de données vérifiables, conformité eIDAS 2.0 et interopérabilité avec l'EUDI Wallet européen.",
     category: 'emploi',
-    image: 'img_projects/wallet_provider.png',
+    image: 'img_projects/wallet_provider-phones.png',
     tech: ['Identity Wallet', 'eIDAS 2.0', 'Verifiable Credentials', 'OIDC4VC', 'EBSI', 'SSI'],
     demo: 'https://www.talao.io/index_fr.html',
     detailedContent: `
@@ -488,7 +488,7 @@ export const emploiProjects: Project[] = [
         </div>
       </div>
     `,
-    gallery: ['img_projects/wallet_provider.png']
+    gallery: ['img_projects/wallet_provider-phones.png']
   },
     {
     id: 'altme-wallet',
