@@ -57,7 +57,7 @@ const pageCopy = {
       {
         number: "02",
         slug: "applications-metier",
-        title: "Applications métier sur mesure pour PME",
+        title: "Applications sur mesure pour PME",
         description:
           "ERP, back-office, portail interne ou tableau de bord : je transforme vos règles métier en parcours simples et utilisables.",
         deliverables: "Front, API, droits d’accès, données et suivi des cas réels.",
@@ -228,7 +228,14 @@ const Freelance = () => {
               {copy.eyebrow}
             </p>
             <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-              {copy.title}
+              {isEnglish ? (
+                copy.title
+              ) : (
+                <>
+                  <span className="block">Développeur web freelance</span>
+                  <span className="block">pour des outils utiles.</span>
+                </>
+              )}
             </h1>
             <div className="mt-7 h-px w-24 bg-primary/80" aria-hidden="true" />
             <p className="mt-7 max-w-3xl text-lg leading-8 text-foreground/85 md:text-xl">

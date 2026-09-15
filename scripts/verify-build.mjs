@@ -129,6 +129,14 @@ if (existsSync(path.join(distDirectory, "index.html"))) {
     failures.push("The prerendered home page does not contain ProfilePage structured data.");
   }
 
+  if (!indexHtml.includes('"@type":"CollectionPage"') && !indexHtml.includes('"@type": "CollectionPage"')) {
+    failures.push("The prerendered home page does not contain the Dev Notes CollectionPage schema.");
+  }
+
+  if (!indexHtml.includes('"@type":"ItemList"') && !indexHtml.includes('"@type": "ItemList"')) {
+    failures.push("The prerendered home page does not contain the Dev Notes ItemList schema.");
+  }
+
   if (!indexHtml.includes('"hasOfferCatalog"') || !indexHtml.includes("https://bastienlopez.fr/services/sites-vitrines")) {
     failures.push("The prerendered home page does not expose the service offer catalog.");
   }
@@ -249,6 +257,9 @@ for (const slug of articleRoutes) {
   const html = readText(relativePath);
   if (!html.includes('"@type":"TechArticle"') && !html.includes('"@type": "TechArticle"')) {
     failures.push(`Prerendered ${relativePath} does not contain TechArticle structured data.`);
+  }
+  if (!html.includes('meta name="keywords"') || !html.includes('property="article:section"')) {
+    failures.push(`Prerendered ${relativePath} does not contain article keyword and section metadata.`);
   }
   if (!html.includes(`https://bastienlopez.fr/notes/${slug}`)) {
     failures.push(`Prerendered ${relativePath} does not contain its canonical production URL.`);

@@ -1,13 +1,11 @@
 .devnotes-section {
-  background-color: hsl(var(--background));
+  background: #14191f;
 }
 
 .devnotes-inline-section {
   padding-top: clamp(2.5rem, 4vw, 3.75rem);
   padding-bottom: clamp(4rem, 8vw, 6rem);
-  background:
-    radial-gradient(circle at 78% 7%, hsl(var(--primary) / 0.11), transparent 27rem),
-    linear-gradient(145deg, #07131e 0%, #081824 58%, #06111a 100%);
+  background: #14191f;
 }
 
 .devnotes-hero {

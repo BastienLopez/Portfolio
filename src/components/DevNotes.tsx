@@ -13,7 +13,7 @@ import { Button } from './ui/button';
 import type { Article, ArticleCategory, ArticleTranslation } from '../data/articles';
 import { articlePageDefinitions, getArticlePageDefinitionById } from '../data/articles/pages';
 import { estimateReadingMinutes } from '@/lib/article-content';
-import { useLanguage } from '@/lib/i18n';
+import { SITE_ORIGIN, useLanguage } from '@/lib/i18n';
 import { Link, useNavigate } from 'react-router-dom';
 import './DevNotes.css';
 import '../pages/Article.css';
@@ -22,6 +22,14 @@ const RenderedArticleContent = lazy(() => import('@/components/RenderedArticleCo
 
 type SelectableCategory = Exclude<ArticleCategory, never>;
 type LocalizedArticle = Article & { titleEn: string; contentEn: string };
+type CategoryConfig = {
+  icon: LucideIcon;
+  title: string;
+  description: {
+    fr: string;
+    en: string;
+  };
+};
 
 const mergeTranslations = (articles: Article[], translations: ArticleTranslation[]): LocalizedArticle[] => {
   const translationsById = new Map(translations.map((translation) => [translation.id, translation]));
@@ -71,6 +79,44 @@ const articleLoaders: Record<SelectableCategory, () => Promise<LocalizedArticle[
   },
 };
 
+const devNotesSchema = (isEnglish: boolean) => {
+  const language = isEnglish ? 'en-US' : 'fr-FR';
+  const title = isEnglish ? 'Selected dev notes' : 'Dev Notes sélectionnées';
+  const description = isEnglish
+    ? 'Technical notes on development methods, CI/CD, tools, architecture and freelance project management.'
+    : 'Notes techniques sur les méthodes de développement, le CI/CD, les outils, l’architecture et la gestion de projet freelance.';
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${SITE_ORIGIN}/#devnotes`,
+        url: `${SITE_ORIGIN}/#devnotes`,
+        name: title,
+        description,
+        inLanguage: language,
+        isPartOf: { '@id': `${SITE_ORIGIN}/#website` },
+        mainEntity: { '@id': `${SITE_ORIGIN}/#devnotes-list` },
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${SITE_ORIGIN}/#devnotes-list`,
+        name: title,
+        description,
+        numberOfItems: articlePageDefinitions.length,
+        itemListOrder: 'https://schema.org/ItemListOrderAscending',
+        itemListElement: articlePageDefinitions.map((definition, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: isEnglish ? definition.title.en : definition.title.fr,
+          url: `${SITE_ORIGIN}/notes/${definition.slug}`,
+        })),
+      },
+    ],
+  };
+};
+
 const DevNotes = () => {
   const { isEnglish } = useLanguage();
   const navigate = useNavigate();
@@ -81,26 +127,46 @@ const DevNotes = () => {
   const [loadError, setLoadError] = useState(false);
   const loadRequestRef = useRef(0);
 
-  const categoryConfig: Record<SelectableCategory, { icon: LucideIcon; title: string }> = {
+  const categoryConfig: Record<SelectableCategory, CategoryConfig> = {
     culture: {
       icon: Brain,
       title: isEnglish ? 'Culture & methods' : 'Culture & Méthodes',
+      description: {
+        fr: 'Méthodes de travail, collaboration et repères pour construire un produit maintenable.',
+        en: 'Working methods, collaboration and practical guidance for maintainable products.',
+      },
     },
     devops: {
       icon: Settings2,
       title: 'CI/CD & DevOps',
+      description: {
+        fr: 'Déploiement, automatisation, observabilité et pratiques de livraison reproductibles.',
+        en: 'Deployment, automation, observability and repeatable delivery practices.',
+      },
     },
     tools: {
       icon: Puzzle,
       title: isEnglish ? 'Tools & productivity' : 'Outils & Productivité',
+      description: {
+        fr: 'Outils développeur, sécurité locale et organisation du travail au quotidien.',
+        en: 'Developer tools, local security and practical day-to-day productivity.',
+      },
     },
     architecture: {
       icon: Wrench,
       title: isEnglish ? 'Architecture & best practices' : 'Architecture & Bonnes pratiques',
+      description: {
+        fr: 'Architecture logicielle, qualité du code et décisions qui réduisent la dette technique.',
+        en: 'Software architecture, code quality and decisions that reduce technical debt.',
+      },
     },
     freelance: {
       icon: Briefcase,
       title: isEnglish ? 'Project management & freelance' : 'Gestion de projet & Freelance',
+      description: {
+        fr: 'Cadrage, estimation, communication et livraison de projets freelance utiles.',
+        en: 'Scoping, estimation, communication and delivery for focused freelance projects.',
+      },
     }
   };
 
@@ -131,6 +197,32 @@ const DevNotes = () => {
   useEffect(() => {
     void loadArticles('freelance');
   }, [loadArticles]);
+
+  useEffect(() => {
+    const schemaId = 'devnotes-collection-schema';
+    const script = document.getElementById(schemaId) ?? document.createElement('script');
+    script.id = schemaId;
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(devNotesSchema(isEnglish));
+    document.head.appendChild(script);
+
+    return () => {
+      if (script.parentNode) script.parentNode.removeChild(script);
+    };
+  }, [isEnglish]);
+
+  useEffect(() => {
+    if (!selectedArticle) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById('devnotes')?.scrollIntoView({
+        behavior: 'auto',
+        block: 'start',
+      });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [selectedArticle]);
 
   const handleCategoryClick = (category: SelectableCategory) => {
     if (selectedCategory === category) {
@@ -313,7 +405,15 @@ const DevNotes = () => {
                     <span className="devnotes-heading-line" aria-hidden="true" />
                     <h3 id="theme-notes-title">{isEnglish ? 'Notes by topic' : 'Notes par thème'}</h3>
                   </div>
-                  <p>{isEnglish ? 'Advice, methods and field notes for managing projects with confidence.' : "Conseils, méthodes et retours d’expérience pour mieux gérer vos projets."}</p>
+                  <p>
+                    {selectedCategory
+                      ? (isEnglish
+                        ? categoryConfig[selectedCategory].description.en
+                        : categoryConfig[selectedCategory].description.fr)
+                      : (isEnglish
+                        ? 'Advice, methods and field notes for managing projects with confidence.'
+                        : "Conseils, méthodes et retours d’expérience pour mieux gérer vos projets.")}
+                  </p>
                 </div>
                 <div className="devnotes-theme-grid animate-in fade-in duration-500">
                   {filteredArticles.map((article) => {

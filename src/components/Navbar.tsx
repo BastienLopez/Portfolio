@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { ChevronDown, Languages, Menu, X, Github, Linkedin, Mail } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -145,6 +145,15 @@ const Navbar = () => {
     { href: sectionHref("#contact"), label: isEnglish ? "Contact" : "Contact" },
   ];
 
+  const handleNavLinkClick = (label: string, closeMobile = false, event?: MouseEvent<HTMLAnchorElement>) => {
+    if (closeMobile) setIsMobileMenuOpen(false);
+
+    if (label === "Freelance" && location.pathname.replace(/\/+$/, "").endsWith("/freelance")) {
+      event?.preventDefault();
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+  };
+
   const socialLinks = [
     { href: "https://github.com/BastienLopez", icon: Github, label: "GitHub" },
     { href: "https://www.linkedin.com/in/bastien-lopez-fullstack/", icon: Linkedin, label: "LinkedIn" },
@@ -173,6 +182,7 @@ const Navbar = () => {
               <Link
                 key={link.href}
                 to={link.href}
+                onClick={(event) => handleNavLinkClick(link.label, false, event)}
                 className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors relative group"
               >
                 {link.label}
@@ -222,7 +232,7 @@ const Navbar = () => {
                   key={link.href}
                   to={link.href}
                   className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors text-center py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(event) => handleNavLinkClick(link.label, true, event)}
                 >
                   {link.label}
                 </Link>

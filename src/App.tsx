@@ -19,6 +19,21 @@ const AppNavigationEffects = () => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (hash) return;
+
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [hash, pathname]);
+
+  useEffect(() => {
     if (!hash || hash.startsWith("#project=")) return;
 
     let targetId: string;

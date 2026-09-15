@@ -20,7 +20,6 @@ import {
 } from "@/lib/project-content";
 import {
   getImageManifestEntry,
-  getImagePrefetchPath,
   getImageSrcSet,
 } from "@/lib/image-variants";
 
@@ -393,43 +392,6 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
   const projectDetailRef = useRef<HTMLDivElement>(null);
   const galleryViewerRef = useRef<HTMLDivElement>(null);
   const hadProjectSelectionRef = useRef(false);
-
-  useEffect(() => {
-    const projectImages = Array.from(
-      new Set(
-        projectsForView
-          .map((project) => project.image)
-          .filter((image): image is string => Boolean(image)),
-      ),
-    );
-
-    const prefetchProjectImages = () => {
-      const preferredWidth = window.innerWidth >= 1500 ? 960 : 480;
-
-      projectImages.forEach((image) => {
-        const prefetchPath = getImagePrefetchPath(image, preferredWidth);
-        if (!prefetchPath) return;
-
-        const href = resolveImage(prefetchPath);
-        const alreadyPrefetched = Array.from(
-          document.head.querySelectorAll<HTMLLinkElement>(
-            "link[data-project-image-prefetch]",
-          ),
-        ).some((link) => link.href === href);
-        if (alreadyPrefetched) return;
-
-        const link = document.createElement("link");
-        link.rel = "prefetch";
-        link.as = "image";
-        link.href = href;
-        link.dataset.projectImagePrefetch = "true";
-        document.head.appendChild(link);
-      });
-    };
-
-    const prefetchTimer = window.setTimeout(prefetchProjectImages, 300);
-    return () => window.clearTimeout(prefetchTimer);
-  }, [projectsForView]);
 
   const localizeProject = (project: DisplayProject) => {
     const englishDetailedContent = getEnglishDetailedContent(project.id);

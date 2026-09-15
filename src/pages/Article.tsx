@@ -47,18 +47,26 @@ const metadataFor = (
     };
   }
 
+  const section = categoryLabels[entry.article.category]?.fr ?? entry.article.category;
+  const sectionEn = categoryLabels[entry.article.category]?.en ?? entry.article.category;
+  const keywords = categoryKeywords[entry.article.category];
+
   return {
     fr: {
       title: `${entry.definition.title.fr} — Dev Notes | Bastien Lopez`,
       description: entry.definition.description.fr,
       path: `/notes/${entry.definition.slug}`,
       robots: "index, follow",
+      keywords: keywords?.fr,
+      section,
     },
     en: {
       title: `${entry.definition.title.en} — Dev Notes | Bastien Lopez`,
       description: entry.definition.description.en,
       path: `/notes/${entry.definition.slug}`,
       robots: "index, follow",
+      keywords: keywords?.en,
+      section: sectionEn,
     },
   };
 };
@@ -92,6 +100,7 @@ const articleSchema = (
         articleSection: category,
         keywords,
         wordCount,
+        timeRequired: `PT${estimateReadingMinutes(content)}M`,
         isAccessibleForFree: true,
         inLanguage: language,
         author: { "@id": `${SITE_ORIGIN}/#person` },

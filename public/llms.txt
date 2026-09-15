@@ -85,6 +85,12 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Demon’s Souls RPCS3: https://bastienlopez.fr/projets/demons-souls-rpcs3
 
 ## Dev Notes indexables
+- Point d’entrée thématique: https://bastienlopez.fr/#devnotes
+- Culture & Méthodes: pratiques de collaboration, agilité et qualité du travail logiciel.
+- CI/CD & DevOps: intégration continue, déploiement, observabilité et automatisation.
+- Outils & Productivité: outils développeur, sécurité locale et organisation quotidienne.
+- Architecture & Bonnes pratiques: architecture logicielle, qualité du code et réduction de la dette technique.
+- Gestion de projet & Freelance: cadrage, estimation, communication et livraison de missions.
 - Pipeline CI/CD GitHub Actions: https://bastienlopez.fr/notes/pipeline-ci-cd-github-actions
 - Docker pour débutants: https://bastienlopez.fr/notes/docker-pour-debutants
 - Monitoring après déploiement: https://bastienlopez.fr/notes/monitorer-une-application-apres-deploiement

@@ -47,9 +47,15 @@ test("keeps project history, gallery, and language navigation usable", async ({ 
   await page.getByRole("button", { name: "Choisir la langue" }).click();
   await page.getByRole("option", { name: "EN" }).click();
   await page.getByRole("button", { name: /Culture & methods/ }).click();
+  await expect(page.locator("#devnotes")).toHaveCSS("background-color", "rgb(20, 25, 31)");
   await page.getByRole("button", { name: /Read article/ }).first().click();
   await expect(page.getByText("Understanding the basics of agility: Scrum, Kanban, XP")).toBeVisible();
   await expect(page.getByText(/Agility was born from an overwhelming observation/)).toBeVisible();
+  await expect
+    .poll(() => page.locator("#devnotes").evaluate((element) => Math.abs(element.getBoundingClientRect().top)), {
+      timeout: 2_000,
+    })
+    .toBeLessThan(100);
   await expect(page.locator("[data-devnotes-back]")).toBeVisible();
   await page.locator("[data-devnotes-back]").click();
   await expect(page.locator("[data-devnotes-back]")).toHaveCount(0);
@@ -124,6 +130,24 @@ test("keeps the critical routes and responsive shell stable", async ({ page }) =
     );
     expect(overflow, `horizontal overflow at ${width}px`).toBeLessThanOrEqual(1);
   }
+});
+
+test("returns to the top when opening the freelance page from the navbar", async ({ page }) => {
+  await page.goto("/#projects");
+  await expect(page.locator("#projects")).toBeVisible();
+
+  await page.getByRole("link", { name: "Freelance", exact: true }).click();
+  await expect(page).toHaveURL(/\/freelance$/);
+  await expect(page.locator("#freelance")).toBeVisible();
+  await expect(page.locator("#freelance h1 > span")).toHaveCount(2);
+  await expect(page.locator("#freelance h1 > span").nth(1)).toHaveText("pour des outils utiles.");
+  await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 2_000 }).toBeLessThan(10);
+
+  await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "auto" }));
+  await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 2_000 }).toBeGreaterThan(10);
+  await page.getByRole("link", { name: "Freelance", exact: true }).click();
+  await expect(page).toHaveURL(/\/freelance$/);
+  await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 2_000 }).toBeLessThan(10);
 });
 
 test("aligns the freelance portfolio link with the projects section", async ({ page }) => {
@@ -206,6 +230,22 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
   await page.goto("/mentions-legales");
   await expect(page).toHaveTitle(/Legal notice — Bastien Lopez/);
   await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Legal, hosting/);
+  await expect(page.getByRole("link", { name: "Back to the portfolio", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Publisher", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Hosting", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Audience measurement and data", exact: true })).toBeVisible();
+  const legalSchemaTypes = await page.locator('script[type="application/ld+json"]').evaluateAll((elements) =>
+    elements.flatMap((element) => {
+      try {
+        const value = JSON.parse(element.textContent ?? "{}");
+        return value["@graph"]?.map((entry: { "@type"?: string }) => entry["@type"]) ?? [value["@type"]];
+      } catch {
+        return [];
+      }
+    }),
+  );
+  expect(legalSchemaTypes).toContain("WebPage");
+  expect(legalSchemaTypes).toContain("BreadcrumbList");
 
   await page.goto("/__metadata-does-not-exist__");
   await expect(page).toHaveTitle(/Page not found — Bastien Lopez/);
@@ -214,6 +254,18 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
 
 test("publishes standalone Dev Notes pages with canonical metadata and TechArticle schema", async ({ page }) => {
   await page.goto("/#devnotes");
+  const devNotesSchemaTypes = await page.locator('script[type="application/ld+json"]').evaluateAll((elements) =>
+    elements.flatMap((element) => {
+      try {
+        const value = JSON.parse(element.textContent ?? "{}");
+        return value["@graph"]?.map((entry: { "@type"?: string }) => entry["@type"]) ?? [value["@type"]];
+      } catch {
+        return [];
+      }
+    }),
+  );
+  expect(devNotesSchemaTypes).toContain("CollectionPage");
+  expect(devNotesSchemaTypes).toContain("ItemList");
   const noteLinks = page.locator('#devnotes a[href^="/notes/"]');
   await expect(noteLinks).toHaveCount(10);
 
@@ -238,6 +290,9 @@ test("publishes standalone Dev Notes pages with canonical metadata and TechArtic
     }),
   );
   expect(articleSchemaTypes).toContain("TechArticle");
+  await expect(page.locator('meta[name="keywords"]')).toHaveAttribute("content", /CI\/CD|DevOps/);
+  await expect(page.locator('meta[property="article:section"]')).toHaveAttribute("content", "CI/CD & DevOps");
+  await expect(page.locator(".devnotes-article-page")).toHaveCSS("background-color", "rgb(20, 25, 31)");
   await expect(page.getByRole("link", { name: "Retour aux Dev Notes", exact: true })).toBeVisible();
 });
 
@@ -318,6 +373,7 @@ test("publishes crawlable project and service pages without changing the three h
   for (const [route, heading] of serviceRoutes) {
     await page.goto(route);
     await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Retour aux projets freelance", exact: true })).toHaveAttribute("href", "/freelance#projects");
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "index, follow");
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://bastienlopez.fr${route}`);
     const serviceSchemaTypes = await page.locator('script[type="application/ld+json"]').evaluateAll((elements) =>
@@ -336,7 +392,7 @@ test("publishes crawlable project and service pages without changing the three h
 
   await page.goto("/freelance");
   await expect(page.getByRole("link", { name: /Création de site internet pour entreprise/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Applications métier sur mesure pour PME/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Applications sur mesure pour PME/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /Automatisations & intégrations/ })).toBeVisible();
 
   await page.goto("/#projects");

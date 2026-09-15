@@ -1,86 +1,84 @@
 # Audit complet du portfolio — état local et production
 
-Date de contrôle : **15 septembre 2026**  
-Périmètre : code source, build prerender, rendu local, Lighthouse local, tests E2E, liens critiques, fichiers SEO/GEO et dernier readback HTTP de `https://bastienlopez.fr`.
+Date du contrôle : **15 septembre 2026**
+Périmètre : source locale, build prerender, rendu navigateur, SEO/GEO, accessibilité, performance, liens, dépendances et readback HTTP de `https://bastienlopez.fr`.
 
 ## Verdict
 
-Le dépôt local est prêt pour une nouvelle publication. Le build produit **38 URLs** cohérentes : 22 projets, 10 Dev Notes, 3 services, l’accueil, la page freelance et les pages légales/404. Les métadonnées sont contrôlées avant écriture prerender, le canonical attendu est sans slash final et la fiche légale est correcte dans `dist/mentions-legales/index.html`.
+Le dépôt local est prêt pour publication. Le build courant produit **38 routes** : accueil, freelance, mentions légales, 22 projets, 3 services et 10 Dev Notes. Chaque route prerender possède un titre, une description, un canonical, un `h1` et des données structurées. La section Dev Notes expose aussi un `CollectionPage` et un `ItemList` reliant les notes dédiées. La page légale a été refondue dans le même système éditorial que les services et son HTML initial contient ses propres metadata et JSON-LD.
 
-La production n’est pas encore alignée sur ce build. Le dernier contrôle public trouve encore **36 URLs**, dont 34 qui commencent par une redirection 308 vers la version avec slash, et `/mentions-legales` sert le shell accueil dans le HTML initial. Le code de correction et la configuration Caddy de référence sont prêts, mais ils doivent encore être publiés sur l’hôte actif.
+Le retrait du prefetch global des images projet améliore nettement la charge initiale : le dernier Lighthouse local mesure **88/100** sur l’accueil et `/freelance`, avec un LCP à **3,2–3,3 s** (les scores performance varient selon l’exécution). SEO, accessibilité et bonnes pratiques restent à 100.
+
+La production publique n’a pas encore reçu ce build. Le dernier readback public expose 38 URLs finales en 200 mais 36 redirections 308 sur les URL sans slash et l’ancien HTML initial de `/mentions-legales`. La publication est bloquée par l’authentification de l’alias SSH `ovh-vps` ; le serveur atteint bien le VPS, mais répond `Permission denied (publickey,password)`.
 
 ## Notes actuelles
 
-Ces notes sont des évaluations techniques internes, pas des scores Google ou LLM officiels.
+Ces évaluations sont des notes techniques internes, pas des scores officiels Google ou LLM.
 
-| Axe | Local actuel | Production observée | Preuve et limite |
+| Axe | Local actuel | Production observée | Évidence / limite |
 | --- | ---: | ---: | --- |
-| Positionnement | **9,0/10** | **8,8/10** | Métier, Reims, offres, stack et cas d’usage explicites. |
-| Frontend / architecture | **9,1/10** | **8,8/10** | React/Vite, routes prerender, vérifications de cohérence et composants réutilisés. |
-| UI / UX | **8,8/10** | **8,5/10** | Hiérarchie premium, cartes projet, fiches et notes testées ; validation visuelle production à refaire après publication. |
-| Accessibilité / responsive | **9,5/10** | **9,5/10** | Lighthouse local et public à 100, axe/E2E sans régression connue. |
-| Anti-AI-slop | **8,0/10** | **7,8/10** | Contenu et parcours spécifiques ; preuves publiables et autorité externe restent limités. |
-| Copywriting | **8,8/10** | **8,5/10** | Français prioritaire, pages d’intention et CTA reliés aux services. |
-| Portfolio / projets | **9,0/10** | **8,7/10** | 22 projets conservés, liens et fiches accessibles ; source locale prête pour 38 routes. |
-| Crédibilité / preuves | **6,8/10** | **6,5/10** | Témoignages présents ; résultats vérifiables et autorisations externes non prouvés. |
-| SEO technique — code | **9,8/10** | **9,2/10** | Canonical, robots, JSON-LD, sitemap, prerender et assertions de build. |
-| SEO technique — production | **9,8/10** | **8,2/10** | La version publique conserve les 34 redirections et le HTML légal obsolète. |
-| SEO contenu | **8,8/10** | **8,0/10** | 10 notes françaises d’intention, 62 traductions contrôlées ; indexation réelle à mesurer. |
-| GEO technique | **9,7/10** | **8,7/10** | `llms.txt` et `llms-full.txt` locaux couvrent 22 projets et 10 notes ; production est encore sur l’ancien fichier. |
-| GEO autorité / entité | **6,8/10** | **6,8/10** | Citations, recommandations LLM et signaux externes ne sont pas contrôlables par le code seul. |
-| **Global observé** | **≈ 8,7/10** | **≈ 8,1/10** | Le dépôt est publiable ; l’écart restant est surtout le déploiement et les preuves externes. |
+| Positionnement | **9,0/10** | **8,8/10** | Métier, Reims, services et cas d’usage explicites. |
+| Frontend / architecture | **9,1/10** | **8,8/10** | React/Vite, composants réutilisables, routes prerender. |
+| UI / UX | **9,1/10** | **8,4/10** | Page légale et services alignés localement ; production à relire après publication. |
+| Accessibilité / responsive | **9,5/10** | **9,5/10** | Lighthouse 100 et axe/E2E sans régression. |
+| Anti-AI-slop | **8,5/10** | **7,9/10** | Design spécifique et contenu réel ; autorité externe encore limitée. |
+| Copywriting | **8,8/10** | **8,4/10** | Français prioritaire, pages d’intention et CTA cohérents. |
+| Portfolio / projets | **9,0/10** | **8,7/10** | 22 projets, stacks, images et fiches conservés. |
+| Crédibilité / preuves | **8,2/10** | **7,5/10** | Témoignages réels et accord confirmé par le propriétaire ; résultats externes chiffrés non publiés. |
+| SEO technique — code | **9,9/10** | **9,2/10** | Canonical, métadonnées de section, JSON-LD, robots, sitemap et prerender contrôlés. |
+| SEO technique — production | **9,8/10** | **7,9/10** | 36 redirections initiales et HTML légal obsolète tant que le build n’est pas publié. |
+| SEO contenu | **9,0/10** | **8,2/10** | 10 notes françaises d’intention, descriptions thématiques et liens internes ; indexation réelle à suivre. |
+| GEO technique | **9,9/10** | **9,2/10** | `llms.txt`, `llms-full.txt`, `CollectionPage`, `ItemList` et métadonnées d’articles alignés sur identité, services, projets et notes. |
+| GEO autorité / entité | **7,2/10** | **6,8/10** | Citations tierces et recommandations LLM restent à mesurer. |
+| **Global** | **≈ 9,1/10** | **≈ 8,2/10** | Local prêt ; l’écart est surtout publication, routage réel et autorité externe. |
 
-## Contrôles locaux
+## SEO et GEO : état précis
+
+### Validé localement
+
+- Sitemap : **38 URLs uniques**, toutes avec `lastmod`.
+- Métadonnées : **38/38** routes avec titre, description, canonical, `h1` et JSON-LD ; zéro doublon de titre ou de description.
+- Données structurées : `Person`, `ProfilePage`, `ProfessionalService`, `Service`, `CreativeWork`, `TechArticle`, `FAQPage` et `BreadcrumbList` selon les routes.
+- Crawlabilité : `robots.txt` autorise le site, déclare le sitemap et autorise `OAI-SearchBot`.
+- GEO documentaire : 22 projets, 10 notes et 3 services sont décrits dans les fichiers LLM avec des liens canoniques.
+- Dev Notes : les cinq thèmes sont décrits dans les fichiers LLM, les notes indexables sont reliées par un `ItemList` et les pages dédiées exposent leur section, leurs mots-clés et leur temps de lecture.
+- UX Dev Notes : l’ouverture d’une note inline repositionne le début de la note sous la navigation ; les pages dédiées et la section inline utilisent le fond exact `#14191f`.
+- Intentions françaises couvertes : création de site d’entreprise, développeur web freelance à Reims, application métier PME et automatisation n8n.
+- Open Graph/Twitter : image 1200x630 et métadonnées présentes.
+- Sécurité HTTP publique : HTTPS, HSTS, CSP, `X-Content-Type-Options`, `X-Frame-Options`, Referrer Policy et Permissions Policy présents.
+- Témoignages : leur réalité et l’accord de publication sont confirmés par l’utilisateur ; aucune action de retrait n’est requise.
+
+### À améliorer
+
+| Priorité | Action | Pourquoi |
+| --- | --- | --- |
+| **P0 publication** | Rétablir l’authentification SSH, publier le build et la règle Caddy sans slash final. | Éliminer les 36 redirections initiales et servir chaque canonical directement. |
+| **P0 publication** | Relire `/mentions-legales` sans JavaScript après déploiement. | Le premier HTML public doit afficher son titre, sa description, son canonical et son JSON-LD propres. |
+| **P1 suivi** | Mesurer Lighthouse public après publication. | Comparer le LCP public au local 3,2–3,3 s et vérifier le cache réel. |
+| **P1 autorité GEO** | Obtenir des citations externes réelles et cohérentes. | Le code facilite l’interprétation mais ne crée pas à lui seul l’autorité d’entité. |
+| **P1 suivi** | Lire Search Console et Bing après 7 à 28 jours. | Vérifier couverture, exclusions, requêtes, impressions et CTR réels. |
+| **P2 GEO** | Tenir un journal daté des tests LLM, sources citées et URL renvoyées. | Mesurer la découvrabilité sans promettre une recommandation automatique. |
+
+## Contrôles exécutés
 
 | Contrôle | Résultat |
 | --- | --- |
+| `npm ci` | **PASS**, 651 paquets installés, 0 vulnérabilité signalée |
 | `npm run lint` | **PASS** |
 | `npm run typecheck` | **PASS** |
-| `npm run build` | **PASS** ; prerender des 38 routes |
-| `npm run verify:build` | **PASS** ; canonical légal et index GEO vérifiés |
-| `npm run verify:translations` | **PASS** ; 62 articles FR/EN alignés |
-| `npm run verify:performance-assets` | **PASS** ; 151 WebP référencés |
-| `npm test -- --run` | **PASS** ; 7 tests |
-| `npm run test:e2e` | **PASS** après mise à jour du contrat Dev Notes ; 15 tests |
-| `npm run check:links` | **PASS** ; 29 OK, 1 inconnu externe, 0 échec |
-| `npm audit --audit-level=high` | **PASS** ; 0 vulnérabilité |
-| `npm run audit:lighthouse` | **PASS** ; accueil 72/100 performance, freelance 73/100, SEO/accessibilité/bonnes pratiques 100/100 |
-| Sitemap local | **PASS** ; 38 URLs uniques, 22 projets, 10 notes, `lastmod` présents |
-| `llms.txt` / `llms-full.txt` locaux | **PASS** ; identité, services, 22 projets et 10 notes |
+| `npm run build` | **PASS**, 38 routes prerender |
+| `npm run verify:build` | **PASS** |
+| `npm run verify:translations` | **PASS**, 62 articles alignés |
+| `npm run verify:performance-assets` | **PASS**, 151 WebP |
+| `npm test -- --run` | **PASS**, 7 tests |
+| `npm run test:e2e` | **PASS**, 16 tests |
+| `npm run check:links` | **PASS**, 29 OK, 1 inconnu externe, 0 échec |
+| `npm audit --audit-level=high` | **PASS**, 0 vulnérabilité |
+| Lighthouse local `/` | **88 performance / 100 accessibilité / 100 bonnes pratiques / 100 SEO**, LCP 3,2 s |
+| Lighthouse local `/freelance` | **88 performance / 100 accessibilité / 100 bonnes pratiques / 100 SEO**, LCP 3,3 s |
+| Probe SSH `ovh-vps` | **BLOQUÉ**, authentification refusée ; aucune publication effectuée |
+| `npm run audit:production` | **À relancer après publication** : dernier readback connu avec 36 redirections initiales et HTML légal obsolète |
 
-L’animation typing est conservée conformément à la demande. Le prerender attend sa fin et garde le métier ainsi que la phrase de soutien dans le HTML initial.
+## Conclusion opérationnelle
 
-## Contrôles publics au dernier readback
-
-Le script reproductible `npm run audit:production` a été exécuté avant cette mise à jour :
-
-- sitemap public : **36 URLs**, toutes finissent en HTTP 200, mais **34/36** commencent par une 308 vers une URL avec slash ;
-- `/mentions-legales` : titre et canonical initiaux incorrects (shell accueil), alors que `/mentions-legales/` rend la bonne fiche après redirection ;
-- titres, descriptions, canonical, `h1` et JSON-LD présents sur les routes finales ;
-- Lighthouse public précédent : SEO 100, accessibilité 100, bonnes pratiques 100, performance 72 sur `/` et 69 sur `/freelance/` ;
-- `robots.txt` public : 200, sitemap déclaré, `OAI-SearchBot` autorisé ;
-- `llms.txt` public : ancienne version avec 22 projets et 8 notes ; `llms-full.txt` public ne listait encore aucun projet ni note.
-
-Le résultat public actuel est donc **FAIL attendu (42 écarts)** jusqu’à publication du build local et de la règle de routage active. Le contrôle signale aussi explicitement l’absence des deux nouvelles notes dans le sitemap et `llms.txt`. Il ne s’agit pas d’un échec des contrôles locaux.
-
-## Ce qui est corrigé dans le dépôt
-
-- `scripts/prerender-routes.mjs` vérifie titre, description et canonical avant d’écrire chaque HTML.
-- `scripts/verify-build.mjs` vérifie la fiche légale, les 38 routes, les index GEO et les canonical.
-- `src/App.tsx` ne charge plus les providers inutilisés dans l’app-shell initiale.
-- Deux Dev Notes françaises répondent aux intentions « créer un site pour son entreprise » et « cadrer une automatisation n8n ».
-- `public/llms-full.txt` contient les 22 projets et 10 notes avec leurs URLs canoniques.
-- Les deux nouvelles notes sont reliées aux services concernés et présentes dans le sitemap, `llms.txt` et le prerender.
-- `scripts/audit-production.mjs` fournit un contrôle HTTP reproductible qui échoue dès qu’une redirection, une metadata ou un signal GEO diverge.
-
-## Priorités après publication
-
-1. Publier le build et appliquer la configuration de routage canonique sans slash (`deploy/Caddyfile.example` ou règle équivalente de l’hôte).
-2. Relancer `npm run audit:production` jusqu’à obtenir 38/38 routes finales en 200, zéro redirection initiale et la fiche légale correcte.
-3. Relire le sitemap dans Google Search Console et Bing Webmaster Tools ; mesurer couverture, exclusions, requêtes et impressions après 7 à 28 jours.
-4. Continuer à documenter les résultats publiables avec accord ou anonymisation cohérente.
-5. Tenir un journal daté de requêtes LLM afin de mesurer les citations et la découvrabilité, sans promettre une recommandation automatique.
-
-## Limites de preuve
-
-Le code peut rendre l’entité, les services et les contenus faciles à comprendre. Il ne peut pas forcer Google ou un LLM à crawler, indexer, citer ou recommander le site. Ces points dépendent du déploiement réel, de l’autorité externe, des citations indépendantes et du temps.
+Le SEO et le GEO techniques locaux sont solides et le principal problème de performance local est traité. Le site est prêt à être poussé dès que l’accès SSH de déploiement est rétabli. Après publication, il faut relancer l’audit HTTP, vérifier les 38 routes sans redirection, puis suivre Search Console, Bing et les citations LLM. Le score GEO autorité reste volontairement à **7,2/10** : des citations tierces réelles et des mesures externes sont nécessaires pour le faire progresser, et ne peuvent pas être inventées par le code.

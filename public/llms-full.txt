@@ -67,6 +67,8 @@ Ces fiches décrivent le contexte, le besoin, le rôle, la stack et le périmèt
 
 ## Index des Dev Notes
 
+Les notes sont regroupées par cinq thèmes accessibles depuis le point d’entrée public `https://bastienlopez.fr/#devnotes` : Culture & Méthodes, CI/CD & DevOps, Outils & Productivité, Architecture & Bonnes pratiques, et Gestion de projet & Freelance. Chaque note indexable ci-dessous possède une URL canonique et une page complète.
+
 - Pipeline CI/CD GitHub Actions : https://bastienlopez.fr/notes/pipeline-ci-cd-github-actions
 - Docker pour débutants : https://bastienlopez.fr/notes/docker-pour-debutants
 - Monitoring après déploiement : https://bastienlopez.fr/notes/monitorer-une-application-apres-deploiement

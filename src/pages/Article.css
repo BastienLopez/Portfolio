@@ -1,14 +1,12 @@
 .devnotes-article-page {
-  --article-surface: #07131e;
+  --article-surface: #14191f;
   background: var(--article-surface);
 }
 
 .devnotes-article-section {
   min-height: calc(100vh - 5rem);
   padding: clamp(2.5rem, 4vw, 3.75rem) 1rem clamp(4rem, 8vw, 6rem);
-  background:
-    radial-gradient(circle at 78% 7%, hsl(var(--primary) / 0.11), transparent 27rem),
-    linear-gradient(145deg, #07131e 0%, #081824 58%, #06111a 100%);
+  background: #14191f;
 }
 
 .devnotes-article-shell {

@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { ArrowRight, Check, Database, LayoutTemplate, MapPin, Workflow } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Database, LayoutTemplate, MapPin, Workflow } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -222,27 +222,42 @@ const Service = () => {
           {JSON.stringify(serviceSchema(definition, isEnglish))}
         </script>
         <article className="section-odd px-4 py-20 md:py-28">
-          <div className="mx-auto w-full max-w-6xl">
-            <nav aria-label={isEnglish ? "Breadcrumb" : "Fil d’Ariane"} className="mb-10 text-sm text-muted-foreground">
-              <Link to="/" className="transition-colors hover:text-primary">Bastien Lopez</Link>
-              <span className="mx-2" aria-hidden="true">/</span>
-              <Link to="/freelance" className="transition-colors hover:text-primary">{isEnglish ? "Freelance services" : "Services freelance"}</Link>
-              <span className="mx-2" aria-hidden="true">/</span>
-              <span className="text-foreground/80">{title}</span>
-            </nav>
+          <div className="mx-auto w-full max-w-7xl">
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-5">
+              <Link
+                to="/freelance#projects"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-foreground"
+              >
+                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
+                {isEnglish ? "Back to freelance projects" : "Retour aux projets freelance"}
+              </Link>
+              <nav aria-label={isEnglish ? "Breadcrumb" : "Fil d’Ariane"} className="text-xs text-muted-foreground">
+                <Link to="/" className="transition-colors hover:text-primary">Bastien Lopez</Link>
+                <span className="mx-2" aria-hidden="true">/</span>
+                <Link to="/freelance" className="transition-colors hover:text-primary">{isEnglish ? "Freelance services" : "Services freelance"}</Link>
+                <span className="mx-2" aria-hidden="true">/</span>
+                <span className="text-foreground/80">{title}</span>
+              </nav>
+            </div>
 
-            <header className="mx-auto max-w-4xl text-center">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                {isEnglish ? "Freelance service" : "Service freelance"}
-              </p>
-              <h1 className="text-4xl font-bold tracking-tight md:text-6xl">{title}</h1>
-              <div className="mx-auto mt-6 h-1 w-20 bg-primary" aria-hidden="true" />
-              <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-foreground/85">{description}</p>
-              <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-muted-foreground">{intro}</p>
-              <p className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary">
-                <MapPin className="h-4 w-4" aria-hidden="true" />
-                {isEnglish ? "Based in Reims · remote across France" : "Basé à Reims · interventions à distance partout en France"}
-              </p>
+            <header className="grid gap-10 border-b border-border py-12 md:py-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)] lg:items-end">
+              <div>
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+                  {isEnglish ? "Freelance service" : "Service freelance"}
+                </p>
+                <h1 className="max-w-4xl text-4xl font-bold leading-tight tracking-tight md:text-6xl">{title}</h1>
+                <div className="mt-6 h-px w-24 bg-primary" aria-hidden="true" />
+                <p className="mt-7 max-w-3xl text-lg leading-8 text-foreground/85">{description}</p>
+                <p className="mt-4 max-w-3xl text-base leading-7 text-muted-foreground">{intro}</p>
+              </div>
+              <div className="border-l border-primary/60 pl-6 lg:max-w-sm lg:justify-self-end">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{isEnglish ? "A clear starting point" : "Un point de départ clair"}</p>
+                <p className="mt-3 text-base leading-7 text-foreground/85">{audience}</p>
+                <p className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary">
+                  <MapPin className="h-4 w-4" aria-hidden="true" />
+                  {isEnglish ? "Based in Reims · remote across France" : "Basé à Reims · interventions à distance partout en France"}
+                </p>
+              </div>
             </header>
 
             {signature && signatureCopy && SignatureIcon ? (
@@ -264,59 +279,59 @@ const Service = () => {
               </section>
             ) : null}
 
-            <div className="mt-16 grid gap-6 lg:grid-cols-2">
-              <section className="rounded-xl border border-border bg-card p-6 md:p-8" aria-labelledby="service-audience-title">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{isEnglish ? "For whom" : "Pour qui"}</p>
-                <h2 id="service-audience-title" className="mt-3 text-2xl font-semibold">{isEnglish ? "A clear starting point" : "Un point de départ clair"}</h2>
-                <p className="mt-4 text-base leading-7 text-muted-foreground">{audience}</p>
-              </section>
-              <section className="rounded-xl border border-border bg-card p-6 md:p-8" aria-labelledby="service-deliverables-title">
+            <section className="mt-16 grid border-y border-border lg:grid-cols-2" aria-label={isEnglish ? "Service scope" : "Périmètre du service"}>
+              <section className="py-8 lg:border-r lg:border-border lg:pr-10" aria-labelledby="service-deliverables-title">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{isEnglish ? "Deliverables" : "Livrables"}</p>
                 <h2 id="service-deliverables-title" className="mt-3 text-2xl font-semibold">{isEnglish ? "What you receive" : "Ce que vous recevez"}</h2>
-                <ul className="mt-5 space-y-3 text-sm leading-6 text-foreground/80">
-                  {definition.deliverables.map((item) => (
-                    <li key={item.fr} className="flex gap-3">
-                      <Check className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                <ul className="mt-6 space-y-4 text-sm leading-6 text-foreground/80">
+                  {definition.deliverables.map((item, index) => (
+                    <li key={item.fr} className="flex gap-4 border-t border-border pt-4">
+                      <span className="text-xs font-semibold tracking-[0.16em] text-primary">{String(index + 1).padStart(2, "0")}</span>
                       <span>{isEnglish ? item.en : item.fr}</span>
                     </li>
                   ))}
                 </ul>
               </section>
-            </div>
-
-            <div className="mt-6 grid gap-6 lg:grid-cols-2">
-              <section className="rounded-xl border border-border bg-card p-6 md:p-8" aria-labelledby="service-approach-title">
+              <section className="border-t border-border py-8 lg:border-t-0 lg:pl-10" aria-labelledby="service-approach-title">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{isEnglish ? "Approach" : "Intervention"}</p>
                 <h2 id="service-approach-title" className="mt-3 text-2xl font-semibold">{isEnglish ? "How the work moves" : "Comment la mission avance"}</h2>
-                <ol className="mt-5 space-y-4">
+                <ol className="mt-6 space-y-4 text-sm leading-6 text-foreground/80">
                   {definition.approach.map((item, index) => (
-                    <li key={item.fr} className="flex gap-4 border-t border-border pt-4 text-sm leading-6 text-foreground/80">
-                      <span className="text-sm font-semibold tracking-[0.16em] text-primary">{String(index + 1).padStart(2, "0")}</span>
+                    <li key={item.fr} className="flex gap-4 border-t border-border pt-4">
+                      <span className="text-xs font-semibold tracking-[0.16em] text-primary">{String(index + 1).padStart(2, "0")}</span>
                       <span>{isEnglish ? item.en : item.fr}</span>
                     </li>
                   ))}
                 </ol>
               </section>
-              <section className="rounded-xl border border-border bg-card p-6 md:p-8" aria-labelledby="service-outcomes-title">
+            </section>
+
+            <section className="grid border-b border-border lg:grid-cols-2" aria-label={isEnglish ? "Service outcomes" : "Résultats du service"}>
+              <section className="py-8 lg:border-r lg:border-border lg:pr-10" aria-labelledby="service-outcomes-title">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{isEnglish ? "Value delivered" : "Valeur produite"}</p>
                 <h2 id="service-outcomes-title" className="mt-3 text-2xl font-semibold">{isEnglish ? "What the result should make easier" : "Ce que le résultat doit simplifier"}</h2>
-                <ul className="mt-5 space-y-3 text-sm leading-6 text-foreground/80">
+                <ul className="mt-6 space-y-4 text-sm leading-6 text-foreground/80">
                   {definition.outcomes.map((item) => (
-                    <li key={item.fr} className="flex gap-3">
+                    <li key={item.fr} className="flex gap-3 border-t border-border pt-4">
                       <Check className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
                       <span>{isEnglish ? item.en : item.fr}</span>
                     </li>
                   ))}
                 </ul>
               </section>
-            </div>
+              <section className="border-t border-border py-8 lg:border-t-0 lg:pl-10" aria-labelledby="service-audience-title">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{isEnglish ? "For whom" : "Pour qui"}</p>
+                <h2 id="service-audience-title" className="mt-3 text-2xl font-semibold">{isEnglish ? "A clear starting point" : "Un point de départ clair"}</h2>
+                <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground">{audience}</p>
+              </section>
+            </section>
 
             <section className="mt-16" aria-labelledby="service-proof-title">
               <div className="mb-7">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{isEnglish ? "Related work" : "Réalisations liées"}</p>
                 <h2 id="service-proof-title" className="mt-3 text-3xl font-bold tracking-tight">{isEnglish ? "See the work behind the service" : "Voir les réalisations derrière le service"}</h2>
               </div>
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="divide-y divide-border border-y border-border">
                 {definition.relatedProjectSlugs.map((projectSlug) => {
                   const project = allProjects.find((entry) => entry.id === projectSlug);
                   const routeMap: Record<string, string> = {
@@ -336,11 +351,12 @@ const Service = () => {
                   }[projectSlug] ?? projectSlug);
 
                   return (
-                    <Link key={projectSlug} to={route} className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/70">
-                      <span className="flex items-center justify-between gap-4 font-semibold">
+                    <Link key={projectSlug} to={route} className="group flex items-center justify-between gap-5 py-5 transition-colors hover:text-primary">
+                      <span className="flex items-center gap-4 font-semibold">
+                        <span className="text-xs font-semibold tracking-[0.16em] text-primary">{String(definition.relatedProjectSlugs.indexOf(projectSlug) + 1).padStart(2, "0")}</span>
                         {label}
-                        <ArrowRight className="h-4 w-4 text-primary transition-transform group-hover:translate-x-1" aria-hidden="true" />
                       </span>
+                      <ArrowRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-1" aria-hidden="true" />
                     </Link>
                   );
                 })}
@@ -370,7 +386,7 @@ const Service = () => {
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{isEnglish ? "Related notes" : "Notes liées"}</p>
                   <h2 id="service-notes-title" className="mt-3 text-3xl font-bold tracking-tight">{isEnglish ? "Go further on the topic" : "Approfondir le sujet"}</h2>
                 </div>
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="divide-y divide-border border-y border-border">
                   {serviceRelatedArticleSlugs[definition.slug].map((articleSlug) => {
                     const article = getArticlePageDefinition(articleSlug);
                     if (!article) return null;
@@ -378,15 +394,15 @@ const Service = () => {
                       <Link
                         key={article.slug}
                         to={`/notes/${article.slug}`}
-                        className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/70"
+                        className="group flex items-start justify-between gap-5 py-5 transition-colors hover:text-primary"
                       >
-                        <span className="flex items-center justify-between gap-4 font-semibold">
-                          {isEnglish ? article.title.en : article.title.fr}
-                          <ArrowRight className="h-4 w-4 text-primary transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                        <span>
+                          <span className="block font-semibold">{isEnglish ? article.title.en : article.title.fr}</span>
+                          <span className="mt-2 block text-sm leading-6 text-muted-foreground">
+                            {isEnglish ? article.description.en : article.description.fr}
+                          </span>
                         </span>
-                        <span className="mt-2 block text-sm leading-6 text-muted-foreground">
-                          {isEnglish ? article.description.en : article.description.fr}
-                        </span>
+                        <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-1" aria-hidden="true" />
                       </Link>
                     );
                   })}
