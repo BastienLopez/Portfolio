@@ -16,9 +16,9 @@ import { getArticlePageDefinition } from "@/data/articles/pages";
 import { SITE_ORIGIN, useLanguage, useRouteMetadata, type PageMetadata } from "@/lib/i18n";
 
 const serviceRelatedArticleSlugs: Record<ServicePageDefinition["slug"], readonly string[]> = {
-  "sites-vitrines": ["deploiement-production-checklist", "estimer-un-projet-freelance"],
+  "sites-vitrines": ["deploiement-production-checklist", "estimer-un-projet-freelance", "creer-site-internet-entreprise-cadrage"],
   "applications-metier": ["architecture-hexagonale", "docker-pour-debutants"],
-  "automatisations-n8n": ["pipeline-ci-cd-github-actions", "monitorer-une-application-apres-deploiement"],
+  "automatisations-n8n": ["pipeline-ci-cd-github-actions", "monitorer-une-application-apres-deploiement", "automatiser-processus-entreprise-n8n-cadrage"],
 };
 
 const metadataFor = (

@@ -215,7 +215,7 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
 test("publishes standalone Dev Notes pages with canonical metadata and TechArticle schema", async ({ page }) => {
   await page.goto("/#devnotes");
   const noteLinks = page.locator('#devnotes a[href^="/notes/"]');
-  await expect(noteLinks).toHaveCount(8);
+  await expect(noteLinks).toHaveCount(10);
 
   const href = await noteLinks.first().getAttribute("href");
   expect(href).toMatch(/^\/notes\/[a-z0-9-]+$/);

@@ -1982,7 +1982,7 @@ Ton TJM n'est pas figé : <strong class="font-bold text-primary">réévalue-le t
 L'expérience et la spécialisation justifient une augmentation progressive.
     `
   },
-  { 
+  {
     id: 'freelance-52',
     title: 'Contrats et aspects juridiques : se protéger en freelance', 
     category: 'freelance',
@@ -2089,6 +2089,79 @@ Tu restes salarié, la société de portage gère l'admin.
 
 <strong class="font-bold text-primary">Jamais de mission sans contrat signé</strong>.
 Un bon contrat protège les deux parties et évite 90% des litiges.
+     `
+  },
+  {
+    id: 'freelance-53',
+    title: 'Créer un site internet pour son entreprise : cadrer le projet',
+    category: 'freelance',
+    content: `
+<h2 class="text-2xl font-bold mt-8 mb-4 text-primary">Commencer par le besoin métier</h2>
+
+Un site utile commence par une décision claire : <strong class="font-bold text-primary">quelle action doit devenir plus simple pour vos visiteurs ?</strong> Présenter une activité, obtenir une demande de contact, expliquer une offre ou préparer une prise de rendez-vous ne demande pas la même structure.
+
+<h2 class="text-2xl font-bold mt-8 mb-4 text-primary">Les questions à cadrer</h2>
+
+<ul class="my-4 list-disc pl-6">
+  <li class="ml-4">Qui sont les visiteurs prioritaires et que doivent-ils comprendre en premier ?</li>
+  <li class="ml-4">Quelles pages sont indispensables au lancement ?</li>
+  <li class="ml-4">Quels contenus, visuels et éléments de preuve sont déjà disponibles ?</li>
+  <li class="ml-4">Quelle action doit être mesurable : appel, email, demande de devis ou rendez-vous ?</li>
+  <li class="ml-4">Quelles contraintes existent côté hébergement, maintenance et conformité ?</li>
+</ul>
+
+<h2 class="text-2xl font-bold mt-8 mb-4 text-primary">Construire un premier périmètre utile</h2>
+
+<p>Un premier périmètre peut réunir une page d’accueil, les services, quelques réalisations, les informations pratiques, les mentions légales et un contact direct. Les fonctionnalités secondaires restent listées pour une phase suivante au lieu de retarder la mise en ligne.</p>
+
+<h2 class="text-2xl font-bold mt-8 mb-4 text-primary">Préparer le SEO dès la structure</h2>
+
+<ul class="my-4 list-disc pl-6">
+  <li class="ml-4">Une page répond à une intention principale et possède un titre, une description et un seul H1 cohérents.</li>
+  <li class="ml-4">Les pages de service renvoient vers des exemples concrets et un moyen de démarrer.</li>
+  <li class="ml-4">Le sitemap, les canoniques, les données structurées et les contenus sont vérifiés dans le build.</li>
+  <li class="ml-4">Les textes restent précis et ne promettent pas de résultat qui ne peut pas être prouvé.</li>
+</ul>
+
+<h2 class="text-2xl font-bold mt-8 mb-4 text-primary">Livrer et faire évoluer</h2>
+
+<p>Après validation du contenu et des parcours, la mise en ligne doit être suivie par une vérification des routes, des liens, de l’accessibilité et des performances. Les évolutions peuvent ensuite être priorisées à partir des retours réels plutôt que d’ajouter des fonctionnalités par anticipation.</p>
+    `
+  },
+  {
+    id: 'freelance-54',
+    title: 'Automatiser un processus d’entreprise avec n8n : méthode de cadrage',
+    category: 'freelance',
+    content: `
+<h2 class="text-2xl font-bold mt-8 mb-4 text-primary">Partir d’une tâche répétée</h2>
+
+Une automatisation utile relie un problème observé à un flux vérifiable. Il faut d’abord décrire la tâche actuelle : source des données, transformation, personne responsable, sortie attendue et traitement d’une erreur.
+
+<h2 class="text-2xl font-bold mt-8 mb-4 text-primary">Décrire le flux avant de choisir les nœuds</h2>
+
+<ol class="my-4 list-decimal pl-6">
+  <li class="ml-4">Déclencher le workflow sur un événement explicite ou une planification connue.</li>
+  <li class="ml-4">Valider les données entrantes et refuser les valeurs incomplètes.</li>
+  <li class="ml-4">Transformer les informations dans un format documenté.</li>
+  <li class="ml-4">Exécuter l’action cible avec une trace exploitable.</li>
+  <li class="ml-4">Notifier la bonne personne en cas de succès ou d’échec.</li>
+</ol>
+
+<h2 class="text-2xl font-bold mt-8 mb-4 text-primary">Prévoir les erreurs et la reprise</h2>
+
+<p>Un workflow de production doit prévoir les doublons, les délais d’API, les données manquantes et les arrêts temporaires. Les secrets restent dans les variables prévues par l’environnement ; ils ne doivent pas apparaître dans les exports, les logs ou les messages de notification.</p>
+
+<h2 class="text-2xl font-bold mt-8 mb-4 text-primary">Garder une validation humaine quand elle est utile</h2>
+
+<p>Une étape de validation peut être conservée avant l’envoi d’un rapport, la publication d’un contenu ou le traitement d’une donnée sensible. L’automatisation accélère le parcours, mais l’équipe doit pouvoir comprendre ce qui s’est passé et relancer le traitement.</p>
+
+<h2 class="text-2xl font-bold mt-8 mb-4 text-primary">Mesurer la valeur sans inventer de chiffres</h2>
+
+<ul class="my-4 list-disc pl-6">
+  <li class="ml-4">Compter les exécutions réussies et les erreurs par période.</li>
+  <li class="ml-4">Comparer le temps réellement consacré avant et après la mise en place.</li>
+  <li class="ml-4">Documenter les limites, les dépendances et le responsable du flux.</li>
+</ul>
     `
   },
 ];

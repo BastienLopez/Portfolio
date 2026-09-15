@@ -66,6 +66,8 @@ const articleSlugs = [
   "gerer-secrets-cles-api-local",
   "refactoring-sans-tout-casser",
   "estimer-un-projet-freelance",
+  "creer-site-internet-entreprise-cadrage",
+  "automatiser-processus-entreprise-n8n-cadrage",
 ];
 
 const routes = [
@@ -107,17 +109,24 @@ const waitForPreview = async (baseUrl) => {
   throw new Error(`Preview server did not start on ${baseUrl}`);
 };
 
-const waitForStablePage = async (page) => {
+const waitForStablePage = async (page, expectedCanonical) => {
   await page.waitForSelector("main", { state: "attached" });
   await page.evaluate(() => document.fonts?.ready);
   // Keep the client-side typing animation, but wait for its final semantic
   // content before serialising HTML for crawlers and no-JS consumers.
   await page.waitForFunction(
-    () => {
+    (canonical) => {
       const heroTitle = document.querySelector("[data-hero-title]");
-      return !heroTitle || heroTitle.getAttribute("data-typing-complete") === "true";
+      const canonicalLink = document.querySelector('link[rel="canonical"]');
+      const description = document.querySelector('meta[name="description"]');
+      return (
+        (!heroTitle || heroTitle.getAttribute("data-typing-complete") === "true") &&
+        document.title.trim().length > 0 &&
+        Boolean(description?.getAttribute("content")?.trim()) &&
+        canonicalLink?.getAttribute("href") === canonical
+      );
     },
-    undefined,
+    expectedCanonical,
     { timeout: 10000 },
   );
 
@@ -163,10 +172,16 @@ const prerender = async () => {
           throw new Error(`Could not render ${route.path}: HTTP ${response?.status() ?? "unknown"}`);
         }
 
-        await waitForStablePage(page);
+        const expectedCanonical = route.allowNotFound
+          ? "https://bastienlopez.fr/"
+          : `https://bastienlopez.fr${route.path === "/" ? "/" : route.path}`;
+        await waitForStablePage(page, expectedCanonical);
         const outputPath = path.join(distRoot, route.output);
         await mkdir(path.dirname(outputPath), { recursive: true });
         const renderedHtml = stripPrerenderRuntimePreloads(await page.content());
+        if (!renderedHtml.includes(`rel="canonical" href="${expectedCanonical}"`)) {
+          throw new Error(`Prerendered ${route.path} does not contain canonical ${expectedCanonical}`);
+        }
         await writeFile(outputPath, renderedHtml, "utf8");
         console.log(`Prerendered ${route.path} -> ${path.relative(projectRoot, outputPath)}`);
       }

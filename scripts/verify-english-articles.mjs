@@ -71,7 +71,7 @@ for (const [id, category] of translatedIds) {
   if (!sourceIds.has(id)) failures.push(`Unknown translated article id: ${id} (${category})`);
 }
 
-if (sourceIds.size !== 60) failures.push(`Expected 60 source articles, found ${sourceIds.size}.`);
+if (sourceIds.size !== 62) failures.push(`Expected 62 source articles, found ${sourceIds.size}.`);
 if (translatedIds.size !== sourceIds.size) {
   failures.push(`Expected ${sourceIds.size} translated articles, found ${translatedIds.size}.`);
 }

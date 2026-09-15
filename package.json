@@ -23,6 +23,7 @@
     "test:e2e": "playwright test",
     "test:axe": "playwright test tests/e2e/accessibility.spec.ts",
     "check:links": "node scripts/check-critical-links.mjs --out artifacts/phase5-url-results.json",
+    "audit:production": "node scripts/audit-production.mjs",
     "audit:lighthouse": "node scripts/run-lighthouse.mjs",
     "check": "npm run lint && npm run typecheck && npm run build && npm run verify:build && npm run verify:translations && npm run verify:performance-assets",
     "preview": "vite preview"

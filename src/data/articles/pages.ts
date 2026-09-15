@@ -133,6 +133,34 @@ export const articlePageDefinitions: readonly ArticlePageDefinition[] = [
     },
     relatedProjectSlugs: ["erp-micro-creches"],
   },
+  {
+    id: "freelance-53",
+    slug: "creer-site-internet-entreprise-cadrage",
+    category: "freelance",
+    title: {
+      fr: "Créer un site internet pour son entreprise : cadrer le projet",
+      en: "Creating a business website: how to frame the project",
+    },
+    description: {
+      fr: "Les questions à poser pour cadrer un site d’entreprise, structurer les pages utiles et préparer un socle SEO maintenable.",
+      en: "The questions to ask when framing a business website, structuring useful pages and preparing a maintainable SEO foundation.",
+    },
+    relatedProjectSlugs: ["eloi-coachsteo"],
+  },
+  {
+    id: "freelance-54",
+    slug: "automatiser-processus-entreprise-n8n-cadrage",
+    category: "freelance",
+    title: {
+      fr: "Automatiser un processus d’entreprise avec n8n : méthode de cadrage",
+      en: "Automating a business process with n8n: a framing method",
+    },
+    description: {
+      fr: "Une méthode pour décrire un processus répétitif, prévoir les erreurs et mettre en place une automatisation n8n traçable.",
+      en: "A method for describing a repeated process, planning for errors and building a traceable n8n automation.",
+    },
+    relatedProjectSlugs: ["automatisations-n8n-reporting"],
+  },
 ];
 
 export const getArticlePageDefinition = (slug: string | undefined) =>

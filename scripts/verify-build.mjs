@@ -58,6 +58,8 @@ const articleRoutes = [
   "gerer-secrets-cles-api-local",
   "refactoring-sans-tout-casser",
   "estimer-un-projet-freelance",
+  "creer-site-internet-entreprise-cadrage",
+  "automatiser-processus-entreprise-n8n-cadrage",
 ];
 
 for (const slug of projectRoutes) {
@@ -179,6 +181,18 @@ for (const route of prerenderedRoutes) {
     failures.push(`Prerendered ${route.file} does not contain route-specific metadata.`);
   }
 
+  if (route.file === path.join("mentions-legales", "index.html")) {
+    if (!html.includes('<link rel="canonical" href="https://bastienlopez.fr/mentions-legales"')) {
+      failures.push("Prerendered legal page does not contain its canonical production URL.");
+    }
+    if (!html.includes("Informations légales, hébergement et mesure d’audience du portfolio de Bastien Lopez.")) {
+      failures.push("Prerendered legal page does not contain its route-specific description.");
+    }
+    if (!html.includes('<meta name="robots" content="index, follow"')) {
+      failures.push("Prerendered legal page does not contain its route-specific robots directive.");
+    }
+  }
+
   if (route.file === path.join("freelance", "index.html") && !html.includes("freelance#service")) {
     failures.push("Prerendered freelance page does not contain its service structured data.");
   }
@@ -270,6 +284,22 @@ if (existsSync(path.join(distDirectory, "sitemap.xml"))) {
   }
 }
 
+const caddyFile = path.join(process.cwd(), "deploy", "Caddyfile.example");
+if (existsSync(caddyFile)) {
+  const caddy = readFileSync(caddyFile, "utf8");
+  for (const route of [
+    "/freelance",
+    "/mentions-legales",
+    ...projectRoutes.map((value) => `/projets/${value}`),
+    ...serviceRoutes.map((value) => `/services/${value}`),
+    ...articleRoutes.map((value) => `/notes/${value}`),
+  ]) {
+    if (!caddy.includes(` ${route} `) || !caddy.includes(` ${route}/`)) {
+      failures.push(`deploy/Caddyfile.example does not list both forms of ${route}.`);
+    }
+  }
+}
+
 if (existsSync(path.join(distDirectory, "llms.txt"))) {
   const llms = readText("llms.txt");
   for (const slug of projectRoutes) {
@@ -290,9 +320,21 @@ if (existsSync(path.join(distDirectory, "llms-full.txt"))) {
     "Réponse à une demande de création de site",
     "Réponse à une recherche de développeur web freelance à Reims",
     "https://bastienlopez.fr/services/sites-vitrines",
+    "## Index des études de cas",
+    "## Index des Dev Notes",
   ]) {
     if (!llmsFull.includes(marker)) {
       failures.push("llms-full.txt does not contain " + marker + ".");
+    }
+  }
+  for (const slug of projectRoutes) {
+    if (!llmsFull.includes(`https://bastienlopez.fr/projets/${slug}`)) {
+      failures.push(`llms-full.txt does not contain https://bastienlopez.fr/projets/${slug}.`);
+    }
+  }
+  for (const slug of articleRoutes) {
+    if (!llmsFull.includes(`https://bastienlopez.fr/notes/${slug}`)) {
+      failures.push(`llms-full.txt does not contain https://bastienlopez.fr/notes/${slug}.`);
     }
   }
 }

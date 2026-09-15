@@ -38,4 +38,44 @@ Page correspondante : https://bastienlopez.fr/services/automatisations-n8n
 - GitHub : https://github.com/BastienLopez
 - LinkedIn : https://www.linkedin.com/in/bastien-lopez-fullstack/
 
+## Index des études de cas
+
+Ces fiches décrivent le contexte, le besoin, le rôle, la stack et le périmètre publiables pour chaque réalisation.
+
+- Altme Wallet Provider : https://bastienlopez.fr/projets/altme-wallet-provider
+- Automatisations n8n — Reporting : https://bastienlopez.fr/projets/automatisations-n8n-reporting
+- Automatisations n8n — Dérush vidéo : https://bastienlopez.fr/projets/automatisations-n8n-derush-video
+- Altme Wallet Platform : https://bastienlopez.fr/projets/altme-wallet-platform
+- Altme Documentation : https://bastienlopez.fr/projets/altme-documentation
+- Teams Bot & Mastra Agents : https://bastienlopez.fr/projets/teams-bot-mastra
+- SEO & optimisation GEO : https://bastienlopez.fr/projets/seo-geo-optimization
+- Eloi CoachStéo : https://bastienlopez.fr/projets/eloi-coachsteo
+- ERP Micro-Crèches : https://bastienlopez.fr/projets/erp-micro-creches
+- Luxury Auto Detailing : https://bastienlopez.fr/projets/luxury-auto-detailing
+- Clé de Voûte : https://bastienlopez.fr/projets/cledevoute
+- Berserk Universe : https://bastienlopez.fr/projets/berserk-universe
+- Codex Limits Usage : https://bastienlopez.fr/projets/codex-limits-usage
+- Pokémon Binder : https://bastienlopez.fr/projets/pokemon-binder
+- IA Trading : https://bastienlopez.fr/projets/ia-trading
+- PatriPro : https://bastienlopez.fr/projets/patripro
+- ATS Filter Resume : https://bastienlopez.fr/projets/ats-filter-resume
+- NOVOTEL — Roue de la chance : https://bastienlopez.fr/projets/novotel-roue-chance
+- Aqualis : https://bastienlopez.fr/projets/aqualis
+- Nolvus Mod Automation : https://bastienlopez.fr/projets/nolvus-mod-automation
+- Bloodborne shadPS4 : https://bastienlopez.fr/projets/bloodborne-shadps4
+- Demon’s Souls RPCS3 : https://bastienlopez.fr/projets/demons-souls-rpcs3
+
+## Index des Dev Notes
+
+- Pipeline CI/CD GitHub Actions : https://bastienlopez.fr/notes/pipeline-ci-cd-github-actions
+- Docker pour débutants : https://bastienlopez.fr/notes/docker-pour-debutants
+- Monitoring après déploiement : https://bastienlopez.fr/notes/monitorer-une-application-apres-deploiement
+- Architecture hexagonale : https://bastienlopez.fr/notes/architecture-hexagonale
+- Check-list de déploiement en production : https://bastienlopez.fr/notes/deploiement-production-checklist
+- Secrets et clés API en local : https://bastienlopez.fr/notes/gerer-secrets-cles-api-local
+- Refactoring progressif : https://bastienlopez.fr/notes/refactoring-sans-tout-casser
+- Estimation d’un projet freelance : https://bastienlopez.fr/notes/estimer-un-projet-freelance
+- Créer un site internet pour son entreprise : https://bastienlopez.fr/notes/creer-site-internet-entreprise-cadrage
+- Automatiser un processus d’entreprise avec n8n : https://bastienlopez.fr/notes/automatiser-processus-entreprise-n8n-cadrage
+
 Les résultats, délais, métriques et témoignages doivent être lus sur les pages correspondantes. Ce document ne remplace pas les études de cas et n’ajoute aucune promesse de résultat.

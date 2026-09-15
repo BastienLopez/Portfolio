@@ -93,6 +93,8 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Secrets et clés API en local: https://bastienlopez.fr/notes/gerer-secrets-cles-api-local
 - Refactoring progressif: https://bastienlopez.fr/notes/refactoring-sans-tout-casser
 - Estimation d’un projet freelance: https://bastienlopez.fr/notes/estimer-un-projet-freelance
+- Créer un site internet pour son entreprise: https://bastienlopez.fr/notes/creer-site-internet-entreprise-cadrage
+- Automatiser un processus d’entreprise avec n8n: https://bastienlopez.fr/notes/automatiser-processus-entreprise-n8n-cadrage
 
 ## Contact et profils
 - Email: bastien.lopez40@gmail.com
