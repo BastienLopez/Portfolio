@@ -3,7 +3,11 @@ import {
   decorateDetailedContent,
   renderProjectMarkdown,
 } from "@/lib/project-content";
-import { getImageManifestEntry, getImageSrcSet } from "@/lib/image-variants";
+import {
+  getImageManifestEntry,
+  getImagePrefetchPath,
+  getImageSrcSet,
+} from "@/lib/image-variants";
 
 describe("project content rendering", () => {
   it("renders the supported Markdown subset and escapes text", () => {
@@ -46,5 +50,14 @@ describe("responsive project image manifest", () => {
     expect(srcSet).toContain("/img_optimized/creche-480.webp 480w");
     expect(srcSet).toContain("/img_optimized/creche-1536.webp 1536w");
     expect(getImageManifestEntry("img_projects/unknown.png")).toBeUndefined();
+  });
+
+  it("selects a generated variant for low-priority image prefetching", () => {
+    expect(getImagePrefetchPath("img_projects/creche.png")).toBe(
+      "/img_optimized/creche-960.webp",
+    );
+    expect(getImagePrefetchPath("img_projects/unknown.png")).toBe(
+      "img_projects/unknown.png",
+    );
   });
 });

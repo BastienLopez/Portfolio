@@ -1,4 +1,4 @@
-import { ArrowUpRight, Quote } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Quote } from "lucide-react";
 import { Testimonial } from "@/data/testimonials";
 import testimonialsData from "@/data/testimonials";
 import { useLanguage } from "@/lib/i18n";
@@ -15,6 +15,11 @@ const testimonialProjectLabels: Record<string, { fr: string; en: string }> = {
   "t-1": { fr: "Projet associé : Eloi CoachStéo", en: "Related project: Eloi CoachSteo" },
   "t-3": { fr: "Projet associé : ERP Micro-Crèches", en: "Related project: Multi-Nursery ERP" },
   "t-4": { fr: "Projet associé : Clé de Voûte", en: "Related project: Clé de Voûte" },
+};
+
+const testimonialProductionLinks: Record<string, string> = {
+  "t-1": "https://bastienlopez.github.io/Eloi_Coaching/",
+  "t-4": "https://bastienlopez.github.io/CleDeVoute/",
 };
 
 const Avatar = ({ name, image }: { name: string; image?: string | null }) => {
@@ -88,6 +93,7 @@ export default function Testimonials(): JSX.Element {
             const text = isEnglish ? testimonial.textEn : testimonial.text;
             const projectLink = testimonialProjectLinks[testimonial.id];
             const projectLabel = testimonialProjectLabels[testimonial.id]?.[isEnglish ? "en" : "fr"];
+            const productionLink = testimonialProductionLinks[testimonial.id];
 
             return (
               <article
@@ -113,13 +119,26 @@ export default function Testimonials(): JSX.Element {
                   “{text}”
                 </blockquote>
                 {projectLink && (
-                  <a
-                    href={projectLink}
-                    className="mt-6 inline-flex w-fit items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                  >
-                    {isEnglish ? "Open related project" : "Voir le projet associé"}
-                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  </a>
+                  <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+                    <a
+                      href={projectLink}
+                      className="inline-flex w-fit items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    >
+                      {isEnglish ? "Open related project" : "Voir le projet associé"}
+                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    </a>
+                    {productionLink && (
+                      <a
+                        href={productionLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex w-fit items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      >
+                        {isEnglish ? "View project" : "Voir le projet"}
+                        <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    )}
+                  </div>
                 )}
               </article>
             );

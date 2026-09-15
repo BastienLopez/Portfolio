@@ -59,12 +59,36 @@ const renderCaseStudy = (caseStudy: CaseStudy) => `
 
 const englishCaseStudies: Record<string, CaseStudy> = {
   "eloi-coachsteo": {
-    title: "Eloi CoachSteo",
-    context: ["Website created for an osteopathy practice to present services, make contact straightforward and offer a responsive experience."],
-    role: "Frontend design and implementation, page structure, responsive integration, contact journey and deployment.",
+    title: "Eloi CoachStéo",
+    context: [
+      "Showcase one-page website created for a sports coach and osteopath. The brief was to make the offer understandable on arrival and guide visitors towards the right service and a direct contact.",
+      "The page brings together fitness, physical preparation and tailored HYROX programmes in one continuous journey, so the information remains easy to scan on a phone as well as on a large screen.",
+    ],
+    role: "I handled the site design, content hierarchy, React and Tailwind CSS integration, responsive layout and deployment. I turned the service information into short, readable sections with a clear next action.",
     technologies: ["React", "Tailwind CSS", "JavaScript"],
-    sections: [{ title: "Scope", items: ["Service presentation", "Contact and appointment journey", "Responsive layout"] }],
-    results: ["Public website designed to make the practice and contact options clear."],
+    sections: [
+      {
+        title: "Page journey",
+        items: [
+          "Position the combined coaching and osteopathy offer",
+          "Present fitness, physical preparation and HYROX programmes",
+          "Use visuals and the testimonials section for reassurance",
+          "Keep the contact and appointment path visible throughout the page",
+        ],
+      },
+      {
+        title: "Value delivered",
+        description: [
+          "The site gives a professional showcase to an activity that combines several areas of expertise. Its hierarchy helps visitors understand the offer, distinguish the types of support and reach contact when they are ready.",
+          "The gain is qualitative: services, visuals and contact are grouped in a responsive one-page experience. No appointment volume or conversion rate is claimed without published tracking data.",
+        ],
+        items: [],
+      },
+    ],
+    results: [
+      "Public website deployed to present the coaching and osteopathy offer with a clear reading order.",
+      "Responsive journey makes services and contact options identifiable across the main screen sizes.",
+    ],
   },
   "erp-micro-creches": {
     title: "Multi-Nursery ERP & Digital Ecosystem",
@@ -119,11 +143,35 @@ const englishCaseStudies: Record<string, CaseStudy> = {
   },
   "luxury-auto-detailing": {
     title: "Luxury Auto Detailing",
-    context: ["Showcase website for a premium car-detailing workshop: cleaning, polishing, ceramic protection and interior restoration."],
-    role: "Frontend design and integration with React and Tailwind CSS, responsive adaptation, service presentation, gallery, contact journey and deployment.",
+    context: [
+      "Premium showcase website for a car-detailing workshop. The project explains services that go beyond a simple wash: decontamination, polishing, ceramic protection and interior restoration.",
+      "The interface puts the expected visual result, the difference between services and the appointment request in the same guided journey. The gallery and calls to action support the explanation without making the page heavy.",
+    ],
+    role: "I handled the frontend design and integration with React and Tailwind CSS, responsive adaptation, service hierarchy, gallery, contact journey and deployment. The work translated a technical service offer into a visual path that a future customer can understand.",
     technologies: ["React", "Tailwind CSS", "JavaScript"],
-    sections: [{ title: "Delivered features", items: ["Service presentation", "Before/after gallery", "Appointment and direct-contact journey", "Responsive navigation"] }],
-    results: ["Public website designed to present the services clearly and support contact requests."],
+    sections: [
+      {
+        title: "Visitor journey",
+        items: [
+          "Establish a premium visual identity from the first screen",
+          "Distinguish cleaning, polishing, ceramic protection and interior work",
+          "Use before-and-after visuals to make the expected finish concrete",
+          "Keep direct contact and appointment requests easy to reach",
+        ],
+      },
+      {
+        title: "Value delivered",
+        description: [
+          "The site turns a list of services into a guided presentation: visitors understand what is offered, see the level of finish expected and know how to get in touch. The structure explains technical interventions without losing the visual nature of detailing.",
+          "The gain is qualitative: a coherent, responsive showcase centred on completed work and direct contact. Commercial performance is not quantified here because no tracking data is published.",
+        ],
+        items: [],
+      },
+    ],
+    results: [
+      "Public website deployed to present services, examples of finish and contact options clearly.",
+      "Responsive journey connects service discovery to an appointment request without a break.",
+    ],
   },
   "wallet-provider": {
     title: "Altme Wallet Provider",
@@ -135,13 +183,44 @@ const englishCaseStudies: Record<string, CaseStudy> = {
   },
   cledevoute: {
     title: "Cle De Voute — Masonry",
-    context: ["Showcase website for a masonry company, created to present its services and completed work."],
-    role: "Frontend design and integration, lightweight UI design, performance work and GitHub Pages deployment.",
+    context: [
+      "Showcase website for a masonry company that wanted a clearer public presence focused on services, completed work and a straightforward route to contact.",
+      "The page is structured as a simple local-discovery journey: understand the activity, browse the portfolio and find the contact action. The hierarchy remains readable on mobile, where many local searches begin.",
+    ],
+    role: "I handled frontend design and integration, interface structure, image optimisation, calls to action, responsive behaviour and GitHub Pages deployment. The work turns a local-visibility need into a public page that can be used immediately.",
     technologies: ["React", "Tailwind CSS", "JavaScript", "Vite", "GitHub Pages"],
     sections: [
-      { title: "Implementation", items: ["Service and portfolio presentation", "Mobile-first reusable components", "Image optimisation and lazy loading", "Clear calls to action and contact form"] },
+      {
+        title: "Page structure",
+        items: [
+          "Introduce the activity before the detailed services",
+          "Make completed work visible through the portfolio",
+          "Keep contact calls to action present without interrupting the reading flow",
+          "Preserve the same hierarchy on phone, tablet and desktop",
+        ],
+      },
+      {
+        title: "Implementation and performance",
+        items: [
+          "Mobile-first reusable React and Tailwind components",
+          "WebP/AVIF image optimisation and lazy loading to reduce initial weight",
+          "Simple contact form and clear calls to action",
+          "GitHub Pages deployment for a simple, reliable distribution path",
+        ],
+      },
+      {
+        title: "Value delivered",
+        description: [
+          "The site gives the company a public support that explains its activity in a few steps and puts completed work at the centre of the decision. Reusable components make content updates easier, while optimised images preserve the portfolio's visual quality.",
+          "The observable gain is a clearer presentation and a more accessible contact path on mobile. Exact weight or loading-time reduction is not quantified in this case study.",
+        ],
+        items: [],
+      },
     ],
-    results: ["Deployed public website with responsive navigation and contact actions suited to mobile use."],
+    results: [
+      "Public website deployed on GitHub Pages with responsive navigation and contact actions suited to mobile use.",
+      "Initial loading is kept lighter while the visual quality of the portfolio is preserved through image optimisation.",
+    ],
   },
   "berserk-universe": {
     title: "Berserk Universe",
@@ -283,19 +362,67 @@ const englishCaseStudies: Record<string, CaseStudy> = {
   },
   "altme-wallet": {
     title: "Altme Wallet Platform",
-    context: ["Contribution to the Discover platform for digital wallets and verifiable credentials, including crypto and NFT data integrations."],
-    role: "Contribution within the product team to Discover components and the data integrations presented in this case study.",
+    context: [
+      "Contribution to Altme's Discover platform for digital wallets and verifiable credentials. The module brings several types of digital assets and identity data into one user journey.",
+      "The public scope includes NFTs and cryptocurrency data supplied through the CoinGecko API, alongside elements related to decentralised identity. Internal implementation details remain confidential.",
+    ],
+    role: "I contributed within the product team to Discover components, HTML/CSS interfaces, Python processing, CoinGecko data integration and verifiable-credential flows. The scope described here reflects the part of the work that can be shared publicly.",
     technologies: ["HTML / CSS", "Python", "CoinGecko API", "Verifiable Credentials"],
-    sections: [{ title: "Contribution scope", items: ["Discover product components", "Crypto and NFT data integrations", "Work performed within a product team"] }],
-    results: ["Contribution to the development and improvement of Discover components and data integrations within the product team."],
+    sections: [
+      {
+        title: "Contribution scope",
+        items: [
+          "Organise wallet and associated data in a readable Discover interface",
+          "Connect CoinGecko market data to the product module",
+          "Present NFTs and verifiable credentials in the same discovery space",
+          "Integrate the work into an existing product with the team",
+        ],
+      },
+      {
+        title: "Value delivered",
+        description: [
+          "The contribution helps make Discover more coherent for end users by grouping data from different sources into one identifiable journey. CoinGecko provides updated crypto information, while verifiable credentials give digital-identity use cases a visible place in the product.",
+          "The gain is qualitative: a more consistent experience and building blocks that can evolve within the product team's conventions. No usage or performance metric is claimed for this contribution.",
+        ],
+        items: [],
+      },
+    ],
+    results: [
+      "Discover components were developed or improved to bring wallets, NFTs, crypto data and verifiable credentials together.",
+      "CoinGecko data integrations and interface elements were consolidated as part of the product-team work.",
+    ],
   },
   "altme-documentation": {
     title: "Altme Documentation",
-    context: ["Creation and maintenance of technical documentation for Altme Wallet Provider, with a GitBook version followed by a Docusaurus version to support developer onboarding."],
-    role: "Documentation content and developer journeys, including migration work from GitBook to Docusaurus.",
+    context: [
+      "Creation and maintenance of technical documentation for Altme Wallet Provider. The documentation is the entry point for developers before they install, call an API or follow an integration example.",
+      "Two versions were worked on: an initial GitBook base followed by a modern Docusaurus version. The migration keeps useful content while providing a structure that is easier to maintain and extend.",
+    ],
+    role: "I structured and maintained Markdown content, organised integration journeys, contributed to the GitBook-to-Docusaurus migration and worked on the React/TypeScript presentation layer. The scope includes API references, step-by-step guides, code examples, navigation, search and international-facing pages.",
     technologies: ["GitBook", "Docusaurus", "Markdown", "React", "TypeScript"],
-    sections: [{ title: "Documentation work", items: ["API reference and integration guides", "Interactive code examples and search", "GitBook-to-Docusaurus migration", "Documentation pages and sections migrated or maintained across GitBook and Docusaurus"] }],
-    results: ["A more structured, maintainable documentation base for developers."],
+    sections: [
+      {
+        title: "Documentation journey",
+        items: [
+          "Introduce Wallet Provider and the concepts needed before coding",
+          "Guide integration step by step with reusable examples",
+          "Provide searchable API references for precise questions",
+          "Keep content and navigation maintainable during the GitBook-to-Docusaurus migration",
+        ],
+      },
+      {
+        title: "Value delivered",
+        description: [
+          "The main gain is a clearer onboarding path: a developer can move from general context to guides and then to API reference without changing the reading logic. Links between sections and examples keep the documentation from becoming a disconnected list of endpoints.",
+          "Docusaurus provides a more structured base for future updates. Published information still needs to be reviewed and kept in sync with the versions that are actually available.",
+        ],
+        items: [],
+      },
+    ],
+    results: [
+      "Structured documentation supports discovery, integration and information lookup for Altme Wallet Provider.",
+      "The GitBook-to-Docusaurus migration provides clearer navigation, more predictable maintenance and an extensible base.",
+    ],
   },
   "teams-bot-mastra": {
     title: "Teams Bot & Mastra Agents",

@@ -3,18 +3,71 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/lib/i18n";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 
-const FreelancePage = lazy(() => import("./pages/Freelance"));
-const ProjectCaseStudyPage = lazy(() => import("./pages/ProjectCaseStudy"));
-const ServicePage = lazy(() => import("./pages/Service"));
-const ArticlePage = lazy(() => import("./pages/Article"));
+const loadFreelancePage = () => import("./pages/Freelance");
+const loadProjectCaseStudyPage = () => import("./pages/ProjectCaseStudy");
+const loadServicePage = () => import("./pages/Service");
+const loadArticlePage = () => import("./pages/Article");
+
+const FreelancePage = lazy(loadFreelancePage);
+const ProjectCaseStudyPage = lazy(loadProjectCaseStudyPage);
+const ServicePage = lazy(loadServicePage);
+const ArticlePage = lazy(loadArticlePage);
 
 const queryClient = new QueryClient();
+
+const AppNavigationEffects = () => {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash || hash.startsWith("#project=")) return;
+
+    let targetId: string;
+    try {
+      targetId = decodeURIComponent(hash.slice(1));
+    } catch {
+      return;
+    }
+    let attempts = 0;
+    let animationFrame = 0;
+    let retryTimer = 0;
+
+    const scrollToHashTarget = () => {
+      const target = document.getElementById(targetId);
+
+      if (!target) {
+        if (attempts < 60) {
+          attempts += 1;
+          animationFrame = window.requestAnimationFrame(scrollToHashTarget);
+        }
+        return;
+      }
+
+      target.scrollIntoView({ behavior: "auto", block: "start" });
+
+      // Re-apply after the route's lazy content has committed so a late
+      // section mount cannot leave the user at the previous page position.
+      if (attempts < 2) {
+        attempts += 1;
+        retryTimer = window.setTimeout(scrollToHashTarget, 120);
+      }
+    };
+
+    animationFrame = window.requestAnimationFrame(scrollToHashTarget);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.clearTimeout(retryTimer);
+    };
+  }, [hash, pathname]);
+
+  return null;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -25,6 +78,7 @@ const App = () => (
         <BrowserRouter
           basename={import.meta.env.BASE_URL}
         >
+          <AppNavigationEffects />
           <Suspense
             fallback={
               <div className="flex min-h-screen items-center justify-center bg-background text-foreground">

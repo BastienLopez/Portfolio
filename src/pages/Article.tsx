@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { lazy, Suspense, useEffect, useMemo } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import NotFound from "@/pages/NotFound";
@@ -6,8 +6,9 @@ import { getProjectPagePath } from "@/data/site-pages";
 import { getArticlePage } from "@/data/articles/registry";
 import { estimateReadingMinutes } from "@/lib/article-content";
 import { SITE_ORIGIN, useLanguage, useRouteMetadata, type PageMetadata } from "@/lib/i18n";
-import RenderedArticleContent from "@/components/RenderedArticleContent";
 import "./Article.css";
+
+const RenderedArticleContent = lazy(() => import("@/components/RenderedArticleContent"));
 
 const categoryLabels: Record<string, { fr: string; en: string }> = {
   culture: { fr: "Culture & méthodes", en: "Culture & methods" },
@@ -15,6 +16,14 @@ const categoryLabels: Record<string, { fr: string; en: string }> = {
   tools: { fr: "Outils & productivité", en: "Tools & productivity" },
   architecture: { fr: "Architecture", en: "Architecture" },
   freelance: { fr: "Gestion de projet & freelance", en: "Project management & freelance" },
+};
+
+const categoryKeywords: Record<string, { fr: string; en: string }> = {
+  culture: { fr: "culture technique, méthodes de développement", en: "engineering culture, development methods" },
+  devops: { fr: "CI/CD, DevOps, déploiement et observabilité", en: "CI/CD, DevOps, deployment and observability" },
+  tools: { fr: "outils développeur, productivité et sécurité", en: "developer tools, productivity and security" },
+  architecture: { fr: "architecture logicielle et bonnes pratiques", en: "software architecture and best practices" },
+  freelance: { fr: "gestion de projet et développement freelance", en: "project management and freelance development" },
 };
 
 const metadataFor = (
@@ -62,6 +71,14 @@ const articleSchema = (
   const title = isEnglish ? entry.translation.title : entry.article.title;
   const description = isEnglish ? entry.definition.description.en : entry.definition.description.fr;
   const language = isEnglish ? "en-US" : "fr-FR";
+  const category = categoryLabels[entry.article.category]?.[isEnglish ? "en" : "fr"] ?? entry.article.category;
+  const keywords = categoryKeywords[entry.article.category]?.[isEnglish ? "en" : "fr"] ?? category;
+  const content = isEnglish ? entry.translation.content : entry.article.content;
+  const wordCount = content
+    .replace(/<[^>]*>/g, " ")
+    .replace(/[#*_\u0060>-]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean).length;
 
   return {
     "@context": "https://schema.org",
@@ -72,7 +89,10 @@ const articleSchema = (
         url,
         headline: title,
         description,
-        articleSection: entry.article.category,
+        articleSection: category,
+        keywords,
+        wordCount,
+        isAccessibleForFree: true,
         inLanguage: language,
         author: { "@id": `${SITE_ORIGIN}/#person` },
         publisher: { "@id": `${SITE_ORIGIN}/#person` },
@@ -160,10 +180,18 @@ const Article = () => {
               </div>
             </header>
 
-            <RenderedArticleContent
-              className="devnotes-article-content prose prose-sm max-w-none md:prose-lg"
-              content={content}
-            />
+              <Suspense
+                fallback={
+                  <div className="devnotes-article-content prose prose-sm max-w-none md:prose-lg">
+                    {isEnglish ? "Loading article…" : "Chargement de la note…"}
+                  </div>
+                }
+              >
+                <RenderedArticleContent
+                  className="devnotes-article-content prose prose-sm max-w-none md:prose-lg"
+                  content={content}
+                />
+              </Suspense>
 
             {entry.definition.relatedProjectSlugs.length > 0 ? (
               <section className="devnotes-related-work" aria-labelledby="article-related-work-title">

@@ -33,9 +33,9 @@ type ProcessStep = {
 const pageCopy = {
   fr: {
     eyebrow: "Freelance · développement sur mesure",
-    title: "Des outils métier qui font avancer votre activité.",
+    title: "Développeur web freelance à Reims pour des outils utiles.",
     description:
-      "Je conçois des sites vitrines, applications métier, des automatisations n8n et des APIs internes qui enlèvent les tâches répétitives et rendent le travail quotidien plus simple.",
+      "Je crée des sites pour les entreprises, des applications métier, des automatisations n8n et des APIs internes qui enlèvent les tâches répétitives et rendent le travail quotidien plus simple.",
     note:
       "J’interviens du cadrage à la mise en production, avec une documentation que votre équipe peut reprendre.",
     location: "Basé à Reims, j’interviens à distance partout en France.",
@@ -48,7 +48,7 @@ const pageCopy = {
       {
         number: "01",
         slug: "sites-vitrines",
-        title: "Sites vitrines & présence en ligne",
+        title: "Création de site internet pour entreprise",
         description:
           "Je crée des sites vitrines clairs, rapides et responsive pour présenter une activité, ses services et ses réalisations.",
         deliverables: "Structure des pages, intégration, responsive, SEO/GEO de base et mise en ligne.",
@@ -57,7 +57,7 @@ const pageCopy = {
       {
         number: "02",
         slug: "applications-metier",
-        title: "Applications métier",
+        title: "Applications métier sur mesure pour PME",
         description:
           "ERP, back-office, portail interne ou tableau de bord : je transforme vos règles métier en parcours simples et utilisables.",
         deliverables: "Front, API, droits d’accès, données et suivi des cas réels.",

@@ -1,4 +1,4 @@
-import type { MouseEvent, RefObject } from "react";
+import { useEffect, useMemo, useState, type MouseEvent, type RefObject } from "react";
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Project, ProjectGalleryItem } from "@/data/projects";
@@ -44,9 +44,32 @@ export const ProjectDetail = ({
   onOpenGallery,
   detailRef,
 }: ProjectDetailProps) => {
-  const detailedContentHtml = project.detailedContent
-    ? prepareDetailedContent(project.detailedContent)
-    : "";
+  const renderedDetailedContent = useMemo(
+    () => (project.detailedContent ? prepareDetailedContent(project.detailedContent) : ""),
+    [prepareDetailedContent, project.detailedContent],
+  );
+  const [detailedContentHtml, setDetailedContentHtml] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (!renderedDetailedContent) {
+      setDetailedContentHtml("");
+      return;
+    }
+
+    void import("dompurify")
+      .then(({ default: DOMPurify }) => {
+        if (!cancelled) setDetailedContentHtml(DOMPurify.sanitize(renderedDetailedContent));
+      })
+      .catch(() => {
+        if (!cancelled) setDetailedContentHtml("");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [renderedDetailedContent]);
   const heroImage = premiumHeroImages[project.id] ?? project.image;
 
   const handleDetailedContentClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -163,6 +186,10 @@ export const ProjectDetail = ({
         >
           {detailedContentHtml ? (
             <div dangerouslySetInnerHTML={{ __html: detailedContentHtml }} />
+          ) : renderedDetailedContent ? (
+            <div className="project-detail-empty">
+              {isEnglish ? "Loading project details…" : "Chargement des détails du projet…"}
+            </div>
           ) : (
             <div className="project-detail-empty">
               {isEnglish

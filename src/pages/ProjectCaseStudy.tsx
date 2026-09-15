@@ -55,6 +55,14 @@ const resolveImage = (image?: string | null) => {
   return `${import.meta.env.BASE_URL}${image.replace(/^\/+/, "")}`;
 };
 
+const schemaImage = (image?: string | null) => {
+  const resolved = resolveImage(image);
+  if (!resolved || resolved.startsWith("data:")) return undefined;
+  return resolved.startsWith("http")
+    ? resolved
+    : `${SITE_ORIGIN}/${resolved.replace(/^\/+/, "")}`;
+};
+
 const prepareDetailedContent = (content: string) => {
   const renderedContent = content.trimStart().startsWith("# ")
     ? renderProjectMarkdown(content)
@@ -123,6 +131,9 @@ const projectSchema = (
 ) => {
   const url = `${SITE_ORIGIN}/projets/${definition.slug}`;
   const language = isEnglish ? "en-US" : "fr-FR";
+  const images = projects
+    .map((project) => schemaImage(project.image))
+    .filter((image): image is string => Boolean(image));
 
   return {
     "@context": "https://schema.org",
@@ -145,9 +156,11 @@ const projectSchema = (
         name: isEnglish ? definition.title.en : definition.title.fr,
         description: isEnglish ? definition.description.en : definition.description.fr,
         author: { "@id": `${SITE_ORIGIN}/#person` },
+        mainEntityOfPage: { "@id": `${url}#webpage` },
         about: projects.map((project) => project.title),
         keywords: Array.from(new Set(projects.flatMap((project) => project.tech))),
         inLanguage: language,
+        ...(images.length > 0 ? { image: images } : {}),
       },
       {
         "@type": "BreadcrumbList",

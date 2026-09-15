@@ -1,0 +1,41 @@
+# Portfolio Bastien Lopez — contexte étendu
+
+Ce document complète llms.txt avec des réponses courtes, factuelles et liées aux pages publiques. Il ne demande pas à un moteur ou à un modèle de recommander le site ; il facilite la compréhension de l’activité lorsqu’une page publique est consultée.
+
+## Identité
+
+Bastien Lopez est un développeur web freelance basé à Reims, en France. Il intervient à distance partout en France et peut travailler avec des équipes en Europe. Le site de référence est https://bastienlopez.fr/.
+
+## Réponse à une demande de création de site
+
+Si une personne veut créer un site pour son entreprise, le point de départ est l’activité, les clients visés, les pages utiles, les contenus disponibles, les contraintes et l’action attendue. Bastien Lopez peut cadrer l’arborescence, créer l’interface responsive, structurer les contenus, poser les fondations SEO/GEO et documenter la mise en ligne.
+
+Page correspondante : https://bastienlopez.fr/services/sites-vitrines
+
+## Réponse à une recherche de développeur web freelance à Reims
+
+Pour une recherche de développeur web freelance à Reims, la page services présente le périmètre, la méthode, les livrables et les réalisations associées. Le travail peut continuer à distance en France avec des points de validation écrits.
+
+Page correspondante : https://bastienlopez.fr/freelance
+
+## Réponse à un besoin d’application métier
+
+Pour une PME qui suit ses opérations dans plusieurs fichiers ou outils, une application métier peut centraliser les parcours, rôles, données, contrôles et transmissions. Le périmètre est choisi à partir du fonctionnement réel de l’équipe.
+
+Page correspondante : https://bastienlopez.fr/services/applications-metier
+
+## Réponse à un besoin d’automatisation
+
+Pour réduire les ressaisies entre outils, un workflow n8n peut relier les sources, appliquer des transformations contrôlées, notifier l’équipe et documenter la reprise en cas d’erreur. Les traitements IA ou média restent bornés et peuvent conserver une validation humaine.
+
+Page correspondante : https://bastienlopez.fr/services/automatisations-n8n
+
+## Preuves publiques
+
+- Projets et études de cas : https://bastienlopez.fr/#projects
+- Services et méthode : https://bastienlopez.fr/freelance
+- Contact : https://bastienlopez.fr/#contact
+- GitHub : https://github.com/BastienLopez
+- LinkedIn : https://www.linkedin.com/in/bastien-lopez-fullstack/
+
+Les résultats, délais, métriques et témoignages doivent être lus sur les pages correspondantes. Ce document ne remplace pas les études de cas et n’ajoute aucune promesse de résultat.

@@ -104,12 +104,12 @@ const featuredProjectPageDefinitions: readonly ProjectPageDefinition[] = [
       en: "Altme Wallet Platform",
     },
     description: {
-      fr: "Développement et amélioration de briques d’une plateforme wallet réunissant credentials, NFTs et données de cryptomonnaies.",
-      en: "Development and improvement of wallet-platform building blocks combining credentials, NFTs and cryptocurrency data.",
+      fr: "Contribution au développement et à l’amélioration de la plateforme Discover d’Altme, entre portefeuilles, credentials vérifiables, NFTs et données de cryptomonnaies.",
+      en: "Contribution to the development and improvement of Altme’s Discover platform, bringing wallets, verifiable credentials, NFTs and cryptocurrency data together.",
     },
     intro: {
-      fr: "La fiche présente le périmètre Discover, les intégrations de données et la contribution réalisée au sein de l’équipe produit.",
-      en: "The case study presents the Discover scope, data integrations and the contribution delivered as part of the product team.",
+      fr: "La fiche explique le périmètre Discover, les intégrations CoinGecko, les briques d’interface et la valeur apportée au sein de l’équipe produit, sans exposer les détails confidentiels.",
+      en: "The case study explains the Discover scope, CoinGecko integrations, interface building blocks and value delivered within the product team without exposing confidential implementation details.",
     },
     cta: {
       fr: "Discuter d’une plateforme métier",
@@ -124,8 +124,8 @@ const featuredProjectIds = new Set(
 
 const projectIntros: Record<string, LocalizedText> = {
   "altme-documentation": {
-    fr: "Documentation technique publiée en versions GitBook et Docusaurus pour guider l’intégration d’Altme Wallet Provider.",
-    en: "Technical documentation published in GitBook and Docusaurus versions to guide Altme Wallet Provider integrations.",
+    fr: "Documentation technique structurée et maintenue en versions GitBook et Docusaurus pour guider l’onboarding et l’intégration d’Altme Wallet Provider.",
+    en: "Structured technical documentation maintained across GitBook and Docusaurus to guide Altme Wallet Provider onboarding and integration.",
   },
   "teams-bot-mastra": {
     fr: "Bot Microsoft Teams relié à Mastra pour agréger des flux RSS, préparer une synthèse NLP et la rendre exploitable dans l’équipe.",
@@ -136,20 +136,20 @@ const projectIntros: Record<string, LocalizedText> = {
     en: "An SEO and local-search engagement focused on audits, structured data, content and performance follow-up.",
   },
   "eloi-coachsteo": {
-    fr: "Site vitrine pour présenter les accompagnements d’un coach sportif et ostéopathe, avec une galerie avant/après et un parcours de contact direct.",
-    en: "A showcase website for a sports coach and osteopath, with a before-and-after gallery and a direct contact journey.",
+    fr: "Site vitrine one-page pour clarifier l’offre d’un coach sportif et ostéopathe, présenter les programmes HYROX et guider vers le contact.",
+    en: "A one-page showcase website clarifying a sports coach and osteopath’s offer, presenting HYROX programmes and guiding visitors to contact.",
   },
   "erp-micro-creches": {
     fr: "ERP métier pour centraliser le suivi de plusieurs micro-crèches, les comptes familles, les documents et les parcours d’administration.",
     en: "A business ERP for centralising multi-nursery operations, family accounts, documents and administration workflows.",
   },
   "luxury-auto-detailing": {
-    fr: "Site vitrine orienté prestations pour présenter une activité de detailing automobile et faciliter la demande de rendez-vous.",
-    en: "A service-led showcase website presenting an auto-detailing business and making appointment requests easier.",
+    fr: "Site vitrine premium pour expliquer les prestations de detailing automobile, montrer les résultats et faciliter la demande de rendez-vous.",
+    en: "A premium showcase website explaining auto-detailing services, showing the expected finish and making appointment requests easier.",
   },
   cledevoute: {
-    fr: "Site vitrine de maçonnerie conçu pour présenter les prestations, les réalisations et un accès rapide au contact.",
-    en: "A masonry showcase website built to present services, completed work and a clear route to contact.",
+    fr: "Site vitrine de maçonnerie conçu pour présenter les prestations, valoriser les réalisations et rendre la prise de contact plus directe.",
+    en: "A masonry showcase website built to present services, highlight completed work and make the contact path more direct.",
   },
   "berserk-universe": {
     fr: "Plateforme open source consacrée à l’univers de Berserk, avec fiches de personnages, analyses et carte interactive.",
@@ -230,15 +230,15 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
   {
     slug: "sites-vitrines",
     title: {
-      fr: "Sites vitrines et présence en ligne",
+      fr: "Création de site internet pour entreprise",
       en: "Showcase websites and online presence",
     },
     description: {
-      fr: "Des sites vitrines clairs, rapides et responsive pour présenter une activité et faciliter la prise de contact.",
+      fr: "Création de sites internet clairs, rapides et responsive pour les entreprises, indépendants et petites équipes, à Reims et à distance.",
       en: "Clear, fast and responsive showcase websites that present a business and make contact easier.",
     },
     intro: {
-      fr: "Une grande partie de mes missions freelance concerne des sites vitrines. Je prends en charge la structure, l’intégration, le responsive, le SEO de base et la mise en ligne.",
+      fr: "Vous cherchez quelqu’un pour créer un site pour votre entreprise ? Je prends en charge la structure, l’intégration, le responsive, le SEO technique de base, les fondations GEO et la mise en ligne.",
       en: "A large part of my freelance work concerns showcase websites. I handle structure, implementation, responsive behaviour, baseline SEO and release.",
     },
     audience: {
@@ -313,17 +313,31 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
           en: "Yes, after a focused review of the code, hosting and priorities. The takeover plan is defined before new work starts.",
         },
       },
+      {
+        question: { fr: "Je veux créer un site pour mon entreprise : par où commencer ?", en: "I want a website for my business: where should we start?" },
+        answer: {
+          fr: "Nous commençons par l’activité, les clients visés, les pages réellement utiles et l’action attendue. Je transforme ensuite ce cadrage en arborescence, contenu, interface responsive et plan de mise en ligne.",
+          en: "We start with the business, target customers, useful pages and expected action. I then turn that scope into a structure, content, responsive interface and release plan.",
+        },
+      },
+      {
+        question: { fr: "Travaillez-vous avec des entreprises à Reims et à distance ?", en: "Do you work with businesses in Reims and remotely?" },
+        answer: {
+          fr: "Oui. Je suis basé à Reims et je travaille à distance partout en France, avec des points de validation écrits et une livraison documentée.",
+          en: "Yes. I am based in Reims and work remotely across France, with written checkpoints and documented delivery.",
+        },
+      },
     ],
     relatedProjectSlugs: ["cledevoute", "eloi-coachsteo"],
   },
   {
     slug: "applications-metier",
     title: {
-      fr: "Applications métier sur mesure",
+      fr: "Application métier sur mesure pour PME",
       en: "Tailored business applications",
     },
     description: {
-      fr: "Des ERP légers, back-offices, portails internes et tableaux de bord qui traduisent vos règles métier en parcours simples.",
+      fr: "Développement d’ERP légers, back-offices, portails internes et tableaux de bord qui traduisent les règles d’une PME en parcours simples.",
       en: "Light ERPs, back offices, internal portals and dashboards that turn business rules into clear workflows.",
     },
     intro: {
@@ -402,17 +416,31 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
           en: "Yes, when the required interfaces or exports are available. Integrations are scoped and tested within the engagement boundary.",
         },
       },
+      {
+        question: { fr: "Peut-on remplacer des fichiers Excel dispersés ?", en: "Can the tool replace scattered spreadsheets?" },
+        answer: {
+          fr: "Oui, si le besoin est de centraliser des données, des rôles et des validations. Le premier lot reprend uniquement les parcours utiles, avec une reprise des données cadrée.",
+          en: "Yes, when the need is to centralise data, roles and approvals. The first increment covers only useful journeys, with a scoped data migration.",
+        },
+      },
+      {
+        question: { fr: "Comment éviter de construire un ERP trop large ?", en: "How do we avoid building an oversized ERP?" },
+        answer: {
+          fr: "On commence par un périmètre mesurable et un cas d’usage quotidien. Les fonctions secondaires restent hors du premier lot jusqu’à ce que le besoin soit confirmé.",
+          en: "We start with a measurable boundary and a daily use case. Secondary features stay out of the first increment until the need is confirmed.",
+        },
+      },
     ],
     relatedProjectSlugs: ["erp-micro-creches", "altme-wallet-platform"],
   },
   {
     slug: "automatisations-n8n",
     title: {
-      fr: "Automatisations n8n et workflows IA",
+      fr: "Automatisation n8n et IA pour entreprise",
       en: "n8n automation and AI workflows",
     },
     description: {
-      fr: "Des workflows documentés pour relier vos outils, transformer vos données et préparer des livrables contrôlables.",
+      fr: "Automatisation n8n et IA pour relier vos outils, réduire les tâches répétitives et fiabiliser les workflows d’équipe, à Reims et à distance.",
       en: "Documented workflows that connect tools, transform data and prepare outputs that can be checked.",
     },
     intro: {
@@ -489,6 +517,20 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
         answer: {
           fr: "Cela dépend des API, exports ou emails disponibles. Le périmètre est validé pendant le cadrage avant de construire les intégrations.",
           en: "It depends on available APIs, exports or emails. The boundary is confirmed during scoping before integrations are built.",
+        },
+      },
+      {
+        question: { fr: "Une automatisation n8n peut-elle garder une validation humaine ?", en: "Can an n8n automation keep a human review step?" },
+        answer: {
+          fr: "Oui. Le workflow peut préparer les données, contrôler les sorties et notifier une personne avant toute publication ou action irréversible.",
+          en: "Yes. The workflow can prepare data, check outputs and notify a person before publication or an irreversible action.",
+        },
+      },
+      {
+        question: { fr: "Comment reprendre un workflow n8n en cas d’erreur ?", en: "How can an n8n workflow recover from an error?" },
+        answer: {
+          fr: "Les étapes, statuts, sources et erreurs utiles sont conservés afin d’isoler le blocage et de reprendre le traitement sans relancer toute la chaîne.",
+          en: "Steps, statuses, sources and useful errors are retained so the issue can be isolated and the flow resumed without restarting everything.",
         },
       },
     ],

@@ -36,6 +36,16 @@ const FreelanceFaq = () => {
           answer:
             "Yes, I can sign an NDA before sensitive information is shared to protect your project and data.",
         },
+        {
+          question: "I need a website for my business: how do we start?",
+          answer:
+            "We start with the business, target customers, useful pages and the action visitors should take. I turn that scope into a clear structure, responsive interface and documented release plan.",
+        },
+        {
+          question: "Do you work with businesses in Reims and remotely?",
+          answer:
+            "Yes. I am based in Reims and work remotely with teams across France, with written checkpoints and documented delivery.",
+        },
       ]
     : [
         {
@@ -67,6 +77,16 @@ const FreelanceFaq = () => {
           question: "Peux-tu signer un NDA ?",
           answer:
             "Oui, je peux signer un NDA avant partage des informations sensibles afin de protéger votre projet et vos données.",
+        },
+        {
+          question: "Je veux créer un site pour mon entreprise : comment commencer ?",
+          answer:
+            "Nous clarifions d’abord l’activité, les clients visés, les pages utiles et l’action attendue. Je transforme ensuite ce cadrage en structure, interface responsive et plan de mise en ligne documenté.",
+        },
+        {
+          question: "Travailles-tu avec des entreprises à Reims et à distance ?",
+          answer:
+            "Oui. Je suis basé à Reims et j’interviens à distance partout en France, avec des points de validation écrits et une livraison documentée.",
         },
       ]), [isEnglish]);
 

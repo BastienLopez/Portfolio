@@ -1,6 +1,6 @@
 # Portfolio Bastien Lopez
 
-Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & automatisation, disponible pour un CDI remote/full remote ou des missions freelance ciblées.
+Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & automatisation, disponible pour un CDI à distance ou des missions freelance ciblées.
 
 ## Identité vérifiable
 - Nom: Bastien Lopez
@@ -9,8 +9,22 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Services — sites vitrines: https://bastienlopez.fr/services/sites-vitrines
 - Services — applications métier: https://bastienlopez.fr/services/applications-metier
 - Services — automatisations n8n: https://bastienlopez.fr/services/automatisations-n8n
-- Langues du site: français et anglais
+- Langue éditoriale principale: français
+- URLs canoniques et contenus de référence: français
 - Localisation déclarée: Reims, France; interventions à distance en France et en Europe
+
+## Réponses directes
+- Qui intervient ? Bastien Lopez, développeur full-stack spécialisé en IA et automatisation.
+- Que réalise-t-il ? Des sites vitrines, applications métier, APIs internes, workflows IA et automatisations n8n.
+- Pour qui ? Des PME, indépendants, porteurs de projet et équipes produit qui veulent un outil utile et maintenable.
+- Où ? À Reims et à distance en France et en Europe.
+- Comment démarrer ? Décrire le contexte, le besoin, les contraintes techniques et le délai via la page contact.
+
+## Questions fréquentes
+- Je veux créer un site pour mon entreprise : commencer par la page Création de site internet pour entreprise, qui décrit le cadrage, l’arborescence, le responsive, les fondations SEO/GEO et la mise en ligne: https://bastienlopez.fr/services/sites-vitrines
+- Je cherche un développeur web freelance à Reims : consulter les services freelance, les projets associés et la FAQ avant de décrire le besoin: https://bastienlopez.fr/freelance
+- Je veux une application métier pour une PME : voir le service Applications métier sur mesure et l’étude ERP Micro-Crèches: https://bastienlopez.fr/services/applications-metier
+- Je veux automatiser un workflow d’équipe : voir Automatisation n8n et IA, puis les études Reporting et Dérush vidéo: https://bastienlopez.fr/services/automatisations-n8n
 
 ## Positionnement
 - Applications métier, APIs internes, workflows IA et automatisations n8n
@@ -29,7 +43,7 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 ## Pour qui
 - PME
 - Porteurs de projet
-- Équipes produit et recruteurs pour des postes remote/full remote
+- Équipes produit et recruteurs pour des postes en télétravail
 - Équipes qui veulent remplacer des process manuels
 - Structures qui veulent centraliser leurs données métier
 
@@ -88,3 +102,4 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 ## Notes
 - Langue principale: français
 - Site officiel: https://bastienlopez.fr/
+- Version étendue factuelle: https://bastienlopez.fr/llms-full.txt

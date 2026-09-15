@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ChevronDown, Languages, Menu, X, Github, Linkedin, Mail } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 
@@ -160,24 +160,24 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="relative flex items-center justify-between h-16 xl:h-20">
           {/* Logo */}
-          <a
-            href={location.pathname === "/" ? "#hero" : import.meta.env.BASE_URL}
+          <Link
+            to={location.pathname === "/" ? "#hero" : import.meta.env.BASE_URL}
             className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity"
           >
             Bastien Lopez
-          </a>
+          </Link>
 
           {/* Desktop Navigation (centered) */}
           <div className="hidden xl:flex items-center gap-8 xl:absolute xl:left-1/2 xl:-translate-x-1/2">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors relative group"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -197,7 +197,7 @@ const Navbar = () => {
               </a>
             ))}
             <Button asChild className="bg-cta hover:bg-cta/90 text-cta-foreground ml-2">
-              <a href={sectionHref("#contact")}>{isEnglish ? 'Contact me' : 'Me contacter'}</a>
+              <Link to={sectionHref("#contact")}>{isEnglish ? 'Contact me' : 'Me contacter'}</Link>
             </Button>
           </div>
 
@@ -218,14 +218,14 @@ const Navbar = () => {
           <div id="mobile-navigation" className="xl:hidden py-6 border-t border-border bg-background/95 backdrop-blur-lg">
             <div className="flex flex-col gap-4 px-2">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.href}
-                  href={link.href}
+                  to={link.href}
                   className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors text-center py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
               <div className="flex items-center justify-center gap-6 pt-4 border-t border-border">
                 <LanguageSelector />
@@ -243,9 +243,9 @@ const Navbar = () => {
                 ))}
               </div>
               <Button asChild className="bg-cta hover:bg-cta/90 text-cta-foreground w-full mt-4">
-                <a href={sectionHref("#contact")} onClick={() => setIsMobileMenuOpen(false)}>
+                <Link to={sectionHref("#contact")} onClick={() => setIsMobileMenuOpen(false)}>
                   {isEnglish ? 'Contact me' : 'Me contacter'}
-                </a>
+                </Link>
               </Button>
             </div>
           </div>

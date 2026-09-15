@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,9 +15,10 @@ import { articlePageDefinitions, getArticlePageDefinitionById } from '../data/ar
 import { estimateReadingMinutes } from '@/lib/article-content';
 import { useLanguage } from '@/lib/i18n';
 import { Link, useNavigate } from 'react-router-dom';
-import RenderedArticleContent from '@/components/RenderedArticleContent';
 import './DevNotes.css';
 import '../pages/Article.css';
+
+const RenderedArticleContent = lazy(() => import('@/components/RenderedArticleContent'));
 
 type SelectableCategory = Exclude<ArticleCategory, never>;
 type LocalizedArticle = Article & { titleEn: string; contentEn: string };
@@ -226,10 +227,18 @@ const DevNotes = () => {
               </div>
             </header>
 
-            <RenderedArticleContent
-              className="devnotes-content devnotes-article-content prose prose-sm max-w-none md:prose-lg"
-              content={isEnglish ? selectedArticle.contentEn : selectedArticle.content}
-            />
+            <Suspense
+              fallback={
+                <div className="devnotes-content devnotes-article-content prose prose-sm max-w-none md:prose-lg">
+                  {isEnglish ? 'Loading article…' : 'Chargement de la note…'}
+                </div>
+              }
+            >
+              <RenderedArticleContent
+                className="devnotes-content devnotes-article-content prose prose-sm max-w-none md:prose-lg"
+                content={isEnglish ? selectedArticle.contentEn : selectedArticle.content}
+              />
+            </Suspense>
           </div>
         ) : (
           <>

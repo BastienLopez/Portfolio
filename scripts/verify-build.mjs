@@ -14,6 +14,7 @@ const requiredFiles = [
   "robots.txt",
   "sitemap.xml",
   "llms.txt",
+  "llms-full.txt",
   "site.webmanifest",
   "og-image.png",
   "CV_LOPEZ_BASTIEN_FREELANCE.pdf",
@@ -126,6 +127,10 @@ if (existsSync(path.join(distDirectory, "index.html"))) {
     failures.push("The prerendered home page does not contain ProfilePage structured data.");
   }
 
+  if (!indexHtml.includes('"hasOfferCatalog"') || !indexHtml.includes("https://bastienlopez.fr/services/sites-vitrines")) {
+    failures.push("The prerendered home page does not expose the service offer catalog.");
+  }
+
   for (const marker of [
     'id="about"',
     'id="projects"',
@@ -143,12 +148,12 @@ const prerenderedRoutes = [
   {
     file: "index.html",
     marker: "Bastien Lopez",
-    title: "Bastien Lopez —",
+    title: "Développeur web freelance à Reims |",
   },
   {
     file: path.join("freelance", "index.html"),
     marker: "Parlons de ce qui doit avancer",
-    title: "Freelance —",
+    title: "Développeur web freelance à Reims | Sites,",
   },
   {
     file: path.join("mentions-legales", "index.html"),
@@ -196,6 +201,12 @@ for (const slug of projectRoutes) {
   if (!html.includes(`https://bastienlopez.fr/projets/${slug}`)) {
     failures.push(`Prerendered ${relativePath} does not contain its canonical production URL.`);
   }
+  if (!html.includes('"mainEntityOfPage":{"@id":"https://bastienlopez.fr/projets/') && !html.includes('"mainEntityOfPage": {"@id": "https://bastienlopez.fr/projets/')) {
+    failures.push(`Prerendered ${relativePath} does not link its case study to its canonical page in structured data.`);
+  }
+  if (!html.includes('"image":["https://bastienlopez.fr/')) {
+    failures.push(`Prerendered ${relativePath} does not expose an absolute project image in structured data.`);
+  }
 }
 
 for (const slug of serviceRoutes) {
@@ -208,6 +219,9 @@ for (const slug of serviceRoutes) {
   }
   if (!html.includes("FAQPage")) {
     failures.push(`Prerendered ${relativePath} does not contain its FAQ structured data.`);
+  }
+  if (!html.includes('"subjectOf"') || !html.includes("https://bastienlopez.fr/notes/")) {
+    failures.push(`Prerendered ${relativePath} does not contain its related Dev Notes links.`);
   }
   if (!html.includes(`https://bastienlopez.fr/services/${slug}`)) {
     failures.push(`Prerendered ${relativePath} does not contain its canonical production URL.`);
@@ -266,6 +280,19 @@ if (existsSync(path.join(distDirectory, "llms.txt"))) {
   for (const slug of articleRoutes) {
     if (!llms.includes(`https://bastienlopez.fr/notes/${slug}`)) {
       failures.push(`llms.txt does not contain https://bastienlopez.fr/notes/${slug}.`);
+    }
+  }
+}
+
+if (existsSync(path.join(distDirectory, "llms-full.txt"))) {
+  const llmsFull = readText("llms-full.txt");
+  for (const marker of [
+    "Réponse à une demande de création de site",
+    "Réponse à une recherche de développeur web freelance à Reims",
+    "https://bastienlopez.fr/services/sites-vitrines",
+  ]) {
+    if (!llmsFull.includes(marker)) {
+      failures.push("llms-full.txt does not contain " + marker + ".");
     }
   }
 }

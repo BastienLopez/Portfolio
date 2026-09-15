@@ -18,10 +18,10 @@ const freelanceSchema = (isEnglish: boolean) => ({
       "url": "https://bastienlopez.fr/freelance",
       "name": isEnglish
         ? "Freelance — Web development, AI and automation | Bastien Lopez"
-        : "Freelance — Développement web, IA et automatisation | Bastien Lopez",
+        : "Développeur web freelance à Reims | Sites, applications et automatisations",
       "description": isEnglish
         ? "Websites, business applications, internal APIs, AI workflows and n8n automation for focused freelance engagements."
-        : "Sites internet, applications métier, APIs internes, workflows IA et automatisations n8n pour des missions freelance ciblées.",
+        : "Vous cherchez quelqu’un pour créer un site pour votre entreprise ? Bastien Lopez conçoit des sites vitrines, applications métier et automatisations n8n à Reims et à distance en France.",
       "inLanguage": isEnglish ? "en-US" : "fr-FR",
       "isPartOf": { "@id": "https://bastienlopez.fr/#website" },
       "about": { "@id": "https://bastienlopez.fr/#person" },
@@ -56,7 +56,43 @@ const freelanceSchema = (isEnglish: boolean) => ({
         { "@type": "Country", "name": "France" },
         { "@type": "AdministrativeArea", "name": "Europe" },
       ],
+      "audience": {
+        "@type": "Audience",
+        "audienceType": isEnglish
+          ? "Businesses, independent professionals and product teams"
+          : "Entreprises, indépendants, PME et équipes produit",
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://bastienlopez.fr/freelance",
+        "availableLanguage": isEnglish ? "en-US" : "fr-FR",
+      },
       "url": "https://bastienlopez.fr/freelance",
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://bastienlopez.fr/freelance#services",
+      "name": isEnglish ? "Freelance services" : "Services freelance",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": isEnglish ? "Showcase websites and online presence" : "Création de site internet pour entreprise",
+          "url": "https://bastienlopez.fr/services/sites-vitrines",
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": isEnglish ? "Tailored business applications" : "Application métier sur mesure pour PME",
+          "url": "https://bastienlopez.fr/services/applications-metier",
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": isEnglish ? "n8n and AI automation" : "Automatisation n8n et IA pour entreprise",
+          "url": "https://bastienlopez.fr/services/automatisations-n8n",
+        },
+      ],
     },
     {
       "@type": "BreadcrumbList",

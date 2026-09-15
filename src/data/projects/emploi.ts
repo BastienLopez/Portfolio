@@ -493,7 +493,7 @@ export const emploiProjects: Project[] = [
     {
     id: 'altme-wallet',
     title: 'Altme Wallet Platform',
-    description: "Développement et amélioration d'une plateforme back-end pour la gestion de portefeuilles numériques et de credentials vérifiables.",
+    description: "Contribution au développement et à l'amélioration de la plateforme Discover d'Altme : gestion de portefeuilles numériques, credentials vérifiables, NFTs et données de cryptomonnaies.",
     category: 'emploi',
     image: 'img_projects/Altme_Discover.png',
     tech: ['HTML / CSS', 'Python', 'Coingecko API'],
@@ -506,18 +506,36 @@ export const emploiProjects: Project[] = [
         <div class="section">
           <h3 class="section-title">📋 Contexte du projet</h3>
           <p class="description">
-            Développement et amélioration d'une <strong>plateforme back-end</strong> pour la gestion de portefeuilles numériques 
-            et de <strong>credentials vérifiables</strong>. Participation au projet <strong>Discover</strong>, intégrant la gestion 
-            des NFTs et des cryptomonnaies via l'API Coingecko.
+            Contribution au développement et à l'amélioration de briques de la plateforme <strong>Discover</strong>,
+            dédiée à la consultation et à la gestion de portefeuilles numériques et de
+            <strong>credentials vérifiables</strong>. Le module réunit plusieurs types d'actifs et de données
+            dans un même parcours, au lieu de les présenter comme des briques isolées.
+          </p>
+          <p class="description">
+            Le périmètre présenté comprend les NFTs et les cryptomonnaies alimentées par l'API CoinGecko,
+            ainsi que les éléments liés à l'identité décentralisée. Cette fiche décrit le travail réalisé
+            dans l'équipe produit sans dévoiler les détails internes de l'implémentation.
           </p>
         </div>
 
         <div class="section info-box">
           <h3 class="section-title">👤 Ma contribution</h3>
           <p class="description">
-            Participation au développement et à l'amélioration de briques de la plateforme Discover,
-            incluant les intégrations présentées ici. Le produit résulte d'un travail d'équipe.
+            J'ai participé au développement et à l'amélioration de briques du module Discover,
+            avec un travail sur les interfaces HTML/CSS, des traitements Python, l'intégration de données
+            CoinGecko et les flux liés aux credentials vérifiables. Le produit résulte d'un travail d'équipe ;
+            cette présentation se limite donc à mon périmètre de contribution publiable.
           </p>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">🧩 Périmètre de travail</h3>
+          <ul class="features-list">
+            <li class="feature-item"><strong>Parcours wallet</strong> — Organiser la consultation des portefeuilles et des éléments associés dans une interface compréhensible.</li>
+            <li class="feature-item"><strong>Données crypto</strong> — Connecter les données de marché CoinGecko au module Discover pour afficher des informations actualisées.</li>
+            <li class="feature-item"><strong>NFTs et credentials</strong> — Faire cohabiter actifs numériques et credentials vérifiables dans le même espace de découverte.</li>
+            <li class="feature-item"><strong>Travail d'équipe</strong> — Intégrer ces briques dans un produit existant en respectant les conventions et les besoins du projet.</li>
+          </ul>
         </div>
 
         <div class="section">
@@ -526,22 +544,22 @@ export const emploiProjects: Project[] = [
             <div class="tech-item">
               <span class="tech-icon">🎨</span>
               <span class="tech-name">HTML / CSS</span>
-              <p class="tech-desc">Interface utilisateur moderne et responsive</p>
+              <p class="tech-desc">Structure des écrans, composants et affichage responsive</p>
             </div>
             <div class="tech-item">
               <span class="tech-icon">🐍</span>
               <span class="tech-name">Python</span>
-              <p class="tech-desc">Développement backend</p>
+              <p class="tech-desc">Traitements et logique de service côté backend</p>
             </div>
             <div class="tech-item">
               <span class="tech-icon">💰</span>
               <span class="tech-name">Coingecko API</span>
-              <p class="tech-desc">Données crypto en temps réel</p>
+              <p class="tech-desc">Données de marché intégrées au module Discover</p>
             </div>
             <div class="tech-item">
               <span class="tech-icon">🔑</span>
               <span class="tech-name">Verifiable Credentials</span>
-              <p class="tech-desc">Système de credentials vérifiables</p>
+              <p class="tech-desc">Présentation d'attestations et d'identité décentralisée</p>
             </div>
           </div>
         </div>
@@ -565,14 +583,39 @@ export const emploiProjects: Project[] = [
               <span class="feature-icon">📱</span>
               <strong>Interface responsive</strong> - Parcours adapté aux principaux supports
             </li>
+            <li class="feature-item">
+              <span class="feature-icon">🔄</span>
+              <strong>Données réunies</strong> - Consultation cohérente des informations wallet, NFTs, crypto et credentials
+            </li>
           </ul>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">📈 Valeur apportée</h3>
+          <p class="description">
+            Le travail contribue à rendre le module Discover plus lisible pour l'utilisateur final :
+            les données issues de sources différentes sont regroupées dans un parcours unique et les
+            briques restent identifiables au sein de la plateforme. L'intégration CoinGecko apporte
+            une information crypto actualisée, tandis que les credentials vérifiables donnent leur place
+            aux usages d'identité numérique.
+          </p>
+          <p class="description">
+            Le gain présenté ici est qualitatif : une expérience plus cohérente et une base plus simple
+            à faire évoluer dans le cadre du travail d'équipe. Aucun indicateur chiffré de performance
+            ou d'usage n'est revendiqué pour cette contribution.
+          </p>
         </div>
 
         <div class="section results">
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Contribution au développement et à l’amélioration de briques du module Discover et de ses intégrations de données, au sein de l’équipe produit.
+              ✅ Briques du module Discover développées ou améliorées pour réunir portefeuilles,
+              NFTs, données crypto et credentials vérifiables dans un parcours cohérent.
+            </p>
+            <p class="result-text">
+              ✅ Intégrations de données CoinGecko et éléments d'interface consolidés dans le cadre
+              du travail d'équipe produit.
             </p>
           </div>
         </div>
@@ -583,7 +626,7 @@ export const emploiProjects: Project[] = [
     {
     id: 'altme-documentation',
     title: 'Altme Documentation',
-    description: "Création et maintenance de la documentation complète pour Altme Wallet Provider. Deux versions : GitBook (v1) et Docusaurus (v2) pour faciliter l'intégration des développeurs.",
+    description: "Création, structuration et maintenance de la documentation technique d'Altme Wallet Provider, d'abord avec GitBook puis avec Docusaurus, pour rendre l'intégration plus claire et plus autonome.",
     category: 'emploi',
     image: 'img_projects/altme_doc.png',
     tech: ['GitBook', 'Docusaurus', 'Markdown', 'React', 'TypeScript'],
@@ -595,19 +638,31 @@ export const emploiProjects: Project[] = [
         <div class="section">
           <h3 class="section-title">📋 Contexte du projet</h3>
           <p class="description">
-            Création et maintenance de la <strong>documentation technique complète</strong> pour Altme Wallet Provider. 
-            Développement de <strong>deux versions</strong> de la documentation : une première version avec GitBook et 
-            une seconde version moderne avec Docusaurus pour améliorer l'expérience développeur.
+            Création et maintenance de la <strong>documentation technique complète</strong> pour
+            <strong>Altme Wallet Provider</strong>, un produit dont l'intégration demande de comprendre
+            les concepts wallet, credentials et les différentes étapes d'un parcours développeur.
+            La documentation sert de point d'entrée avant l'installation, l'appel d'API ou la lecture
+            des exemples.
+          </p>
+          <p class="description">
+            Deux versions ont été travaillées : une première base publiée avec <strong>GitBook</strong>,
+            puis une version moderne avec <strong>Docusaurus</strong>. La migration permet de conserver
+            le contenu utile tout en disposant d'une structure plus facile à maintenir et à faire évoluer.
           </p>
         </div>
 
         <div class="section info-box">
           <h3 class="section-title">👤 Ma contribution</h3>
           <p class="description">
-            Création et maintenance de contenus et de parcours de documentation, avec migration de GitBook
-            vers Docusaurus pour faciliter l'intégration des développeurs.
+            J'ai structuré les contenus, rédigé et maintenu les pages en Markdown, organisé les parcours
+            d'intégration et participé à la migration de GitBook vers Docusaurus. J'ai également travaillé
+            sur les éléments React/TypeScript qui encadrent la présentation de la documentation.
           </p>
-          <p class="highlight"><strong>Pages et sections de documentation</strong> migrées ou maintenues entre GitBook et Docusaurus.</p>
+          <p class="description">
+            Le périmètre inclut les références API, les guides étape par étape, les exemples de code,
+            la navigation, la recherche et les pages destinées à une audience internationale.
+          </p>
+          <p class="highlight"><strong>Pages et sections de documentation</strong> migrées ou maintenues entre GitBook et Docusaurus, avec contrôle de la cohérence des parcours.</p>
         </div>
 
         <div class="section">
@@ -616,22 +671,22 @@ export const emploiProjects: Project[] = [
             <div class="tech-item">
               <span class="tech-icon">📖</span>
               <span class="tech-name">GitBook</span>
-              <p class="tech-desc">Documentation V1 - Simple et efficace</p>
+              <p class="tech-desc">Base initiale de publication et de partage</p>
             </div>
             <div class="tech-item">
               <span class="tech-icon">📘</span>
               <span class="tech-name">Docusaurus</span>
-              <p class="tech-desc">Documentation V2 - Moderne et performante</p>
+              <p class="tech-desc">Version structurée, extensible et maintenable</p>
             </div>
             <div class="tech-item">
               <span class="tech-icon">📝</span>
               <span class="tech-name">Markdown</span>
-              <p class="tech-desc">Rédaction structurée et lisible</p>
+              <p class="tech-desc">Contenu versionnable, réutilisable et lisible</p>
             </div>
             <div class="tech-item">
               <span class="tech-icon">⚛️</span>
               <span class="tech-name">React & TypeScript</span>
-              <p class="tech-desc">Composants personnalisés typés</p>
+              <p class="tech-desc">Composants et personnalisation de l'interface</p>
             </div>
           </div>
         </div>
@@ -667,6 +722,22 @@ export const emploiProjects: Project[] = [
         </div>
 
         <div class="section">
+          <h3 class="section-title">🧭 Organisation des parcours</h3>
+          <p class="description">
+            La documentation est organisée pour répondre aux questions dans l'ordre où elles se posent :
+            découvrir le produit, comprendre les concepts, suivre un guide d'intégration puis retrouver
+            une référence précise. Les exemples et les liens entre sections évitent de laisser le lecteur
+            seul face à une liste d'API.
+          </p>
+          <ul class="features-list">
+            <li class="feature-item"><strong>Découverte</strong> — Présenter le rôle de Wallet Provider et les notions nécessaires avant de coder.</li>
+            <li class="feature-item"><strong>Intégration</strong> — Guider le développeur étape par étape avec des exemples directement exploitables.</li>
+            <li class="feature-item"><strong>Référence</strong> — Retrouver rapidement les endpoints, paramètres et comportements documentés.</li>
+            <li class="feature-item"><strong>Maintenance</strong> — Conserver une base organisée lors du passage de GitBook à Docusaurus.</li>
+          </ul>
+        </div>
+
+        <div class="section">
           <h3 class="section-title">🔗 Versions disponibles</h3>
           <div class="versions-grid">
             <div class="version-card">
@@ -686,15 +757,31 @@ export const emploiProjects: Project[] = [
           </div>
         </div>
 
+        <div class="section">
+          <h3 class="section-title">📈 Valeur apportée</h3>
+          <p class="description">
+            Le principal gain est un parcours d'onboarding plus lisible : un développeur peut passer
+            du contexte général aux guides puis à la référence API sans changer de logique de lecture.
+            La séparation entre contenu Markdown, composants d'interface et navigation rend aussi les
+            mises à jour plus prévisibles pour l'équipe.
+          </p>
+          <p class="description">
+            La migration vers Docusaurus fournit une base plus structurée pour faire évoluer la
+            documentation. Elle ne remplace pas la validation produit : les informations publiées
+            doivent continuer à être relues et synchronisées avec les versions réellement disponibles.
+          </p>
+        </div>
+
         <div class="section results">
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Documentation structurée pour faciliter l’intégration des développeurs.
+              ✅ Documentation structurée pour accompagner la découverte, l'intégration et la recherche
+              d'informations sur Altme Wallet Provider.
             </p>
             <p class="result-text">
-              ✅ Migration vers Docusaurus pour proposer une navigation plus structurée
-              et une base de documentation plus maintenable.
+              ✅ Migration de GitBook vers Docusaurus pour proposer une navigation plus structurée,
+              une maintenance plus claire et une base extensible.
             </p>
           </div>
         </div>

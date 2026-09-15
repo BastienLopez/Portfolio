@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import DOMPurify from "dompurify";
+import { Link } from "react-router-dom";
 import {
   ArrowRight,
   ExternalLink,
@@ -18,7 +18,11 @@ import {
   decorateDetailedContent,
   renderProjectMarkdown,
 } from "@/lib/project-content";
-import { getImageManifestEntry, getImageSrcSet } from "@/lib/image-variants";
+import {
+  getImageManifestEntry,
+  getImagePrefetchPath,
+  getImageSrcSet,
+} from "@/lib/image-variants";
 
 type DisplayProjectCategory = Project["category"];
 type DisplayProject = Project;
@@ -56,6 +60,7 @@ const freelancePageProjectIds = new Set([
   "n8n-video-derush",
   "seo-geo-optimization",
 ]);
+const portfolioFreelanceProjectIds = new Set(["seo-geo-optimization"]);
 const freelanceProjects: DisplayProject[] = allProjects.filter(
   (project) =>
     project.category === "freelance" || freelancePageProjectIds.has(project.id),
@@ -177,12 +182,12 @@ const englishProjectSummaries: Record<
   "altme-wallet": {
     title: "Altme Wallet Platform",
     description:
-      "Backend platform development and improvement for managing digital wallets and verifiable credentials.",
+      "Contribution to Altme's Discover platform, bringing wallets, verifiable credentials, NFTs and CoinGecko cryptocurrency data into one product journey.",
   },
   "altme-documentation": {
     title: "Altme Documentation",
     description:
-      "Creation and maintenance of developer documentation for Altme Wallet Provider, across GitBook and Docusaurus.",
+      "Technical documentation for Altme Wallet Provider, structured and maintained across GitBook and Docusaurus to make developer onboarding clearer and more autonomous.",
   },
   "seo-geo-optimization": {
     title: "SEO & Local Search Visibility",
@@ -200,19 +205,19 @@ const englishProjectSummaries: Record<
       "n8n pipeline that turns raw footage into selected sequences, subtitles, previews and edit-ready deliverables for Instagram and TikTok.",
   },
   "eloi-coachsteo": {
-    title: "Eloi CoachSteo — Sport Trainer",
+    title: "Eloi CoachStéo — Sport Trainer",
     description:
-      "One-page showcase website for a sports coach and osteopath, presenting fitness, physical preparation and tailored HYROX programmes.",
+      "One-page showcase website for a sports coach and osteopath, presenting fitness, physical preparation, tailored HYROX programmes and a direct contact journey.",
   },
   "luxury-auto-detailing": {
     title: "Luxury Auto Detailing",
     description:
-      "Showcase website for premium car-detailing services: cleaning, polishing, ceramic protection and interior restoration.",
+      "Premium showcase website for car-detailing services, with a clear presentation of cleaning, polishing, ceramic protection, interior restoration and appointment contact.",
   },
   cledevoute: {
     title: "Cle De Voute — Masonry",
     description:
-      "Showcase website for Cle De Voute Masonry, presenting services and completed work.",
+      "Masonry showcase website presenting services and completed work, with an accessible contact path and responsive portfolio presentation.",
   },
   "berserk-universe": {
     title: "Berserk Universe",
@@ -303,6 +308,10 @@ const getProjectTechHighlights = (project: DisplayProject) =>
 const getProjectDetailCta = (project: DisplayProject, isEnglish: boolean) => {
   const projectContext = `${project.id} ${project.title}`.toLowerCase();
 
+  if (project.id === "nolvus-mod-automation") {
+    return isEnglish ? "Discover the project →" : "Découvrir le projet →";
+  }
+
   if (
     projectContext.includes("erp") ||
     projectContext.includes("micro-creche")
@@ -337,15 +346,19 @@ const resolveImage = (img?: string | null) => {
   return `${import.meta.env.BASE_URL}${normalized}`;
 };
 
-const shouldContainProjectImage = (project: DisplayProject) => {
+const shouldStretchProjectImage = (project: DisplayProject) => {
   const entry = getImageManifestEntry(project.image);
   if (!entry) return false;
 
   const aspectRatio = entry.width / entry.height;
 
-  // Keep the shared banner frame for regular captures, while preserving
-  // unusually wide, square, and portrait artwork in full.
-  return aspectRatio < 2 || aspectRatio > 2.6;
+  // Wide banners only need a very small horizontal stretch to fill the
+  // shared card frame without cropping their top or bottom edges.
+  return (
+    (aspectRatio >= 2 && aspectRatio <= 2.6) ||
+    project.id === "aqualis" ||
+    project.id === "seo-geo-optimization"
+  );
 };
 
 const prepareDetailedContent = (content: string) => {
@@ -353,9 +366,9 @@ const prepareDetailedContent = (content: string) => {
     ? renderProjectMarkdown(content)
     : content;
 
-  return DOMPurify.sanitize(
-    decorateDetailedContent(renderedContent),
-  );
+  // The sanitizer is loaded only when a visitor opens a project detail. This
+  // keeps the large Mermaid/DOMPurify dependency out of the initial page.
+  return decorateDetailedContent(renderedContent);
 };
 
 type ProjectsProps = {
@@ -380,6 +393,44 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
   const projectDetailRef = useRef<HTMLDivElement>(null);
   const galleryViewerRef = useRef<HTMLDivElement>(null);
   const hadProjectSelectionRef = useRef(false);
+
+  useEffect(() => {
+    const projectImages = Array.from(
+      new Set(
+        projectsForView
+          .map((project) => project.image)
+          .filter((image): image is string => Boolean(image)),
+      ),
+    );
+
+    const prefetchProjectImages = () => {
+      const preferredWidth = window.innerWidth >= 1500 ? 960 : 480;
+
+      projectImages.forEach((image) => {
+        const prefetchPath = getImagePrefetchPath(image, preferredWidth);
+        if (!prefetchPath) return;
+
+        const href = resolveImage(prefetchPath);
+        const alreadyPrefetched = Array.from(
+          document.head.querySelectorAll<HTMLLinkElement>(
+            "link[data-project-image-prefetch]",
+          ),
+        ).some((link) => link.href === href);
+        if (alreadyPrefetched) return;
+
+        const link = document.createElement("link");
+        link.rel = "prefetch";
+        link.as = "image";
+        link.href = href;
+        link.dataset.projectImagePrefetch = "true";
+        document.head.appendChild(link);
+      });
+    };
+
+    const prefetchTimer = window.setTimeout(prefetchProjectImages, 300);
+    return () => window.clearTimeout(prefetchTimer);
+  }, [projectsForView]);
+
   const localizeProject = (project: DisplayProject) => {
     const englishDetailedContent = getEnglishDetailedContent(project.id);
     const localizedProject = isEnglish
@@ -912,7 +963,12 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
         ? projectsForView.filter((project) =>
             freelanceSelectedWorkProjectIds.has(project.id),
           )
-        : projectsForView.filter((project) => project.category === selectedCategory))]
+        : projectsForView.filter((project) =>
+            selectedCategory === "freelance"
+              ? project.category === selectedCategory ||
+                portfolioFreelanceProjectIds.has(project.id)
+              : project.category === selectedCategory,
+          ))]
         .sort((a, b) => {
           const displayOrderIndex =
             selectedCategory === "freelance"
@@ -1236,14 +1292,14 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                       {item.title}
                     </Button>
                     {projectPath ? (
-                      <a
-                        href={projectPath}
+                      <Link
+                        to={projectPath}
                         aria-label={isEnglish ? "Open dedicated case study" : "Ouvrir l’étude de cas dédiée"}
                         className="project-featured-link"
                       >
                         {isEnglish ? "Open the case study" : "Ouvrir l’étude de cas"}
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                      </a>
+                      </Link>
                     ) : null}
                   </div>
                 );
@@ -1493,7 +1549,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                           alt={title}
                           loading="lazy"
                           decoding="async"
-                          sizes="(max-width: 768px) 100vw, 55vw"
+                          sizes="(max-width: 768px) 360px, (max-width: 1200px) 480px, 640px"
                           width={getImageManifestEntry(project.image)?.width}
                           height={getImageManifestEntry(project.image)?.height}
                           className="relative block h-full w-full rounded-none object-contain"
@@ -1536,7 +1592,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                           {group.projects.map((detailProject) => (
                             getProjectLink(detailProject.id, isFreelancePage) ? (
                               <Button key={detailProject.id} asChild variant="outline">
-                                <a href={getProjectLink(detailProject.id, isFreelancePage)}>
+                                <Link to={getProjectLink(detailProject.id, isFreelancePage)}>
                                   {group.projects.length > 1
                                     ? detailProject.id === "n8n-reporting"
                                       ? isEnglish
@@ -1546,7 +1602,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                                         ? "Explore video editing →"
                                         : "Explorer le dérush →"
                                     : getProjectDetailCta(detailProject, isEnglish)}
-                                </a>
+                                </Link>
                               </Button>
                             ) : (
                               <Button
@@ -1610,10 +1666,10 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                       : "Les autres fiches et explorations restent accessibles dans le portfolio complet."}
                   </p>
                   <Button asChild variant="link" className="h-auto gap-2 px-0 text-primary">
-                    <a href="/#projects">
+                    <Link to="/#projects">
                       {isEnglish ? "View the full portfolio" : "Voir le portfolio complet"}
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </a>
+                    </Link>
                   </Button>
                 </div>
               </div>
@@ -1644,29 +1700,29 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                           alt={localizedProject.title}
                           loading="lazy"
                           decoding="async"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          sizes="(max-width: 768px) 360px, (max-width: 1200px) 320px, 320px"
                           width={getImageManifestEntry(project.image)?.width}
                           height={getImageManifestEntry(project.image)?.height}
-                          className={shouldContainProjectImage(project)
-                            ? "block h-full w-full object-contain"
-                            : "block h-full w-full object-cover"}
+                          className={shouldStretchProjectImage(project)
+                            ? "block h-full w-full object-fill"
+                            : "block h-full w-full object-contain"}
                         />
                       </div>
                       <div className="project-card-content flex flex-1 flex-col p-4 md:p-5">
                         <h3 className="min-h-[3rem] text-lg font-semibold leading-6 text-foreground md:text-xl md:leading-6">
                           {localizedProject.title}
                         </h3>
-                        <p className="mt-2 min-h-[6rem] text-sm leading-6 text-muted-foreground">
+                        <p className="project-card-description mt-2 min-h-[6rem] text-sm leading-6 text-muted-foreground">
                           {localizedProject.description}
                         </p>
                         <div
                           data-project-tech
-                          className="project-card-tech mt-4 grid min-h-10 min-w-0 grid-cols-3 items-stretch text-center text-xs font-semibold leading-5 text-foreground/75 md:text-sm"
+                          className="project-card-tech mt-0 grid min-h-12 min-w-0 grid-cols-3 items-stretch text-center text-xs font-semibold leading-5 text-foreground/75 md:text-sm"
                         >
                           {getProjectTechHighlights(project).map((tech, index) => (
                             <span
                               key={tech}
-                              className="relative flex min-h-10 min-w-0 items-center justify-center break-words whitespace-normal px-1"
+                              className="relative flex min-h-12 min-w-0 items-center justify-center break-words whitespace-normal px-1"
                             >
                               {index > 0 ? (
                                 <span
@@ -1687,10 +1743,10 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                             }`}
                           >
                             {projectPath ? (
-                              <a className="project-card-link" href={projectPath}>
+                              <Link className="project-card-link" to={projectPath}>
                                 {getProjectCardLabel(project, isEnglish)}
                                 <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
-                              </a>
+                              </Link>
                             ) : (
                               <button
                                 type="button"

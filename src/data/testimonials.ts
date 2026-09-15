@@ -21,7 +21,7 @@ export const testimonials: Testimonial[] = [
     roleEn: "Sports coach & osteopath",
     serviceEn: "Showcase website & SEO optimisation",
     textEn: "The website matches the need exactly: clear, professional and easy to use. Communication was smooth, with quick adjustments after feedback.",
-    image: "/img_clients/eloi.png",
+    image: "/img_clients/eloi-112.webp",
   },
   {
     id: "t-2",
@@ -32,7 +32,7 @@ export const testimonials: Testimonial[] = [
     roleEn: "Founder",
     serviceEn: "Showcase website & SEO optimisation",
     textEn: "The result gives the business a more professional image. The website is modern, clear and fast, and highlights the services effectively.",
-    image: "/img_clients/luxury-auto.png",
+    image: "/img_clients/luxury-auto-112.webp",
   },
   {
     id: "t-3",
@@ -43,7 +43,7 @@ export const testimonials: Testimonial[] = [
     roleEn: "Manager",
     serviceEn: "Custom ERP",
     textEn: "The tool made it easier to centralise information and simplify daily tracking. The interface is clear and adapted to field needs.",
-    image: "/img_clients/jose.png",
+    image: "/img_clients/jose-112.webp",
   },
   {
     id: "t-4",
@@ -54,7 +54,7 @@ export const testimonials: Testimonial[] = [
     roleEn: "Clé de Voûte · Manager",
     serviceEn: "Showcase website & SEO optimisation",
     textEn: "The project was well scoped from the start. The result is clean, suited to the business, and requested changes were integrated efficiently.",
-    image: "/img_clients/marino.png",
+    image: "/img_clients/marino-112.webp",
   },
   {
     id: "t-5",
@@ -65,7 +65,7 @@ export const testimonials: Testimonial[] = [
     roleEn: "Anonymised user feedback",
     serviceEn: "CV ATS tool",
     textEn: "The application meets the initial need: analyse a CV quickly and get clear feedback. It is simple, useful and effective.",
-    image: "/img_clients/user.png",
+    image: "/img_clients/user-112.webp",
   },
 
 ];

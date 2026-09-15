@@ -49,8 +49,8 @@ export type PageMetadata = {
 const PAGE_METADATA: Record<PageId, Record<Locale, PageMetadata>> = {
   home: {
     fr: {
-      title: 'Bastien Lopez — Développeur Full-Stack IA & Automatisation',
-      description: 'Sites internet, applications métier, APIs internes et automatisations IA/n8n par Bastien Lopez. Disponible pour CDI remote ou missions freelance.',
+      title: 'Développeur web freelance à Reims | IA & automatisation — Bastien Lopez',
+      description: 'Développeur web freelance à Reims : création de sites pour entreprises, applications métier, APIs et automatisations IA/n8n en France et à distance.',
       path: '/',
       robots: 'index, follow',
     },
@@ -63,8 +63,8 @@ const PAGE_METADATA: Record<PageId, Record<Locale, PageMetadata>> = {
   },
   freelance: {
     fr: {
-      title: 'Freelance — Développement web, IA et automatisation | Bastien Lopez',
-      description: 'Sites internet, applications métier, APIs internes, workflows IA et automatisations n8n pour des missions freelance ciblées.',
+      title: 'Développeur web freelance à Reims | Sites, applications et automatisations',
+      description: 'Vous cherchez quelqu’un pour créer un site pour votre entreprise ? Bastien Lopez conçoit des sites vitrines, applications métier et automatisations n8n à Reims et à distance en France.',
       path: '/freelance',
       robots: 'index, follow',
     },
@@ -124,8 +124,8 @@ const applyPageMetadata = (metadata: PageMetadata, locale: Locale) => {
   setMetaContent('meta[name="robots"]', metadata.robots);
   setMetaContent('meta[property="og:title"]', metadata.title);
   setMetaContent('meta[property="og:description"]', metadata.description);
+  setMetaContent('meta[property="og:type"]', metadata.path.startsWith('/notes/') ? 'article' : 'website');
   setMetaContent('meta[property="og:locale"]', locale === 'en' ? 'en_US' : 'fr_FR');
-  setMetaContent('meta[property="og:locale:alternate"]', locale === 'en' ? 'fr_FR' : 'en_US');
   setMetaContent('meta[property="og:url"]', canonicalUrl);
   setMetaContent('meta[name="twitter:title"]', metadata.title);
   setMetaContent('meta[name="twitter:description"]', metadata.description);

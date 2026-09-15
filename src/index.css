@@ -258,12 +258,22 @@ All colors MUST be HSL.
     min-width: 0;
   }
 
+  /* Keep the technology strip aligned while leaving the full description
+     visible on desktop and naturally wrapping on mobile. */
+  .project-card-description {
+    height: 6rem;
+    overflow: visible;
+  }
+
   .project-card-tech {
+    min-height: 3rem;
+    overflow: visible;
     color: hsl(var(--foreground) / 0.78);
   }
 
   .project-card-tech span {
     border-radius: 0 !important;
+    overflow: visible;
   }
 
   .project-card-actions {
@@ -334,6 +344,10 @@ All colors MUST be HSL.
     .project-category-tab::after {
       right: 0.35rem;
       left: 0.35rem;
+    }
+
+    .project-card-description {
+      height: auto;
     }
   }
 }

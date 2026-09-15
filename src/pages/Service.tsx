@@ -12,7 +12,14 @@ import {
   type ServicePageDefinition,
 } from "@/data/site-pages";
 import { allProjects } from "@/data/projects";
+import { getArticlePageDefinition } from "@/data/articles/pages";
 import { SITE_ORIGIN, useLanguage, useRouteMetadata, type PageMetadata } from "@/lib/i18n";
+
+const serviceRelatedArticleSlugs: Record<ServicePageDefinition["slug"], readonly string[]> = {
+  "sites-vitrines": ["deploiement-production-checklist", "estimer-un-projet-freelance"],
+  "applications-metier": ["architecture-hexagonale", "docker-pour-debutants"],
+  "automatisations-n8n": ["pipeline-ci-cd-github-actions", "monitorer-une-application-apres-deploiement"],
+};
 
 const metadataFor = (
   definition: ServicePageDefinition | undefined,
@@ -64,6 +71,16 @@ const serviceSchema = (definition: ServicePageDefinition, isEnglish: boolean) =>
       text: isEnglish ? item.answer.en : item.answer.fr,
     },
   }));
+  const relatedArticles = (serviceRelatedArticleSlugs[definition.slug] ?? [])
+    .map((slug) => getArticlePageDefinition(slug))
+    .filter((article): article is NonNullable<ReturnType<typeof getArticlePageDefinition>> => Boolean(article))
+    .map((article) => ({
+      "@type": "TechArticle",
+      "@id": `${SITE_ORIGIN}/notes/${article.slug}#article`,
+      url: `${SITE_ORIGIN}/notes/${article.slug}`,
+      name: isEnglish ? article.title.en : article.title.fr,
+      inLanguage: language,
+    }));
 
   return {
     "@context": "https://schema.org",
@@ -85,12 +102,35 @@ const serviceSchema = (definition: ServicePageDefinition, isEnglish: boolean) =>
         url,
         name: title,
         description: isEnglish ? definition.intro.en : definition.intro.fr,
+        inLanguage: language,
         provider: { "@id": `${SITE_ORIGIN}/#person` },
         areaServed: [
           { "@type": "City", name: "Reims" },
           { "@type": "Country", name: "France" },
         ],
+        audience: {
+          "@type": "Audience",
+          audienceType: isEnglish ? definition.audience.en : definition.audience.fr,
+        },
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: url,
+          availableLanguage: language,
+        },
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: isEnglish ? "Deliverables" : "Livrables",
+          itemListElement: definition.deliverables.map((item, index) => ({
+            "@type": "Offer",
+            position: index + 1,
+            itemOffered: {
+              "@type": "Service",
+              name: isEnglish ? item.en : item.fr,
+            },
+          })),
+        },
         serviceType: title,
+        ...(relatedArticles.length > 0 ? { subjectOf: relatedArticles } : {}),
       },
       {
         "@type": "FAQPage",
@@ -323,6 +363,36 @@ const Service = () => {
                 ))}
               </div>
             </section>
+
+            {serviceRelatedArticleSlugs[definition.slug]?.length ? (
+              <section className="mt-16" aria-labelledby="service-notes-title">
+                <div className="mb-7">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{isEnglish ? "Related notes" : "Notes liées"}</p>
+                  <h2 id="service-notes-title" className="mt-3 text-3xl font-bold tracking-tight">{isEnglish ? "Go further on the topic" : "Approfondir le sujet"}</h2>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {serviceRelatedArticleSlugs[definition.slug].map((articleSlug) => {
+                    const article = getArticlePageDefinition(articleSlug);
+                    if (!article) return null;
+                    return (
+                      <Link
+                        key={article.slug}
+                        to={`/notes/${article.slug}`}
+                        className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/70"
+                      >
+                        <span className="flex items-center justify-between gap-4 font-semibold">
+                          {isEnglish ? article.title.en : article.title.fr}
+                          <ArrowRight className="h-4 w-4 text-primary transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                        </span>
+                        <span className="mt-2 block text-sm leading-6 text-muted-foreground">
+                          {isEnglish ? article.description.en : article.description.fr}
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </section>
+            ) : null}
 
             <div className="mt-16 flex flex-wrap items-center justify-center gap-4 border-t border-border pt-8">
               <Button asChild size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90">
