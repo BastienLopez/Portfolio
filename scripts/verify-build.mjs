@@ -9,6 +9,7 @@ const failures = [];
 const requiredFiles = [
   "index.html",
   path.join("freelance", "index.html"),
+  path.join("creation-site-internet-reims", "index.html"),
   path.join("mentions-legales", "index.html"),
   "404.html",
   "robots.txt",
@@ -45,10 +46,10 @@ const projectRoutes = [
   "demons-souls-rpcs3",
 ];
 const serviceRoutes = [
-  "sites-vitrines",
   "applications-metier",
   "automatisations-n8n",
 ];
+const localRoutes = ["creation-site-internet-reims"];
 const articleRoutes = [
   "pipeline-ci-cd-github-actions",
   "docker-pour-debutants",
@@ -137,8 +138,11 @@ if (existsSync(path.join(distDirectory, "index.html"))) {
     failures.push("The prerendered home page does not contain the Dev Notes ItemList schema.");
   }
 
-  if (!indexHtml.includes('"hasOfferCatalog"') || !indexHtml.includes("https://bastienlopez.fr/services/sites-vitrines")) {
+  if (!indexHtml.includes('"hasOfferCatalog"') || !indexHtml.includes("https://bastienlopez.fr/creation-site-internet-reims")) {
     failures.push("The prerendered home page does not expose the service offer catalog.");
+  }
+  if (indexHtml.includes("https://bastienlopez.fr/services/sites-vitrines")) {
+    failures.push("The prerendered home page still advertises the legacy sites-vitrines URL.");
   }
 
   for (const marker of [
@@ -164,6 +168,11 @@ const prerenderedRoutes = [
     file: path.join("freelance", "index.html"),
     marker: "Parlons de ce qui doit avancer",
     title: "Développeur web freelance à Reims | Sites,",
+  },
+  {
+    file: path.join("creation-site-internet-reims", "index.html"),
+    marker: "Création de sites internet à Reims",
+    title: "Création de sites internet à Reims |",
   },
   {
     file: path.join("mentions-legales", "index.html"),
@@ -201,8 +210,13 @@ for (const route of prerenderedRoutes) {
     }
   }
 
-  if (route.file === path.join("freelance", "index.html") && !html.includes("freelance#service")) {
-    failures.push("Prerendered freelance page does not contain its service structured data.");
+  if (route.file === path.join("freelance", "index.html")) {
+    if (!html.includes("freelance#service")) {
+      failures.push("Prerendered freelance page does not contain its service structured data.");
+    }
+    if (!html.includes('href="/creation-site-internet-reims"')) {
+      failures.push("Prerendered freelance page does not link its local website-creation page.");
+    }
   }
 }
 
@@ -250,6 +264,22 @@ for (const slug of serviceRoutes) {
   }
 }
 
+for (const slug of localRoutes) {
+  const relativePath = path.join(slug, "index.html");
+  const routePath = path.join(distDirectory, relativePath);
+  if (!existsSync(routePath)) continue;
+  const html = readText(relativePath);
+  if (!html.includes("FAQPage")) {
+    failures.push(`Prerendered ${relativePath} does not contain its local FAQ structured data.`);
+  }
+  if (!html.includes(`https://bastienlopez.fr/${slug}`)) {
+    failures.push(`Prerendered ${relativePath} does not contain its canonical production URL.`);
+  }
+  if (html.includes("/services/sites-vitrines")) {
+    failures.push(`Prerendered ${relativePath} still contains a visible legacy sites-vitrines link.`);
+  }
+}
+
 for (const slug of articleRoutes) {
   const relativePath = path.join("notes", slug, "index.html");
   const routePath = path.join(distDirectory, relativePath);
@@ -285,6 +315,7 @@ if (existsSync(path.join(distDirectory, "sitemap.xml"))) {
     failures.push("sitemap.xml does not contain the public freelance route.");
   }
   for (const slug of [
+    ...localRoutes.map((value) => value),
     ...projectRoutes.map((value) => `projets/${value}`),
     ...serviceRoutes.map((value) => `services/${value}`),
     ...articleRoutes.map((value) => `notes/${value}`),
@@ -293,13 +324,20 @@ if (existsSync(path.join(distDirectory, "sitemap.xml"))) {
       failures.push(`sitemap.xml does not contain https://bastienlopez.fr/${slug}.`);
     }
   }
+  if (sitemap.includes("https://bastienlopez.fr/services/sites-vitrines")) {
+    failures.push("sitemap.xml still lists the legacy sites-vitrines URL.");
+  }
 }
 
 const caddyFile = path.join(process.cwd(), "deploy", "Caddyfile.example");
 if (existsSync(caddyFile)) {
   const caddy = readFileSync(caddyFile, "utf8");
+  if (!caddy.includes("@legacySitesVitrines") || !caddy.includes("redir @legacySitesVitrines https://bastienlopez.fr/creation-site-internet-reims 301")) {
+    failures.push("deploy/Caddyfile.example does not redirect the legacy sites-vitrines URL to the Reims landing page.");
+  }
   for (const route of [
     "/freelance",
+    ...localRoutes.map((value) => `/${value}`),
     "/mentions-legales",
     ...projectRoutes.map((value) => `/projets/${value}`),
     ...serviceRoutes.map((value) => `/services/${value}`),
@@ -313,6 +351,9 @@ if (existsSync(caddyFile)) {
 
 if (existsSync(path.join(distDirectory, "llms.txt"))) {
   const llms = readText("llms.txt");
+  if (llms.includes("https://bastienlopez.fr/services/sites-vitrines")) {
+    failures.push("llms.txt still advertises the legacy sites-vitrines URL.");
+  }
   for (const slug of projectRoutes) {
     if (!llms.includes(`https://bastienlopez.fr/projets/${slug}`)) {
       failures.push(`llms.txt does not contain https://bastienlopez.fr/projets/${slug}.`);
@@ -323,6 +364,11 @@ if (existsSync(path.join(distDirectory, "llms.txt"))) {
       failures.push(`llms.txt does not contain https://bastienlopez.fr/notes/${slug}.`);
     }
   }
+  for (const slug of localRoutes) {
+    if (!llms.includes(`https://bastienlopez.fr/${slug}`)) {
+      failures.push(`llms.txt does not contain https://bastienlopez.fr/${slug}.`);
+    }
+  }
 }
 
 if (existsSync(path.join(distDirectory, "llms-full.txt"))) {
@@ -330,13 +376,18 @@ if (existsSync(path.join(distDirectory, "llms-full.txt"))) {
   for (const marker of [
     "Réponse à une demande de création de site",
     "Réponse à une recherche de développeur web freelance à Reims",
-    "https://bastienlopez.fr/services/sites-vitrines",
+    "https://bastienlopez.fr/creation-site-internet-reims",
+    "https://www.malt.fr/profile/bastienlopez",
+    "https://www.societe.com/societe/monsieur-bastien-lopez-994557593.html",
     "## Index des études de cas",
     "## Index des Dev Notes",
   ]) {
     if (!llmsFull.includes(marker)) {
       failures.push("llms-full.txt does not contain " + marker + ".");
     }
+  }
+  if (llmsFull.includes("https://bastienlopez.fr/services/sites-vitrines")) {
+    failures.push("llms-full.txt still advertises the legacy sites-vitrines URL.");
   }
   for (const slug of projectRoutes) {
     if (!llmsFull.includes(`https://bastienlopez.fr/projets/${slug}`)) {
@@ -346,6 +397,11 @@ if (existsSync(path.join(distDirectory, "llms-full.txt"))) {
   for (const slug of articleRoutes) {
     if (!llmsFull.includes(`https://bastienlopez.fr/notes/${slug}`)) {
       failures.push(`llms-full.txt does not contain https://bastienlopez.fr/notes/${slug}.`);
+    }
+  }
+  for (const slug of localRoutes) {
+    if (!llmsFull.includes(`https://bastienlopez.fr/${slug}`)) {
+      failures.push(`llms-full.txt does not contain https://bastienlopez.fr/${slug}.`);
     }
   }
 }
@@ -364,7 +420,7 @@ if (existsSync(path.join(distDirectory, "site.webmanifest"))) {
   }
 }
 
-const oldPortfolioUrl = "https://bastienlopez.github.io/Portfolio/";
+const obsoletePortfolioUrlPattern = /https?:\/\/bastienlopez\.github\.io\/Portfolio(?:[\/\s"'<>)]|$)/i;
 const filesToScan = [];
 const collectFiles = (directory) => {
   if (!existsSync(directory)) return;
@@ -381,8 +437,8 @@ const collectFiles = (directory) => {
 
 collectFiles(distDirectory);
 for (const filePath of filesToScan) {
-  if (readFileSync(filePath).indexOf(oldPortfolioUrl) !== -1) {
-    failures.push(`Obsolete portfolio URL found in ${path.relative(distDirectory, filePath)}.`);
+  if (obsoletePortfolioUrlPattern.test(readFileSync(filePath, "utf8"))) {
+    failures.push(`Obsolete GitHub Pages portfolio URL found in ${path.relative(distDirectory, filePath)}.`);
   }
 }
 

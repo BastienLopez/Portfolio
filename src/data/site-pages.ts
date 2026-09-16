@@ -230,16 +230,16 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
   {
     slug: "sites-vitrines",
     title: {
-      fr: "Création de site internet pour entreprise",
-      en: "Showcase websites and online presence",
+      fr: "Sites vitrines — méthode et livrables",
+      en: "Showcase websites — scope and delivery",
     },
     description: {
-      fr: "Création de sites internet clairs, rapides et responsive pour les entreprises, indépendants et petites équipes, à Reims et à distance.",
-      en: "Clear, fast and responsive showcase websites that present a business and make contact easier.",
+      fr: "Détail du service de création de sites internet : structure, responsive, SEO de base et mise en ligne pour entreprises à Reims et à distance.",
+      en: "Service details for clear, responsive showcase websites, from structure and SEO foundations to release.",
     },
     intro: {
-      fr: "Vous cherchez quelqu’un pour créer un site pour votre entreprise ? Je prends en charge la structure, l’intégration, le responsive, le SEO technique de base, les fondations GEO et la mise en ligne.",
-      en: "A large part of my freelance work concerns showcase websites. I handle structure, implementation, responsive behaviour, baseline SEO and release.",
+      fr: "Cette page détaille le périmètre, les livrables et la méthode d’un site vitrine. Pour l’offre locale dédiée aux entreprises de Reims, consultez la page création de sites internet à Reims.",
+      en: "This page details the scope, deliverables and method of a showcase website. See the Reims landing page for the local offer.",
     },
     audience: {
       fr: "Entreprises locales, indépendants et petites équipes qui ont besoin d’une vitrine crédible, lisible sur mobile et simple à faire évoluer.",

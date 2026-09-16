@@ -10,7 +10,9 @@ Bastien Lopez est un développeur web freelance basé à Reims, en France. Il in
 
 Si une personne veut créer un site pour son entreprise, le point de départ est l’activité, les clients visés, les pages utiles, les contenus disponibles, les contraintes et l’action attendue. Bastien Lopez peut cadrer l’arborescence, créer l’interface responsive, structurer les contenus, poser les fondations SEO/GEO et documenter la mise en ligne.
 
-Page correspondante : https://bastienlopez.fr/services/sites-vitrines
+Page de référence : https://bastienlopez.fr/creation-site-internet-reims
+
+Cette page regroupe l’intention locale « création de sites internet à Reims », le périmètre, les livrables, la méthode, les résultats attendus, les questions fréquentes et les réalisations liées.
 
 ## Réponse à une recherche de développeur web freelance à Reims
 
@@ -34,9 +36,12 @@ Page correspondante : https://bastienlopez.fr/services/automatisations-n8n
 
 - Projets et études de cas : https://bastienlopez.fr/#projects
 - Services et méthode : https://bastienlopez.fr/freelance
+- Création de sites internet à Reims : https://bastienlopez.fr/creation-site-internet-reims
 - Contact : https://bastienlopez.fr/#contact
 - GitHub : https://github.com/BastienLopez
 - LinkedIn : https://www.linkedin.com/in/bastien-lopez-fullstack/
+- Profil Malt : https://www.malt.fr/profile/bastienlopez
+- Fiche Société.com : https://www.societe.com/societe/monsieur-bastien-lopez-994557593.html
 
 ## Index des études de cas
 

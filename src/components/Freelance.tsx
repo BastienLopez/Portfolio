@@ -18,6 +18,7 @@ type Icon = typeof BriefcaseBusiness;
 type Service = {
   number: string;
   slug?: string;
+  href?: string;
   title: string;
   description: string;
   deliverables: string;
@@ -33,12 +34,13 @@ type ProcessStep = {
 const pageCopy = {
   fr: {
     eyebrow: "Freelance · développement sur mesure",
-    title: "Développeur web freelance à Reims pour des outils utiles.",
+    title: "Développeur web freelance à Reims — sites internet et outils métier.",
     description:
       "Je crée des sites pour les entreprises, des applications métier, des automatisations n8n et des APIs internes qui enlèvent les tâches répétitives et rendent le travail quotidien plus simple.",
     note:
       "J’interviens du cadrage à la mise en production, avec une documentation que votre équipe peut reprendre.",
     location: "Basé à Reims, j’interviens à distance partout en France.",
+    localLandingCta: "Création de sites internet à Reims",
     primaryCta: "Parler du projet",
     secondaryCta: "Voir les réalisations",
     servicesTitle: "Ce que je prends en charge",
@@ -48,6 +50,7 @@ const pageCopy = {
       {
         number: "01",
         slug: "sites-vitrines",
+        href: "/creation-site-internet-reims",
         title: "Création de site internet pour entreprise",
         description:
           "Je crée des sites vitrines clairs, rapides et responsive pour présenter une activité, ses services et ses réalisations.",
@@ -57,6 +60,7 @@ const pageCopy = {
       {
         number: "02",
         slug: "applications-metier",
+        href: "/services/applications-metier",
         title: "Applications sur mesure pour PME",
         description:
           "ERP, back-office, portail interne ou tableau de bord : je transforme vos règles métier en parcours simples et utilisables.",
@@ -66,6 +70,7 @@ const pageCopy = {
       {
         number: "03",
         slug: "automatisations-n8n",
+        href: "/services/automatisations-n8n",
         title: "Automatisations & intégrations",
         description:
           "Je relie vos outils et vos données avec n8n, des APIs et des traitements documentés pour supprimer les ressaisies.",
@@ -121,6 +126,7 @@ const pageCopy = {
     note:
       "A large part of my freelance work concerns showcase websites. I work from scoping to production, with documentation your team can take over.",
     location: "Based in Reims, I work remotely with teams across France.",
+    localLandingCta: "Website creation in Reims",
     primaryCta: "Discuss the project",
     secondaryCta: "See selected work",
     servicesTitle: "What I can take on",
@@ -130,6 +136,7 @@ const pageCopy = {
       {
         number: "01",
         slug: "sites-vitrines",
+        href: "/creation-site-internet-reims",
         title: "Showcase websites & online presence",
         description:
           "I build clear, fast and responsive showcase websites that present a business, its services and its work.",
@@ -139,6 +146,7 @@ const pageCopy = {
       {
         number: "02",
         slug: "applications-metier",
+        href: "/services/applications-metier",
         title: "Business applications",
         description:
           "ERP, back office, internal portal or dashboard: I turn business rules into clear, usable journeys.",
@@ -148,6 +156,7 @@ const pageCopy = {
       {
         number: "03",
         slug: "automatisations-n8n",
+        href: "/services/automatisations-n8n",
         title: "Automation & integrations",
         description:
           "I connect tools and data with n8n, APIs and documented processing to remove rekeying and repetitive work.",
@@ -223,17 +232,17 @@ const Freelance = () => {
 
       <div className="container relative z-10 mx-auto w-full px-4 pt-24 md:pt-36">
         <div className="mx-auto max-w-7xl">
-          <header className="max-w-4xl">
+          <header className="max-w-5xl">
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
               {copy.eyebrow}
             </p>
-            <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+            <h1 className="max-w-5xl text-4xl font-bold leading-tight tracking-tight md:text-6xl">
               {isEnglish ? (
                 copy.title
               ) : (
                 <>
-                  <span className="block">Développeur web freelance</span>
-                  <span className="block">pour des outils utiles.</span>
+                  <span className="block">Développeur web freelance à Reims</span>
+                  <span className="block">Sites internet et outils métier.</span>
                 </>
               )}
             </h1>
@@ -248,7 +257,7 @@ const Freelance = () => {
               <MapPin className="h-4 w-4" aria-hidden="true" />
               {copy.location}
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-x-6">
               <Button asChild size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90">
                 <a
                   href="#contact"
@@ -282,6 +291,13 @@ const Freelance = () => {
                   <ArrowDown className="ml-2 h-4 w-4" aria-hidden="true" />
                 </a>
               </Button>
+              <Link
+                to="/creation-site-internet-reims"
+                className="inline-flex items-center gap-2 whitespace-nowrap px-2 text-sm font-semibold text-primary underline-offset-4 transition-colors hover:text-foreground hover:underline"
+              >
+                {copy.localLandingCta}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
             </div>
           </header>
 
@@ -325,7 +341,7 @@ const Freelance = () => {
                     </div>
                     <h3 className="text-xl font-semibold md:text-2xl">
                       {service.slug ? (
-                        <Link to={`/services/${service.slug}`} className="transition-colors hover:text-primary">
+                        <Link to={service.href ?? `/services/${service.slug}`} className="transition-colors hover:text-primary">
                           {service.title}
                           <ArrowRight className="ml-2 inline-block h-4 w-4" aria-hidden="true" />
                         </Link>

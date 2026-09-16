@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { ArrowLeft, ArrowRight, Check, Database, LayoutTemplate, MapPin, Workflow } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NotFound from "@/pages/NotFound";
@@ -203,6 +203,10 @@ const Service = () => {
     return <NotFound />;
   }
 
+  if (definition.slug === "sites-vitrines") {
+    return <Navigate to="/creation-site-internet-reims" replace />;
+  }
+
   const title = isEnglish ? definition.title.en : definition.title.fr;
   const description = isEnglish ? definition.description.en : definition.description.fr;
   const intro = isEnglish ? definition.intro.en : definition.intro.fr;
@@ -334,15 +338,7 @@ const Service = () => {
               <div className="divide-y divide-border border-y border-border">
                 {definition.relatedProjectSlugs.map((projectSlug) => {
                   const project = allProjects.find((entry) => entry.id === projectSlug);
-                  const routeMap: Record<string, string> = {
-                    cledevoute: "/freelance#projects",
-                    "eloi-coachsteo": "/freelance#projects",
-                    "erp-micro-creches": "/#projects",
-                    "altme-wallet-platform": "/projets/altme-wallet-platform",
-                    "automatisations-n8n-reporting": "/projets/automatisations-n8n-reporting",
-                    "automatisations-n8n-derush-video": "/projets/automatisations-n8n-derush-video",
-                  };
-                  const route = routeMap[projectSlug] ?? getProjectPagePath(projectSlug);
+                  const route = getProjectPagePath(projectSlug);
                   if (!route) return null;
                   const label = project?.title ?? ({
                     "altme-wallet-platform": "Altme Wallet Platform",

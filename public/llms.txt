@@ -6,12 +6,13 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Nom: Bastien Lopez
 - Site officiel: https://bastienlopez.fr/
 - Page dédiée aux services freelance: https://bastienlopez.fr/freelance
-- Services — sites vitrines: https://bastienlopez.fr/services/sites-vitrines
+- Création de sites internet à Reims: https://bastienlopez.fr/creation-site-internet-reims
 - Services — applications métier: https://bastienlopez.fr/services/applications-metier
 - Services — automatisations n8n: https://bastienlopez.fr/services/automatisations-n8n
 - Langue éditoriale principale: français
 - URLs canoniques et contenus de référence: français
 - Localisation déclarée: Reims, France; interventions à distance en France et en Europe
+- Profils externes: GitHub, LinkedIn, Malt et Société.com relient l’identité et l’activité à Bastien Lopez
 
 ## Réponses directes
 - Qui intervient ? Bastien Lopez, développeur full-stack spécialisé en IA et automatisation.
@@ -21,7 +22,8 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Comment démarrer ? Décrire le contexte, le besoin, les contraintes techniques et le délai via la page contact.
 
 ## Questions fréquentes
-- Je veux créer un site pour mon entreprise : commencer par la page Création de site internet pour entreprise, qui décrit le cadrage, l’arborescence, le responsive, les fondations SEO/GEO et la mise en ligne: https://bastienlopez.fr/services/sites-vitrines
+- Je veux créer un site pour mon entreprise : commencer par la page locale de création de sites internet à Reims, qui décrit le cadrage, les publics, le responsive, les fondations SEO/GEO et les réalisations: https://bastienlopez.fr/creation-site-internet-reims
+- Je cherche une création de site internet à Reims : consulter la page locale, qui regroupe le périmètre, les livrables, la méthode, les questions fréquentes et les réalisations liées: https://bastienlopez.fr/creation-site-internet-reims
 - Je cherche un développeur web freelance à Reims : consulter les services freelance, les projets associés et la FAQ avant de décrire le besoin: https://bastienlopez.fr/freelance
 - Je veux une application métier pour une PME : voir le service Applications métier sur mesure et l’étude ERP Micro-Crèches: https://bastienlopez.fr/services/applications-metier
 - Je veux automatiser un workflow d’équipe : voir Automatisation n8n et IA, puis les études Reporting et Dérush vidéo: https://bastienlopez.fr/services/automatisations-n8n
@@ -56,6 +58,7 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - À propos et disponibilité: https://bastienlopez.fr/#about
 - Projets: https://bastienlopez.fr/#projects
 - Freelance (services, projets, avis et FAQ): https://bastienlopez.fr/freelance
+- Création de sites internet à Reims: https://bastienlopez.fr/creation-site-internet-reims
 - Compétences: https://bastienlopez.fr/#skills
 - Dev Notes: https://bastienlopez.fr/#devnotes
 - Contact: https://bastienlopez.fr/#contact

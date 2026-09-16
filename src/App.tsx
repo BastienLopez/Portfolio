@@ -1,16 +1,18 @@
 import { LanguageProvider } from "@/lib/i18n";
 import { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 
 const loadFreelancePage = () => import("./pages/Freelance");
+const loadLocalWebCreationPage = () => import("./pages/LocalWebCreation");
 const loadProjectCaseStudyPage = () => import("./pages/ProjectCaseStudy");
 const loadServicePage = () => import("./pages/Service");
 const loadArticlePage = () => import("./pages/Article");
 
 const FreelancePage = lazy(loadFreelancePage);
+const LocalWebCreationPage = lazy(loadLocalWebCreationPage);
 const ProjectCaseStudyPage = lazy(loadProjectCaseStudyPage);
 const ServicePage = lazy(loadServicePage);
 const ArticlePage = lazy(loadArticlePage);
@@ -94,8 +96,10 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/freelance" element={<FreelancePage />} />
+          <Route path="/creation-site-internet-reims" element={<LocalWebCreationPage />} />
           <Route path="/mentions-legales" element={<Legal />} />
           <Route path="/projets/:slug" element={<ProjectCaseStudyPage />} />
+          <Route path="/services/sites-vitrines" element={<Navigate to="/creation-site-internet-reims" replace />} />
           <Route path="/services/:slug" element={<ServicePage />} />
           <Route path="/notes/:slug" element={<ArticlePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -52,10 +52,10 @@ const PAGE_METADATA: Record<PageId, Record<Locale, PageMetadata>> = {
   home: {
     fr: {
       title: 'Développeur web freelance à Reims | IA & automatisation — Bastien Lopez',
-      description: 'Développeur web freelance à Reims : création de sites pour entreprises, applications métier, APIs et automatisations IA/n8n en France et à distance.',
+      description: 'Développeur web freelance à Reims : création de sites internet pour entreprises, applications métier, APIs et automatisations IA/n8n en France et à distance.',
       path: '/',
       robots: 'index, follow',
-      keywords: 'développeur web freelance Reims, sites vitrines, applications métier, automatisations n8n, Dev Notes',
+      keywords: 'développeur web freelance Reims, création site internet Reims, sites vitrines, applications métier, automatisations n8n, Dev Notes',
     },
     en: {
       title: 'Bastien Lopez — Full-Stack AI & Automation Developer',
@@ -68,7 +68,7 @@ const PAGE_METADATA: Record<PageId, Record<Locale, PageMetadata>> = {
   freelance: {
     fr: {
       title: 'Développeur web freelance à Reims | Sites, applications et automatisations',
-      description: 'Vous cherchez quelqu’un pour créer un site pour votre entreprise ? Bastien Lopez conçoit des sites vitrines, applications métier et automatisations n8n à Reims et à distance en France.',
+      description: 'Vous cherchez quelqu’un pour créer un site internet pour votre entreprise ? Bastien Lopez conçoit des sites vitrines, applications métier et automatisations n8n à Reims et à distance en France.',
       path: '/freelance',
       robots: 'index, follow',
       keywords: 'développeur web freelance Reims, création site entreprise, application métier PME, automatisation n8n',

@@ -140,7 +140,7 @@ test("returns to the top when opening the freelance page from the navbar", async
   await expect(page).toHaveURL(/\/freelance$/);
   await expect(page.locator("#freelance")).toBeVisible();
   await expect(page.locator("#freelance h1 > span")).toHaveCount(2);
-  await expect(page.locator("#freelance h1 > span").nth(1)).toHaveText("pour des outils utiles.");
+  await expect(page.locator("#freelance h1 > span").nth(1)).toHaveText("Sites internet et outils métier.");
   await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 2_000 }).toBeLessThan(10);
 
   await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "auto" }));
@@ -172,7 +172,7 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
 
   await page.goto("/freelance");
   await expect(page).toHaveTitle(/Développeur web freelance à Reims \| Sites, applications et automatisations/);
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /créer un site pour votre entreprise/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /créer un site internet pour votre entreprise/);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://bastienlopez.fr/freelance");
   await expect(page.locator('meta[property="og:url"]')).toHaveAttribute("content", "https://bastienlopez.fr/freelance");
   expect(await page.locator('meta[name="description"]').getAttribute("content")).not.toBe(homeDescription);
@@ -187,6 +187,8 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
   await expect(page.getByText("Projet associé : Eloi CoachStéo", { exact: true })).toBeVisible();
   await expect(page.getByText("Projet associé : ERP Micro-Crèches", { exact: true })).toBeVisible();
   await expect(page.getByText("Projet associé : Clé de Voûte", { exact: true })).toBeVisible();
+  await expect(page.locator('#testimonials a[href="https://bastienlopez.github.io/Eloi_Coaching/"]')).toHaveCount(1);
+  await expect(page.locator('#testimonials a[href="https://bastienlopez.github.io/CleDeVoute/"]')).toHaveCount(1);
   const testimonialSizes = await page.locator("#testimonials [data-testimonial-slide]").evaluateAll((elements) =>
     elements.map((element) => {
       const rect = element.getBoundingClientRect();
@@ -364,8 +366,11 @@ test("publishes crawlable project and service pages without changing the three h
   await expect(page).toHaveURL(/\/#projects$/);
   await expect(page.locator("#projects")).toBeVisible();
 
+  await page.goto("/services/sites-vitrines");
+  await expect(page).toHaveURL(/\/creation-site-internet-reims$/);
+  await expect(page.getByRole("heading", { name: "Création de sites internet à Reims", exact: true })).toBeVisible();
+
   const serviceRoutes = [
-    ["/services/sites-vitrines", "Création de site internet pour entreprise"],
     ["/services/applications-metier", "Application métier sur mesure pour PME"],
     ["/services/automatisations-n8n", "Automatisation n8n et IA pour entreprise"],
   ] as const;
@@ -390,8 +395,37 @@ test("publishes crawlable project and service pages without changing the three h
     await expect(page.getByText(/Reims/).first()).toBeVisible();
   }
 
+  await page.goto("/creation-site-internet-reims");
+  await expect(page.getByRole("heading", { name: "Création de sites internet à Reims", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Retour aux services freelance", exact: true }).first()).toHaveAttribute("href", "/freelance");
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Création de sites internet à Reims/);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://bastienlopez.fr/creation-site-internet-reims");
+  await expect(page.getByRole("link", { name: "Voir le périmètre complet", exact: true })).toHaveAttribute(
+    "href",
+    "#local-scope",
+  );
+  await expect(page.getByRole("heading", { name: "Ce que vous recevez", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Ce que le résultat doit simplifier", exact: true })).toBeVisible();
+  await expect(page.locator("#local-faq-title").locator("..").getByRole("heading", { level: 2 })).toHaveText("Avant de commencer");
+  await expect(page.locator("details")).toHaveCount(5);
+  await expect(page.locator('a[href="/services/sites-vitrines"]')).toHaveCount(0);
+  const localSchemaTypes = await page.locator('script[type="application/ld+json"]').evaluateAll((elements) =>
+    elements.flatMap((element) => {
+      try {
+        const value = JSON.parse(element.textContent ?? "{}");
+        return value["@graph"]?.map((entry: { "@type"?: string }) => entry["@type"]) ?? [value["@type"]];
+      } catch {
+        return [];
+      }
+    }),
+  );
+  expect(localSchemaTypes).toContain("FAQPage");
+
   await page.goto("/freelance");
-  await expect(page.getByRole("link", { name: /Création de site internet pour entreprise/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Création de site internet pour entreprise", exact: true })).toHaveAttribute(
+    "href",
+    "/creation-site-internet-reims",
+  );
   await expect(page.getByRole("link", { name: /Applications sur mesure pour PME/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /Automatisations & intégrations/ })).toBeVisible();
 

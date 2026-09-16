@@ -108,6 +108,7 @@ try {
   await waitForPreview();
   await runLighthouse("/", "home");
   await runLighthouse("/freelance", "freelance");
+  await runLighthouse("/creation-site-internet-reims", "creation-site-internet-reims");
 } finally {
   stopPreview();
 }

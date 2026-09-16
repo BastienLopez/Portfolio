@@ -77,8 +77,8 @@ const freelanceSchema = (isEnglish: boolean) => ({
         {
           "@type": "ListItem",
           "position": 1,
-          "name": isEnglish ? "Showcase websites and online presence" : "Création de site internet pour entreprise",
-          "url": "https://bastienlopez.fr/services/sites-vitrines",
+          "name": isEnglish ? "Website creation in Reims" : "Création de sites internet à Reims",
+          "url": "https://bastienlopez.fr/creation-site-internet-reims",
         },
         {
           "@type": "ListItem",

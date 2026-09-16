@@ -47,8 +47,13 @@ const urls = [...sitemap.body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => m
 const uniqueUrls = new Set(urls);
 const expectedRouteCount = 38;
 const requiredNewRoutes = [
+  `${origin}/creation-site-internet-reims`,
   `${origin}/notes/creer-site-internet-entreprise-cadrage`,
   `${origin}/notes/automatiser-processus-entreprise-n8n-cadrage`,
+];
+const legacyRedirects = [
+  `${origin}/services/sites-vitrines`,
+  `${origin}/services/sites-vitrines/`,
 ];
 if (urls.length === 0) failures.push("Le sitemap ne contient aucune URL.");
 if (urls.length !== uniqueUrls.size) failures.push("Le sitemap contient des doublons.");
@@ -58,6 +63,9 @@ if (urls.length !== expectedRouteCount) {
 }
 for (const requiredRoute of requiredNewRoutes) {
   if (!uniqueUrls.has(requiredRoute)) failures.push(`Le sitemap ne contient pas ${requiredRoute}.`);
+}
+if (urls.some((url) => legacyRedirects.includes(url))) {
+  failures.push("Le sitemap contient encore l’ancienne URL sites-vitrines, qui doit rediriger vers la page Reims.");
 }
 
 let redirects = 0;
@@ -90,6 +98,14 @@ if (!titleOf(legal.body).startsWith("Mentions légales —")) {
 }
 if (canonicalOf(legal.body) !== `${origin}/mentions-legales`) {
   failures.push("/mentions-legales ne sert pas son canonical initial.");
+}
+
+for (const legacyUrl of legacyRedirects) {
+  const response = await fetchManual(legacyUrl);
+  const target = response.location ? new URL(response.location, legacyUrl).toString().replace(/\/$/, "") : "";
+  if (![301, 308].includes(response.status) || target !== `${origin}/creation-site-internet-reims`) {
+    failures.push(`${new URL(legacyUrl).pathname} doit rediriger en 301/308 vers ${origin}/creation-site-internet-reims.`);
+  }
 }
 
 const robots = await fetchManual(`${origin}/robots.txt`);

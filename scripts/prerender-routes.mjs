@@ -53,10 +53,10 @@ const projectSlugs = [
   "demons-souls-rpcs3",
 ];
 const serviceSlugs = [
-  "sites-vitrines",
   "applications-metier",
   "automatisations-n8n",
 ];
+const localSlugs = ["creation-site-internet-reims"];
 const articleSlugs = [
   "pipeline-ci-cd-github-actions",
   "docker-pour-debutants",
@@ -73,6 +73,11 @@ const articleSlugs = [
 const routes = [
   { path: "/", output: "index.html", allowNotFound: false },
   { path: "/freelance", output: path.join("freelance", "index.html"), allowNotFound: false },
+  ...localSlugs.map((slug) => ({
+    path: `/${slug}`,
+    output: path.join(slug, "index.html"),
+    allowNotFound: false,
+  })),
   { path: "/mentions-legales", output: path.join("mentions-legales", "index.html"), allowNotFound: false },
   ...projectSlugs.map((slug) => ({
     path: `/projets/${slug}`,

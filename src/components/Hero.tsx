@@ -91,6 +91,11 @@ const Hero = () => {
               ? 'I create internal tools and automations that simplify day-to-day work.'
               : 'Je crée des outils internes et des automatisations qui simplifient le travail quotidien.'}
           </p>
+          <p className="mx-auto max-w-3xl text-base leading-7 text-foreground/80 md:text-lg">
+            {isEnglish
+              ? 'Freelance web developer based in Reims, I create professional websites and business tools for companies.'
+              : 'Développeur web freelance basé à Reims, je crée des sites internet professionnels et des outils métier pour les entreprises.'}
+          </p>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
             {isEnglish
               ? 'Over 7 years of experience and more than 30 projects completed.'
