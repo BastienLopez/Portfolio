@@ -427,7 +427,7 @@ test("publishes crawlable project and service pages without changing the three h
     "/creation-site-internet-reims",
   );
   await expect(page.getByRole("link", { name: /Applications sur mesure pour PME/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Automatisations & intégrations/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Automatisations et intégrations/ })).toBeVisible();
 
   await page.goto("/#projects");
   await expect(page.getByRole("link", { name: "Ouvrir l’étude de cas dédiée", exact: true })).toHaveCount(4);

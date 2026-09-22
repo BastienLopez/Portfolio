@@ -132,7 +132,7 @@ const Contact = ({ variant = "default" }: ContactProps) => {
           <footer className="contact-footer">
             <a href={`mailto:${email}`} className="contact-email">{email}</a>
             <span className="contact-footer-rule" aria-hidden="true" />
-            <p>{isEnglish ? 'AVAILABLE FOR REMOTE/FULL-REMOTE PERMANENT ROLES OR FOCUSED FREELANCE ENGAGEMENTS' : 'DISPONIBLE POUR CDI REMOTE/FULL REMOTE OU MISSIONS FREELANCE CIBLÉES'}</p>
+            <p>{isEnglish ? 'AVAILABLE FOR REMOTE/FULL-REMOTE PERMANENT ROLES OR FOCUSED FREELANCE ENGAGEMENTS' : 'DISPONIBLE POUR DES POSTES EN CDI À DISTANCE OU DES MISSIONS FREELANCE CIBLÉES'}</p>
           </footer>
         </div>
       </div>

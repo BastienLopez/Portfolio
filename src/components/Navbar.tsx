@@ -148,9 +148,14 @@ const Navbar = () => {
   const handleNavLinkClick = (label: string, closeMobile = false, event?: MouseEvent<HTMLAnchorElement>) => {
     if (closeMobile) setIsMobileMenuOpen(false);
 
-    if (label === "Freelance" && location.pathname.replace(/\/+$/, "").endsWith("/freelance")) {
+    if (label !== "Freelance") return;
+
+    // Reset before navigation as well as on the destination route. This avoids
+    // exposing the previous page's scroll position while the lazy page mounts.
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+    if (location.pathname.replace(/\/+$/, "").endsWith("/freelance")) {
       event?.preventDefault();
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     }
   };
 

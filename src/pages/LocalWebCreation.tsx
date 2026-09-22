@@ -10,7 +10,7 @@ const localPageMetadata: Record<"fr" | "en", PageMetadata> = {
   fr: {
     title: "Création de sites internet à Reims | Bastien Lopez",
     description:
-      "Création de sites internet à Reims pour entreprises, indépendants et PME : sites vitrines rapides, responsive et structurés pour le SEO local.",
+      "Création de sites internet à Reims pour entreprises, indépendants et PME : sites vitrines rapides, adaptés aux mobiles et structurés pour le SEO local.",
     path: "/creation-site-internet-reims",
     robots: "index, follow",
     keywords:

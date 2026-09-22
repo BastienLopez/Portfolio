@@ -1,19 +1,19 @@
 # Audit anti-AI-slop et readiness - portfolio Bastien Lopez
 
-Date du contrôle : **16 septembre 2026**
+Date du contrôle : **21 septembre 2026**
 Périmètre : dépôt local courant, build prerender, rendu navigateur local, routes, contenu, SEO/GEO, accessibilité, crédibilité, sécurité smoke et dernier readback HTTP de `https://bastienlopez.fr`.
 
 ## Synthèse
 
 - Dépôt : `C:/Users/UTILISATEUR/Documents/GitHub/Portfolio`
 - Stack : React, TypeScript, Vite, Tailwind, React Router
-- Mode : audit local après extension SEO/GEO ; readback public exécuté le 16 septembre 2026 conservé comme référence de déploiement
+- Mode : audit local et production après publication ; readback public exécuté le 21 septembre 2026
 - Couverture : **94/94 contrôles**
-- Évidence : inspection statique, build testé, rendu local desktop, E2E, Lighthouse local/public et contrôle HTTP public
-- Matrice locale : **53 PASS / 0 FAIL / 17 JUSTIFIED / 23 N/A / 1 UNKNOWN**
-- Priorité restante : corriger la convention de slash côté serveur et le fallback de `/mentions-legales`
+- Évidence : inspection statique, build testé, rendu local desktop/mobile, E2E, axe, Lighthouse local et contrôle HTTP public
+- Matrice locale : **52 PASS / 0 FAIL / 18 JUSTIFIED / 23 N/A / 1 UNKNOWN**
+- Priorité restante : améliorer la performance des chunks et développer l’autorité GEO externe
 
-Le code local est à un niveau de publication élevé. Le SEO technique et le GEO technique couvrent désormais 38 routes canoniques, dont une page locale complète dédiée à la création de sites internet à Reims, avec métadonnées uniques, données structurées, index Dev Notes `CollectionPage`/`ItemList`, sitemap, `robots.txt`, `llms.txt` et `llms-full.txt`. L’ancienne URL `/services/sites-vitrines` est conservée hors index comme redirection de compatibilité. Le readback public exécuté le 16 septembre 2026 conserve l’ancien sitemap, 36 redirections 308 et l’ancien HTML de `/mentions-legales` sans slash ; la nouvelle page locale n’y est pas encore publiée.
+Le code local et la production sont à un niveau de publication élevé. Le SEO technique et le GEO technique couvrent désormais 38 routes canoniques, dont une page locale complète dédiée à la création de sites internet à Reims, avec métadonnées uniques, données structurées, index Dev Notes `CollectionPage`/`ItemList`, sitemap, `robots.txt`, `llms.txt` et `llms-full.txt`. L’ancienne URL `/services/sites-vitrines` est conservée hors index comme redirection 301 de compatibilité. Le readback public exécuté le 21 septembre 2026 confirme 38/38 routes finales en 200, 0 redirection initiale et le HTML légal correct sans slash.
 
 ## Notes internes
 
@@ -23,18 +23,18 @@ Ces notes sont des évaluations techniques de ce dépôt, pas des scores Google 
 | --- | ---: | ---: | --- |
 | Positionnement | **9,0/10** | **8,8/10** | Métier, Reims, offres et usages explicites. |
 | Frontend / architecture | **9,1/10** | **8,8/10** | Routes prerender, composants et contrôles de cohérence. |
-| UI / UX | **9,1/10** | **8,8/10** | Parcours public desktop/mobile sans erreur console ; redirections d’URL restantes. |
+| UI / UX | **9,1/10** | **9,1/10** | Parcours public desktop/mobile sans erreur console ; routes canoniques servies directement. |
 | Accessibilité / responsive | **9,5/10** | **9,5/10** | Lighthouse 100 et E2E axe ; aucune régression détectée. |
 | Anti-AI-slop | **8,5/10** | **7,9/10** | Interface spécifique et contenu réel ; autorité externe encore limitée. |
 | Copywriting | **8,8/10** | **8,4/10** | Français prioritaire, pages d’intention et CTA reliés. |
 | Portfolio / projets | **9,0/10** | **8,7/10** | 22 projets, images, stacks et fiches accessibles. |
 | Crédibilité / preuves | **8,2/10** | **7,5/10** | Témoignages réels et accord confirmé par le propriétaire ; résultats externes chiffrés non publiés. |
 | SEO technique - code | **9,9/10** | **9,2/10** | Canonical, métadonnées d’article, JSON-LD, sitemap, robots et prerender contrôlés localement. |
-| SEO technique - production | **9,9/10** | **8,0/10** | Lighthouse SEO 100, mais 36 redirections initiales et `/mentions-legales` sans slash incorrecte. |
+| SEO technique - production | **9,9/10** | **9,9/10** | Audit public : 38/38 routes finales en 200, 0 redirection initiale, légal et redirection legacy conformes. |
 | SEO contenu | **9,0/10** | **8,8/10** | 10 notes françaises d’intention et cinq thèmes explicités ; indexation réelle à mesurer. |
-| GEO technique | **9,9/10** | **9,6/10** | Identité, services, page locale, 22 projets, 10 notes et leur index structuré validés localement ; extension à publier. |
+| GEO technique | **9,9/10** | **9,9/10** | Identité, services, page locale, 22 projets, 10 notes et leur index structuré validés en production. |
 | GEO autorité / entité | **7,2/10** | **6,8/10** | Citations tierces et recommandations LLM restent à mesurer. |
-| **Global local** | **≈ 9,1/10** | **≈ 8,5/10** | Build local prêt ; l’écart observé est le routage réel et l’autorité externe. |
+| **Global local** | **≈ 9,1/10** | **≈ 9,0/10** | Technique publiée et cohérente ; l’autorité externe et l’indexation réelle restent à mesurer. |
 
 ## Constats SEO et GEO
 
@@ -50,16 +50,15 @@ Ces notes sont des évaluations techniques de ce dépôt, pas des scores Google 
 - Le contenu répond directement aux intentions « création de sites internet à Reims », « créer un site pour son entreprise », « application métier pour PME », « automatiser un processus » et « développeur web freelance à Reims ».
 - Le site ne promet pas qu’un LLM recommandera automatiquement Bastien : les fichiers LLM facilitent l’interprétation, mais ne remplacent pas les citations externes.
 - Les témoignages sont confirmés comme réels et publiés avec accord par le propriétaire ; aucune action de retrait n’est requise sur ce point.
-- Le readback public confirme 200 sur l’accueil, `/freelance/`, `/mentions-legales/` et une Dev Note ; les parcours desktop/mobile testés n’ont produit aucune erreur console ou requête échouée.
-- Lighthouse public atteint 93–95 en performance, 100 en accessibilité, bonnes pratiques et SEO ; le LCP est de 2,6 s sur l’accueil et freelance.
+- Le readback public du 21 septembre confirme 38/38 routes du sitemap en 200 sans redirection initiale ; `/services/sites-vitrines` répond en 301 vers la page Reims et `/mentions-legales` sans slash sert sa fiche dédiée.
+- Lighthouse local du 21 septembre atteint 82–89 en performance selon la route, 100 en accessibilité, bonnes pratiques et SEO. Le contrôle public actuel reste structurel (HTTP, métadonnées et routes) ; aucun score Lighthouse public n’est inventé ici.
 - Autorité externe : GitHub, LinkedIn, Malt et Société.com sont reliés dans les données structurées et les fichiers LLM ; ces profils confirment l’identité et l’activité de développement web à Reims. La recherche publique remonte encore peu le domaine directement, donc le GEO autorité reste à **7,2/10**.
 
 ### Ce qui reste à améliorer
 
 | Priorité | Contrôle | Constat | Action recommandée |
 | --- | --- | --- | --- |
-| **P1** | L03/L04/L08 en production | `audit:production` lit 38/38 routes finales en 200 mais 36 URLs commencent par une 308 ; `/mentions-legales` sans slash expose encore le titre et canonical de l’accueil dans le premier HTML. | Corriger la règle Caddy pour servir directement la convention sans slash et traiter explicitement `/mentions-legales`, puis relancer `npm run audit:production`. |
-| **P1** | Performance | Lighthouse public : 93–95/100 ; LCP 2,6 s, avec 88 KiB de JavaScript et 15–18 KiB de CSS inutilisés signalés. | Conserver le lazy-loading et réduire les chunks inutilisés si le gain reste mesurable sans régression. |
+| **P1** | Performance | Lighthouse local : 82–89/100 ; SEO, accessibilité et bonnes pratiques restent à 100. Le build signale encore quelques chunks JavaScript >500 KiB (vendor Mermaid/cytoscape). | Réduire les chunks initiaux et mesurer LCP/INP après chaque changement, sans régression E2E. |
 | **P2** | Autorité GEO | Les signaux GitHub, Malt et Société.com existent, mais les profils tiers ne pointent pas tous vers le domaine actuel et Search Console/Bing/LLM restent non mesurés. | Harmoniser les liens externes, tenir un journal daté des requêtes et suivre les sources citées. |
 | **P2** | Autorité GEO | Les mentions externes, citations indépendantes, Google Search Console, Bing et recommandations LLM ne peuvent pas être garanties par le code. | Tenir un journal daté des requêtes, citations et pages sources ; obtenir progressivement des liens ou profils externes cohérents. |
 | **P2** | S02 | Aucun `.env` local suivi et aucune vulnérabilité npm haute détectée, mais une recherche exhaustive de tout l’historique Git n’est pas une preuve de rotation des secrets externes. | Confirmer que les anciennes clés éventuelles ont été révoquées côté fournisseurs. |
@@ -75,14 +74,15 @@ Ces notes sont des évaluations techniques de ce dépôt, pas des scores Google 
 - `npm run verify:performance-assets` : **PASS**, 151 WebP référencés
 - `npm test -- --run` : **PASS**, 7 tests
 - `npm run test:e2e` : **PASS**, 16 tests
-- `npm run check:links` : **PASS**, 29 OK, 2 inconnus externes, 0 échec (App Store et LinkedIn soumis à des limites réseau)
+- `npm run check:links` : **PASS**, 31 OK, 1 inconnu externe, 0 échec (limite réseau/anti-bot externe)
 - `npm audit --audit-level=high` : **PASS**, 0 vulnérabilité
-- Lighthouse local : **SEO 100, accessibilité 100, bonnes pratiques 100**, performance 88 sur `/`, 88 sur `/freelance` et 91 sur `/creation-site-internet-reims`
+- Lighthouse local : **SEO 100, accessibilité 100, bonnes pratiques 100**, performance 82 sur `/`, 87 sur `/freelance` et 89 sur `/creation-site-internet-reims`
 - Rendu navigateur local : service refondu et page légale éditoriale vérifiés ; navigation commune et sections lisibles
 - Contrôle HTTP public : headers HTTPS, HSTS, CSP, `nosniff`, frame deny et permissions restrictives présents
-- Readback navigateur public : **PASS**, 1440/375 px, Dev Notes `#14191f`, note inline repositionnée au début, page dédiée et légal avec slash corrects
-- Lighthouse public : **PASS SEO/accessibilité/bonnes pratiques**, performance 93–95, LCP 2,6 s
-- `npm run audit:production` : **FAIL attendu avant publication (44 écarts)**, readback public actuel avec ancien sitemap, 36 redirections initiales, page locale absente, redirection legacy absente et fallback légal sans slash incorrect
+- Readback navigateur public : **PASS**, 1440/375 px, Dev Notes `#14191f`, note inline repositionnée au début, page dédiée et légal sans slash corrects
+- `npm run audit:production` : **PASS**, 38 routes du sitemap, 38/38 finales en 200, 0 redirection initiale, redirection legacy et fichiers GEO conformes
+- Playwright responsive hero : **PASS**, le titre métier reste sur une ligne desktop aux formats 1920x1080, 1880x850, 1280x720 et 1080x720 ; mobile conserve le retour à la ligne.
+- Navigation Freelance : **PASS**, le scroll est réinitialisé avant le montage de la route lazy et la régression est couverte par E2E.
 
 ## Matrice des 94 contrôles
 
@@ -114,7 +114,7 @@ Ces notes sont des évaluations techniques de ce dépôt, pas des scores Google 
 | P07 | PASS | Services, projets, notes et légal ont des routes dédiées. |
 | P08 | JUSTIFIED | Le nom textuel est utilisé comme wordmark volontaire. |
 | P09 | PASS | `favicon.ico`, icônes PNG et manifest présents dans le build. |
-| P10 | PASS | Aucun titre principal animé par couleur en boucle. |
+| P10 | JUSTIFIED | Le titre principal utilise un accent cyan/vert statique de marque, sans animation de couleur en boucle. |
 | P11 | N/A | Pas de page de confidentialité distincte ni de tracking côté navigateur. |
 | P12 | N/A | Les conditions générales ne sont pas nécessaires pour ce portfolio statique. |
 | P13 | PASS | Aucun compteur de visiteurs en temps réel. |
@@ -137,7 +137,7 @@ Ces notes sont des évaluations techniques de ce dépôt, pas des scores Google 
 | D05 | PASS | Les ombres ne sont pas appliquées à chaque objet. |
 | D06 | JUSTIFIED | Les grilles projets et témoignages reflètent des contenus comparables. |
 | D07 | JUSTIFIED | Le blur est limité à la navigation et à la visionneuse. |
-| D08 | JUSTIFIED | La typographie est intégrée au système existant. |
+| D08 | PASS | Manrope est auto-hébergée dans `public/fonts` et appliquée de façon cohérente au système typographique. |
 | D09 | PASS | Aucun bandeau pleine largeur purement décoratif. |
 | D10 | PASS | Pas de bento appliqué par réflexe. |
 | D11 | JUSTIFIED | Les fenêtres de code apparaissent seulement dans les notes techniques. |
@@ -149,7 +149,7 @@ Ces notes sont des évaluations techniques de ce dépôt, pas des scores Google 
 | D17 | N/A | Site principalement statique, sans attente réseau métier. |
 | D18 | JUSTIFIED | Les halos servent l’identité des héros et des études de cas. |
 | D19 | PASS | Pas de dot-grid décoratif systématique. |
-| D20 | PASS | Pas d’étoile universelle pour les actions IA. |
+| D20 | JUSTIFIED | L’iconographie Lucide est utilisée comme système cohérent ; aucune étoile universelle ne signale une action IA. |
 | D21 | PASS | Pas de flèche rebondissante imposant le scroll. |
 | D22 | PASS | Les animations hover restent attachées aux éléments interactifs. |
 | D23 | JUSTIFIED | Cyan sur fond sombre est la palette de marque, non un thème IA arbitraire. |
@@ -207,10 +207,9 @@ Ces notes sont des évaluations techniques de ce dépôt, pas des scores Google 
 
 ## Points de suivi après publication
 
-1. Corriger côté serveur la convention sans slash et le fallback de `/mentions-legales`.
-2. Relancer `npm run audit:production` et obtenir zéro redirection initiale, la redirection legacy attendue, le canonical légal exact et 38/38 routes conformes.
-3. Suivre Search Console et Bing pendant 7 à 28 jours : couverture, exclusions, requêtes, impressions et CTR.
-4. Tenir un journal GEO daté et renforcer les citations externes sans inventer de preuve.
+1. Suivre Search Console et Bing pendant 7 à 28 jours : couverture, exclusions, requêtes, impressions et CTR.
+2. Tenir un journal GEO daté et renforcer les citations externes sans inventer de preuve.
+3. Rejouer Lighthouse après les prochaines publications et conserver le LCP dans la même plage ou en amélioration.
 
 ## Limites
 

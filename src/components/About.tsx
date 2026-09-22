@@ -24,7 +24,7 @@ const About = () => {
     : [
         { label: "Années d'expérience", value: "7+", icon: Clock },
         { label: "Projets et réalisations", value: "30+", icon: BarChart3 },
-        { label: "Modes d’intervention", value: "CDI & freelance", icon: BriefcaseBusiness },
+        { label: "Modes d’intervention", value: "CDI ou freelance", icon: BriefcaseBusiness },
       ];
 
   const trustPoints = isEnglish
@@ -82,7 +82,11 @@ const About = () => {
                       } ${index === stats.length - 1 ? "pb-0 sm:pr-0" : ""}`}
                     >
                       <Icon className="mb-5 h-7 w-7 text-primary" aria-hidden="true" />
-                      <p className="break-words text-5xl font-semibold tracking-tight text-foreground md:text-6xl">
+                      <p
+                        className={`break-normal font-semibold tracking-tight text-foreground ${
+                          index === stats.length - 1 ? "text-3xl md:text-4xl" : "text-5xl md:text-6xl"
+                        }`}
+                      >
                         {stat.value}
                       </p>
                       <p className="mt-2 max-w-[12rem] text-sm leading-6 text-muted-foreground">
@@ -103,7 +107,7 @@ const About = () => {
                     <p className="mt-2 text-lg font-semibold leading-7 text-foreground md:text-xl">
                       {isEnglish
                         ? "Remote/full-remote permanent roles or focused freelance projects"
-                        : "CDI remote/full remote ou missions freelance ciblées"}
+                        : "Des postes en CDI à distance ou des missions freelance ciblées"}
                     </p>
                   </div>
                 </div>

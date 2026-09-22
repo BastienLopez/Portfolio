@@ -81,7 +81,7 @@ const FreelanceFaq = () => {
         {
           question: "Je veux créer un site pour mon entreprise : comment commencer ?",
           answer:
-            "Nous clarifions d’abord l’activité, les clients visés, les pages utiles et l’action attendue. Je transforme ensuite ce cadrage en structure, interface responsive et plan de mise en ligne documenté.",
+            "Nous clarifions d’abord l’activité, les clients visés, les pages utiles et l’action attendue. Je transforme ensuite ce cadrage en structure, interface adaptée aux mobiles et plan de mise en ligne documenté.",
         },
         {
           question: "Travailles-tu avec des entreprises à Reims et à distance ?",

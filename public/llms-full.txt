@@ -8,7 +8,7 @@ Bastien Lopez est un développeur web freelance basé à Reims, en France. Il in
 
 ## Réponse à une demande de création de site
 
-Si une personne veut créer un site pour son entreprise, le point de départ est l’activité, les clients visés, les pages utiles, les contenus disponibles, les contraintes et l’action attendue. Bastien Lopez peut cadrer l’arborescence, créer l’interface responsive, structurer les contenus, poser les fondations SEO/GEO et documenter la mise en ligne.
+Si une personne veut créer un site pour son entreprise, le point de départ est l’activité, les clients visés, les pages utiles, les contenus disponibles, les contraintes et l’action attendue. Bastien Lopez peut cadrer l’arborescence, créer une interface adaptée aux mobiles, structurer les contenus, poser les fondations SEO/GEO et documenter la mise en ligne.
 
 Page de référence : https://bastienlopez.fr/creation-site-internet-reims
 
@@ -72,7 +72,7 @@ Ces fiches décrivent le contexte, le besoin, le rôle, la stack et le périmèt
 
 ## Index des Dev Notes
 
-Les notes sont regroupées par cinq thèmes accessibles depuis le point d’entrée public `https://bastienlopez.fr/#devnotes` : Culture & Méthodes, CI/CD & DevOps, Outils & Productivité, Architecture & Bonnes pratiques, et Gestion de projet & Freelance. Chaque note indexable ci-dessous possède une URL canonique et une page complète.
+Les notes sont regroupées par cinq thèmes accessibles depuis le point d’entrée public `https://bastienlopez.fr/#devnotes` : Culture & Méthodes, CI/CD & DevOps, Outils & Productivité, Architecture & Bonnes pratiques, et Gestion de projet & freelance. Chaque note indexable ci-dessous possède une URL canonique et une page complète.
 
 - Pipeline CI/CD GitHub Actions : https://bastienlopez.fr/notes/pipeline-ci-cd-github-actions
 - Docker pour débutants : https://bastienlopez.fr/notes/docker-pour-debutants

@@ -63,12 +63,12 @@ const Hero = () => {
       </div>
 
       <div className="container relative z-10 mx-auto px-4 pb-8 pt-24 sm:pb-10 sm:pt-28 lg:translate-y-7 lg:pb-0 lg:pt-20">
-        <div className="mx-auto max-w-4xl space-y-8 text-center lg:space-y-6">
+        <div className="mx-auto max-w-4xl space-y-8 text-center lg:max-w-6xl lg:space-y-6">
           {/* Keep the positioning message visible in the initial HTML while animating after mount. */}
           <div className="space-y-4">
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               <span className="block">Bastien Lopez</span>
-              <span className="mt-3 block min-h-[1.15em] bg-[length:200%_auto] text-2xl font-medium leading-tight text-primary supports-[background-clip:text]:bg-gradient-to-r supports-[background-clip:text]:from-primary supports-[background-clip:text]:via-accent supports-[background-clip:text]:to-primary supports-[background-clip:text]:bg-clip-text supports-[background-clip:text]:text-transparent md:text-4xl lg:text-5xl">
+              <span className="mt-3 block min-h-[1.15em] bg-[length:200%_auto] text-2xl font-medium leading-tight text-primary supports-[background-clip:text]:bg-gradient-to-r supports-[background-clip:text]:from-primary supports-[background-clip:text]:via-accent supports-[background-clip:text]:to-primary supports-[background-clip:text]:bg-clip-text supports-[background-clip:text]:text-transparent md:text-4xl lg:whitespace-nowrap lg:text-[clamp(2.5rem,3.5vw,3rem)]">
                 {typedProfession}
               </span>
             </h1>

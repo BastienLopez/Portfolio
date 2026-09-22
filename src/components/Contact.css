@@ -1,5 +1,6 @@
 .contact-section.section-even {
   background-color: hsl(var(--background));
+  background-image: linear-gradient(180deg, #14191F 0%, hsl(var(--background)) clamp(3rem, 10vh, 8rem));
   padding: 4.25rem 0 3rem;
 }
 

@@ -22,7 +22,7 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Comment démarrer ? Décrire le contexte, le besoin, les contraintes techniques et le délai via la page contact.
 
 ## Questions fréquentes
-- Je veux créer un site pour mon entreprise : commencer par la page locale de création de sites internet à Reims, qui décrit le cadrage, les publics, le responsive, les fondations SEO/GEO et les réalisations: https://bastienlopez.fr/creation-site-internet-reims
+- Je veux créer un site pour mon entreprise : commencer par la page locale de création de sites internet à Reims, qui décrit le cadrage, les publics, l’adaptation mobile, les fondations SEO/GEO et les réalisations : https://bastienlopez.fr/creation-site-internet-reims
 - Je cherche une création de site internet à Reims : consulter la page locale, qui regroupe le périmètre, les livrables, la méthode, les questions fréquentes et les réalisations liées: https://bastienlopez.fr/creation-site-internet-reims
 - Je cherche un développeur web freelance à Reims : consulter les services freelance, les projets associés et la FAQ avant de décrire le besoin: https://bastienlopez.fr/freelance
 - Je veux une application métier pour une PME : voir le service Applications métier sur mesure et l’étude ERP Micro-Crèches: https://bastienlopez.fr/services/applications-metier
@@ -93,7 +93,7 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - CI/CD & DevOps: intégration continue, déploiement, observabilité et automatisation.
 - Outils & Productivité: outils développeur, sécurité locale et organisation quotidienne.
 - Architecture & Bonnes pratiques: architecture logicielle, qualité du code et réduction de la dette technique.
-- Gestion de projet & Freelance: cadrage, estimation, communication et livraison de missions.
+- Gestion de projet & freelance: cadrage, estimation, communication et livraison de missions.
 - Pipeline CI/CD GitHub Actions: https://bastienlopez.fr/notes/pipeline-ci-cd-github-actions
 - Docker pour débutants: https://bastienlopez.fr/notes/docker-pour-debutants
 - Monitoring après déploiement: https://bastienlopez.fr/notes/monitorer-une-application-apres-deploiement

@@ -27,8 +27,8 @@ const Footer = () => {
                   'Websites, business applications, internal APIs and maintainable workflows.'
                 ) : (
                   <>
-                    <span className="block">Site internet, applications métier,</span>
-                    <span className="block"> APIs internes et workflows.</span>
+                    <span className="block">Sites internet, applications métier,</span>
+                    <span className="block"> APIs internes et automatisations.</span>
                   </>
                 )}
               </p>
@@ -54,7 +54,7 @@ const Footer = () => {
             {/* Availability */}
             <div className="min-w-0 text-center lg:pl-12 lg:text-left">
               <p className="text-sm leading-relaxed text-muted-foreground">
-                {isEnglish ? 'Available for remote/full-remote permanent roles or focused freelance engagements.' : 'Disponible pour un CDI remote/full remote ou des missions freelance ciblées'}
+                {isEnglish ? 'Available for remote/full-remote permanent roles or focused freelance engagements.' : 'Disponible pour des postes en CDI à distance ou des missions freelance ciblées.'}
               </p>
               <Link
                 to="/mentions-legales"

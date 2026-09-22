@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Manrope";
+  src: url("/fonts/manrope-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
@@ -58,6 +66,14 @@ All colors MUST be HSL.
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  body,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  }
 }
 
 /* Smooth section background transitions -------------------------------------------------- */
@@ -92,7 +108,9 @@ All colors MUST be HSL.
 @layer components {
   .project-list-section {
     background-color: #0c141c;
-    background-image: radial-gradient(circle at 78% 12%, hsl(var(--primary) / 0.08), transparent 28rem);
+    background-image:
+      linear-gradient(180deg, #0F1319 0%, #0c141c clamp(3rem, 10vh, 8rem)),
+      radial-gradient(circle at 78% 12%, hsl(var(--primary) / 0.08), transparent 28rem);
   }
 
   .project-list-container {
@@ -360,6 +378,11 @@ All colors MUST be HSL.
   background: linear-gradient(180deg, rgba(20,25,31,0) 0%, #0F1319 100%);
 }
 
+/* The projects section owns the transition into its own navy surface. */
+#about.section-odd::after {
+  background: linear-gradient(180deg, rgba(15,19,25,0) 0%, #0F1319 100%);
+}
+
 /* Dev Notes shares the same surface as the following contact section. */
 #devnotes.section-even::after {
   background: linear-gradient(180deg, rgba(20,25,31,0) 0%, #14191F 100%);
@@ -397,6 +420,10 @@ All colors MUST be HSL.
 @media (min-width: 1024px) and (max-height: 760px) {
   .hero-section {
     min-height: max(100vh, 44rem);
+  }
+
+  .hero-section > .container {
+    transform: translateY(0);
   }
 
   .hero-section > .container > .max-w-4xl > :not([hidden]) ~ :not([hidden]) {

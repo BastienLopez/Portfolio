@@ -162,7 +162,7 @@ const DevNotes = () => {
     },
     freelance: {
       icon: Briefcase,
-      title: isEnglish ? 'Project management & freelance' : 'Gestion de projet & Freelance',
+      title: isEnglish ? 'Project management & freelance' : 'Gestion de projet & freelance',
       description: {
         fr: 'Cadrage, estimation, communication et livraison de projets freelance utiles.',
         en: 'Scoping, estimation, communication and delivery for focused freelance projects.',
@@ -281,7 +281,7 @@ const DevNotes = () => {
               {isEnglish ? 'Technical notes on automation, AI, architecture and deployment, with access to all notes by topic.' : "Retours techniques autour de l'automatisation, de l'IA, de l'architecture et du déploiement, avec un accès à l'ensemble des notes par thème."}
             </p>
             <p className="devnotes-prompt text-sm text-muted-foreground font-medium">
-              {isEnglish ? 'Select a topic:' : 'Sélectionnez le topic souhaité :'}
+              {isEnglish ? 'Select a topic:' : 'Sélectionnez un thème :'}
             </p>
           </header>
         )}

@@ -271,11 +271,11 @@ const Service = () => {
                     <SignatureIcon className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                     <h2 id="service-signature-title" className="text-lg font-semibold">{signatureCopy.label}</h2>
                   </div>
-                  <ol className="grid flex-1 gap-2 sm:grid-cols-4 lg:grid-cols-5">
+                  <ol className="grid min-w-0 flex-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
                     {signatureCopy.items.map((item, index) => (
-                      <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <li key={item} className="flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
                         <span className="text-xs font-semibold tracking-[0.16em] text-primary">{String(index + 1).padStart(2, "0")}</span>
-                        <span>{item}</span>
+                        <span className="min-w-0 break-words">{item}</span>
                       </li>
                     ))}
                   </ol>

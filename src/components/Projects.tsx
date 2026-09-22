@@ -91,7 +91,7 @@ const freelanceSelectedWorkGroups: FreelanceSelectedWorkGroup[] = [
       en: "Frontend design and integration, light UI design, performance work and GitHub Pages deployment.",
     },
     outcome: {
-      fr: "Une vitrine responsive qui présente l’activité et facilite la demande de contact.",
+      fr: "Une vitrine adaptée à tous les écrans qui présente l’activité et facilite la demande de contact.",
       en: "A responsive showcase that presents the business and makes it easier to get in touch.",
     },
   },
@@ -107,7 +107,7 @@ const freelanceSelectedWorkGroups: FreelanceSelectedWorkGroup[] = [
       en: "One-page showcase website for a sports coach and osteopath, presenting fitness, physical preparation and HYROX programmes.",
     },
     role: {
-      fr: "Conception du site, intégration React et Tailwind CSS, mise en page responsive, structuration des contenus et mise en ligne.",
+      fr: "Conception du site, intégration React et Tailwind CSS, mise en page adaptée aux mobiles, structuration des contenus et mise en ligne.",
       en: "Website design, React and Tailwind CSS integration, responsive layout, content structure and release.",
     },
     outcome: {
@@ -832,7 +832,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
           need:
             "Améliorer les briques produit et relier les vues utilisateur à des sources de données fiables.",
           solution:
-            "Contribution aux interfaces et intégrations backend de Discover, dont les données CoinGecko et les parcours wallet responsive.",
+            "Contribution aux interfaces et intégrations back-end de Discover, dont les données CoinGecko et les parcours wallet adaptés aux différents écrans.",
           stack: "HTML / CSS, Python, API CoinGecko, Verifiable Credentials",
           result:
             "Une expérience plus lisible pour gérer les informations wallet et explorer les données d’actifs numériques connectées.",
@@ -841,12 +841,12 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
           tasks: [
             "Développer et améliorer les vues produit pour les parcours wallet et credentials.",
             "Connecter les données CoinGecko pour afficher les informations liées aux cryptomonnaies.",
-            "Accompagner les vues NFTs et crypto tout en gardant une interface responsive.",
+            "Accompagner les vues NFTs et crypto tout en gardant une interface adaptée aux différents écrans.",
           ],
           gains: [
             "Deux domaines produit sont réunis : NFTs et cryptomonnaies.",
             "CoinGecko fournit une source dédiée aux informations crypto en temps réel.",
-            "Les vues responsive rendent les parcours utilisables sur différentes tailles d’écran.",
+            "Les vues adaptées aux différents écrans rendent les parcours utilisables sur toutes les tailles d’écran.",
           ],
           metrics: [
             { value: "2", label: "domaines : NFTs + crypto" },
@@ -859,13 +859,13 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
               items: [
                 "Gestion de wallet et découverte d’actifs numériques.",
                 "Collections NFT, informations crypto et credentials.",
-                "Vues responsive pour l’expérience Discover.",
+                "Vues adaptées aux différents écrans pour l’expérience Discover.",
               ],
             },
             {
               title: "Intégrations",
               items: [
-                "Contribution backend Python.",
+                "Contribution back-end Python.",
                 "API CoinGecko pour les données de cryptomonnaies.",
                 "Credentials vérifiables et contexte d’identité décentralisée.",
               ],
@@ -1498,7 +1498,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                   return (
                     <article
                       key={group.key}
-                      className="grid gap-8 border-y border-border py-8 md:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)] md:gap-12 md:py-10 lg:gap-16"
+                      className={`grid gap-8 border-b border-border py-8 md:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)] md:gap-12 md:py-10 lg:gap-16 ${index === 0 ? "border-t" : ""}`}
                     >
                       <div
                         className={`relative aspect-video w-full self-center overflow-hidden ${

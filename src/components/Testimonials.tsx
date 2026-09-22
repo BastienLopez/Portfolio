@@ -22,6 +22,8 @@ const testimonialProductionLinks: Record<string, string> = {
   "t-4": "https://bastienlopez.github.io/CleDeVoute/",
 };
 
+const googleReviewUrl = "https://share.google/lZ2jBImQaBpUQGkDq";
+
 const Avatar = ({ name, image }: { name: string; image?: string | null }) => {
   const resolveImage = (img?: string | null) => {
     if (!img) return undefined;
@@ -72,18 +74,29 @@ export default function Testimonials(): JSX.Element {
       aria-labelledby="testimonials-title"
     >
       <div className="container relative z-10 mx-auto w-full px-4">
-        <header className="mb-10 flex max-w-4xl items-start gap-4">
-          <Quote className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-              {isEnglish ? "Selected feedback" : "Retours sélectionnés"}
-            </p>
-            <h2 id="testimonials-title" className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
-              {isEnglish
-                ? "What clients and users say"
-                : "Retours clients et utilisateurs anonymisés"}
-            </h2>
+        <header className="mb-10 flex max-w-6xl flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="flex items-start gap-4">
+            <Quote className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+                {isEnglish ? "Selected feedback" : "Retours sélectionnés"}
+              </p>
+              <h2 id="testimonials-title" className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
+                {isEnglish
+                  ? "What clients and users say"
+                  : "Retours clients et utilisateurs anonymisés"}
+              </h2>
+            </div>
           </div>
+          <a
+            href={googleReviewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-fit items-center gap-2 whitespace-nowrap text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background md:ml-auto"
+          >
+            {isEnglish ? "Leave a Google review" : "Laisser un avis Google"}
+            <ExternalLink className="h-4 w-4" aria-hidden="true" />
+          </a>
         </header>
 
         <div className="grid border-y border-border md:grid-cols-3">

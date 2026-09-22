@@ -53,8 +53,8 @@ const pageCopy = {
         href: "/creation-site-internet-reims",
         title: "Création de site internet pour entreprise",
         description:
-          "Je crée des sites vitrines clairs, rapides et responsive pour présenter une activité, ses services et ses réalisations.",
-        deliverables: "Structure des pages, intégration, responsive, SEO/GEO de base et mise en ligne.",
+          "Je crée des sites vitrines clairs, rapides et adaptés aux mobiles pour présenter une activité, ses services et ses réalisations.",
+        deliverables: "Structure des pages, intégration, adaptation mobile, SEO/GEO de base et mise en ligne.",
         icon: Layers3,
       },
       {
@@ -71,15 +71,15 @@ const pageCopy = {
         number: "03",
         slug: "automatisations-n8n",
         href: "/services/automatisations-n8n",
-        title: "Automatisations & intégrations",
+        title: "Automatisations et intégrations",
         description:
           "Je relie vos outils et vos données avec n8n, des APIs et des traitements documentés pour supprimer les ressaisies.",
-        deliverables: "Workflows, reporting, notifications, contrôles et reprise sur erreur.",
+        deliverables: "Flux automatisés, rapports, notifications, contrôles et reprise sur erreur.",
         icon: Workflow,
       },
       {
         number: "04",
-        title: "Reprise & évolution technique",
+        title: "Reprise et évolution technique",
         description:
           "Je reprends un existant quand il faut corriger une dette, fiabiliser une livraison ou ajouter une fonctionnalité sans repartir de zéro.",
         deliverables: "Audit ciblé, plan d’action, corrections prioritaires et mise à niveau progressive.",
@@ -110,7 +110,7 @@ const pageCopy = {
       },
       {
         number: "04",
-        title: "Transmission & suivi",
+        title: "Transmission et suivi",
         description:
           "Je documente les choix, les procédures et les limites, puis je peux accompagner les corrections ou évolutions prévues.",
       },
@@ -331,7 +331,7 @@ const Freelance = () => {
                 return (
                   <li
                     key={service.number}
-                    className="grid gap-5 py-7 md:grid-cols-[5rem_minmax(13rem,0.7fr)_minmax(0,1fr)] md:items-start md:gap-8 md:py-9"
+                    className="grid gap-5 py-7 md:grid-cols-[4rem_minmax(0,0.75fr)_minmax(0,1fr)] md:items-start md:gap-5 md:py-9"
                   >
                     <div className="flex items-center gap-3 text-primary md:flex-col md:items-start md:gap-2">
                       <ServiceIcon className="h-5 w-5" aria-hidden="true" />
@@ -341,9 +341,12 @@ const Freelance = () => {
                     </div>
                     <h3 className="text-xl font-semibold md:text-2xl">
                       {service.slug ? (
-                        <Link to={service.href ?? `/services/${service.slug}`} className="transition-colors hover:text-primary">
-                          {service.title}
-                          <ArrowRight className="ml-2 inline-block h-4 w-4" aria-hidden="true" />
+                        <Link
+                          to={service.href ?? `/services/${service.slug}`}
+                          className="inline-flex max-w-full items-center gap-2 transition-colors hover:text-primary"
+                        >
+                          <span>{service.title}</span>
+                          <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
                         </Link>
                       ) : service.title}
                     </h3>
