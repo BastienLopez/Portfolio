@@ -10,7 +10,9 @@ import { ProjectDetail } from "@/components/projects/ProjectDetail";
 import { ProjectGallery } from "@/components/projects/ProjectGallery";
 import { allProjects, type Project, type ProjectGalleryItem } from "@/data/projects";
 import {
+  getPublicServicePagePath,
   getProjectPage,
+  getServiceForProject,
   type ProjectPageDefinition,
 } from "@/data/site-pages";
 import { getEnglishDetailedContent } from "@/data/projects/englishDetails";
@@ -197,6 +199,17 @@ const ProjectCaseStudy = () => {
     () => projects.map((project) => localizeProject(project, isEnglish)),
     [isEnglish, projects],
   );
+  const relatedServices = useMemo(
+    () => Array.from(
+      new Map(
+        projects
+          .map((project) => getServiceForProject(project.id))
+          .filter((service): service is NonNullable<ReturnType<typeof getServiceForProject>> => Boolean(service))
+          .map((service) => [service.slug, service] as const),
+      ).values(),
+    ),
+    [projects],
+  );
   const [activeGallery, setActiveGallery] = useState<{ projectId: string; index: number } | null>(null);
   const galleryViewerRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
@@ -269,14 +282,14 @@ const ProjectCaseStudy = () => {
                       detailRef={detailRef}
                     />
                     <div className="mx-auto mt-5 flex w-full max-w-5xl flex-wrap items-center gap-3 border-t border-border pt-5" data-contextual-cta>
-                      <Button asChild className="bg-cta text-cta-foreground hover:bg-cta/90">
+                      <Button asChild className="h-auto min-h-10 max-w-full whitespace-normal bg-cta text-center text-cta-foreground hover:bg-cta/90">
                         <Link to="/freelance#contact">
                           {isEnglish ? definition.cta.en : definition.cta.fr}
                           <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                         </Link>
                       </Button>
                       {project.demo ? (
-                        <Button asChild variant="outline" className="border-border text-foreground hover:border-primary hover:text-primary">
+                        <Button asChild variant="outline" className="h-auto min-h-10 max-w-full whitespace-normal border-border text-center text-foreground hover:border-primary hover:text-primary">
                           <a href={project.demo} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="mr-2 h-4 w-4" aria-hidden="true" />
                             {isEnglish ? "View production link" : "Voir le lien en production"}
@@ -289,11 +302,39 @@ const ProjectCaseStudy = () => {
               })}
             </div>
 
+            {relatedServices.length > 0 ? (
+              <section className="mx-auto mt-16 max-w-5xl border-t border-border pt-8" aria-labelledby="case-study-services-title" data-editorial-service-links>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                  {isEnglish ? "Related service" : "Service associé"}
+                </p>
+                <h2 id="case-study-services-title" className="mt-3 text-2xl font-semibold">
+                  {isEnglish ? "See the service behind this case study" : "Voir le service derrière cette étude de cas"}
+                </h2>
+                <div className="mt-5 divide-y divide-border border-y border-border">
+                  {relatedServices.map((service) => (
+                    <Link
+                      key={service.slug}
+                      to={getPublicServicePagePath(service.slug)}
+                      className="group flex items-center justify-between gap-5 py-5 transition-colors hover:text-primary"
+                    >
+                      <span>
+                        <span className="block font-semibold">{isEnglish ? service.title.en : service.title.fr}</span>
+                        <span className="mt-2 block text-sm leading-6 text-muted-foreground">
+                          {isEnglish ? service.description.en : service.description.fr}
+                        </span>
+                      </span>
+                      <ArrowRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
             <div className="mx-auto mt-16 flex max-w-5xl flex-wrap items-center justify-between gap-4 border-t border-border pt-8">
               <p className="text-sm text-muted-foreground">
                 {isEnglish
-                  ? "Based in Reims, I work remotely with teams across France."
-                  : "Basé à Reims, j’interviens à distance avec des équipes partout en France."}
+                  ? "Based in Reims, France, I work remotely with teams across Europe."
+                  : "Basé à Reims, en France, j’interviens à distance avec des équipes en Europe."}
               </p>
               <div className="flex flex-wrap gap-3">
                 <Button

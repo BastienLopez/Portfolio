@@ -2,8 +2,10 @@ import { ArrowLeft, ArrowRight, Check, Globe2, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ServiceConditions from "@/components/ServiceConditions";
 import { Button } from "@/components/ui/button";
-import { getServicePage } from "@/data/site-pages";
+import { getArticlePageDefinition } from "@/data/articles/pages";
+import { getServicePage, serviceRelatedArticleSlugs } from "@/data/site-pages";
 import { SITE_ORIGIN, useLanguage, useRouteMetadata, type PageMetadata } from "@/lib/i18n";
 
 const localPageMetadata: Record<"fr" | "en", PageMetadata> = {
@@ -20,7 +22,7 @@ const localPageMetadata: Record<"fr" | "en", PageMetadata> = {
   en: {
     title: "Website creation in Reims | Freelance web developer — Bastien Lopez",
     description:
-      "Showcase websites for businesses and independent professionals in Reims and across France, with responsive implementation and clear SEO foundations.",
+      "Showcase websites for businesses and independent professionals in Reims, France and Europe, with responsive implementation and clear SEO foundations.",
     path: "/creation-site-internet-reims",
     robots: "index, follow",
     keywords:
@@ -36,8 +38,8 @@ const localCopy = {
     description:
       "Je conçois des sites vitrines professionnels pour les entreprises, indépendants, artisans et petites équipes qui veulent présenter leur activité clairement et faciliter la prise de contact.",
     note:
-      "Le projet est cadré autour de vos clients, de vos contenus et de l’action attendue. J’interviens à Reims et à distance partout en France.",
-    location: "Basé à Reims · interventions à distance en France",
+      "Le projet est cadré autour de vos clients, de vos contenus et de l’action attendue. J’interviens à Reims, en France et à distance en Europe.",
+    location: "Basé à Reims, France · interventions à distance en Europe",
     primaryCta: "Parler de votre site",
     secondaryCta: "Voir le périmètre complet",
     audiencesLabel: "Pour qui",
@@ -54,7 +56,6 @@ const localCopy = {
     proof: [
       ["Eloi CoachStéo", "/projets/eloi-coachsteo"],
       ["Clé de Voûte", "/projets/cledevoute"],
-      ["Luxury Auto Detailing", "/projets/luxury-auto-detailing"],
     ],
     faqLabel: "Questions fréquentes",
     faqTitle: "Avant de commencer",
@@ -68,8 +69,8 @@ const localCopy = {
     description:
       "I build professional showcase websites for businesses, independent professionals and small teams that need a clear presentation and a direct path to contact.",
     note:
-      "The project is scoped around your customers, content and expected action. I work in Reims and remotely across France.",
-    location: "Based in Reims · remote work across France",
+      "The project is scoped around your customers, content and expected action. I work in Reims, France and remotely across Europe.",
+    location: "Based in Reims, France · remote work across Europe",
     primaryCta: "Discuss your website",
     secondaryCta: "See the full service scope",
     audiencesLabel: "Who it is for",
@@ -86,7 +87,6 @@ const localCopy = {
     proof: [
       ["Eloi CoachStéo", "/projets/eloi-coachsteo"],
       ["Clé de Voûte", "/projets/cledevoute"],
-      ["Luxury Auto Detailing", "/projets/luxury-auto-detailing"],
     ],
     faqLabel: "Frequently asked questions",
     faqTitle: "Before we start",
@@ -95,6 +95,10 @@ const localCopy = {
     contact: "Discuss the project",
   },
 } as const;
+
+const localRelatedArticleDefinitions = serviceRelatedArticleSlugs["sites-vitrines"]
+  .map((slug) => getArticlePageDefinition(slug))
+  .filter((article): article is NonNullable<ReturnType<typeof getArticlePageDefinition>> => Boolean(article));
 
 const siteVitrineService = getServicePage("sites-vitrines");
 
@@ -116,6 +120,13 @@ const localPageSchema = (isEnglish: boolean) => {
     "@type": "Question",
     name: isEnglish ? question.en : question.fr,
     acceptedAnswer: { "@type": "Answer", text: isEnglish ? answer.en : answer.fr },
+  }));
+  const relatedArticles = localRelatedArticleDefinitions.map((article) => ({
+    "@type": "TechArticle",
+    "@id": `${SITE_ORIGIN}/notes/${article.slug}#article`,
+    url: `${SITE_ORIGIN}/notes/${article.slug}`,
+    name: isEnglish ? article.title.en : article.title.fr,
+    inLanguage: language,
   }));
 
   return {
@@ -148,6 +159,7 @@ const localPageSchema = (isEnglish: boolean) => {
         areaServed: [
           { "@type": "City", name: "Reims" },
           { "@type": "Country", name: "France" },
+          { "@type": "Continent", name: "Europe" },
         ],
         audience: {
           "@type": "Audience",
@@ -169,6 +181,7 @@ const localPageSchema = (isEnglish: boolean) => {
             itemOffered: { "@type": "Service", name: isEnglish ? item.en : item.fr },
           })),
         },
+        subjectOf: relatedArticles,
       },
       {
         "@type": "FAQPage",
@@ -251,6 +264,8 @@ const LocalWebCreation = () => {
               </div>
             </header>
 
+            <ServiceConditions service={siteVitrineService} />
+
             <section className="grid border-b border-border lg:grid-cols-2" aria-label={isEnglish ? "Website audience and foundations" : "Public et fondations du site"}>
               <section className="py-10 lg:border-r lg:border-border lg:pr-10" aria-labelledby="local-audiences-title">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{copy.audiencesLabel}</p>
@@ -326,6 +341,35 @@ const LocalWebCreation = () => {
                 ))}
               </div>
             </section>
+
+            <section className="mt-16" aria-labelledby="local-notes-title" data-editorial-cluster="sites-vitrines">
+                <div className="mb-7">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{isEnglish ? "Related notes" : "Notes liées"}</p>
+                  <h2 id="local-notes-title" className="mt-3 text-3xl font-bold tracking-tight">{isEnglish ? "Prepare a professional website" : "Préparer un site professionnel"}</h2>
+                  <p className="mt-3 max-w-3xl text-base leading-7 text-muted-foreground">
+                    {isEnglish
+                      ? "Two notes to clarify scope, content and release before starting a new website or redesign."
+                      : "Deux notes pour clarifier le périmètre, les contenus et la mise en ligne avant de lancer une création ou une refonte."}
+                  </p>
+                </div>
+                <div className="divide-y divide-border border-y border-border">
+                  {localRelatedArticleDefinitions.map((article) => (
+                    <Link
+                      key={article.slug}
+                      to={`/notes/${article.slug}`}
+                      className="group flex items-start justify-between gap-5 py-5 transition-colors hover:text-primary"
+                    >
+                      <span>
+                        <span className="block font-semibold">{isEnglish ? article.title.en : article.title.fr}</span>
+                        <span className="mt-2 block text-sm leading-6 text-muted-foreground">
+                          {isEnglish ? article.description.en : article.description.fr}
+                        </span>
+                      </span>
+                      <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                    </Link>
+                  ))}
+                </div>
+              </section>
 
             <section className="mt-16" aria-labelledby="local-faq-title">
               <div className="mb-7">

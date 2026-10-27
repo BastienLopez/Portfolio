@@ -264,7 +264,7 @@ const DevNotes = () => {
       id="devnotes"
       aria-labelledby={selectedArticle ? undefined : 'devnotes-title'}
       aria-label={selectedArticle ? (isEnglish ? 'Dev Note' : 'Dev Note') : undefined}
-      className={`devnotes-section px-4 w-full overflow-x-hidden section-even ${selectedArticle ? 'devnotes-inline-section' : 'py-20'}`}
+      className={`devnotes-section px-4 w-full overflow-x-hidden section-even ${selectedArticle ? 'devnotes-inline-section' : 'py-14 md:py-16'}`}
     >
       <div className="container mx-auto max-w-6xl w-full">
         {!selectedArticle && (

@@ -1,4 +1,5 @@
 import { ArrowUpRight, ExternalLink, Quote } from "lucide-react";
+import type { ReactNode } from "react";
 import { Testimonial } from "@/data/testimonials";
 import testimonialsData from "@/data/testimonials";
 import { useLanguage } from "@/lib/i18n";
@@ -23,6 +24,16 @@ const testimonialProductionLinks: Record<string, string> = {
 };
 
 const googleReviewUrl = "https://share.google/lZ2jBImQaBpUQGkDq";
+
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const renderHighlightedMetrics = (text: string, metrics: readonly string[] | undefined): ReactNode => {
+  if (!metrics?.length) return text;
+  const matcher = new RegExp(`(${metrics.map(escapeRegExp).join("|")})`, "g");
+  return text.split(matcher).map((part, index) => (
+    metrics.includes(part) ? <strong key={`${part}-${index}`} className="font-bold text-white">{part}</strong> : part
+  ));
+};
 
 const Avatar = ({ name, image }: { name: string; image?: string | null }) => {
   const resolveImage = (img?: string | null) => {
@@ -70,7 +81,7 @@ export default function Testimonials(): JSX.Element {
   return (
     <section
       id="testimonials"
-      className="section-odd relative w-full overflow-hidden py-20 md:py-28"
+      className="section-odd relative w-full overflow-hidden py-14 md:py-16"
       aria-labelledby="testimonials-title"
     >
       <div className="container relative z-10 mx-auto w-full px-4">
@@ -83,8 +94,8 @@ export default function Testimonials(): JSX.Element {
               </p>
               <h2 id="testimonials-title" className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
                 {isEnglish
-                  ? "What clients and users say"
-                  : "Retours clients et utilisateurs anonymisés"}
+                  ? "Three projects, three client perspectives"
+                  : "Trois projets, trois retours clients"}
               </h2>
             </div>
           </div>
@@ -107,6 +118,8 @@ export default function Testimonials(): JSX.Element {
             const projectLink = testimonialProjectLinks[testimonial.id];
             const projectLabel = testimonialProjectLabels[testimonial.id]?.[isEnglish ? "en" : "fr"];
             const productionLink = testimonialProductionLinks[testimonial.id];
+            const context = testimonial.context?.[isEnglish ? "en" : "fr"];
+            const highlightedMetrics = testimonial.highlightedMetrics?.[isEnglish ? "en" : "fr"];
 
             return (
               <article
@@ -128,6 +141,20 @@ export default function Testimonials(): JSX.Element {
                     <p className="mt-1 text-sm text-muted-foreground">{role}</p>
                   </div>
                 </div>
+                {context && (
+                  <dl className="mt-6 space-y-4 text-sm leading-6" data-testimonial-context>
+                    {[
+                      [isEnglish ? "Initial need" : "Besoin initial", context.need],
+                      [isEnglish ? "Delivered" : "Livrable", context.delivery],
+                      [isEnglish ? "Client-reported result" : "Résultat rapporté par le client", context.outcome],
+                    ].map(([label, value]) => (
+                      <div key={label}>
+                        <dt className="font-semibold text-foreground">{label}</dt>
+                        <dd className="mt-1 text-muted-foreground">{label === (isEnglish ? "Client-reported result" : "Résultat rapporté par le client") ? renderHighlightedMetrics(value, highlightedMetrics) : value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
                 <blockquote className="mt-6 flex-1 text-base leading-7 text-foreground/85">
                   “{text}”
                 </blockquote>

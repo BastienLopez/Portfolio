@@ -45,7 +45,7 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" aria-labelledby="skills-title" className="py-20 md:py-24 relative section-odd">
+    <section id="skills" aria-labelledby="skills-title" className="py-14 md:py-16 relative section-odd">
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}

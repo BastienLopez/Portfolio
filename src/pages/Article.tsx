@@ -2,7 +2,12 @@ import { lazy, Suspense, useEffect, useMemo } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import NotFound from "@/pages/NotFound";
-import { getProjectPagePath } from "@/data/site-pages";
+import {
+  getProjectPage,
+  getProjectPagePath,
+  getPublicServicePagePath,
+  getServicePage,
+} from "@/data/site-pages";
 import { getArticlePage } from "@/data/articles/registry";
 import { estimateReadingMinutes } from "@/lib/article-content";
 import { SITE_ORIGIN, useLanguage, useRouteMetadata, type PageMetadata } from "@/lib/i18n";
@@ -81,6 +86,12 @@ const articleSchema = (
   const language = isEnglish ? "en-US" : "fr-FR";
   const category = categoryLabels[entry.article.category]?.[isEnglish ? "en" : "fr"] ?? entry.article.category;
   const keywords = categoryKeywords[entry.article.category]?.[isEnglish ? "en" : "fr"] ?? category;
+  const relatedService = entry.definition.relatedServiceSlug
+    ? getServicePage(entry.definition.relatedServiceSlug)
+    : undefined;
+  const relatedServicePath = relatedService
+    ? getPublicServicePagePath(relatedService.slug)
+    : undefined;
   const content = isEnglish ? entry.translation.content : entry.article.content;
   const wordCount = content
     .replace(/<[^>]*>/g, " ")
@@ -106,6 +117,9 @@ const articleSchema = (
         author: { "@id": `${SITE_ORIGIN}/#person` },
         publisher: { "@id": `${SITE_ORIGIN}/#person` },
         mainEntityOfPage: { "@id": `${url}#webpage` },
+        ...(relatedServicePath
+          ? { isRelatedTo: { "@id": `${SITE_ORIGIN}${relatedServicePath}#service` } }
+          : {}),
       },
       {
         "@type": "WebPage",
@@ -149,6 +163,9 @@ const Article = () => {
   const category = categoryLabels[entry.article.category]?.[isEnglish ? "en" : "fr"] ?? entry.article.category;
   const content = isEnglish ? entry.translation.content : entry.article.content;
   const readingMinutes = estimateReadingMinutes(content);
+  const relatedService = entry.definition.relatedServiceSlug
+    ? getServicePage(entry.definition.relatedServiceSlug)
+    : undefined;
 
   return (
     <div className="devnotes-article-page min-h-screen w-full text-foreground">
@@ -164,7 +181,7 @@ const Article = () => {
             <nav aria-label={isEnglish ? "Article navigation" : "Navigation de l’article"}>
               <Link
                 to="/#devnotes"
-                aria-label={isEnglish ? "Back to Dev Notes" : "Retour aux Dev Notes"}
+                aria-label={isEnglish ? "Back to articles" : "Retour aux articles"}
                 className="devnotes-article-back"
               >
                 <ArrowLeft aria-hidden="true" />
@@ -202,8 +219,31 @@ const Article = () => {
                 />
               </Suspense>
 
+            {relatedService ? (
+              <section className="devnotes-related-work" aria-labelledby="article-related-service-title" data-editorial-service-link>
+                <div className="devnotes-related-heading">
+                  <h2 id="article-related-service-title">
+                    <span className="devnotes-related-heading-line" aria-hidden="true" />
+                    {isEnglish ? "Related freelance service" : "Service freelance associé"}
+                  </h2>
+                </div>
+                <Link
+                  to={getPublicServicePagePath(relatedService.slug)}
+                  className="devnotes-related-link"
+                >
+                  <span>
+                    <span className="block font-semibold">{isEnglish ? relatedService.title.en : relatedService.title.fr}</span>
+                    <span className="mt-2 block text-sm leading-6 text-muted-foreground">
+                      {isEnglish ? relatedService.description.en : relatedService.description.fr}
+                    </span>
+                  </span>
+                  <ArrowRight aria-hidden="true" />
+                </Link>
+              </section>
+            ) : null}
+
             {entry.definition.relatedProjectSlugs.length > 0 ? (
-              <section className="devnotes-related-work" aria-labelledby="article-related-work-title">
+              <section className="devnotes-related-work" aria-labelledby="article-related-work-title" data-editorial-case-links>
                 <div className="devnotes-related-heading">
                   <h2 id="article-related-work-title">
                     <span className="devnotes-related-heading-line" aria-hidden="true" />
@@ -218,8 +258,12 @@ const Article = () => {
                   {entry.definition.relatedProjectSlugs.map((projectSlug) => {
                     const projectPath = getProjectPagePath(projectSlug);
                     if (!projectPath) return null;
+                    const project = getProjectPage(projectSlug);
+                    const projectTitle = project
+                      ? (isEnglish ? project.title.en : project.title.fr)
+                      : projectSlug.replaceAll("-", " ");
                     return <Link key={projectSlug} to={projectPath} className="devnotes-related-link">
-                      <span>{projectSlug.replaceAll("-", " ")}</span>
+                      <span>{projectTitle}</span>
                       <ArrowRight aria-hidden="true" />
                     </Link>;
                   })}

@@ -49,6 +49,7 @@ type FeaturedCaseStudy = {
   gains: string[];
   sections: FeaturedCaseStudySection[];
   metrics?: FeaturedCaseStudyMetric[];
+  evidence?: string;
 };
 
 const portfolioProjects: DisplayProject[] = allProjects;
@@ -72,6 +73,24 @@ type FreelanceSelectedWorkGroup = {
   description: { fr: string; en: string };
   role: { fr: string; en: string };
   outcome: { fr: string; en: string };
+  measurableGain: { fr: HighlightedGain; en: HighlightedGain };
+};
+
+type HighlightedGain = {
+  text: string;
+  highlights: readonly string[];
+};
+
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const renderHighlightedGain = (gain: HighlightedGain) => {
+  if (!gain.highlights.length) return gain.text;
+  const matcher = new RegExp(`(${gain.highlights.map(escapeRegExp).join("|")})`, "g");
+  return gain.text.split(matcher).map((part, index) => (
+    gain.highlights.includes(part)
+      ? <strong key={`${part}-${index}`} className="font-bold text-foreground">{part}</strong>
+      : part
+  ));
 };
 
 const freelanceSelectedWorkGroups: FreelanceSelectedWorkGroup[] = [
@@ -94,6 +113,16 @@ const freelanceSelectedWorkGroups: FreelanceSelectedWorkGroup[] = [
       fr: "Une vitrine adaptée à tous les écrans qui présente l’activité et facilite la demande de contact.",
       en: "A responsive showcase that presents the business and makes it easier to get in touch.",
     },
+    measurableGain: {
+      fr: {
+        text: "Après la refonte, le client rapporte +60 % de trafic et +17 % de devis mensuels, avec un rendu jugé propre et adapté à l’activité.",
+        highlights: ["+60 %", "+17 %"],
+      },
+      en: {
+        text: "After the redesign, the client reports 60% more traffic and 17% more monthly quote requests, with a clean result suited to the business.",
+        highlights: ["60%", "17%"],
+      },
+    },
   },
   {
     key: "eloi-coachsteo",
@@ -114,6 +143,16 @@ const freelanceSelectedWorkGroups: FreelanceSelectedWorkGroup[] = [
       fr: "Une page unique qui rend les prestations lisibles et donne un accès direct à la prise de contact.",
       en: "A single page that makes the services easy to understand and gives visitors a direct path to contact.",
     },
+    measurableGain: {
+      fr: {
+        text: "Le client rapporte une hausse de 45 % des clients trouvés grâce à la présence en ligne.",
+        highlights: ["45 %"],
+      },
+      en: {
+        text: "The client reports a 45% increase in clients found through the online presence.",
+        highlights: ["45%"],
+      },
+    },
   },
   {
     key: "n8n-automation",
@@ -133,6 +172,16 @@ const freelanceSelectedWorkGroups: FreelanceSelectedWorkGroup[] = [
     outcome: {
       fr: "Le reporting et le pré-montage partent de sources brutes pour aboutir à des livrables structurés, traçables et prêts à relire ou produire.",
       en: "Reporting and pre-editing start from raw sources and end with structured, traceable deliverables ready for review or production.",
+    },
+    measurableGain: {
+      fr: {
+        text: "Gain de temps de plus de 35 % sur le dérushage et le montage de volumes importants de rushes bruts de festivals, grâce à l’automatisation des processus via un workflow dédié.",
+        highlights: ["Gain de temps de plus de 35 %"],
+      },
+      en: {
+        text: "More than 35% time saved on editing and assembling large volumes of raw festival footage through an automated workflow.",
+        highlights: ["More than 35% time saved"],
+      },
     },
   },
 ];
@@ -209,9 +258,9 @@ const englishProjectSummaries: Record<
       "One-page showcase website for a sports coach and osteopath, presenting fitness, physical preparation, tailored HYROX programmes and a direct contact journey.",
   },
   "luxury-auto-detailing": {
-    title: "Luxury Auto Detailing",
+    title: "Luxury Auto Detailing — Concept / demo",
     description:
-      "Premium showcase website for car-detailing services, with a clear presentation of cleaning, polishing, ceramic protection, interior restoration and appointment contact.",
+      "Concept / demo showcase website for car-detailing services, with a clear presentation of cleaning, polishing, ceramic protection, interior restoration and appointment contact.",
   },
   cledevoute: {
     title: "Cle De Voute — Masonry",
@@ -355,8 +404,7 @@ const shouldStretchProjectImage = (project: DisplayProject) => {
   // shared card frame without cropping their top or bottom edges.
   return (
     (aspectRatio >= 2 && aspectRatio <= 2.6) ||
-    project.id === "aqualis" ||
-    project.id === "seo-geo-optimization"
+    project.id === "aqualis"
   );
 };
 
@@ -372,9 +420,10 @@ const prepareDetailedContent = (content: string) => {
 
 type ProjectsProps = {
   mode?: "portfolio" | "freelance";
+  as?: "section" | "div";
 };
 
-const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
+const Projects = ({ mode = "portfolio", as = "section" }: ProjectsProps) => {
   const { isEnglish } = useLanguage();
   const isFreelancePage = mode === "freelance";
   const projectsForView = isFreelancePage ? freelanceProjects : portfolioProjects;
@@ -392,6 +441,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
   const projectDetailRef = useRef<HTMLDivElement>(null);
   const galleryViewerRef = useRef<HTMLDivElement>(null);
   const hadProjectSelectionRef = useRef(false);
+  const shouldFocusProjectDetailRef = useRef(false);
 
   const localizeProject = (project: DisplayProject) => {
     const englishDetailedContent = getEnglishDetailedContent(project.id);
@@ -471,64 +521,22 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
           ],
         },
         {
-          id: "n8n-reporting",
-          title: "n8n Automations — Reporting",
-          context:
-            "A complete n8n reporting pipeline that starts with SocialPilot PDF exports and turns them into structured client-facing community-management reports.",
-          need:
-            "Move from a technical social-media export to a consistent CM deliverable while keeping sources, KPI checks and visual QA traceable.",
-          solution:
-            "Email and Drive intake, deduplication, KPI extraction and normalisation, targeted OCR, bounded analysis, client-PDF generation, QA and delivery notifications.",
-          stack: "n8n, SocialPilot, Gmail API, Google Drive, JSON/PDF, OCR, Discord",
-          result:
-            "A repeatable reporting chain that gives the CM team a clear report to review and send to the client.",
-          role:
-            "Process analysis, workflow architecture, API integrations, JSON transformation, report generation and quality controls.",
-          tasks: [
-            "Receive SocialPilot exports, verify the expected attachment and archive the source in Google Drive.",
-            "Detect duplicates and keep each reporting period linked to its source file and processing status.",
-            "Extract and normalise KPIs by social network, with targeted OCR when a value is only available in a visual.",
-            "Prepare the analysis, highlights and recommendations that turn raw metrics into a CM client narrative.",
-            "Generate the client PDF with tables, charts and selected visuals, then run content and layout checks.",
-            "Notify the delivery channel and preserve the traceability needed for a manual final review.",
-          ],
-          gains: [
-            "A raw SocialPilot export becomes a homogeneous client-reporting base for the CM team.",
-            "Sources, KPI transformations and generated files remain linked and easier to audit.",
-            "The workflow removes repeated preparation steps while keeping the final editorial review in human hands.",
-            "No percentage or traffic gain is claimed here without a source that can be published.",
-          ],
+          id: "cledevoute",
+          title: "Clé de Voûte",
+          context: "A freelance website project for a masonry business that needed a clearer online presence.",
+          need: "Help visitors understand the services, see completed work and find a direct contact path on mobile.",
+          solution: "A responsive showcase website organised around services, project images and contact calls to action.",
+          stack: "React, Tailwind CSS, JavaScript, GitHub Pages",
+          result: "A publicly accessible website presenting the business and its work. The client reports 60% more traffic after the redesign and 17% more monthly quote requests; these figures are not independently verified.",
+          role: "Website design, frontend implementation, content hierarchy, image optimisation and deployment.",
+          tasks: ["Structure the services and completed work.", "Build the responsive interface and contact journey.", "Optimise images and publish the website."],
+          gains: ["Services and work are visible in one place.", "Contact actions remain available on mobile.", "The client reports 60% more traffic after the redesign and 17% more monthly quote requests.", "The client feedback describes a clean result suited to the business."],
           metrics: [
-            { value: "PDF", label: "SocialPilot input/output" },
-            { value: "KPI", label: "normalised per network" },
-            { value: "QA", label: "content and visual checks" },
+            { value: "+60%", label: "traffic after redesign — client-reported" },
+            { value: "+17%", label: "monthly quote requests — client-reported" },
           ],
-          sections: [
-            {
-              title: "Intake & archive",
-              items: [
-                "Receive and validate the SocialPilot PDF by email or Drive.",
-                "Archive the source, reject duplicates and track the reporting period.",
-                "Keep processing status and delivery notifications visible to the team.",
-              ],
-            },
-            {
-              title: "Analysis & report generation",
-              items: [
-                "Extract, normalise and cross-check KPIs for each social network.",
-                "Use OCR only for values that are not available as selectable text.",
-                "Generate the client PDF with analysis, recommendations, tables and visuals.",
-              ],
-            },
-            {
-              title: "QA & delivery",
-              items: [
-                "Check figures, labels, missing sections and report consistency.",
-                "Run a visual pass on page breaks, charts and readable typography.",
-                "Deliver the report with its source and processing trace available for review.",
-              ],
-            },
-          ],
+          evidence: "Evidence available: public project link, screenshots and client feedback. The traffic and quote figures are client-reported; the comparison period and analytics source are not published.",
+          sections: [{ title: "Proof and scope", items: ["Freelance project with a public website and screenshots in the dedicated case study.", "Client feedback from Marino, manager of Clé de Voûte.", "Scope: showcase website, not an online sales platform."] }],
         },
         {
           id: "n8n-video-derush",
@@ -591,57 +599,54 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
           ],
         },
         {
-          id: "altme-wallet",
-          title: "Altme Wallet Platform",
+          id: "eloi-coachsteo",
+          title: "Eloi CoachStéo — Sport Trainer",
           context:
-            "A Discover platform combining wallet data, verifiable credentials, NFTs and cryptocurrency information.",
+            "A one-page freelance website for a sports coach and osteopath who needed a clearer presentation of several services.",
           need:
-            "Improve the product building blocks and connect user-facing views to reliable data sources.",
+            "Make coaching, physical preparation and HYROX programmes understandable at a glance, then guide visitors to contact.",
           solution:
-            "Contribution to Discover interfaces and backend integrations, including CoinGecko data and responsive wallet journeys.",
-          stack: "HTML / CSS, Python, CoinGecko API, Verifiable Credentials",
+            "A responsive one-page site with structured service sections, visual proof and a direct contact journey.",
+          stack: "React, Tailwind CSS, JavaScript, GitHub Pages",
           result:
-            "A clearer platform experience for managing wallet information and exploring connected digital-asset data.",
+            "A deployed showcase that makes the offer easier to understand. The client reports a 45% increase in clients found through the online presence; this figure is not independently verified.",
           role:
-            "Team contribution on interface, backend and data-integration work within the Discover product.",
+            "Website design, content hierarchy, React/Tailwind integration, responsive implementation and release.",
           tasks: [
-            "Develop and improve product views for wallet and credential-related journeys.",
-            "Connect CoinGecko data to display cryptocurrency information.",
-            "Support NFT and crypto views while keeping the interface responsive across devices.",
+            "Clarify the dual coaching and osteopathy positioning.",
+            "Structure fitness, preparation and HYROX programmes into one readable journey.",
+            "Keep the contact path accessible on mobile and desktop.",
           ],
           gains: [
-            "Two product domains are brought together: NFTs and cryptocurrencies.",
-            "CoinGecko provides a dedicated source for live crypto information.",
-            "Responsive views make the same product journeys usable on different screen sizes.",
+            "The services are presented in one coherent page.",
+            "The responsive layout gives visitors a direct route to contact.",
+            "The client reports a 45% increase in clients found through the online presence.",
           ],
           metrics: [
-            { value: "2", label: "domains: NFTs + crypto" },
-            { value: "API", label: "CoinGecko data" },
-            { value: "DID", label: "credential context" },
+            { value: "+45%", label: "clients found — client-reported" },
           ],
+          evidence: "Evidence available: public project link and client testimonial. The +45% figure is client-reported; the comparison period and analytics source are not published.",
           sections: [
             {
-              title: "Platform scope",
+              title: "Freelance scope",
               items: [
-                "Wallet management and digital-asset discovery.",
-                "NFT collections, cryptocurrency information and credentials.",
-                "Responsive views for the Discover experience.",
+                "One-page showcase website for a sports coach and osteopath.",
+                "Structured services, HYROX programmes and contact path.",
+                "Public production link and client testimonial available.",
               ],
             },
             {
-              title: "Integrations",
+              title: "Proof",
               items: [
-                "Python backend contribution.",
-                "CoinGecko API for cryptocurrency data.",
-                "Verifiable credentials and decentralised-identity context.",
+                "The client reports a 45% increase in clients found through the online presence.",
+                "The metric is reported by the client and not independently verified.",
               ],
             },
             {
-              title: "Contribution",
+              title: "Delivery",
               items: [
-                "Interface improvements and product integration work.",
-                "Data display and connected user journeys.",
-                "Delivery completed as part of a wider product team.",
+                "Responsive interface, content hierarchy and deployment.",
+                "Scope focused on the showcase website and contact journey.",
               ],
             },
           ],
@@ -705,64 +710,22 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
           ],
         },
         {
-          id: "n8n-reporting",
-          title: "Automatisations n8n — Reporting",
-          context:
-            "Workflow n8n complet qui part des rapports PDF exportés par SocialPilot et les transforme en reportings CM clients structurés, analysés, contrôlés et prêts à livrer.",
-          need:
-            "Passer d’un export technique à un support de suivi client homogène, tout en gardant les sources, contrôles KPI et QA visuelle traçables.",
-          solution:
-            "Réception email/Drive, anti-doublon, extraction et normalisation des KPI, OCR ciblé, analyse bornée, génération PDF client, QA et notifications.",
-          stack: "n8n, SocialPilot, Gmail API, Google Drive, JSON/PDF, OCR, Discord",
-          result:
-            "Une chaîne reproductible qui donne à l’équipe CM un rapport clair à relire puis transmettre au client.",
-          role:
-            "Analyse des processus, architecture des workflows, intégrations API, transformations JSON, génération du rapport et contrôles qualité.",
-          tasks: [
-            "Recevoir les exports SocialPilot, vérifier la pièce jointe attendue et archiver la source dans Google Drive.",
-            "Détecter les doublons et relier chaque période de reporting à son fichier source et à son statut de traitement.",
-            "Extraire et normaliser les KPI par réseau, avec OCR ciblé lorsqu’une valeur n’est disponible que dans un visuel.",
-            "Préparer l’analyse, les faits marquants et les recommandations qui transforment les métriques brutes en récit CM client.",
-            "Générer le PDF client avec tableaux, graphiques et visuels sélectionnés, puis contrôler le contenu et la mise en page.",
-            "Notifier le canal de livraison et conserver la traçabilité nécessaire à la relecture humaine finale.",
-          ],
-          gains: [
-            "Un export SocialPilot brut devient une base homogène de reporting client pour l’équipe CM.",
-            "Les sources, transformations KPI et fichiers générés restent liés et plus faciles à contrôler.",
-            "Le workflow supprime les préparations répétitives tout en laissant la validation éditoriale finale à l’humain.",
-            "Aucun pourcentage de hausse n’est annoncé sans source publiable dans cette fiche.",
-          ],
+          id: "cledevoute",
+          title: "Clé de Voûte",
+          context: "Une mission freelance pour une entreprise de maçonnerie souhaitant clarifier sa présence en ligne.",
+          need: "Permettre aux visiteurs de comprendre les prestations, de consulter les réalisations et de trouver le contact depuis un téléphone.",
+          solution: "Un site vitrine responsive structuré autour des services, des photos de réalisations et des appels à l’action.",
+          stack: "React, Tailwind CSS, JavaScript, GitHub Pages",
+          result: "Un site accessible publiquement qui présente l’activité et les réalisations. Le client rapporte +60 % de trafic après la refonte et +17 % de devis mensuels ; ces chiffres n’ont pas été vérifiés indépendamment.",
+          role: "Conception du site, intégration frontend, hiérarchie des contenus, optimisation des images et déploiement.",
+          tasks: ["Structurer les prestations et les réalisations.", "Construire l’interface responsive et le parcours de contact.", "Optimiser les images et mettre le site en ligne."],
+          gains: ["L’offre et les réalisations sont réunies au même endroit.", "Les actions de contact restent accessibles sur mobile.", "Le client rapporte +60 % de trafic après la refonte et +17 % de devis mensuels.", "Le retour client décrit un rendu propre et adapté à l’activité."],
           metrics: [
-            { value: "PDF", label: "entrée/sortie SocialPilot" },
-            { value: "KPI", label: "normalisés par réseau" },
-            { value: "QA", label: "contrôles contenu et visuels" },
+            { value: "+60 %", label: "trafic après refonte — rapport client" },
+            { value: "+17 %", label: "devis mensuels — rapport client" },
           ],
-          sections: [
-            {
-              title: "Réception et archivage",
-              items: [
-                "Recevoir et valider le PDF SocialPilot par email ou Drive.",
-                "Archiver la source, rejeter les doublons et suivre la période de reporting.",
-                "Garder le statut de traitement et les notifications de livraison visibles pour l’équipe.",
-              ],
-            },
-            {
-              title: "Analyse et génération du rapport",
-              items: [
-                "Extraire, normaliser et recouper les KPI de chaque réseau social.",
-                "Utiliser l’OCR uniquement pour les valeurs non disponibles en texte sélectionnable.",
-                "Générer le PDF client avec analyse, recommandations, tableaux et visuels.",
-              ],
-            },
-            {
-              title: "Contrôle qualité et livraison",
-              items: [
-                "Vérifier les chiffres, libellés, sections manquantes et cohérence du rapport.",
-                "Relire la mise en page : sauts de page, graphiques et lisibilité des textes.",
-                "Livrer le rapport avec sa source et sa trace de traitement disponibles pour relecture.",
-              ],
-            },
-          ],
+          evidence: "Preuves disponibles : lien public, captures et avis client. Les chiffres de trafic et de devis sont rapportés par le client ; la période de comparaison et la source analytics ne sont pas publiées.",
+          sections: [{ title: "Preuves et périmètre", items: ["Mission freelance avec site public et captures dans l’étude de cas dédiée.", "Avis de Marino, gérant de Clé de Voûte.", "Périmètre : un site vitrine, sans plateforme de vente en ligne."] }],
         },
         {
           id: "n8n-video-derush",
@@ -825,57 +788,54 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
           ],
         },
         {
-          id: "altme-wallet",
-          title: "Altme Wallet Platform",
+          id: "eloi-coachsteo",
+          title: "Eloi CoachStéo — Sport Trainer",
           context:
-            "Plateforme Discover réunissant données wallet, credentials vérifiables, NFTs et informations liées aux cryptomonnaies.",
+            "Une mission freelance pour créer un site one-page plus lisible pour un coach sportif et ostéopathe.",
           need:
-            "Améliorer les briques produit et relier les vues utilisateur à des sources de données fiables.",
+            "Rendre compréhensibles le coaching, la préparation physique et les programmes HYROX, puis guider les visiteurs vers le contact.",
           solution:
-            "Contribution aux interfaces et intégrations back-end de Discover, dont les données CoinGecko et les parcours wallet adaptés aux différents écrans.",
-          stack: "HTML / CSS, Python, API CoinGecko, Verifiable Credentials",
+            "Un site one-page responsive avec des prestations structurées, des preuves visuelles et un parcours de contact direct.",
+          stack: "React, Tailwind CSS, JavaScript, GitHub Pages",
           result:
-            "Une expérience plus lisible pour gérer les informations wallet et explorer les données d’actifs numériques connectées.",
+            "Une vitrine déployée qui clarifie l’offre. Le client rapporte une hausse de 45 % des clients trouvés grâce à la présence en ligne ; cette donnée n’a pas été vérifiée indépendamment.",
           role:
-            "Contribution en équipe sur l’interface, le backend et les intégrations de données du produit Discover.",
+            "Conception du site, hiérarchie des contenus, intégration React/Tailwind, responsive et mise en ligne.",
           tasks: [
-            "Développer et améliorer les vues produit pour les parcours wallet et credentials.",
-            "Connecter les données CoinGecko pour afficher les informations liées aux cryptomonnaies.",
-            "Accompagner les vues NFTs et crypto tout en gardant une interface adaptée aux différents écrans.",
+            "Clarifier le positionnement entre coaching sportif et ostéopathie.",
+            "Structurer la remise en forme, la préparation physique et les programmes HYROX.",
+            "Garder le parcours de contact accessible sur mobile et desktop.",
           ],
           gains: [
-            "Deux domaines produit sont réunis : NFTs et cryptomonnaies.",
-            "CoinGecko fournit une source dédiée aux informations crypto en temps réel.",
-            "Les vues adaptées aux différents écrans rendent les parcours utilisables sur toutes les tailles d’écran.",
+            "Les prestations sont réunies dans une page cohérente.",
+            "La mise en page responsive donne un accès direct au contact.",
+            "Le client rapporte une hausse de 45 % des clients trouvés grâce à la présence en ligne.",
           ],
           metrics: [
-            { value: "2", label: "domaines : NFTs + crypto" },
-            { value: "API", label: "données CoinGecko" },
-            { value: "DID", label: "contexte credentials" },
+            { value: "+45 %", label: "clients trouvés — rapport client" },
           ],
+          evidence: "Preuves disponibles : lien public et témoignage client. Le +45 % est rapporté par le client ; la période de comparaison et la source analytics ne sont pas publiées.",
           sections: [
             {
-              title: "Périmètre plateforme",
+              title: "Périmètre freelance",
               items: [
-                "Gestion de wallet et découverte d’actifs numériques.",
-                "Collections NFT, informations crypto et credentials.",
-                "Vues adaptées aux différents écrans pour l’expérience Discover.",
+                "Site vitrine one-page pour un coach sportif et ostéopathe.",
+                "Prestations structurées, programmes HYROX et parcours de contact.",
+                "Lien public et témoignage client disponibles.",
               ],
             },
             {
-              title: "Intégrations",
+              title: "Preuve",
               items: [
-                "Contribution back-end Python.",
-                "API CoinGecko pour les données de cryptomonnaies.",
-                "Credentials vérifiables et contexte d’identité décentralisée.",
+                "Le client rapporte une hausse de 45 % des clients trouvés grâce à la présence en ligne.",
+                "La donnée est rapportée par le client et n’a pas été vérifiée indépendamment.",
               ],
             },
             {
-              title: "Contribution",
+              title: "Livraison",
               items: [
-                "Améliorations d’interface et intégration produit.",
-                "Affichage des données et parcours connectés.",
-                "Livraison réalisée au sein d’une équipe produit plus large.",
+                "Interface responsive, hiérarchie des contenus et déploiement.",
+                "Périmètre centré sur le site vitrine et le parcours de contact.",
               ],
             },
           ],
@@ -988,6 +948,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
     const nextHash = `#project=${encodeURIComponent(project.id)}`;
     const historyState = getHistoryState();
 
+    shouldFocusProjectDetailRef.current = true;
     setSelectedProject(project);
     setSelectedCategory(isFreelancePage ? "freelance" : project.category);
     setActiveGalleryIndex(null);
@@ -1100,6 +1061,9 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
 
   useEffect(() => {
     if (!selectedProject) return;
+    const shouldFocusProjectDetail = shouldFocusProjectDetailRef.current;
+    shouldFocusProjectDetailRef.current = false;
+    if (!shouldFocusProjectDetail) return;
 
     const scrollTimer = window.setTimeout(() => {
       projectDetailRef.current?.scrollIntoView({
@@ -1169,14 +1133,17 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
     };
   }, [isGalleryViewerOpen, galleryImages.length]);
 
+  const Root = as;
+  const rootClassName = `project-list-section px-4 w-full overflow-x-hidden section-even ${
+    isFreelancePage
+      ? "pb-12 pt-6 md:pb-14 md:pt-8"
+      : "py-14 md:py-16"
+  }`;
+
   return (
-    <section
-      id="projects"
-      className={`project-list-section px-4 w-full overflow-x-hidden section-even ${
-        isFreelancePage
-          ? "pb-20 pt-8 md:pb-20 md:pt-12"
-          : "py-20"
-      }`}
+    <Root
+      {...(as === "section" ? { id: "projects" } : {})}
+      className={as === "section" ? rootClassName : undefined}
     >
       <div className="project-list-container container mx-auto max-w-7xl w-full">
         {/* Section Header */}
@@ -1188,14 +1155,14 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
             className="project-section-title focus-visible:outline-none"
           >
             {isFreelancePage
-              ? (isEnglish ? "Selected freelance work." : "Réalisations freelance sélectionnées.")
-              : (isEnglish ? "Selected projects." : "Projets sélectionnés.")}
+              ? (isEnglish ? "Selected work" : "Réalisations sélectionnées")
+              : (isEnglish ? "Selected projects" : "Projets sélectionnés")}
           </h2>
           <p className="project-section-description">
             {isFreelancePage
               ? (isEnglish
-                ? "Three representative projects, with the role, deliverables and value made explicit."
-                : "Trois réalisations représentatives, avec le rôle, les livrables et la valeur produite.")
+                ? "Two client websites and an automation example from my professional experience, with the role and deliverables made explicit."
+                : "Deux sites clients et un exemple d’automatisation issu de mon expérience professionnelle, avec le rôle et les livrables explicités.")
               : (isEnglish
                 ? "Context, role, solution and value delivered through selected professional work."
                 : "Contexte, rôle, solution et valeur produite à travers une sélection de réalisations professionnelles.")}
@@ -1233,7 +1200,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                     <p className="project-featured-eyebrow">
                       <span>{String(index + 1).padStart(2, "0")}</span>
                       <span className="project-featured-eyebrow-line" aria-hidden="true" />
-                      <span>{isEnglish ? "PROJECT" : "PROJET PRO"}</span>
+                      <span>{["cledevoute", "eloi-coachsteo"].includes(item.id) ? (isEnglish ? "FREELANCE PROJECT" : "MISSION FREELANCE") : (isEnglish ? "PROFESSIONAL PROJECT" : "PROJET PRO")}</span>
                     </p>
                     <Button
                       type="button"
@@ -1375,6 +1342,12 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                   </div>
                 ) : null}
 
+                {selectedFeaturedCaseStudy.evidence ? (
+                  <p className="border-b border-border py-4 text-xs leading-6 text-muted-foreground md:text-sm">
+                    {selectedFeaturedCaseStudy.evidence}
+                  </p>
+                ) : null}
+
                 <div className="grid border-b border-border md:grid-cols-3">
                   {[
                     {
@@ -1464,13 +1437,13 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                       handleCategoryClick(key as DisplayProjectCategory)
                     }
                     variant="ghost"
-                    className={`project-category-tab w-full px-2 py-3 text-xs transition-colors sm:px-4 sm:text-sm md:px-5 md:py-4 md:text-base lg:px-6 lg:py-5 lg:text-lg ${
+                    className={`project-category-tab h-auto min-h-11 min-w-0 w-full whitespace-normal px-2 py-3 text-xs leading-snug transition-colors sm:px-4 sm:text-sm md:px-5 md:py-4 md:text-base lg:px-6 lg:py-5 lg:text-lg ${
                       selectedCategory === key
                         ? "is-active text-primary"
                         : "text-foreground/80 hover:bg-transparent hover:text-primary"
                     }`}
                   >
-                    <span>{categoryLabels[key as DisplayProjectCategory]}</span>
+                    <span className="min-w-0 [overflow-wrap:anywhere]">{categoryLabels[key as DisplayProjectCategory]}</span>
                   </Button>
                 ))}
               </div>
@@ -1494,6 +1467,9 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                       ),
                     ),
                   ).slice(0, 5);
+                   const measurableGain = isEnglish
+                     ? group.measurableGain.en
+                     : group.measurableGain.fr;
 
                   return (
                     <article
@@ -1545,6 +1521,14 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                               {isEnglish ? group.outcome.en : group.outcome.fr}
                             </dd>
                           </div>
+                           <div>
+                             <dt className="font-semibold text-foreground">
+                               {isEnglish ? "Measurable gain" : "Gain chiffrable"}
+                             </dt>
+                             <dd className="mt-1 text-muted-foreground">
+                               {renderHighlightedGain(measurableGain)}
+                             </dd>
+                           </div>
                         </dl>
                         <p className="mt-5 text-sm text-muted-foreground">
                           <span className="font-semibold text-foreground">Stack :</span>{" "}
@@ -1749,6 +1733,37 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
                 })}
               </div>
             )}
+
+            {!isFreelancePage && !selectedProject && (
+              <details className="mt-10 border-y border-border py-5">
+                <summary className="cursor-pointer text-sm font-semibold text-primary marker:text-primary">
+                  {isEnglish
+                    ? "Explore all project case studies"
+                    : "Explorer toutes les fiches projet"}
+                </summary>
+                <nav
+                  className="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3"
+                  aria-label={isEnglish ? "All project case studies" : "Toutes les fiches projet"}
+                >
+                  {portfolioProjects.map((project) => {
+                    const projectPath = getProjectLink(project.id);
+                    if (!projectPath) return null;
+
+                    const localizedProject = localizeProject(project);
+                    return (
+                      <Link
+                        key={project.id}
+                        to={projectPath}
+                        className="inline-flex min-w-0 items-center gap-2 text-sm text-foreground/80 transition-colors hover:text-primary"
+                      >
+                        <span className="min-w-0 truncate">{localizedProject.title}</span>
+                        <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </details>
+            )}
           </>
         )}
 
@@ -1789,7 +1804,7 @@ const Projects = ({ mode = "portfolio" }: ProjectsProps) => {
           />
         )}
       </div>
-    </section>
+    </Root>
   );
 };
 

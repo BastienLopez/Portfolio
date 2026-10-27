@@ -105,16 +105,16 @@ export const freelanceProjects: Project[] = [
             d'accompagnement et à passer directement au contact lorsqu'il est prêt.
           </p>
           <p class="description">
-            Le gain est surtout opérationnel et qualitatif : les informations sont regroupées dans
-            une page responsive, la galerie apporte un support visuel et le parcours de contact devient
-            identifiable sur mobile comme sur desktop. Aucun volume de rendez-vous ni taux de conversion
-            n'est revendiqué sans mesure publiée.
+            Le client rapporte une hausse de 45 % des clients trouvés grâce à la présence en ligne.
+            Cette donnée est déclarative : la période de comparaison et la source analytique ne sont
+            pas publiées et elle n'a pas été vérifiée indépendamment.
           </p>
         </div>
 
         <div class="section results">
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
+            <p class="result-text"><strong>+45 %</strong> de clients trouvés rapportés par le client grâce à la présence en ligne. Période de comparaison et source analytique non publiées.</p>
             <p class="result-text">
               ✅ Site déployé pour présenter clairement l'offre de coaching,
               les services et les modalités de contact.
@@ -181,6 +181,7 @@ export const freelanceProjects: Project[] = [
             <div><strong>5</strong><span>micro-crèches gérées depuis une même plateforme</span></div>
             <div><strong>4</strong><span>profils d’accès principaux</span></div>
             <div><strong>8</strong><span>ans de données historiques migrées</span></div>
+            <div><strong>+15 %</strong><span>gain hebdomadaire moyen rapporté pour la gestion des professionnels et des crèches</span></div>
           </div>
         </div>
         <div class="section">
@@ -249,6 +250,7 @@ export const freelanceProjects: Project[] = [
           <div class="result-box success">
             <p class="result-text">La gestion de cinq micro-crèches est centralisée dans une plateforme unique, avec modules métier, portail parents et accès différenciés selon les profils.</p>
             <p class="result-text">Le projet apporte une supervision multi-sites, des dossiers centralisés, un suivi opérationnel, une communication avec les familles, une gestion des permissions et une architecture conçue pour évoluer.</p>
+            <p class="result-text"><strong>+15 %</strong> de gain hebdomadaire moyen rapporté par le client pour la gestion des professionnels et des crèches. La période de comparaison et la méthode de mesure ne sont pas publiées ; la donnée n’a pas été vérifiée indépendamment.</p>
           </div>
         </div>
       </div>
@@ -268,21 +270,21 @@ export const freelanceProjects: Project[] = [
   },
   {
     id: "luxury-auto-detailing",
-    title: "Luxury Auto Detailing",
+    title: "Luxury Auto Detailing — Concept / démo",
     description:
-      "Site vitrine premium pour présenter les prestations de detailing automobile : nettoyage, décontamination, polissage, protection céramique et remise à neuf esthétique.",
+      "Concept / démo de site vitrine premium pour présenter des prestations de detailing automobile : nettoyage, décontamination, polissage, protection céramique et remise à neuf esthétique.",
     category: "freelance",
     image: "img_projects/LuxuryAutoDetailling.png",
     tech: ["React", "Tailwind CSS", "JavaScript"],
     demo: "https://bastienlopez.github.io/LuxuryAutoDetailling/",
     detailedContent: `
       <div class="project-detail">
-        <h2 class="project-title">🚗 Luxury Auto Detailing</h2>
+        <h2 class="project-title">🚗 Luxury Auto Detailing — Concept / démo</h2>
         
         <div class="section">
           <h3 class="section-title">📋 Contexte du projet</h3>
           <p class="description">
-            Création d'un <strong>site vitrine premium</strong> pour un atelier de detailing automobile.
+            Concept / démo d'un <strong>site vitrine premium</strong> pour un atelier de detailing automobile.
             Le site devait expliquer clairement des prestations qui ne se résument pas à un simple lavage :
             décontamination, polissage, protection céramique et relooking intérieur.
           </p>
@@ -297,9 +299,10 @@ export const freelanceProjects: Project[] = [
           <h3 class="section-title">👤 Mon rôle</h3>
           <p class="description">
             J'ai assuré la conception et l'intégration frontend avec React et Tailwind CSS, l'adaptation
-            responsive, la hiérarchisation des prestations, la galerie, la prise de contact et le
-            déploiement du site. Le travail a consisté à transformer une offre technique en parcours
-            visuel compréhensible pour un futur client.
+            responsive, la hiérarchisation des prestations, la galerie, la prise de contact et la
+            publication de la démo. Le travail a consisté à transformer une offre technique en parcours
+            visuel compréhensible pour un futur client, sans présenter cette réalisation comme une
+            référence client.
           </p>
         </div>
 
@@ -346,7 +349,7 @@ export const freelanceProjects: Project[] = [
             </li>
             <li class="feature-item">
               <span class="feature-icon">💬</span>
-              <strong>Témoignages</strong> - Avis clients et notes
+              <strong>Statut</strong> - Concept / démo sans témoignage client associé
             </li>
           </ul>
         </div>
@@ -354,15 +357,15 @@ export const freelanceProjects: Project[] = [
         <div class="section">
           <h3 class="section-title">📈 Valeur apportée</h3>
           <p class="description">
-            Le site transforme une liste de prestations en une présentation guidée : le visiteur comprend
+            La démo transforme une liste de prestations en une présentation guidée : le visiteur comprend
             ce qui est proposé, voit le niveau de finition attendu et sait comment entrer en contact.
             Cette structure aide l'atelier à expliquer des interventions parfois techniques sans perdre
             la dimension visuelle propre au detailing.
           </p>
           <p class="description">
-            Le gain est qualitatif : une vitrine cohérente, responsive et centrée sur les réalisations,
-            avec un accès direct à la demande de rendez-vous. Les performances commerciales ne sont pas
-            chiffrées ici faute de données de suivi publiées.
+            Le résultat attendu est une vitrine cohérente, responsive et centrée sur les réalisations,
+            avec un accès direct à la demande de rendez-vous. Il s'agit d'un concept / démo : aucune
+            performance commerciale, donnée client ou conversion n'est revendiquée.
           </p>
         </div>
 
@@ -370,13 +373,14 @@ export const freelanceProjects: Project[] = [
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">
-              ✅ Site déployé pour présenter clairement les prestations, les exemples de rendu et les
+              ✅ Concept / démo publique pour présenter clairement les prestations, les exemples de rendu et les
               modalités de prise de contact.
             </p>
             <p class="result-text">
               ✅ Parcours responsive permettant de passer de la découverte d'un service à la demande
               de rendez-vous sans rupture.
             </p>
+            <p class="result-text">ℹ️ Aucun client, témoignage ou indicateur commercial n’est associé à cette démo.</p>
           </div>
         </div>
       </div>
@@ -476,12 +480,22 @@ export const freelanceProjects: Project[] = [
           </p>
         </div>
 
+        <div class="section project-metrics">
+          <h3 class="section-title">Résultats rapportés par le client</h3>
+          <div class="metrics-grid">
+            <div><strong>+60 %</strong><span>trafic après la refonte</span></div>
+            <div><strong>+17 %</strong><span>devis mensuels</span></div>
+          </div>
+          <p class="description">Ces deux données sont rapportées par le client. La période de comparaison et la source analytics ne sont pas publiées ; elles n’ont pas été vérifiées indépendamment.</p>
+        </div>
+
         <div class="section results">
           <h3 class="section-title">🎯 Résultats</h3>
           <div class="result-box success">
             <p class="result-text">✅ Site déployé et accessible publiquement via GitHub Pages.</p>
             <p class="result-text">✅ Chargement initial allégé et rendu visuel préservé grâce aux images optimisées.</p>
             <p class="result-text">✅ Interface responsive avec navigation et appels à l'action adaptés aux usages mobiles.</p>
+            <p class="result-text"><strong>+60 %</strong> de trafic après la refonte et <strong>+17 %</strong> de devis mensuels, selon les données rapportées par le client. La période de comparaison et la source analytics ne sont pas publiées ; ces chiffres n’ont pas été vérifiés indépendamment.</p>
           </div>
         </div>
 

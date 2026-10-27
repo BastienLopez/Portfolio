@@ -1,0 +1,176 @@
+.section-timeline {
+  --timeline-header-offset: clamp(6rem, 10vh, 7rem);
+  --timeline-muted: #54606f;
+  --timeline-cyan: #00c9dd;
+  --timeline-small-length: 6px;
+  --timeline-medium-length: 12px;
+  --timeline-section-length: 24px;
+  position: fixed;
+  top: var(--timeline-header-offset);
+  right: 10px;
+  z-index: 40;
+  display: flex;
+  width: min(12rem, calc(100vw - 1.5rem));
+  height: calc(100dvh - var(--timeline-header-offset) - 1rem);
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+@supports not (height: 100dvh) {
+  .section-timeline {
+    height: calc(100vh - var(--timeline-header-offset) - 1rem);
+  }
+}
+
+.section-timeline-track {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-rows: repeat(50, minmax(0, 1fr));
+  align-items: center;
+  justify-items: end;
+  pointer-events: none;
+}
+
+.section-timeline-link {
+  position: relative;
+  display: flex;
+  width: 4rem;
+  height: 100%;
+  min-height: 24px;
+  align-items: center;
+  justify-content: flex-end;
+  align-self: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+.section-timeline-link-label {
+  position: absolute;
+  top: 50%;
+  right: calc(100% - 3rem);
+  width: 9rem;
+  max-width: 9rem;
+  overflow: hidden;
+  color: var(--timeline-cyan);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.25;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  transform: translate(0.35rem, -50%);
+  transition: opacity 220ms ease, transform 220ms ease;
+  white-space: nowrap;
+}
+
+.section-timeline-link.is-section-active .section-timeline-link-label,
+.section-timeline-link:hover .section-timeline-link-label,
+.section-timeline-link:focus-visible .section-timeline-link-label {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.section-timeline-mark {
+  display: block;
+  width: 3px;
+  height: 3px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--timeline-muted);
+  opacity: 0.9;
+  transition: width 280ms ease, height 180ms ease, background-color 180ms ease, box-shadow 280ms ease;
+}
+
+.section-timeline-link.is-passed .section-timeline-mark {
+  background: var(--timeline-cyan);
+}
+
+.section-timeline-link.is-current:not(.is-section-active) .section-timeline-mark {
+  width: 5px;
+  height: 5px;
+  background: #79f5ff;
+  box-shadow: 0 0 0.45rem rgb(0 201 221 / 0.7);
+}
+
+.section-timeline-link:hover:not(.is-section-active) .section-timeline-mark,
+.section-timeline-link:focus-visible:not(.is-section-active) .section-timeline-mark {
+  width: 6px;
+  height: 6px;
+  background: #79f5ff;
+}
+
+.section-timeline-link.is-before-section .section-timeline-mark,
+.section-timeline-link.is-after-section .section-timeline-mark {
+  width: var(--timeline-medium-length);
+  height: 2px;
+  border-radius: 999px;
+}
+
+.section-timeline-link.is-two-before-section .section-timeline-mark,
+.section-timeline-link.is-two-after-section .section-timeline-mark {
+  width: var(--timeline-small-length);
+  height: 2px;
+}
+
+.section-timeline-link[data-section-id] .section-timeline-mark {
+  width: var(--timeline-section-length);
+  height: 3px;
+  border-radius: 999px;
+  background: var(--timeline-muted);
+  opacity: 0.92;
+}
+
+.section-timeline-link[data-section-id] .section-timeline-link-label {
+  opacity: 0.78;
+  transform: translate(0, -50%);
+}
+
+.section-timeline-link[data-section-id].is-passed .section-timeline-mark {
+  background: var(--timeline-cyan);
+}
+
+.section-timeline-link.is-section-active .section-timeline-mark {
+  width: var(--timeline-section-length);
+  height: 3px;
+  border-radius: 999px;
+  background: var(--timeline-cyan);
+  opacity: 1;
+  box-shadow: 0 0 0.55rem rgb(0 201 221 / 0.36);
+}
+
+.section-timeline-link.is-section-active.is-current .section-timeline-mark {
+  background: #79f5ff;
+  box-shadow: 0 0 0.7rem rgb(0 201 221 / 0.72);
+}
+
+.section-timeline-link:focus-visible {
+  outline: none;
+}
+
+.section-timeline-link:focus-visible .section-timeline-mark {
+  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px var(--timeline-cyan);
+}
+
+@media (max-width: 767px) {
+  .section-timeline {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-timeline-mark,
+  .section-timeline-link-label {
+    transition: none;
+  }
+}

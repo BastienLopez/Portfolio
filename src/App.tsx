@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-route
 import Index from "./pages/Index";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
+import SectionTimeline from "./components/SectionTimeline";
 
 const loadFreelancePage = () => import("./pages/Freelance");
 const loadLocalWebCreationPage = () => import("./pages/LocalWebCreation");
@@ -16,6 +17,22 @@ const LocalWebCreationPage = lazy(loadLocalWebCreationPage);
 const ProjectCaseStudyPage = lazy(loadProjectCaseStudyPage);
 const ServicePage = lazy(loadServicePage);
 const ArticlePage = lazy(loadArticlePage);
+
+const scrollToTopInstant = () => {
+  const root = document.documentElement;
+  const body = document.body;
+  const previousScrollBehavior = root.style.scrollBehavior;
+  const previousBodyScrollBehavior = body.style.scrollBehavior;
+
+  root.style.scrollBehavior = "auto";
+  body.style.scrollBehavior = "auto";
+  root.scrollTop = 0;
+  body.scrollTop = 0;
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  document.scrollingElement?.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  root.style.scrollBehavior = previousScrollBehavior;
+  body.style.scrollBehavior = previousBodyScrollBehavior;
+};
 
 const AppNavigationEffects = () => {
   const { pathname, hash } = useLocation();
@@ -32,7 +49,15 @@ const AppNavigationEffects = () => {
   useEffect(() => {
     if (hash) return;
 
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    scrollToTopInstant();
+
+    const frame = window.requestAnimationFrame(scrollToTopInstant);
+    const timer = window.setTimeout(scrollToTopInstant, 120);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
   }, [hash, pathname]);
 
   useEffect(() => {
@@ -59,7 +84,7 @@ const AppNavigationEffects = () => {
         return;
       }
 
-      target.scrollIntoView({ behavior: "auto", block: "start" });
+      target.scrollIntoView({ behavior: "instant", block: "start" });
 
       // Re-apply after the route's lazy content has committed so a late
       // section mount cannot leave the user at the previous page position.
@@ -106,6 +131,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
+      <SectionTimeline />
     </BrowserRouter>
   </LanguageProvider>
 );

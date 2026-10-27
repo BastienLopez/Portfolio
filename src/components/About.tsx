@@ -1,15 +1,10 @@
 import {
-  ArrowRight,
   BarChart3,
   BriefcaseBusiness,
   CheckCircle,
   Clock,
-  FileText,
-  Github,
-  Linkedin,
   Mail,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/i18n";
 
@@ -19,12 +14,12 @@ const About = () => {
     ? [
         { label: "Years of experience", value: "7+", icon: Clock },
         { label: "Projects and builds", value: "30+", icon: BarChart3 },
-        { label: "Working modes", value: "Permanent & freelance", icon: BriefcaseBusiness },
+        { label: "Working together", value: "Freelance", icon: BriefcaseBusiness },
       ]
     : [
         { label: "Années d'expérience", value: "7+", icon: Clock },
         { label: "Projets et réalisations", value: "30+", icon: BarChart3 },
-        { label: "Modes d’intervention", value: "CDI ou freelance", icon: BriefcaseBusiness },
+        { label: "Mode d’intervention", value: "Freelance", icon: BriefcaseBusiness },
       ];
 
   const trustPoints = isEnglish
@@ -42,7 +37,7 @@ const About = () => {
       ];
 
   return (
-    <section id="about" className="relative section-odd py-20 md:py-28">
+    <section id="about" className="relative section-odd py-14 md:py-16">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-10 lg:grid-cols-[minmax(15rem,0.8fr)_minmax(0,2fr)] lg:items-start lg:gap-14">
@@ -55,14 +50,14 @@ const About = () => {
                   <>
                     About
                     <span className="block">
-                      me<span className="text-primary">.</span>
+                      me<span className="text-primary"></span>
                     </span>
                   </>
                 ) : (
                   <>
                     À propos
                     <span className="block">
-                      de moi<span className="text-primary">.</span>
+                      de moi<span className="text-primary"></span>
                     </span>
                   </>
                 )}
@@ -102,12 +97,12 @@ const About = () => {
                   <Mail className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
                   <div className="min-w-0">
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">
-                      {isEnglish ? "Available for" : "Disponible pour"}
+                      {isEnglish ? "Your projects" : "Vos projets"}
                     </p>
                     <p className="mt-2 text-lg font-semibold leading-7 text-foreground md:text-xl">
                       {isEnglish
-                        ? "Remote/full-remote permanent roles or focused freelance projects"
-                        : "Des postes en CDI à distance ou des missions freelance ciblées"}
+                        ? "Websites, business tools and automation for small businesses and service organisations"
+                        : "Sites, outils métier et automatisations pour les TPE, PME et structures de services"}
                     </p>
                   </div>
                 </div>
@@ -134,41 +129,6 @@ const About = () => {
             </ul>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 pt-10 sm:grid-cols-3">
-            <Button
-              asChild
-              variant="outline"
-              className="w-full justify-center gap-2 border-border text-foreground hover:border-emerald-300 hover:bg-emerald-300/10 hover:text-emerald-300"
-            >
-              <a href="https://github.com/BastienLopez" target="_blank" rel="noopener noreferrer">
-                <Github className="h-5 w-5" aria-hidden="true" />
-                <span>GitHub</span>
-                <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
-              </a>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="w-full justify-center gap-2 border-border text-foreground hover:border-blue-400 hover:bg-blue-400/10 hover:text-blue-400"
-            >
-              <a href="https://www.linkedin.com/in/bastien-lopez-fullstack/" target="_blank" rel="noopener noreferrer">
-                <Linkedin className="h-5 w-5" aria-hidden="true" />
-                <span>LinkedIn</span>
-                <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
-              </a>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="w-full justify-center gap-2 border-muted-foreground text-foreground hover:border-emerald-300 hover:bg-emerald-300/10 hover:text-emerald-300"
-            >
-              <a href="/CV_LOPEZ_BASTIEN_FREELANCE.pdf" download>
-                <FileText className="h-5 w-5" aria-hidden="true" />
-                <span>{isEnglish ? "View my résumé" : "Voir mon CV"}</span>
-                <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
-              </a>
-            </Button>
-          </div>
         </div>
       </div>
     </section>

@@ -23,6 +23,7 @@ export type ServicePageDefinition = {
   deliverables: LocalizedText[];
   approach: LocalizedText[];
   outcomes: LocalizedText[];
+  conditions?: Array<{ label: LocalizedText; value: LocalizedText }>;
   faq: Array<{
     question: LocalizedText;
     answer: LocalizedText;
@@ -144,8 +145,8 @@ const projectIntros: Record<string, LocalizedText> = {
     en: "A business ERP for centralising multi-nursery operations, family accounts, documents and administration workflows.",
   },
   "luxury-auto-detailing": {
-    fr: "Site vitrine premium pour expliquer les prestations de detailing automobile, montrer les résultats et faciliter la demande de rendez-vous.",
-    en: "A premium showcase website explaining auto-detailing services, showing the expected finish and making appointment requests easier.",
+    fr: "Concept / démo de site vitrine premium pour expliquer les prestations de detailing automobile, montrer les résultats attendus et faciliter la demande de rendez-vous.",
+    en: "A concept / demo showcase website explaining auto-detailing services, showing the expected finish and making appointment requests easier.",
   },
   cledevoute: {
     fr: "Site vitrine de maçonnerie conçu pour présenter les prestations, valoriser les réalisations et rendre la prise de contact plus directe.",
@@ -323,12 +324,19 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
       {
         question: { fr: "Travaillez-vous avec des entreprises à Reims et à distance ?", en: "Do you work with businesses in Reims and remotely?" },
         answer: {
-          fr: "Oui. Je suis basé à Reims et je travaille à distance partout en France, avec des points de validation écrits et une livraison documentée.",
-          en: "Yes. I am based in Reims and work remotely across France, with written checkpoints and documented delivery.",
+          fr: "Oui. Je suis basé à Reims, en France, et je travaille à distance en Europe, avec des points de validation écrits et une livraison documentée.",
+          en: "Yes. I am based in Reims, France, and work remotely across Europe, with written checkpoints and documented delivery.",
         },
       },
     ],
     relatedProjectSlugs: ["cledevoute", "eloi-coachsteo"],
+    conditions: [
+      { label: { fr: "Budget", en: "Budget" }, value: { fr: "Sur devis après cadrage, selon les pages, fonctionnalités, contenus disponibles et intégrations. Le périmètre et le prix sont définis avant la réalisation.", en: "Quoted after scoping, based on pages, features, available content and integrations. Scope and price are defined before the build." } },
+      { label: { fr: "Délai et démarrage", en: "Timing and start" }, value: { fr: "Un planning est proposé après examen du besoin et des contenus. La date de démarrage dépend du périmètre validé et des disponibilités.", en: "A schedule is proposed after reviewing the need and content. The start date depends on the agreed scope and availability." } },
+      { label: { fr: "À prévoir séparément", en: "Scoped separately" }, value: { fr: "Nom de domaine, hébergement, abonnements, création de marque, photos et rédaction complète ne sont inclus que s’ils figurent au devis. Aucun classement Google ni volume de demandes n’est garanti.", en: "Domain, hosting, subscriptions, branding, photography and full copywriting are included only when listed in the quotation. No Google ranking or lead volume is guaranteed." } },
+      { label: { fr: "Après votre brief", en: "After your brief" }, value: { fr: "Nous clarifions l’activité, le public, les pages et l’action attendue, puis les livrables, le devis et le planning sont précisés avant engagement.", en: "We clarify the business, audience, pages and expected action, then define deliverables, quotation and schedule before commitment." } },
+      { label: { fr: "Après livraison", en: "After delivery" }, value: { fr: "La mise en ligne et la prise en main sont documentées. Maintenance, corrections et évolutions sont définies dans le devis ou un accompagnement distinct.", en: "Release and handover are documented. Maintenance, fixes and improvements are defined in the quotation or a separate support agreement." } },
+    ],
   },
   {
     slug: "applications-metier",
@@ -337,8 +345,8 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
       en: "Tailored business applications",
     },
     description: {
-      fr: "Développement d’ERP légers, back-offices, portails internes et tableaux de bord qui traduisent les règles d’une PME en parcours simples.",
-      en: "Light ERPs, back offices, internal portals and dashboards that turn business rules into clear workflows.",
+      fr: "Outil métier ou automatisation pour centraliser vos informations, relier vos outils et réduire les ressaisies : application interne, back-office ou workflow adapté à votre équipe.",
+      en: "Business tools or automation to centralise information, connect existing systems and reduce rekeying: internal applications, back offices or workflows built around your team.",
     },
     intro: {
       fr: "Je pars du fonctionnement réel de l’équipe pour construire un outil utilisable, avec les droits, les données et les cas de reprise nécessaires.",
@@ -354,8 +362,8 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
         en: "Business journeys, roles and permissions defined with the people who use them.",
       },
       {
-        fr: "Interface web, API et modèle de données adaptés au périmètre réellement prioritaire.",
-        en: "A web interface, API and data model sized to the genuinely useful scope.",
+        fr: "Application web, API ou workflow automatisé selon le besoin : intégrations, contrôles et reprise sur erreur inclus dans le périmètre défini.",
+        en: "A web application, API or automated workflow depending on the need, with integrations, checks and error recovery within the agreed scope.",
       },
       {
         fr: "Contrôles sur les cas nominaux, erreurs, doublons et changements de contexte.",
@@ -432,6 +440,13 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
       },
     ],
     relatedProjectSlugs: ["erp-micro-creches", "altme-wallet-platform"],
+    conditions: [
+      { label: { fr: "Budget", en: "Budget" }, value: { fr: "Sur devis après cadrage d’un premier lot utile. Le chiffrage dépend des règles métier, des données, des droits d’accès et des intégrations.", en: "Quoted after scoping a useful first increment. Pricing depends on business rules, data, permissions and integrations." } },
+      { label: { fr: "Délai et démarrage", en: "Timing and start" }, value: { fr: "Le planning dépend du premier lot, des accès disponibles et des validations de votre équipe. Les jalons et la disponibilité sont précisés avant le démarrage.", en: "The schedule depends on the first increment, available access and team approvals. Milestones and availability are defined before starting." } },
+      { label: { fr: "À prévoir séparément", en: "Scoped separately" }, value: { fr: "Les abonnements tiers, l’hébergement, une reprise massive de données, les lots supplémentaires et le support continu doivent être explicitement prévus au devis.", en: "Third-party subscriptions, hosting, large data migrations, extra increments and ongoing support must be explicitly included in the quotation." } },
+      { label: { fr: "Après votre brief", en: "After your brief" }, value: { fr: "Nous identifions une tâche ou un parcours prioritaire, les outils existants et les contraintes. Vous recevez ensuite une proposition de périmètre, de livrables et de planning chiffrée sur devis.", en: "We identify a priority task or workflow, existing tools and constraints. This leads to a scoped proposal covering deliverables, schedule and quotation." } },
+      { label: { fr: "Après livraison", en: "After delivery" }, value: { fr: "Le fonctionnement, les contrôles et les limites sont documentés. La maintenance, les évolutions et leur périmètre sont convenus séparément si nécessaires.", en: "Operation, checks and limits are documented. Maintenance and improvements are scoped separately when needed." } },
+    ],
   },
   {
     slug: "automatisations-n8n",
@@ -538,6 +553,28 @@ export const servicePageDefinitions: readonly ServicePageDefinition[] = [
   },
 ] as const;
 
+/**
+ * Editorial clusters deliberately stay small: every service exposes a few
+ * useful notes, while the rest of the Dev Notes catalogue remains accessible
+ * globally without being forced into a commercial funnel.
+ */
+export const serviceRelatedArticleSlugs: Record<string, readonly string[]> = {
+  "sites-vitrines": [
+    "creer-site-internet-entreprise-cadrage",
+    "deploiement-production-checklist",
+  ],
+  "applications-metier": [
+    "architecture-hexagonale",
+    "estimer-un-projet-freelance",
+    "docker-pour-debutants",
+  ],
+  "automatisations-n8n": [
+    "automatiser-processus-entreprise-n8n-cadrage",
+    "pipeline-ci-cd-github-actions",
+    "monitorer-une-application-apres-deploiement",
+  ],
+};
+
 const projectPageBySlug = new Map(
   projectPageDefinitions.map((definition) => [definition.slug, definition]),
 );
@@ -556,7 +593,7 @@ export const getProjectPage = (slug: string | undefined) =>
   slug ? projectPageBySlug.get(slug) : undefined;
 
 export const getProjectPagePath = (projectId: string) => {
-  const slug = projectSlugById.get(projectId);
+  const slug = projectSlugById.get(projectId) ?? (projectPageBySlug.has(projectId) ? projectId : undefined);
   return slug ? `/projets/${slug}` : undefined;
 };
 
@@ -564,6 +601,18 @@ export const getServicePage = (slug: string | undefined) =>
   slug ? servicePageBySlug.get(slug) : undefined;
 
 export const getServicePagePath = (slug: string) => `/services/${slug}`;
+
+export const getPublicServicePagePath = (slug: string) =>
+  slug === "sites-vitrines" ? "/creation-site-internet-reims" : getServicePagePath(slug);
+
+export const getServiceForProject = (projectId: string) =>
+  servicePageDefinitions.find((definition) => {
+    if (definition.relatedProjectSlugs.includes(projectId)) return true;
+    const projectPage = projectPageDefinitions.find(
+      (page) => page.slug === projectId || page.projectIds.includes(projectId),
+    );
+    return projectPage ? definition.relatedProjectSlugs.includes(projectPage.slug) : false;
+  });
 
 export const canonicalProjectSlugs = projectPageDefinitions.map(({ slug }) => slug);
 export const canonicalServiceSlugs = servicePageDefinitions.map(({ slug }) => slug);

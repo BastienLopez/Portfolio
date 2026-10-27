@@ -43,6 +43,8 @@ export type PageMetadata = {
   title: string;
   description: string;
   path: string;
+  /** Set to null for a noindex route that must not claim another page as canonical. */
+  canonicalPath?: string | null;
   robots: string;
   keywords?: string;
   section?: string;
@@ -51,15 +53,15 @@ export type PageMetadata = {
 const PAGE_METADATA: Record<PageId, Record<Locale, PageMetadata>> = {
   home: {
     fr: {
-      title: 'Développeur web freelance à Reims | IA & automatisation — Bastien Lopez',
-      description: 'Développeur web freelance à Reims : création de sites internet pour entreprises, applications métier, APIs et automatisations IA/n8n en France et à distance.',
+      title: 'Développeur web freelance à Reims | Sites et outils métier — Bastien Lopez',
+      description: 'Sites professionnels, applications métier et automatisations pour les TPE, PME et structures de services. Bastien Lopez, développeur web basé à Reims, en France, et disponible à distance en Europe.',
       path: '/',
       robots: 'index, follow',
       keywords: 'développeur web freelance Reims, création site internet Reims, sites vitrines, applications métier, automatisations n8n, Dev Notes',
     },
     en: {
-      title: 'Bastien Lopez — Full-Stack AI & Automation Developer',
-      description: 'Websites, business applications, internal APIs and AI/n8n automations by Bastien Lopez. Available for remote roles and freelance projects.',
+      title: 'Bastien Lopez — Freelance web developer in Reims',
+      description: 'Professional websites, business applications and automation for small businesses and service organisations. Based in Reims, France, working remotely across Europe.',
       path: '/',
       robots: 'index, follow',
       keywords: 'full-stack developer, AI automation, business applications, n8n workflows, Bastien Lopez',
@@ -67,15 +69,15 @@ const PAGE_METADATA: Record<PageId, Record<Locale, PageMetadata>> = {
   },
   freelance: {
     fr: {
-      title: 'Développeur web freelance à Reims | Sites, applications et automatisations',
-      description: 'Vous cherchez quelqu’un pour créer un site internet pour votre entreprise ? Bastien Lopez conçoit des sites vitrines, applications métier et automatisations n8n à Reims et à distance en France.',
+      title: 'Développeur web freelance à Reims | Sites et outils métier',
+      description: 'Deux offres pour les TPE, PME et structures de services à Reims, en France et en Europe : création ou refonte de site professionnel, et outil métier ou automatisation. Sur devis après cadrage.',
       path: '/freelance',
       robots: 'index, follow',
       keywords: 'développeur web freelance Reims, création site entreprise, application métier PME, automatisation n8n',
     },
     en: {
-      title: 'Freelance — Web development, AI and automation | Bastien Lopez',
-      description: 'Websites, business applications, internal APIs, AI workflows and n8n automation for focused freelance engagements.',
+      title: 'Freelance — Websites and business tools | Bastien Lopez',
+      description: 'Two freelance services for teams in Reims, France and Europe: professional websites, and business tools or automation for small businesses and service organisations.',
       path: '/freelance',
       robots: 'index, follow',
       keywords: 'freelance web developer, business applications, AI workflows, n8n automation',
@@ -102,12 +104,14 @@ const PAGE_METADATA: Record<PageId, Record<Locale, PageMetadata>> = {
       title: 'Page introuvable — Bastien Lopez',
       description: 'La page demandée n’existe pas dans le portfolio de Bastien Lopez.',
       path: '/',
+      canonicalPath: null,
       robots: 'noindex, follow',
     },
     en: {
       title: 'Page not found — Bastien Lopez',
       description: 'The requested page does not exist in Bastien Lopez’s portfolio.',
       path: '/',
+      canonicalPath: null,
       robots: 'noindex, follow',
     },
   },
@@ -121,10 +125,16 @@ const setLinkHref = (selector: string, href: string) => {
   document.head.querySelector<HTMLLinkElement>(selector)?.setAttribute('href', href);
 };
 
+const removeLink = (selector: string) => {
+  document.head.querySelectorAll<HTMLLinkElement>(selector).forEach((link) => link.remove());
+};
+
 const toCanonicalUrl = (path: string) => SITE_ORIGIN + (path === '/' ? '/' : path);
 
 const applyPageMetadata = (metadata: PageMetadata, locale: Locale) => {
-  const canonicalUrl = toCanonicalUrl(metadata.path);
+  const canonicalPath = metadata.canonicalPath === undefined ? metadata.path : metadata.canonicalPath;
+  const canonicalUrl = canonicalPath === null ? null : toCanonicalUrl(canonicalPath);
+  const socialUrl = canonicalUrl ?? toCanonicalUrl(window.location.pathname);
 
   document.documentElement.lang = locale;
   document.title = metadata.title;
@@ -136,13 +146,19 @@ const applyPageMetadata = (metadata: PageMetadata, locale: Locale) => {
   setMetaContent('meta[property="og:description"]', metadata.description);
   setMetaContent('meta[property="og:type"]', metadata.path.startsWith('/notes/') ? 'article' : 'website');
   setMetaContent('meta[property="og:locale"]', locale === 'en' ? 'en_US' : 'fr_FR');
-  setMetaContent('meta[property="og:url"]', canonicalUrl);
+  setMetaContent('meta[property="og:url"]', socialUrl);
   setMetaContent('meta[name="twitter:title"]', metadata.title);
   setMetaContent('meta[name="twitter:description"]', metadata.description);
-  setMetaContent('meta[name="twitter:url"]', canonicalUrl);
-  setLinkHref('link[rel="canonical"]', canonicalUrl);
-  setLinkHref('link[rel="alternate"][hreflang="fr-FR"]', toCanonicalUrl(metadata.path));
-  setLinkHref('link[rel="alternate"][hreflang="x-default"]', toCanonicalUrl(metadata.path));
+  setMetaContent('meta[name="twitter:url"]', socialUrl);
+
+  if (canonicalUrl) {
+    setLinkHref('link[rel="canonical"]', canonicalUrl);
+    setLinkHref('link[rel="alternate"][hreflang="fr-FR"]', canonicalUrl);
+    setLinkHref('link[rel="alternate"][hreflang="x-default"]', canonicalUrl);
+  } else {
+    removeLink('link[rel="canonical"]');
+    removeLink('link[rel="alternate"]');
+  }
 };
 
 export function LanguageProvider({ children }: { children: ReactNode }) {

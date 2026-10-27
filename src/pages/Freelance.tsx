@@ -17,11 +17,11 @@ const freelanceSchema = (isEnglish: boolean) => ({
       "@id": "https://bastienlopez.fr/freelance#webpage",
       "url": "https://bastienlopez.fr/freelance",
       "name": isEnglish
-        ? "Freelance — Web development, AI and automation | Bastien Lopez"
-        : "Développeur web freelance à Reims | Sites, applications et automatisations",
+        ? "Freelance — Websites and business tools | Bastien Lopez"
+        : "Développeur web freelance à Reims | Sites et outils métier",
       "description": isEnglish
-        ? "Websites, business applications, internal APIs, AI workflows and n8n automation for focused freelance engagements."
-        : "Vous cherchez quelqu’un pour créer un site pour votre entreprise ? Bastien Lopez conçoit des sites vitrines, applications métier et automatisations n8n à Reims et à distance en France.",
+        ? "Professional websites and business tools or automation for small businesses and service organisations."
+        : "Deux offres pour les TPE, PME et structures de services : création ou refonte de site professionnel, et outil métier ou automatisation.",
       "inLanguage": isEnglish ? "en-US" : "fr-FR",
       "isPartOf": { "@id": "https://bastienlopez.fr/#website" },
       "about": { "@id": "https://bastienlopez.fr/#person" },
@@ -34,33 +34,23 @@ const freelanceSchema = (isEnglish: boolean) => ({
       "provider": { "@id": "https://bastienlopez.fr/#person" },
       "serviceType": isEnglish
         ? [
-            "Showcase websites",
-            "Tailored web applications",
-            "Business applications",
-            "Internal APIs and integrations",
-            "AI and n8n automation",
-            "MVP delivery",
-            "Tailored ERP",
+            "Professional website creation or redesign",
+            "Business tools and automation",
           ]
         : [
-            "Sites vitrines",
-            "Applications web sur mesure",
-            "Applications métier",
-            "APIs internes et intégrations",
-            "Automatisations IA et n8n",
-            "Livraison de MVP",
-            "ERP sur mesure",
+            "Création ou refonte de site professionnel",
+            "Outil métier ou automatisation",
           ],
       "areaServed": [
         { "@type": "City", "name": "Reims" },
         { "@type": "Country", "name": "France" },
-        { "@type": "AdministrativeArea", "name": "Europe" },
+        { "@type": "Continent", "name": "Europe" },
       ],
       "audience": {
         "@type": "Audience",
         "audienceType": isEnglish
-          ? "Businesses, independent professionals and product teams"
-          : "Entreprises, indépendants, PME et équipes produit",
+          ? "Small businesses and service organisations"
+          : "TPE, PME et structures de services",
       },
       "availableChannel": {
         "@type": "ServiceChannel",
@@ -83,14 +73,8 @@ const freelanceSchema = (isEnglish: boolean) => ({
         {
           "@type": "ListItem",
           "position": 2,
-          "name": isEnglish ? "Tailored business applications" : "Application métier sur mesure pour PME",
+          "name": isEnglish ? "Business tools and automation" : "Outil métier ou automatisation",
           "url": "https://bastienlopez.fr/services/applications-metier",
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": isEnglish ? "n8n and AI automation" : "Automatisation n8n et IA pour entreprise",
-          "url": "https://bastienlopez.fr/services/automatisations-n8n",
         },
       ],
     },

@@ -54,7 +54,7 @@ const Footer = () => {
             {/* Availability */}
             <div className="min-w-0 text-center lg:pl-12 lg:text-left">
               <p className="text-sm leading-relaxed text-muted-foreground">
-                {isEnglish ? 'Available for remote/full-remote permanent roles or focused freelance engagements.' : 'Disponible pour des postes en CDI à distance ou des missions freelance ciblées.'}
+                {isEnglish ? 'Freelance web developer in Reims, France. Remote projects across Europe.' : 'Développeur web freelance à Reims, France. Missions à distance en Europe.'}
               </p>
               <Link
                 to="/mentions-legales"

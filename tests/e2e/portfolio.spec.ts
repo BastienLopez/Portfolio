@@ -140,8 +140,12 @@ test("returns to the top when opening the freelance page from the navbar", async
   await expect(page).toHaveURL(/\/freelance$/);
   await expect(page.locator("#freelance")).toBeVisible();
   await expect(page.locator("#freelance h1 > span")).toHaveCount(2);
-  await expect(page.locator("#freelance h1 > span").nth(1)).toHaveText("Sites internet et outils métier.");
+  await expect(page.locator("#freelance h1 > span").nth(1)).toHaveText("Sites internet et outils métier");
   await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 2_000 }).toBeLessThan(10);
+
+  // AppNavigationEffects reapplies the route reset once after lazy content
+  // commits. Let that scheduled reset settle before testing manual scrolling.
+  await page.waitForTimeout(160);
 
   await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "auto" }));
   await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 2_000 }).toBeGreaterThan(10);
@@ -165,14 +169,14 @@ test("aligns the freelance portfolio link with the projects section", async ({ p
 
 test("keeps route metadata, FAQ schema and freelance translations aligned", async ({ page }) => {
   await page.goto("/");
-  await expect(page).toHaveTitle(/Développeur web freelance à Reims \| IA & automatisation — Bastien Lopez/);
+  await expect(page).toHaveTitle(/Développeur web freelance à Reims \| Sites et outils métier — Bastien Lopez/);
   const homeDescription = await page.locator('meta[name="description"]').getAttribute("content");
   expect(homeDescription).toContain("applications métier");
   await expect(page.locator("#freelance-faq-schema")).toHaveCount(0);
 
   await page.goto("/freelance");
-  await expect(page).toHaveTitle(/Développeur web freelance à Reims \| Sites, applications et automatisations/);
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /créer un site internet pour votre entreprise/);
+  await expect(page).toHaveTitle(/Développeur web freelance à Reims \| Sites et outils métier/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /TPE, PME et structures de services/);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://bastienlopez.fr/freelance");
   await expect(page.locator('meta[property="og:url"]')).toHaveAttribute("content", "https://bastienlopez.fr/freelance");
   expect(await page.locator('meta[name="description"]').getAttribute("content")).not.toBe(homeDescription);
@@ -203,9 +207,9 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
   await expect(page.getByRole("heading", { name: "SEO & référencement local", exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: "4 projets clés" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Altme Wallet Provider", exact: true })).toBeVisible();
-  await expect(page.getByRole("button", { name: /Automatisations n8n.*Reporting/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Clé de Voûte", exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: /Automatisations n8n.*Dérush vidéo/ })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Altme Wallet Platform", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Eloi CoachStéo — Sport Trainer", exact: true })).toBeVisible();
   const featuredProjectButton = page.getByRole("button", { name: /Altme Wallet Provider/ });
   await featuredProjectButton.click();
   await expect(page.locator("#featured-case-study")).toBeVisible();
@@ -217,12 +221,12 @@ test("keeps route metadata, FAQ schema and freelance translations aligned", asyn
 
   await page.getByRole("button", { name: "MISSIONS FREELANCE", exact: true }).click();
   await expect(page.getByRole("heading", { name: "SEO & référencement local", exact: true })).toBeVisible();
-  await expect(page.locator('[data-project-card="seo-geo-optimization"] img')).toHaveCSS("object-fit", "fill");
+  await expect(page.locator('[data-project-card="seo-geo-optimization"] img')).toHaveCSS("object-fit", "contain");
 
   await page.goto("/freelance");
   await page.getByRole("button", { name: "Choisir la langue" }).click();
   await page.getByRole("option", { name: "EN" }).click();
-  await expect(page).toHaveTitle(/Freelance — Web development, AI and automation/);
+  await expect(page).toHaveTitle(/Freelance — Websites and business tools/);
   await expect(page.getByRole("heading", { name: "Clé de Voûte", exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Eloi CoachStéo", exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: "n8n automations — Video editing & reporting", exact: true })).toBeVisible();
@@ -295,21 +299,22 @@ test("publishes standalone Dev Notes pages with canonical metadata and TechArtic
   await expect(page.locator('meta[name="keywords"]')).toHaveAttribute("content", /CI\/CD|DevOps/);
   await expect(page.locator('meta[property="article:section"]')).toHaveAttribute("content", "CI/CD & DevOps");
   await expect(page.locator(".devnotes-article-page")).toHaveCSS("background-color", "rgb(20, 25, 31)");
-  await expect(page.getByRole("link", { name: "Retour aux Dev Notes", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Retour aux articles", exact: true })).toBeVisible();
 });
 
-test("publishes crawlable project and service pages without changing the three hero CTAs", async ({ page }) => {
+test("publishes crawlable project and service pages with the freelance hero and its navigation", async ({ page }) => {
+  test.setTimeout(120_000);
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    /Bastien Lopez.*Développeur Full-Stack IA & Automatisation/,
+    /Bastien Lopez.*Développeur web Freelance/,
   );
   await expect(page.locator("[data-hero-title]")).toHaveAttribute(
     "aria-label",
-    "Applications métier, APIs et workflows n8n",
+    "Sites professionnels et outils métier",
   );
   const hero = page.locator("#hero");
   await expect(hero.getByRole("link", { name: "Voir mes projets clés", exact: true })).toHaveCount(1);
-  await expect(hero.getByRole("link", { name: "Me contacter", exact: true })).toHaveCount(1);
+  await expect(hero.getByRole("link", { name: "Décrire mon projet", exact: true })).toHaveCount(1);
   await expect(hero.getByRole("link", { name: "Mes services freelance", exact: true })).toHaveCount(1);
 
   const projectRoutes = [
@@ -422,12 +427,12 @@ test("publishes crawlable project and service pages without changing the three h
   expect(localSchemaTypes).toContain("FAQPage");
 
   await page.goto("/freelance");
-  await expect(page.getByRole("link", { name: "Création de site internet pour entreprise", exact: true })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Création ou refonte de site professionnel", exact: true })).toHaveAttribute(
     "href",
     "/creation-site-internet-reims",
   );
-  await expect(page.getByRole("link", { name: /Applications sur mesure pour PME/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Automatisations et intégrations/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Outil métier ou automatisation", exact: true })).toHaveAttribute("href", "/services/applications-metier");
+  await expect(page.locator("#freelance-services > div + ol > li")).toHaveCount(2);
 
   await page.goto("/#projects");
   await expect(page.getByRole("link", { name: "Ouvrir l’étude de cas dédiée", exact: true })).toHaveCount(4);

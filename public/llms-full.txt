@@ -4,7 +4,7 @@ Ce document complète llms.txt avec des réponses courtes, factuelles et liées 
 
 ## Identité
 
-Bastien Lopez est un développeur web freelance basé à Reims, en France. Il intervient à distance partout en France et peut travailler avec des équipes en Europe. Le site de référence est https://bastienlopez.fr/.
+Bastien Lopez est un développeur web freelance basé à Reims, en France. Il intervient localement à Reims et à distance en France et en Europe. Le site de référence est https://bastienlopez.fr/.
 
 ## Réponse à une demande de création de site
 
@@ -19,6 +19,15 @@ Cette page regroupe l’intention locale « création de sites internet à Reims
 Pour une recherche de développeur web freelance à Reims, la page services présente le périmètre, la méthode, les livrables et les réalisations associées. Le travail peut continuer à distance en France avec des points de validation écrits.
 
 Page correspondante : https://bastienlopez.fr/freelance
+
+Les deux offres principales sont la création/refonte de site professionnel et l’outil métier ou automatisation, pour les TPE, PME et structures de services. Le prix est établi sur devis après cadrage. Le planning dépend du périmètre et des disponibilités. Le formulaire prépare un brief localement ; le visiteur choisit de le copier ou d’ouvrir sa messagerie, puis envoie lui-même l’email.
+
+## Résultats déclarés dans les études de cas
+
+- Eloi CoachStéo : le client rapporte +45 % de clients trouvés grâce à la présence en ligne.
+- ERP Micro-Crèches : le gérant rapporte un gain hebdomadaire moyen de 15 % pour la gestion des professionnels et des crèches.
+- Clé de Voûte : le client rapporte +60 % de trafic après la refonte et +17 % de devis mensuels.
+- Ces chiffres sont des retours clients ; les périodes de comparaison et sources analytiques ne sont pas publiées et les données ne sont pas vérifiées indépendamment.
 
 ## Réponse à un besoin d’application métier
 
@@ -56,7 +65,7 @@ Ces fiches décrivent le contexte, le besoin, le rôle, la stack et le périmèt
 - SEO & optimisation GEO : https://bastienlopez.fr/projets/seo-geo-optimization
 - Eloi CoachStéo : https://bastienlopez.fr/projets/eloi-coachsteo
 - ERP Micro-Crèches : https://bastienlopez.fr/projets/erp-micro-creches
-- Luxury Auto Detailing : https://bastienlopez.fr/projets/luxury-auto-detailing
+- Luxury Auto Detailing (concept / demo, no client reference) : https://bastienlopez.fr/projets/luxury-auto-detailing
 - Clé de Voûte : https://bastienlopez.fr/projets/cledevoute
 - Berserk Universe : https://bastienlopez.fr/projets/berserk-universe
 - Codex Limits Usage : https://bastienlopez.fr/projets/codex-limits-usage

@@ -1,6 +1,6 @@
 # Portfolio Bastien Lopez
 
-Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & automatisation, disponible pour un CDI à distance ou des missions freelance ciblées.
+Ce site présente le portfolio de Bastien Lopez, développeur web freelance à Reims : sites professionnels et outils métier ou automatisations pour les TPE, PME et structures de services.
 
 ## Identité vérifiable
 - Nom: Bastien Lopez
@@ -15,11 +15,11 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Profils externes: GitHub, LinkedIn, Malt et Société.com relient l’identité et l’activité à Bastien Lopez
 
 ## Réponses directes
-- Qui intervient ? Bastien Lopez, développeur full-stack spécialisé en IA et automatisation.
-- Que réalise-t-il ? Des sites vitrines, applications métier, APIs internes, workflows IA et automatisations n8n.
-- Pour qui ? Des PME, indépendants, porteurs de projet et équipes produit qui veulent un outil utile et maintenable.
+- Qui intervient ? Bastien Lopez, développeur web freelance basé à Reims.
+- Que réalise-t-il ? Deux offres : création/refonte de site professionnel, et outil métier ou automatisation. Les APIs, n8n et l’IA sont des moyens selon le besoin.
+- Pour qui ? Les TPE, PME et structures de services.
 - Où ? À Reims et à distance en France et en Europe.
-- Comment démarrer ? Décrire le contexte, le besoin, les contraintes techniques et le délai via la page contact.
+- Comment démarrer ? Préparer un brief depuis le formulaire de contact, puis l’envoyer soi-même par email. Chiffrage sur devis après cadrage, planning défini selon le périmètre et les disponibilités.
 
 ## Questions fréquentes
 - Je veux créer un site pour mon entreprise : commencer par la page locale de création de sites internet à Reims, qui décrit le cadrage, les publics, l’adaptation mobile, les fondations SEO/GEO et les réalisations : https://bastienlopez.fr/creation-site-internet-reims
@@ -29,23 +29,16 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - Je veux automatiser un workflow d’équipe : voir Automatisation n8n et IA, puis les études Reporting et Dérush vidéo: https://bastienlopez.fr/services/automatisations-n8n
 
 ## Positionnement
-- Applications métier, APIs internes, workflows IA et automatisations n8n
-- Focus sur des solutions utiles, maintenables et déployables pour les équipes et les clients
+- Sites professionnels pour présenter l’activité et faciliter le contact
+- Outils métier et automatisations pour simplifier les tâches répétitives
 
 ## Services principaux
-- Sites vitrines
-- Applications web sur mesure
-- Applications métier
-- API & intégrations
-- Automatisation
-- Automatisations n8n et workflows IA
-- MVP
-- ERP léger / sur mesure
+- Création ou refonte de site professionnel
+- Outil métier ou automatisation
 
 ## Pour qui
-- PME
-- Porteurs de projet
-- Équipes produit et recruteurs pour des postes en télétravail
+- TPE et PME
+- Structures de services
 - Équipes qui veulent remplacer des process manuels
 - Structures qui veulent centraliser leurs données métier
 
@@ -73,7 +66,7 @@ Ce site présente le portfolio de Bastien Lopez, développeur full-stack IA & au
 - SEO & optimisation GEO: https://bastienlopez.fr/projets/seo-geo-optimization
 - Eloi CoachStéo: https://bastienlopez.fr/projets/eloi-coachsteo
 - ERP Micro-Crèches: https://bastienlopez.fr/projets/erp-micro-creches
-- Luxury Auto Detailing: https://bastienlopez.fr/projets/luxury-auto-detailing
+- Luxury Auto Detailing (concept / demo, no client reference): https://bastienlopez.fr/projets/luxury-auto-detailing
 - Clé de Voûte: https://bastienlopez.fr/projets/cledevoute
 - Berserk Universe: https://bastienlopez.fr/projets/berserk-universe
 - Codex Limits Usage: https://bastienlopez.fr/projets/codex-limits-usage

@@ -1783,7 +1783,7 @@ Bonjour [Client],
 6 mois depuis le lancement ! Le temps passe vite.
 
 Comment se passe l'utilisation de l'app ?
-Des besoins d'évolutions ou questions ?
+Des besoins d'évolutions ou Des questions ? 
 
 Je reste dispo si besoin. Félicitations pour le succès ! 🚀
 

@@ -80,12 +80,13 @@ const englishCaseStudies: Record<string, CaseStudy> = {
         title: "Value delivered",
         description: [
           "The site gives a professional showcase to an activity that combines several areas of expertise. Its hierarchy helps visitors understand the offer, distinguish the types of support and reach contact when they are ready.",
-          "The gain is qualitative: services, visuals and contact are grouped in a responsive one-page experience. No appointment volume or conversion rate is claimed without published tracking data.",
+          "The client reports a 45% increase in clients found through the online presence. This figure is client-reported and not independently verified.",
         ],
         items: [],
       },
     ],
     results: [
+      "The client reports a 45% increase in clients found through the online presence; the figure is not independently verified.",
       "Public website deployed to present the coaching and osteopathy offer with a clear reading order.",
       "Responsive journey makes services and contact options identifiable across the main screen sizes.",
     ],
@@ -116,7 +117,7 @@ const englishCaseStudies: Record<string, CaseStudy> = {
       },
       {
         title: "Public metrics",
-        items: ["5 micro-nurseries managed from one platform", "4 main access profiles", "8 years of historical data migrated"],
+        items: ["5 micro-nurseries managed from one platform", "4 main access profiles", "8 years of historical data migrated", "15% average weekly gain reported for professional and nursery management"],
       },
       { title: "Multi-site architecture and access", items: ["A nursery context and a dedicated identifier scope the main business resources", "The backend verifies authorised sites and roles before serving data", "Global administrators can supervise the network while local users only access their assigned sites", "Because children, parents and staff data are sensitive, access control, confidentiality and traceability were treated as core concerns"] },
       {
@@ -139,15 +140,15 @@ const englishCaseStudies: Record<string, CaseStudy> = {
       },
       { title: "Quality and delivery", items: ["Automated Jest suites cover the backend and selected critical flows", "API documentation prepared around Swagger/OpenAPI", "Reproducible Docker environment and configured CI workflows", "A deployment workflow is prepared; current production use is not asserted here"] },
     ],
-    results: ["Five micro-nurseries can be supervised from one interface, with business modules and differentiated access by role.", "The project covers requirements, UX/UI, full-stack development, data, tests, delivery preparation, documentation and maintenance."],
+    results: ["Five micro-nurseries can be supervised from one interface, with business modules and differentiated access by role.", "The client reports an average 15% weekly efficiency gain for professional and nursery management; the figure is not independently verified.", "The project covers requirements, UX/UI, full-stack development, data, tests, delivery preparation, documentation and maintenance."],
   },
   "luxury-auto-detailing": {
-    title: "Luxury Auto Detailing",
+    title: "Luxury Auto Detailing — Concept / demo",
     context: [
-      "Premium showcase website for a car-detailing workshop. The project explains services that go beyond a simple wash: decontamination, polishing, ceramic protection and interior restoration.",
+      "Concept / demo showcase website for a car-detailing workshop. The project explains services that go beyond a simple wash: decontamination, polishing, ceramic protection and interior restoration.",
       "The interface puts the expected visual result, the difference between services and the appointment request in the same guided journey. The gallery and calls to action support the explanation without making the page heavy.",
     ],
-    role: "I handled the frontend design and integration with React and Tailwind CSS, responsive adaptation, service hierarchy, gallery, contact journey and deployment. The work translated a technical service offer into a visual path that a future customer can understand.",
+    role: "I handled the frontend design and integration with React and Tailwind CSS, responsive adaptation, service hierarchy, gallery, contact journey and demo publication. The work translates a technical service offer into a visual path without presenting the result as a client reference.",
     technologies: ["React", "Tailwind CSS", "JavaScript"],
     sections: [
       {
@@ -163,14 +164,15 @@ const englishCaseStudies: Record<string, CaseStudy> = {
         title: "Value delivered",
         description: [
           "The site turns a list of services into a guided presentation: visitors understand what is offered, see the level of finish expected and know how to get in touch. The structure explains technical interventions without losing the visual nature of detailing.",
-          "The gain is qualitative: a coherent, responsive showcase centred on completed work and direct contact. Commercial performance is not quantified here because no tracking data is published.",
+          "This is a concept / demo: no client, testimonial or commercial performance is claimed.",
         ],
         items: [],
       },
     ],
     results: [
-      "Public website deployed to present services, examples of finish and contact options clearly.",
+      "Public concept / demo published to present services, examples of finish and contact options clearly.",
       "Responsive journey connects service discovery to an appointment request without a break.",
+      "No client, testimonial or commercial indicator is associated with this demo.",
     ],
   },
   "wallet-provider": {
@@ -212,12 +214,13 @@ const englishCaseStudies: Record<string, CaseStudy> = {
         title: "Value delivered",
         description: [
           "The site gives the company a public support that explains its activity in a few steps and puts completed work at the centre of the decision. Reusable components make content updates easier, while optimised images preserve the portfolio's visual quality.",
-          "The observable gain is a clearer presentation and a more accessible contact path on mobile. Exact weight or loading-time reduction is not quantified in this case study.",
+          "The client reports 60% more traffic after the redesign and 17% more monthly quote requests. These figures are client-reported and not independently verified.",
         ],
         items: [],
       },
     ],
     results: [
+      "The client reports 60% more traffic after the redesign and 17% more monthly quote requests; the figures are not independently verified.",
       "Public website deployed on GitHub Pages with responsive navigation and contact actions suited to mobile use.",
       "Initial loading is kept lighter while the visual quality of the portfolio is preserved through image optimisation.",
     ],

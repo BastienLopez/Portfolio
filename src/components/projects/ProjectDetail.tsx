@@ -184,6 +184,9 @@ export const ProjectDetail = ({
           aria-label={isEnglish ? "Project information" : "Informations du projet"}
           onClick={handleDetailedContentClick}
         >
+          <h2 className="sr-only">
+            {isEnglish ? `${project.title} details` : `Détails du projet ${project.title}`}
+          </h2>
           {detailedContentHtml ? (
             <div dangerouslySetInnerHTML={{ __html: detailedContentHtml }} />
           ) : renderedDetailedContent ? (

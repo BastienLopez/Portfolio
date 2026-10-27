@@ -12,6 +12,7 @@ const requiredFiles = [
   path.join("creation-site-internet-reims", "index.html"),
   path.join("mentions-legales", "index.html"),
   "404.html",
+  "favicon.ico",
   "robots.txt",
   "sitemap.xml",
   "llms.txt",
@@ -62,6 +63,23 @@ const articleRoutes = [
   "creer-site-internet-entreprise-cadrage",
   "automatiser-processus-entreprise-n8n-cadrage",
 ];
+const editorialClusters = [
+  {
+    servicePath: "creation-site-internet-reims",
+    articleSlugs: ["creer-site-internet-entreprise-cadrage", "deploiement-production-checklist"],
+    projectSlugs: ["eloi-coachsteo", "cledevoute"],
+  },
+  {
+    servicePath: "services/applications-metier",
+    articleSlugs: ["architecture-hexagonale", "estimer-un-projet-freelance", "docker-pour-debutants"],
+    projectSlugs: ["erp-micro-creches"],
+  },
+  {
+    servicePath: "services/automatisations-n8n",
+    articleSlugs: ["automatiser-processus-entreprise-n8n-cadrage", "pipeline-ci-cd-github-actions", "monitorer-une-application-apres-deploiement"],
+    projectSlugs: ["automatisations-n8n-reporting", "automatisations-n8n-derush-video"],
+  },
+];
 
 for (const slug of projectRoutes) {
   requiredFiles.push(path.join("projets", slug, "index.html"));
@@ -81,6 +99,15 @@ for (const relativePath of requiredFiles) {
   const absolutePath = path.join(distDirectory, relativePath);
   if (!existsSync(absolutePath) || !statSync(absolutePath).isFile()) {
     failures.push(`Missing dist/${relativePath}.`);
+  }
+}
+
+for (const relativePath of requiredFiles.filter((value) => value.endsWith(".html"))) {
+  const absolutePath = path.join(distDirectory, relativePath);
+  if (!existsSync(absolutePath)) continue;
+  const html = readFileSync(absolutePath, "utf8");
+  if (/(?:href|src)="https?:\/\/(?:127\.0\.0\.1|localhost)(?::\d+)?\/assets\//i.test(html)) {
+    failures.push("dist/" + relativePath + " contains a local runtime asset URL.");
   }
 }
 
@@ -110,11 +137,11 @@ if (existsSync(path.join(distDirectory, "index.html"))) {
     failures.push("The prerendered home page does not reference the PNG Open Graph image.");
   }
 
-  if (!/<h1[^>]*>[\s\S]*Développeur Full-Stack IA &amp; Automatisation[\s\S]*<\/h1>/.test(indexHtml)) {
+  if (!/<h1[^>]*>[\s\S]*Développeur web freelance[\s\S]*<\/h1>/i.test(indexHtml)) {
     failures.push("The prerendered home page does not contain the profession in its H1.");
   }
 
-  if (!/<h2[^>]*>[\s\S]*Applications métier, APIs et workflows n8n[\s\S]*<\/h2>/.test(indexHtml)) {
+  if (!/<h2[^>]*>[\s\S]*Sites professionnels et outils métier[\s\S]*<\/h2>/.test(indexHtml)) {
     failures.push("The prerendered home page does not contain the supporting hero line.");
   }
 
@@ -126,7 +153,7 @@ if (existsSync(path.join(distDirectory, "index.html"))) {
     failures.push("The prerendered home page still contains the obsolete 5+ years claim.");
   }
 
-  if (!indexHtml.includes('"@type": "ProfilePage"')) {
+  if (!indexHtml.includes('"@type":"ProfilePage"') && !indexHtml.includes('"@type": "ProfilePage"')) {
     failures.push("The prerendered home page does not contain ProfilePage structured data.");
   }
 
@@ -138,7 +165,27 @@ if (existsSync(path.join(distDirectory, "index.html"))) {
     failures.push("The prerendered home page does not contain the Dev Notes ItemList schema.");
   }
 
-  if (!indexHtml.includes('"hasOfferCatalog"') || !indexHtml.includes("https://bastienlopez.fr/creation-site-internet-reims")) {
+  if (!/"telephone"\s*:\s*"\+33 6 52 64 97 13"/.test(indexHtml)) {
+    failures.push("The prerendered home page does not expose the supplied business telephone in structured data.");
+  }
+
+  if (!/"image"\s*:\s*"https:\/\/bastienlopez\.fr\/og-image\.png"/.test(indexHtml)) {
+    failures.push("The prerendered home page does not expose an absolute business image in structured data.");
+  }
+
+  if (!/"@type"\s*:\s*"Continent"/.test(indexHtml) || !indexHtml.includes("Europe")) {
+    failures.push("The prerendered home page does not expose Europe in the service area structured data.");
+  }
+
+  if (!indexHtml.includes("Reims, en France") || !indexHtml.includes("à distance en Europe")) {
+    failures.push("The prerendered home page does not expose the intended Reims / France / Europe positioning.");
+  }
+
+  if (!indexHtml.includes("https://bastienlopez.fr/#selected-projects") || !indexHtml.includes("https://bastienlopez.fr/projets/cledevoute")) {
+    failures.push("The prerendered home page does not contain the selected-projects ItemList with its current case-study links.");
+  }
+
+  if (!indexHtml.includes('"hasOfferCatalog"') || !indexHtml.includes("https://bastienlopez.fr/creation-site-internet-reims") || !indexHtml.includes("https://bastienlopez.fr/services/automatisations-n8n")) {
     failures.push("The prerendered home page does not expose the service offer catalog.");
   }
   if (indexHtml.includes("https://bastienlopez.fr/services/sites-vitrines")) {
@@ -166,8 +213,8 @@ const prerenderedRoutes = [
   },
   {
     file: path.join("freelance", "index.html"),
-    marker: "Parlons de ce qui doit avancer",
-    title: "Développeur web freelance à Reims | Sites,",
+    marker: "Décrivez votre projet",
+    title: "Développeur web freelance à Reims | Sites et outils métier",
   },
   {
     file: path.join("creation-site-internet-reims", "index.html"),
@@ -210,6 +257,15 @@ for (const route of prerenderedRoutes) {
     }
   }
 
+  if (route.file === "404.html") {
+    if (/<link\s+rel="canonical"/i.test(html)) {
+      failures.push("Prerendered 404 page must not contain a canonical link.");
+    }
+    if (!/<meta name="robots" content="noindex, follow"/i.test(html)) {
+      failures.push("Prerendered 404 page must remain noindex, follow.");
+    }
+  }
+
   if (route.file === path.join("freelance", "index.html")) {
     if (!html.includes("freelance#service")) {
       failures.push("Prerendered freelance page does not contain its service structured data.");
@@ -242,6 +298,27 @@ for (const slug of projectRoutes) {
   }
   if (!html.includes('"image":["https://bastienlopez.fr/')) {
     failures.push(`Prerendered ${relativePath} does not expose an absolute project image in structured data.`);
+  }
+  if (["cledevoute", "eloi-coachsteo", "erp-micro-creches", "automatisations-n8n-reporting", "automatisations-n8n-derush-video"].includes(slug) && !html.includes("data-editorial-service-links")) {
+    failures.push(`Prerendered ${relativePath} does not expose its editorial service link.`);
+  }
+}
+
+const caseStudyEvidence = {
+  cledevoute: ["+60 %", "+17 %", "rapportées par le client"],
+  "eloi-coachsteo": ["+45 %", "rapportés par le client"],
+  "erp-micro-creches": ["+15 %", "rapporté par le client"],
+};
+
+for (const [slug, markers] of Object.entries(caseStudyEvidence)) {
+  const relativePath = path.join("projets", slug, "index.html");
+  const routePath = path.join(distDirectory, relativePath);
+  if (!existsSync(routePath)) continue;
+  const html = readText(relativePath);
+  for (const marker of markers) {
+    if (!html.includes(marker)) {
+      failures.push(`Prerendered ${relativePath} does not contain the declared case-study evidence marker: ${marker}.`);
+    }
   }
 }
 
@@ -278,6 +355,9 @@ for (const slug of localRoutes) {
   if (html.includes("/services/sites-vitrines")) {
     failures.push(`Prerendered ${relativePath} still contains a visible legacy sites-vitrines link.`);
   }
+  if (!html.includes('href="/notes/creer-site-internet-entreprise-cadrage"') || !html.includes('href="/notes/deploiement-production-checklist"')) {
+    failures.push(`Prerendered ${relativePath} does not expose the complete website editorial cluster.`);
+  }
 }
 
 for (const slug of articleRoutes) {
@@ -293,6 +373,32 @@ for (const slug of articleRoutes) {
   }
   if (!html.includes(`https://bastienlopez.fr/notes/${slug}`)) {
     failures.push(`Prerendered ${relativePath} does not contain its canonical production URL.`);
+  }
+}
+
+for (const cluster of editorialClusters) {
+  const serviceHtml = readText(path.join("dist", cluster.servicePath, "index.html").replace(/^dist[\\/]/, ""));
+  for (const articleSlug of cluster.articleSlugs) {
+    const articlePath = path.join("notes", articleSlug, "index.html");
+    const articleHtml = readText(articlePath);
+    if (!articleHtml.includes(`href="/${cluster.servicePath}"`)) {
+      failures.push(`Prerendered ${articlePath} does not link its service cluster ${cluster.servicePath}.`);
+    }
+    if (!articleHtml.includes("href=\"/freelance#contact\"")) {
+      failures.push(`Prerendered ${articlePath} does not expose the project contact path.`);
+    }
+    if (!cluster.projectSlugs.some((projectSlug) => articleHtml.includes(`href="/projets/${projectSlug}"`))) {
+      failures.push(`Prerendered ${articlePath} does not link a proof project in its editorial cluster.`);
+    }
+  }
+  for (const projectSlug of cluster.projectSlugs) {
+    const projectHtml = readText(path.join("projets", projectSlug, "index.html"));
+    if (!projectHtml.includes("data-editorial-service-links")) {
+      failures.push(`Prerendered projets/${projectSlug}/index.html does not link back to its service cluster.`);
+    }
+  }
+  if (!serviceHtml.includes("subjectOf") && !serviceHtml.includes("data-editorial-cluster")) {
+    failures.push(`Editorial service page ${cluster.servicePath} does not expose its related content graph.`);
   }
 }
 

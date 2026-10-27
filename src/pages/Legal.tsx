@@ -72,7 +72,7 @@ const Legal = () => {
               </h1>
               <div className="mt-6 h-px w-24 bg-primary" aria-hidden="true" />
               <p className="mt-6 text-base text-muted-foreground">
-                {isEnglish ? "Last updated: 10 September 2026." : "Dernière mise à jour : 10 septembre 2026."}
+                {isEnglish ? "Last updated: 26 October 2026." : "Dernière mise à jour : 26 octobre 2026."}
               </p>
             </header>
 
@@ -144,8 +144,8 @@ const Legal = () => {
                 </div>
                 <p className="max-w-3xl">
                   {isEnglish
-                    ? "The domain is monitored through Google Search Console for search visibility. This site has no account, contact form or user content submission, and this version does not load a client-side audience measurement script."
-                    : "Le domaine est suivi dans Google Search Console pour sa visibilité dans les résultats de recherche. Ce site ne propose ni compte, ni formulaire de contact, ni dépôt de contenu utilisateur, et cette version ne charge pas de script de mesure d’audience côté navigateur."}
+                    ? "The domain is monitored through Google Search Console for search visibility. The project brief form prepares a message in your browser: the site does not store these fields or send them to a server. You choose whether to open your mail app or copy the brief, then send the email yourself. The site has no account or user content upload and does not load a client-side audience measurement script."
+                    : "Le domaine est suivi dans Google Search Console pour sa visibilité dans les résultats de recherche. Le formulaire de brief prépare un message dans votre navigateur : le site ne stocke pas ces champs et ne les transmet pas à un serveur. Vous choisissez d’ouvrir votre messagerie ou de copier le brief, puis vous envoyez vous-même l’email. Le site ne propose ni compte ni dépôt de contenu utilisateur et ne charge pas de script de mesure d’audience côté navigateur."}
                 </p>
               </section>
             </div>

@@ -117,6 +117,11 @@ jobs:
 
   links:
     name: Critical link check
+    # Do not let an untrusted pull request make the runner contact arbitrary
+    # external hosts. The check runs on trusted pushes and manual dispatches;
+    # the script itself still enforces an allowlist, DNS validation and manual
+    # redirect checks for every execution.
+    if: github.event_name != 'pull_request'
     needs: quality
     runs-on: ubuntu-latest
     timeout-minutes: 10

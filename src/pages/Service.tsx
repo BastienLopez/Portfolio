@@ -3,23 +3,19 @@ import { ArrowLeft, ArrowRight, Check, Database, LayoutTemplate, MapPin, Workflo
 import { Link, Navigate, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ServiceConditions from "@/components/ServiceConditions";
 import NotFound from "@/pages/NotFound";
 import { Button } from "@/components/ui/button";
 import {
   getProjectPagePath,
   getServicePage,
   getServicePagePath,
+  serviceRelatedArticleSlugs,
   type ServicePageDefinition,
 } from "@/data/site-pages";
 import { allProjects } from "@/data/projects";
 import { getArticlePageDefinition } from "@/data/articles/pages";
 import { SITE_ORIGIN, useLanguage, useRouteMetadata, type PageMetadata } from "@/lib/i18n";
-
-const serviceRelatedArticleSlugs: Record<ServicePageDefinition["slug"], readonly string[]> = {
-  "sites-vitrines": ["deploiement-production-checklist", "estimer-un-projet-freelance", "creer-site-internet-entreprise-cadrage"],
-  "applications-metier": ["architecture-hexagonale", "docker-pour-debutants"],
-  "automatisations-n8n": ["pipeline-ci-cd-github-actions", "monitorer-une-application-apres-deploiement", "automatiser-processus-entreprise-n8n-cadrage"],
-};
 
 const metadataFor = (
   definition: ServicePageDefinition | undefined,
@@ -107,6 +103,7 @@ const serviceSchema = (definition: ServicePageDefinition, isEnglish: boolean) =>
         areaServed: [
           { "@type": "City", name: "Reims" },
           { "@type": "Country", name: "France" },
+          { "@type": "Continent", name: "Europe" },
         ],
         audience: {
           "@type": "Audience",
@@ -259,10 +256,12 @@ const Service = () => {
                 <p className="mt-3 text-base leading-7 text-foreground/85">{audience}</p>
                 <p className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary">
                   <MapPin className="h-4 w-4" aria-hidden="true" />
-                  {isEnglish ? "Based in Reims · remote across France" : "Basé à Reims · interventions à distance partout en France"}
+                  {isEnglish ? "Based in Reims, France · remote across Europe" : "Basé à Reims, France · interventions à distance en Europe"}
                 </p>
               </div>
             </header>
+
+            <ServiceConditions service={definition} />
 
             {signature && signatureCopy && SignatureIcon ? (
               <section className="mt-12 border-y border-border py-6" aria-labelledby="service-signature-title">

@@ -1,4 +1,5 @@
 import type { RefObject } from "react";
+import { createPortal } from "react-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { ProjectGalleryItem } from "@/data/projects";
 import { getImageManifestEntry, getImageSrcSet } from "@/lib/image-variants";
@@ -29,7 +30,7 @@ export const ProjectGallery = ({
   const activeImage = galleryImages[activeGalleryIndex];
   if (!activeImage) return null;
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 p-4 backdrop-blur-sm"
       role="dialog"
@@ -94,6 +95,7 @@ export const ProjectGallery = ({
           {isEnglish ? "Use ← → or Esc" : "Utilisez ← → ou Échap"}
         </p>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };

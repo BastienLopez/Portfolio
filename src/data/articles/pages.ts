@@ -4,6 +4,7 @@ export type ArticlePageDefinition = {
   id: string;
   slug: string;
   category: ArticleCategory;
+  relatedServiceSlug?: "sites-vitrines" | "applications-metier" | "automatisations-n8n";
   title: {
     fr: string;
     en: string;
@@ -33,6 +34,7 @@ export const articlePageDefinitions: readonly ArticlePageDefinition[] = [
       fr: "Une méthode concrète pour relier lint, tests et build dans une pipeline CI/CD GitHub Actions exploitable.",
       en: "A practical way to connect linting, tests and builds in a maintainable GitHub Actions CI/CD pipeline.",
     },
+    relatedServiceSlug: "automatisations-n8n",
     relatedProjectSlugs: ["automatisations-n8n-reporting"],
   },
   {
@@ -47,7 +49,8 @@ export const articlePageDefinitions: readonly ArticlePageDefinition[] = [
       fr: "Les bases utiles de Docker : images, conteneurs, volumes et repères pour isoler un environnement de développement.",
       en: "The useful Docker fundamentals: images, containers, volumes and the basics of an isolated development environment.",
     },
-    relatedProjectSlugs: ["codex-limits-usage"],
+    relatedServiceSlug: "applications-metier",
+    relatedProjectSlugs: ["codex-limits-usage", "erp-micro-creches"],
   },
   {
     id: "devops-20",
@@ -61,6 +64,7 @@ export const articlePageDefinitions: readonly ArticlePageDefinition[] = [
       fr: "Une introduction opérationnelle aux logs, métriques, traces et alertes qui rendent une application observable après sa mise en ligne.",
       en: "An operational introduction to logs, metrics, traces and alerts that make an application observable after release.",
     },
+    relatedServiceSlug: "automatisations-n8n",
     relatedProjectSlugs: ["automatisations-n8n-reporting"],
   },
   {
@@ -75,6 +79,7 @@ export const articlePageDefinitions: readonly ArticlePageDefinition[] = [
       fr: "Quand et comment isoler le cœur métier des bases de données, APIs et interfaces avec une architecture hexagonale.",
       en: "When and how to isolate business rules from databases, APIs and interfaces with hexagonal architecture.",
     },
+    relatedServiceSlug: "applications-metier",
     relatedProjectSlugs: ["erp-micro-creches"],
   },
   {
@@ -89,6 +94,7 @@ export const articlePageDefinitions: readonly ArticlePageDefinition[] = [
       fr: "Une check-list de livraison pour préparer la production, vérifier les accès et transmettre un projet repris par l’équipe.",
       en: "A release checklist for preparing production, checking access and handing a project over to its team.",
     },
+    relatedServiceSlug: "sites-vitrines",
     relatedProjectSlugs: ["cledevoute"],
   },
   {
@@ -131,6 +137,7 @@ export const articlePageDefinitions: readonly ArticlePageDefinition[] = [
       fr: "Une méthode pour découper un projet freelance, expliciter les hypothèses et présenter une estimation compréhensible.",
       en: "A method for breaking down a freelance project, making assumptions explicit and presenting a readable estimate.",
     },
+    relatedServiceSlug: "applications-metier",
     relatedProjectSlugs: ["erp-micro-creches"],
   },
   {
@@ -145,6 +152,7 @@ export const articlePageDefinitions: readonly ArticlePageDefinition[] = [
       fr: "Les questions à poser pour cadrer un site d’entreprise, structurer les pages utiles et préparer un socle SEO maintenable.",
       en: "The questions to ask when framing a business website, structuring useful pages and preparing a maintainable SEO foundation.",
     },
+    relatedServiceSlug: "sites-vitrines",
     relatedProjectSlugs: ["eloi-coachsteo"],
   },
   {
@@ -159,7 +167,8 @@ export const articlePageDefinitions: readonly ArticlePageDefinition[] = [
       fr: "Une méthode pour décrire un processus répétitif, prévoir les erreurs et mettre en place une automatisation n8n traçable.",
       en: "A method for describing a repeated process, planning for errors and building a traceable n8n automation.",
     },
-    relatedProjectSlugs: ["automatisations-n8n-reporting"],
+    relatedServiceSlug: "automatisations-n8n",
+    relatedProjectSlugs: ["automatisations-n8n-reporting", "automatisations-n8n-derush-video"],
   },
 ];
 

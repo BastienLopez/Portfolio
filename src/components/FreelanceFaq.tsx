@@ -9,12 +9,12 @@ const FreelanceFaq = () => {
         {
           question: "What are the usual timelines?",
           answer:
-            "It depends on the scope. A focused task can take days, an MVP a few weeks, and a light ERP several delivery stages. A realistic plan is defined during scoping.",
+            "The schedule is proposed after reviewing the scope, available content, integrations and team approvals. The start date and delivery milestones are confirmed before the engagement.",
         },
         {
           question: "How does billing work?",
           answer:
-            "Depending on the need, I can work on a daily rate, a fixed-price scope or staged delivery. The format is agreed upfront with milestones and deliverables.",
+            "Pricing is quoted after scoping. Pages, features, integrations and data determine the cost. A fixed price, daily rate or staged delivery can be agreed upfront, with exclusions and third-party costs stated separately.",
         },
         {
           question: "Who owns the code?",
@@ -44,19 +44,19 @@ const FreelanceFaq = () => {
         {
           question: "Do you work with businesses in Reims and remotely?",
           answer:
-            "Yes. I am based in Reims and work remotely with teams across France, with written checkpoints and documented delivery.",
+            "Yes. I am based in Reims, France, and work remotely with teams across Europe, with written checkpoints and documented delivery.",
         },
       ]
     : [
         {
           question: "Quels sont les délais habituels ?",
           answer:
-            "Le délai dépend du périmètre. Une mission ciblée peut être livrée en quelques jours, un MVP en quelques semaines, et un ERP léger sur plusieurs lots. Un planning réaliste est donné dès le cadrage.",
+            "Le planning est proposé après examen du périmètre, des contenus disponibles, des intégrations et des validations de votre équipe. La date de démarrage et les jalons sont confirmés avant engagement.",
         },
         {
           question: "Comment fonctionne la facturation ?",
           answer:
-            "Selon le besoin, je propose du TJM, du forfait ou un découpage par lots. Le mode est fixé en amont avec jalons, livrables et visibilité budget.",
+            "Le prix est établi sur devis après cadrage. Pages, fonctionnalités, intégrations et données déterminent le chiffrage. Forfait, tarif journalier ou lots sont convenus avant engagement, avec les exclusions et frais tiers précisés séparément.",
         },
         {
           question: "À qui appartient le code ?",
@@ -86,7 +86,7 @@ const FreelanceFaq = () => {
         {
           question: "Travailles-tu avec des entreprises à Reims et à distance ?",
           answer:
-            "Oui. Je suis basé à Reims et j’interviens à distance partout en France, avec des points de validation écrits et une livraison documentée.",
+            "Oui. Je suis basé à Reims, en France, et j’interviens à distance en Europe, avec des points de validation écrits et une livraison documentée.",
         },
       ]), [isEnglish]);
 
@@ -122,18 +122,18 @@ const FreelanceFaq = () => {
   return (
     <section
       id="freelance-faq"
-      className="section-odd relative overflow-hidden px-4 py-20 md:py-28"
+      className="section-odd relative overflow-hidden px-4 py-14 md:py-16"
       aria-labelledby="freelance-faq-title"
     >
       <div className="relative z-10 mx-auto max-w-5xl">
-        <header className="mb-8 flex items-start gap-4">
+        <header className="mb-6 flex items-start gap-4">
           <HelpCircle className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
               {isEnglish ? "Before we start" : "Avant de commencer"}
             </p>
-            <h2 id="freelance-faq-title" className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
-              {isEnglish ? "Frequently asked questions" : "Questions fréquentes"}
+            <h2 id="freelance-faq-title" className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+              {isEnglish ? "Frequently asked questions" : "Des questions ? "}
             </h2>
           </div>
         </header>

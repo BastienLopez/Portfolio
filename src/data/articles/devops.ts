@@ -1276,9 +1276,9 @@ Utile pour le <strong class="font-bold text-primary">hot reload</strong> en dév
 
 <ul class="my-4 list-disc pl-6">
   <li class="ml-4"><strong class="font-bold text-primary">docker images</strong> : Lister les images</li>
-  <li class="ml-4"><strong class="font-bold text-primary">docker rmi <image></strong> : Supprimer une image</li>
-  <li class="ml-4"><strong class="font-bold text-primary">docker pull <image></strong> : Télécharger une image du Docker Hub</li>
-  <li class="ml-4"><strong class="font-bold text-primary">docker push <image></strong> : Pousser une image sur un registry</li>
+  <li class="ml-4"><strong class="font-bold text-primary">docker rmi &lt;image&gt;</strong> : Supprimer une image</li>
+  <li class="ml-4"><strong class="font-bold text-primary">docker pull &lt;image&gt;</strong> : Télécharger une image du Docker Hub</li>
+  <li class="ml-4"><strong class="font-bold text-primary">docker push &lt;image&gt;</strong> : Pousser une image sur un registry</li>
 </ul>
 
 <h3 class="text-xl font-bold mt-6 mb-3">Nettoyage</h3>

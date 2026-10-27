@@ -6,13 +6,13 @@ import path from "path";
 export default defineConfig({
   base: "/",
   server: {
-    host: "::",
+    host: "127.0.0.1",
     port: 8080,
   },
   plugins: [react()].filter(Boolean),
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(import.meta.dirname, "./src"),
     },
   },
   build: {
@@ -94,7 +94,10 @@ export default defineConfig({
             return "query-vendor";
           }
 
-          return "vendor";
+          // Let the import graph split the remaining dependencies. A catch-all
+          // vendor chunk also collects article-only parsers/layout engines and
+          // makes the home page preload them through shared React imports.
+          return;
         },
       },
     },

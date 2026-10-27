@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { ChevronDown, Languages, Menu, X, Github, Linkedin, Mail } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -28,7 +28,7 @@ const LanguageSelector = () => {
     if (restoreFocus) triggerRef.current?.focus();
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isOpen) return;
     optionRefs.current[activeIndex]?.focus();
   }, [activeIndex, isOpen]);
@@ -78,7 +78,7 @@ const LanguageSelector = () => {
         onClick={() => (isOpen ? closeMenu() : openMenu())}
         onKeyDown={handleTriggerKeyDown}
         className="flex h-10 min-w-[92px] items-center justify-between gap-2 rounded-xl border border-primary bg-card px-3 text-sm font-bold text-foreground shadow-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-        aria-label={isEnglish ? 'Choose language' : 'Choisir la langue'}
+        aria-label={isEnglish ? `${locale.toUpperCase()} — Choose language` : `${locale.toUpperCase()} — Choisir la langue`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
@@ -152,7 +152,23 @@ const Navbar = () => {
 
     // Reset before navigation as well as on the destination route. This avoids
     // exposing the previous page's scroll position while the lazy page mounts.
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    const root = document.documentElement;
+    const body = document.body;
+    const previousScrollBehavior = root.style.scrollBehavior;
+    const previousBodyScrollBehavior = body.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    body.style.scrollBehavior = "auto";
+    root.scrollTop = 0;
+    body.scrollTop = 0;
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    document.scrollingElement?.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    root.style.scrollBehavior = previousScrollBehavior;
+    body.style.scrollBehavior = previousBodyScrollBehavior;
+    window.requestAnimationFrame(() => {
+      root.scrollTop = 0;
+      body.scrollTop = 0;
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    });
 
     if (location.pathname.replace(/\/+$/, "").endsWith("/freelance")) {
       event?.preventDefault();

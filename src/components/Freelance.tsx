@@ -3,15 +3,15 @@ import {
   ArrowRight,
   BriefcaseBusiness,
   Code2,
-  GitBranch,
   Layers3,
   MapPin,
-  Workflow,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
 import { useLanguage } from "@/lib/i18n";
 import { Link } from "react-router-dom";
+import { getServicePage } from "@/data/site-pages";
+import ServiceConditions from "@/components/ServiceConditions";
 
 type Icon = typeof BriefcaseBusiness;
 
@@ -34,24 +34,24 @@ type ProcessStep = {
 const pageCopy = {
   fr: {
     eyebrow: "Freelance · développement sur mesure",
-    title: "Développeur web freelance à Reims — sites internet et outils métier.",
+    title: "Développeur web freelance à Reims — sites internet et outils métier",
     description:
-      "Je crée des sites pour les entreprises, des applications métier, des automatisations n8n et des APIs internes qui enlèvent les tâches répétitives et rendent le travail quotidien plus simple.",
+      "J’aide les TPE, PME et structures de services à présenter leur activité en ligne et à réduire leurs tâches répétitives. Deux offres : un site professionnel, ou un outil métier avec les automatisations utiles.",
     note:
       "J’interviens du cadrage à la mise en production, avec une documentation que votre équipe peut reprendre.",
-    location: "Basé à Reims, j’interviens à distance partout en France.",
+    location: "Basé à Reims, en France, j’interviens à distance en France et en Europe et je crée des sites internet professionnels et des outils métier pour les entreprises.",
     localLandingCta: "Création de sites internet à Reims",
-    primaryCta: "Parler du projet",
+    primaryCta: "Décrire mon projet",
     secondaryCta: "Voir les réalisations",
-    servicesTitle: "Ce que je prends en charge",
+    servicesTitle: "Deux offres pour votre entreprise",
     servicesIntro:
-      "Une grande partie de mes missions concerne des sites vitrines. Je prends aussi en charge des outils métier et des automatisations avec un périmètre clair et un livrable utilisable.",
+      "Choisissez votre point de départ : rendre votre activité plus lisible sur le web, ou simplifier le travail de votre équipe. Chaque mission commence par un périmètre, des livrables et un devis.",
     services: [
       {
         number: "01",
         slug: "sites-vitrines",
         href: "/creation-site-internet-reims",
-        title: "Création de site internet pour entreprise",
+        title: "Création ou refonte de site professionnel",
         description:
           "Je crée des sites vitrines clairs, rapides et adaptés aux mobiles pour présenter une activité, ses services et ses réalisations.",
         deliverables: "Structure des pages, intégration, adaptation mobile, SEO/GEO de base et mise en ligne.",
@@ -61,29 +61,11 @@ const pageCopy = {
         number: "02",
         slug: "applications-metier",
         href: "/services/applications-metier",
-        title: "Applications sur mesure pour PME",
+        title: "Outil métier ou automatisation",
         description:
-          "ERP, back-office, portail interne ou tableau de bord : je transforme vos règles métier en parcours simples et utilisables.",
-        deliverables: "Front, API, droits d’accès, données et suivi des cas réels.",
+          "Pour les équipes qui jonglent entre fichiers, outils et ressaisies : je construis un outil adapté ou je relie l’existant pour simplifier un parcours quotidien.",
+        deliverables: "Application interne ou workflow, connexions aux outils, droits d’accès, contrôles et documentation selon le besoin.",
         icon: BriefcaseBusiness,
-      },
-      {
-        number: "03",
-        slug: "automatisations-n8n",
-        href: "/services/automatisations-n8n",
-        title: "Automatisations et intégrations",
-        description:
-          "Je relie vos outils et vos données avec n8n, des APIs et des traitements documentés pour supprimer les ressaisies.",
-        deliverables: "Flux automatisés, rapports, notifications, contrôles et reprise sur erreur.",
-        icon: Workflow,
-      },
-      {
-        number: "04",
-        title: "Reprise et évolution technique",
-        description:
-          "Je reprends un existant quand il faut corriger une dette, fiabiliser une livraison ou ajouter une fonctionnalité sans repartir de zéro.",
-        deliverables: "Audit ciblé, plan d’action, corrections prioritaires et mise à niveau progressive.",
-        icon: GitBranch,
       },
     ] satisfies Service[],
     processTitle: "Comment je travaille",
@@ -120,24 +102,24 @@ const pageCopy = {
   },
   en: {
     eyebrow: "Freelance · tailored development",
-    title: "Business tools that move your work forward.",
+    title: "Professional websites and business tools",
     description:
-      "I mainly build showcase websites, along with business applications, n8n automations and internal APIs that remove repetitive work and make daily operations easier.",
+      "I help small businesses and service organisations present their work online and reduce repetitive tasks. Two services: a professional website, or a business tool with useful automation.",
     note:
-      "A large part of my freelance work concerns showcase websites. I work from scoping to production, with documentation your team can take over.",
-    location: "Based in Reims, I work remotely with teams across France.",
+      "From scoping to release, with documentation your team can take over.",
+    location: "Based in Reims, France, I work remotely with teams across France and Europe.",
     localLandingCta: "Website creation in Reims",
-    primaryCta: "Discuss the project",
+    primaryCta: "Describe my project",
     secondaryCta: "See selected work",
-    servicesTitle: "What I can take on",
+    servicesTitle: "Two services for your business",
     servicesIntro:
-      "A large part of my engagements concerns showcase websites. I also take on business tools and automations with a clear scope and a usable deliverable.",
+      "Choose a starting point: make your business clearer online, or simplify your team's work. Each engagement starts with a scope, deliverables and a quotation.",
     services: [
       {
         number: "01",
         slug: "sites-vitrines",
         href: "/creation-site-internet-reims",
-        title: "Showcase websites & online presence",
+        title: "Professional website creation or redesign",
         description:
           "I build clear, fast and responsive showcase websites that present a business, its services and its work.",
         deliverables: "Page structure, implementation, responsive behaviour, baseline SEO/GEO and release.",
@@ -147,29 +129,11 @@ const pageCopy = {
         number: "02",
         slug: "applications-metier",
         href: "/services/applications-metier",
-        title: "Business applications",
+        title: "Business tool or automation",
         description:
-          "ERP, back office, internal portal or dashboard: I turn business rules into clear, usable journeys.",
-        deliverables: "Frontend, API, access rules, data and real-world workflow coverage.",
+          "For teams juggling files, tools and repeated data entry: I build a focused tool or connect existing systems to simplify a daily workflow.",
+        deliverables: "Internal application or workflow, integrations, permissions, checks and documentation according to your need.",
         icon: BriefcaseBusiness,
-      },
-      {
-        number: "03",
-        slug: "automatisations-n8n",
-        href: "/services/automatisations-n8n",
-        title: "Automation & integrations",
-        description:
-          "I connect tools and data with n8n, APIs and documented processing to remove rekeying and repetitive work.",
-        deliverables: "Workflows, reporting, notifications, checks and error recovery.",
-        icon: Workflow,
-      },
-      {
-        number: "04",
-        title: "Technical takeover & evolution",
-        description:
-          "I take over an existing system when debt, delivery reliability or a new feature needs a controlled path forward.",
-        deliverables: "Focused audit, action plan, priority fixes and staged improvements.",
-        icon: GitBranch,
       },
     ] satisfies Service[],
     processTitle: "How I work",
@@ -213,7 +177,7 @@ const Freelance = () => {
   return (
     <section
       id="freelance"
-      className="section-odd relative overflow-hidden pb-16 md:pb-24"
+      className="section-odd relative overflow-hidden pb-12 md:pb-14"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[44rem] overflow-hidden sm:h-[48rem]" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
@@ -230,35 +194,33 @@ const Freelance = () => {
         <div className="hero-grid-fade" />
       </div>
 
-      <div className="container relative z-10 mx-auto w-full px-4 pt-24 md:pt-36">
+      <div className="container relative z-10 mx-auto w-full px-4 pt-28 md:pt-36">
         <div className="mx-auto max-w-7xl">
           <header className="max-w-5xl">
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
               {copy.eyebrow}
             </p>
-            <h1 className="max-w-5xl text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+            <h1 className="max-w-5xl text-3xl font-bold leading-tight tracking-tight md:text-6xl">
               {isEnglish ? (
                 copy.title
               ) : (
                 <>
                   <span className="block">Développeur web freelance à Reims</span>
-                  <span className="block">Sites internet et outils métier.</span>
+                  <span className="block">Sites internet et outils métier</span>
                 </>
               )}
             </h1>
             <div className="mt-7 h-px w-24 bg-primary/80" aria-hidden="true" />
-            <p className="mt-7 max-w-3xl text-lg leading-8 text-foreground/85 md:text-xl">
+            <p className="mt-5 max-w-3xl text-base leading-7 text-foreground/85 md:text-xl md:leading-8">
               {copy.description}
             </p>
-            <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">
-              {copy.note}
-            </p>
-            <p className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary">
-              <MapPin className="h-4 w-4" aria-hidden="true" />
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">{copy.note}</p>
+            <p className="mt-4 inline-flex items-start gap-2 text-sm font-medium text-primary">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
               {copy.location}
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-x-6">
-              <Button asChild size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90">
+            <div data-freelance-actions className="mt-6 flex flex-wrap items-center gap-3 sm:gap-x-6">
+              <Button asChild size="lg" className="h-auto min-h-11 max-w-full whitespace-normal bg-cta px-5 py-3 text-cta-foreground hover:bg-cta/90">
                 <a
                   href="#contact"
                   onClick={() =>
@@ -276,7 +238,7 @@ const Freelance = () => {
                 asChild
                 size="lg"
                 variant="ghost"
-                className="justify-start px-2 text-foreground/80 hover:text-primary"
+                className="h-auto min-h-11 max-w-full justify-start whitespace-normal px-2 py-3 text-foreground/80 hover:text-primary"
               >
                 <a
                   href={copy.projectsAnchor}
@@ -293,10 +255,10 @@ const Freelance = () => {
               </Button>
               <Link
                 to="/creation-site-internet-reims"
-                className="inline-flex items-center gap-2 whitespace-nowrap px-2 text-sm font-semibold text-primary underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                className="inline-flex max-w-full items-center gap-2 px-2 py-2 text-sm font-semibold text-primary underline-offset-4 transition-colors hover:text-foreground hover:underline"
               >
                 {copy.localLandingCta}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
               </Link>
             </div>
           </header>
@@ -357,6 +319,18 @@ const Freelance = () => {
                       <p className="mt-3 text-sm leading-6 text-muted-foreground">
                         {service.deliverables}
                       </p>
+                      <ServiceConditions service={getServicePage(service.slug)} headingAs="h4" />
+                      {service.slug === "applications-metier" ? (
+                        <Link
+                          to="/services/automatisations-n8n"
+                          className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-foreground"
+                        >
+                          {isEnglish
+                            ? "See the dedicated n8n automation service"
+                            : "Voir la page dédiée aux automatisations n8n"}
+                          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </Link>
+                      ) : null}
                     </div>
                   </li>
                 );
@@ -387,7 +361,7 @@ const Freelance = () => {
               </p>
             </div>
 
-            <ol className="grid border-y border-border md:grid-cols-2 lg:grid-cols-4">
+            <ol className="grid border-t border-border md:grid-cols-2 lg:grid-cols-4">
               {copy.process.map((step, index) => (
                 <li
                   key={step.number}

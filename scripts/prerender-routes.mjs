@@ -71,8 +71,8 @@ const articleSlugs = [
 ];
 
 const routes = [
-  { path: "/", output: "index.html", allowNotFound: false },
-  { path: "/freelance", output: path.join("freelance", "index.html"), allowNotFound: false },
+  { path: "/", output: "index.html", allowNotFound: false, requiredSelectors: ["#projects", ".project-featured-title", "#devnotes"] },
+  { path: "/freelance", output: path.join("freelance", "index.html"), allowNotFound: false, requiredSelectors: ["#projects"] },
   ...localSlugs.map((slug) => ({
     path: `/${slug}`,
     output: path.join(slug, "index.html"),
@@ -114,7 +114,7 @@ const waitForPreview = async (baseUrl) => {
   throw new Error(`Preview server did not start on ${baseUrl}`);
 };
 
-const waitForStablePage = async (page, expectedCanonical) => {
+const waitForStablePage = async (page, expectedCanonical, requiredSelectors = []) => {
   await page.waitForSelector("main", { state: "attached" });
   await page.evaluate(() => document.fonts?.ready);
   // Keep the client-side typing animation, but wait for its final semantic
@@ -124,25 +124,45 @@ const waitForStablePage = async (page, expectedCanonical) => {
       const heroTitle = document.querySelector("[data-hero-title]");
       const canonicalLink = document.querySelector('link[rel="canonical"]');
       const description = document.querySelector('meta[name="description"]');
+      const canonicalMatches = canonical === null
+        ? !canonicalLink
+        : canonicalLink?.getAttribute("href") === canonical;
       return (
         (!heroTitle || heroTitle.getAttribute("data-typing-complete") === "true") &&
         document.title.trim().length > 0 &&
         Boolean(description?.getAttribute("content")?.trim()) &&
-        canonicalLink?.getAttribute("href") === canonical
+        canonicalMatches
       );
     },
     expectedCanonical,
     { timeout: 10000 },
   );
 
+  if (requiredSelectors.length > 0) {
+    await page.waitForFunction(
+      (selectors) => selectors.every((selector) => document.querySelector(selector)),
+      requiredSelectors,
+      { timeout: 10000 },
+    );
+  }
+
   await sleep(250);
 };
 
-const stripPrerenderRuntimePreloads = (html) =>
-  html.replace(
-    /<link\s+rel="modulepreload"[^>]+href="http:\/\/127\.0\.0\.1:\d+\/[^"]+"\s*\/?>(?:<\/link>)?/gi,
-    "",
-  );
+const normalizePrerenderRuntimeAssets = (html) =>
+  html
+    .replace(
+      /<link\s+rel="modulepreload"[^>]+href="http:\/\/127\.0\.0\.1:\d+\/[^"]+"\s*\/?>(?:<\/link>)?/gi,
+      "",
+    )
+    .replace(
+      /(href|src)="http:\/\/127\.0\.0\.1:\d+(\/assets\/[^"]+)"/gi,
+      "$1=\"$2\"",
+    )
+    .replace(
+      /<link\s+rel="stylesheet"([^>]*href="\/assets\/(?:Article|DevNotes)-[^"]+\.css"[^>]*)>/gi,
+      '<link rel="preload" as="style"$1 onload="this.onload=null;this.rel=\'stylesheet\'"><noscript><link rel="stylesheet"$1></noscript>',
+    );
 
 const prerender = async () => {
   const port = await findAvailablePort(preferredPort);
@@ -178,14 +198,17 @@ const prerender = async () => {
         }
 
         const expectedCanonical = route.allowNotFound
-          ? "https://bastienlopez.fr/"
+          ? null
           : `https://bastienlopez.fr${route.path === "/" ? "/" : route.path}`;
-        await waitForStablePage(page, expectedCanonical);
+        await waitForStablePage(page, expectedCanonical, route.requiredSelectors ?? []);
         const outputPath = path.join(distRoot, route.output);
         await mkdir(path.dirname(outputPath), { recursive: true });
-        const renderedHtml = stripPrerenderRuntimePreloads(await page.content());
-        if (!renderedHtml.includes(`rel="canonical" href="${expectedCanonical}"`)) {
+        const renderedHtml = normalizePrerenderRuntimeAssets(await page.content());
+        if (expectedCanonical && !renderedHtml.includes(`rel="canonical" href="${expectedCanonical}"`)) {
           throw new Error(`Prerendered ${route.path} does not contain canonical ${expectedCanonical}`);
+        }
+        if (!expectedCanonical && /<link\s+rel="canonical"/i.test(renderedHtml)) {
+          throw new Error(`Prerendered ${route.path} must not contain a canonical link`);
         }
         await writeFile(outputPath, renderedHtml, "utf8");
         console.log(`Prerendered ${route.path} -> ${path.relative(projectRoot, outputPath)}`);
