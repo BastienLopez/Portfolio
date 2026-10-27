@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FreelanceServices from "@/components/Freelance";
@@ -114,10 +114,18 @@ const Freelance = () => {
             {JSON.stringify(freelanceSchema(isEnglish))}
           </script>
           <FreelanceServices />
-          <Projects mode="freelance" />
-          <Testimonials />
-          <FreelanceFaq />
-          <Contact variant="freelance" />
+          <Suspense fallback={null}>
+            <Projects mode="freelance" />
+          </Suspense>
+          <Suspense fallback={null}>
+            <Testimonials />
+          </Suspense>
+          <Suspense fallback={null}>
+            <FreelanceFaq />
+          </Suspense>
+          <Suspense fallback={null}>
+            <Contact variant="freelance" />
+          </Suspense>
       </main>
       <Footer />
     </div>

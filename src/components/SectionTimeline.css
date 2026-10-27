@@ -52,6 +52,57 @@
   touch-action: manipulation;
 }
 
+ .section-timeline-link:nth-child(1) { z-index: 50; }
+ .section-timeline-link:nth-child(2) { z-index: 49; }
+ .section-timeline-link:nth-child(3) { z-index: 48; }
+ .section-timeline-link:nth-child(4) { z-index: 47; }
+ .section-timeline-link:nth-child(5) { z-index: 46; }
+ .section-timeline-link:nth-child(6) { z-index: 45; }
+ .section-timeline-link:nth-child(7) { z-index: 44; }
+ .section-timeline-link:nth-child(8) { z-index: 43; }
+ .section-timeline-link:nth-child(9) { z-index: 42; }
+ .section-timeline-link:nth-child(10) { z-index: 41; }
+ .section-timeline-link:nth-child(11) { z-index: 40; }
+ .section-timeline-link:nth-child(12) { z-index: 39; }
+ .section-timeline-link:nth-child(13) { z-index: 38; }
+ .section-timeline-link:nth-child(14) { z-index: 37; }
+ .section-timeline-link:nth-child(15) { z-index: 36; }
+ .section-timeline-link:nth-child(16) { z-index: 35; }
+ .section-timeline-link:nth-child(17) { z-index: 34; }
+ .section-timeline-link:nth-child(18) { z-index: 33; }
+ .section-timeline-link:nth-child(19) { z-index: 32; }
+ .section-timeline-link:nth-child(20) { z-index: 31; }
+ .section-timeline-link:nth-child(21) { z-index: 30; }
+ .section-timeline-link:nth-child(22) { z-index: 29; }
+ .section-timeline-link:nth-child(23) { z-index: 28; }
+ .section-timeline-link:nth-child(24) { z-index: 27; }
+ .section-timeline-link:nth-child(25) { z-index: 26; }
+ .section-timeline-link:nth-child(26) { z-index: 25; }
+ .section-timeline-link:nth-child(27) { z-index: 24; }
+ .section-timeline-link:nth-child(28) { z-index: 23; }
+ .section-timeline-link:nth-child(29) { z-index: 22; }
+ .section-timeline-link:nth-child(30) { z-index: 21; }
+ .section-timeline-link:nth-child(31) { z-index: 20; }
+ .section-timeline-link:nth-child(32) { z-index: 19; }
+ .section-timeline-link:nth-child(33) { z-index: 18; }
+ .section-timeline-link:nth-child(34) { z-index: 17; }
+ .section-timeline-link:nth-child(35) { z-index: 16; }
+ .section-timeline-link:nth-child(36) { z-index: 15; }
+ .section-timeline-link:nth-child(37) { z-index: 14; }
+ .section-timeline-link:nth-child(38) { z-index: 13; }
+ .section-timeline-link:nth-child(39) { z-index: 12; }
+ .section-timeline-link:nth-child(40) { z-index: 11; }
+ .section-timeline-link:nth-child(41) { z-index: 10; }
+ .section-timeline-link:nth-child(42) { z-index: 9; }
+ .section-timeline-link:nth-child(43) { z-index: 8; }
+ .section-timeline-link:nth-child(44) { z-index: 7; }
+ .section-timeline-link:nth-child(45) { z-index: 6; }
+ .section-timeline-link:nth-child(46) { z-index: 5; }
+ .section-timeline-link:nth-child(47) { z-index: 4; }
+ .section-timeline-link:nth-child(48) { z-index: 3; }
+ .section-timeline-link:nth-child(49) { z-index: 2; }
+ .section-timeline-link:nth-child(50) { z-index: 1; }
+
 /* Only section anchors need an accessible focus target. The other 44 points
    remain mouse click targets, so 50 points can stay evenly distributed
    without overlapping 24 px interactive boxes. */

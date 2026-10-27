@@ -154,16 +154,18 @@ const Navbar = () => {
     // exposing the previous page's scroll position while the lazy page mounts.
     const root = document.documentElement;
     const body = document.body;
-    const previousScrollBehavior = root.style.scrollBehavior;
-    const previousBodyScrollBehavior = body.style.scrollBehavior;
-    root.style.scrollBehavior = "auto";
-    body.style.scrollBehavior = "auto";
-    root.scrollTop = 0;
-    body.scrollTop = 0;
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    document.scrollingElement?.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    root.style.scrollBehavior = previousScrollBehavior;
-    body.style.scrollBehavior = previousBodyScrollBehavior;
+    const instantScrollClass = "force-instant-scroll";
+    root.classList.add(instantScrollClass);
+    body.classList.add(instantScrollClass);
+    try {
+      root.scrollTop = 0;
+      body.scrollTop = 0;
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      document.scrollingElement?.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    } finally {
+      root.classList.remove(instantScrollClass);
+      body.classList.remove(instantScrollClass);
+    }
     window.requestAnimationFrame(() => {
       root.scrollTop = 0;
       body.scrollTop = 0;

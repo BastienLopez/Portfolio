@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import DOMPurify from "dompurify";
 import { renderArticleContent } from "@/lib/article-content";
+import { asHtmlString, sanitizeHtml } from "@/lib/trusted-html";
 
 let mermaidRenderId = 0;
 
@@ -12,7 +13,10 @@ type RenderedArticleContentProps = {
 const RenderedArticleContent = ({ content, className }: RenderedArticleContentProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const html = useMemo(
-    () => DOMPurify.sanitize(renderArticleContent(content)),
+    () =>
+      sanitizeHtml(renderArticleContent(content), (value) =>
+        DOMPurify.sanitize(value) as string,
+      ),
     [content],
   );
 
@@ -49,7 +53,9 @@ const RenderedArticleContent = ({ content, className }: RenderedArticleContentPr
           wrapper.className = "devnotes-mermaid";
           wrapper.setAttribute("role", "img");
           wrapper.setAttribute("aria-label", "Diagramme Mermaid");
-          wrapper.innerHTML = rendered.svg;
+          wrapper.innerHTML = asHtmlString(
+            sanitizeHtml(rendered.svg, (value) => DOMPurify.sanitize(value) as string),
+          );
           pre.replaceWith(wrapper);
           rendered.bindFunctions?.(wrapper);
         } catch {
@@ -65,7 +71,13 @@ const RenderedArticleContent = ({ content, className }: RenderedArticleContentPr
     };
   }, [html]);
 
-  return <div ref={contentRef} className={className} dangerouslySetInnerHTML={{ __html: html }} />;
+  return (
+    <div
+      ref={contentRef}
+      className={className}
+      dangerouslySetInnerHTML={{ __html: asHtmlString(html) }}
+    />
+  );
 };
 
 export default RenderedArticleContent;

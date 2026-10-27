@@ -207,11 +207,7 @@ const Article = () => {
             </header>
 
               <Suspense
-                fallback={
-                  <div className="devnotes-article-content prose prose-sm max-w-none md:prose-lg">
-                    {isEnglish ? "Loading article…" : "Chargement de la note…"}
-                  </div>
-                }
+                fallback={null}
               >
                 <RenderedArticleContent
                   className="devnotes-article-content prose prose-sm max-w-none md:prose-lg"

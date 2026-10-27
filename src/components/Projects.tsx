@@ -1083,8 +1083,7 @@ const Projects = ({ mode = "portfolio", as = "section" }: ProjectsProps) => {
 
     const previouslyFocusedElement =
       document.activeElement as HTMLElement | null;
-    const previousBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.body.classList.add("gallery-open");
     const focusTimer = window.setTimeout(() => {
       galleryViewerRef.current
         ?.querySelector<HTMLButtonElement>("[data-gallery-close]")
@@ -1127,7 +1126,7 @@ const Projects = ({ mode = "portfolio", as = "section" }: ProjectsProps) => {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.clearTimeout(focusTimer);
-      document.body.style.overflow = previousBodyOverflow;
+      document.body.classList.remove("gallery-open");
       window.removeEventListener("keydown", handleKeyDown);
       previouslyFocusedElement?.focus();
     };

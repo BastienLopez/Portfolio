@@ -408,6 +408,13 @@ All colors MUST be HSL.
 }
 
 /* Hero: fade the lower edge into the first content section. */
+.hero-grid-background {
+  background-image:
+    linear-gradient(hsl(var(--border)) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
 .hero-grid-fade {
   pointer-events: none;
   position: absolute;
@@ -496,6 +503,15 @@ All colors MUST be HSL.
   
   html {
     scroll-behavior: smooth;
+  }
+
+  html.force-instant-scroll,
+  body.force-instant-scroll {
+    scroll-behavior: auto !important;
+  }
+
+  body.gallery-open {
+    overflow: hidden;
   }
 
   :focus-visible {

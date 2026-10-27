@@ -56,12 +56,7 @@ const Hero = () => {
       {/* Subtle grid: a static visual anchor for the hero composition. */}
       <div className="pointer-events-none absolute inset-0 z-0 opacity-20" aria-hidden="true">
         <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
-            backgroundSize: "50px 50px",
-          }}
+          className="hero-grid-background absolute inset-0"
         />
       </div>
 

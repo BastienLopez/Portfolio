@@ -438,6 +438,16 @@ if (existsSync(path.join(distDirectory, "sitemap.xml"))) {
 const caddyFile = path.join(process.cwd(), "deploy", "Caddyfile.example");
 if (existsSync(caddyFile)) {
   const caddy = readFileSync(caddyFile, "utf8");
+  if (!caddy.includes('Cross-Origin-Opener-Policy "same-origin"')) {
+    failures.push("deploy/Caddyfile.example does not enable Cross-Origin-Opener-Policy same-origin.");
+  }
+  if (
+    !caddy.includes("script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'") ||
+    !caddy.includes("trusted-types default portfolio-html dompurify; require-trusted-types-for 'script'") ||
+    caddy.includes("unsafe-inline")
+  ) {
+    failures.push("deploy/Caddyfile.example does not expose the enforced strict CSP without unsafe-inline.");
+  }
   if (!caddy.includes("@legacySitesVitrines") || !caddy.includes("redir @legacySitesVitrines https://bastienlopez.fr/creation-site-internet-reims 301")) {
     failures.push("deploy/Caddyfile.example does not redirect the legacy sites-vitrines URL to the Reims landing page.");
   }

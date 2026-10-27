@@ -1,7 +1,6 @@
 import { LanguageProvider } from "@/lib/i18n";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import SectionTimeline from "./components/SectionTimeline";
 
 const IndexPage = lazy(() => import("./pages/Index"));
 const loadFreelancePage = () => import("./pages/Freelance");
@@ -17,21 +16,48 @@ const ServicePage = lazy(loadServicePage);
 const ArticlePage = lazy(loadArticlePage);
 const LegalPage = lazy(() => import("./pages/Legal"));
 const NotFoundPage = lazy(() => import("./pages/NotFound"));
+const SectionTimeline = lazy(() => import("./components/SectionTimeline"));
+
+const DesktopSectionTimeline = () => {
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches,
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const updateViewport = () => setIsDesktop(mediaQuery.matches);
+
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
+
+  if (!isDesktop) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <SectionTimeline />
+    </Suspense>
+  );
+};
 
 const scrollToTopInstant = () => {
   const root = document.documentElement;
   const body = document.body;
-  const previousScrollBehavior = root.style.scrollBehavior;
-  const previousBodyScrollBehavior = body.style.scrollBehavior;
+  const instantScrollClass = "force-instant-scroll";
 
-  root.style.scrollBehavior = "auto";
-  body.style.scrollBehavior = "auto";
-  root.scrollTop = 0;
-  body.scrollTop = 0;
-  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  document.scrollingElement?.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  root.style.scrollBehavior = previousScrollBehavior;
-  body.style.scrollBehavior = previousBodyScrollBehavior;
+  root.classList.add(instantScrollClass);
+  body.classList.add(instantScrollClass);
+  try {
+    root.scrollTop = 0;
+    body.scrollTop = 0;
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    document.scrollingElement?.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  } finally {
+    root.classList.remove(instantScrollClass);
+    body.classList.remove(instantScrollClass);
+  }
 };
 
 const AppNavigationEffects = () => {
@@ -112,11 +138,7 @@ const App = () => (
     >
       <AppNavigationEffects />
       <Suspense
-        fallback={
-          <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
-            Chargement…
-          </div>
-        }
+        fallback={null}
       >
         <Routes>
           <Route path="/" element={<IndexPage />} />
@@ -131,7 +153,7 @@ const App = () => (
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
-      <SectionTimeline />
+      <DesktopSectionTimeline />
     </BrowserRouter>
   </LanguageProvider>
 );

@@ -161,7 +161,7 @@ const normalizePrerenderRuntimeAssets = (html) =>
     )
     .replace(
       /<link\s+rel="stylesheet"([^>]*href="\/assets\/(?:Article|DevNotes)-[^"]+\.css"[^>]*)>/gi,
-      '<link rel="preload" as="style"$1 onload="this.onload=null;this.rel=\'stylesheet\'"><noscript><link rel="stylesheet"$1></noscript>',
+      '<link rel="preload" as="style"$1><link rel="stylesheet"$1 media="print" data-deferred-style><noscript><link rel="stylesheet"$1></noscript>',
     );
 
 const prerender = async () => {

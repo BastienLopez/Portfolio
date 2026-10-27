@@ -202,7 +202,6 @@ const SectionTimeline = () => {
       const timeline = timelineRef.current;
       if (timeline) {
         timeline.dataset.scrollProgress = scrollProgress.toFixed(4);
-        timeline.style.setProperty("--timeline-scroll-progress", String(scrollProgress));
       }
 
       setCurrentPointIndex((current) => (current === nextPointIndex ? current : nextPointIndex));
@@ -319,7 +318,6 @@ const SectionTimeline = () => {
                 data-point-index={point.index}
                 data-section-id={section.id}
                 data-section-progress={section.scrollProgress.toFixed(4)}
-                style={{ zIndex: timelinePoints.length - point.index }}
                 onClick={(event) => navigateToSection(event, section.id)}
               >
                 <span className="section-timeline-link-label" aria-hidden="true">
@@ -337,7 +335,6 @@ const SectionTimeline = () => {
               aria-hidden="true"
               data-point-index={point.index}
               data-point-progress={point.progress.toFixed(4)}
-              style={{ zIndex: timelinePoints.length - point.index }}
               onClick={navigateToPoint}
             >
               <span className="section-timeline-mark" aria-hidden="true" />

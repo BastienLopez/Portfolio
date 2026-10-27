@@ -150,3 +150,18 @@ test("la timeline suit la progression réelle et les sections de chaque page", a
   await page.goto("/");
   await expect(page.locator(".section-timeline")).toBeHidden();
 });
+
+test("ne charge pas le JavaScript de la timeline sur mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  const timelineScriptRequests: string[] = [];
+
+  page.on("request", (request) => {
+    if (/\/assets\/SectionTimeline-[^/]+\.js$/.test(new URL(request.url()).pathname)) {
+      timelineScriptRequests.push(request.url());
+    }
+  });
+
+  await page.goto("/freelance");
+  await expect(page.locator(".section-timeline")).toHaveCount(0);
+  expect(timelineScriptRequests).toHaveLength(0);
+});

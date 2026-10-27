@@ -183,12 +183,7 @@ const Freelance = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
         <div className="absolute inset-0 opacity-20">
           <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
-              backgroundSize: "50px 50px",
-            }}
+            className="hero-grid-background absolute inset-0"
           />
         </div>
         <div className="hero-grid-fade" />

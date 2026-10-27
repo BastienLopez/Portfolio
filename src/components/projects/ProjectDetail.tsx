@@ -3,6 +3,7 @@ import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Project, ProjectGalleryItem } from "@/data/projects";
 import { getImageManifestEntry, getImageSrcSet } from "@/lib/image-variants";
+import { asHtmlString, sanitizeHtml, type SanitizedHtml } from "@/lib/trusted-html";
 import { ProjectNavigation } from "./ProjectNavigation";
 
 type ProjectDetailProps = {
@@ -48,7 +49,7 @@ export const ProjectDetail = ({
     () => (project.detailedContent ? prepareDetailedContent(project.detailedContent) : ""),
     [prepareDetailedContent, project.detailedContent],
   );
-  const [detailedContentHtml, setDetailedContentHtml] = useState("");
+  const [detailedContentHtml, setDetailedContentHtml] = useState<SanitizedHtml | "">("");
 
   useEffect(() => {
     let cancelled = false;
@@ -60,7 +61,11 @@ export const ProjectDetail = ({
 
     void import("dompurify")
       .then(({ default: DOMPurify }) => {
-        if (!cancelled) setDetailedContentHtml(DOMPurify.sanitize(renderedDetailedContent));
+        if (!cancelled) {
+          setDetailedContentHtml(
+            sanitizeHtml(renderedDetailedContent, (value) => DOMPurify.sanitize(value) as string),
+          );
+        }
       })
       .catch(() => {
         if (!cancelled) setDetailedContentHtml("");
@@ -188,7 +193,7 @@ export const ProjectDetail = ({
             {isEnglish ? `${project.title} details` : `Détails du projet ${project.title}`}
           </h2>
           {detailedContentHtml ? (
-            <div dangerouslySetInnerHTML={{ __html: detailedContentHtml }} />
+            <div dangerouslySetInnerHTML={{ __html: asHtmlString(detailedContentHtml) }} />
           ) : renderedDetailedContent ? (
             <div className="project-detail-empty">
               {isEnglish ? "Loading project details…" : "Chargement des détails du projet…"}
