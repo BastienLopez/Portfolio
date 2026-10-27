@@ -4,11 +4,11 @@ Ce site présente le portfolio de Bastien Lopez, développeur web freelance à R
 
 ## Identité vérifiable
 - Nom: Bastien Lopez
-- Site officiel: https://bastienlopez.fr/
-- Page dédiée aux services freelance: https://bastienlopez.fr/freelance
-- Création de sites internet à Reims: https://bastienlopez.fr/creation-site-internet-reims
-- Services — applications métier: https://bastienlopez.fr/services/applications-metier
-- Services — automatisations n8n: https://bastienlopez.fr/services/automatisations-n8n
+- [Site officiel](https://bastienlopez.fr/)
+- [Page dédiée aux services freelance](https://bastienlopez.fr/freelance)
+- [Création de sites internet à Reims](https://bastienlopez.fr/creation-site-internet-reims)
+- [Services — applications métier](https://bastienlopez.fr/services/applications-metier)
+- [Services — automatisations n8n](https://bastienlopez.fr/services/automatisations-n8n)
 - Langue éditoriale principale: français
 - URLs canoniques et contenus de référence: français
 - Localisation déclarée: Reims, France; interventions à distance en France et en Europe
@@ -22,11 +22,11 @@ Ce site présente le portfolio de Bastien Lopez, développeur web freelance à R
 - Comment démarrer ? Préparer un brief depuis le formulaire de contact, puis l’envoyer soi-même par email. Chiffrage sur devis après cadrage, planning défini selon le périmètre et les disponibilités.
 
 ## Questions fréquentes
-- Je veux créer un site pour mon entreprise : commencer par la page locale de création de sites internet à Reims, qui décrit le cadrage, les publics, l’adaptation mobile, les fondations SEO/GEO et les réalisations : https://bastienlopez.fr/creation-site-internet-reims
-- Je cherche une création de site internet à Reims : consulter la page locale, qui regroupe le périmètre, les livrables, la méthode, les questions fréquentes et les réalisations liées: https://bastienlopez.fr/creation-site-internet-reims
-- Je cherche un développeur web freelance à Reims : consulter les services freelance, les projets associés et la FAQ avant de décrire le besoin: https://bastienlopez.fr/freelance
-- Je veux une application métier pour une PME : voir le service Applications métier sur mesure et l’étude ERP Micro-Crèches: https://bastienlopez.fr/services/applications-metier
-- Je veux automatiser un workflow d’équipe : voir Automatisation n8n et IA, puis les études Reporting et Dérush vidéo: https://bastienlopez.fr/services/automatisations-n8n
+- Je veux créer un site pour mon entreprise : commencer par la [page locale de création de sites internet à Reims](https://bastienlopez.fr/creation-site-internet-reims), qui décrit le cadrage, les publics, l’adaptation mobile, les fondations SEO/GEO et les réalisations.
+- Je cherche une création de site internet à Reims : consulter la [page locale](https://bastienlopez.fr/creation-site-internet-reims), qui regroupe le périmètre, les livrables, la méthode, les questions fréquentes et les réalisations liées.
+- Je cherche un développeur web freelance à Reims : consulter les [services freelance](https://bastienlopez.fr/freelance), les projets associés et la FAQ avant de décrire le besoin.
+- Je veux une application métier pour une PME : voir le service [Applications métier sur mesure](https://bastienlopez.fr/services/applications-metier) et l’étude ERP Micro-Crèches.
+- Je veux automatiser un workflow d’équipe : voir [Automatisation n8n et IA](https://bastienlopez.fr/services/automatisations-n8n), puis les études Reporting et Dérush vidéo.
 
 ## Positionnement
 - Sites professionnels pour présenter l’activité et faciliter le contact
@@ -47,63 +47,63 @@ Ce site présente le portfolio de Bastien Lopez, développeur web freelance à R
 - Travail à distance pour des équipes en France et en Europe
 
 ## Sections importantes
-- Hero et proposition de valeur: https://bastienlopez.fr/
-- À propos et disponibilité: https://bastienlopez.fr/#about
-- Projets: https://bastienlopez.fr/#projects
-- Freelance (services, projets, avis et FAQ): https://bastienlopez.fr/freelance
-- Création de sites internet à Reims: https://bastienlopez.fr/creation-site-internet-reims
-- Compétences: https://bastienlopez.fr/#skills
-- Dev Notes: https://bastienlopez.fr/#devnotes
-- Contact: https://bastienlopez.fr/#contact
+- [Hero et proposition de valeur](https://bastienlopez.fr/)
+- [À propos et disponibilité](https://bastienlopez.fr/#about)
+- [Projets](https://bastienlopez.fr/#projects)
+- [Freelance (services, projets, avis et FAQ)](https://bastienlopez.fr/freelance)
+- [Création de sites internet à Reims](https://bastienlopez.fr/creation-site-internet-reims)
+- [Compétences](https://bastienlopez.fr/#skills)
+- [Dev Notes](https://bastienlopez.fr/#devnotes)
+- [Contact](https://bastienlopez.fr/#contact)
 
 ## Études de cas et fiches projet
-- Altme Wallet Provider: https://bastienlopez.fr/projets/altme-wallet-provider
-- Automatisations n8n — Reporting: https://bastienlopez.fr/projets/automatisations-n8n-reporting
-- Automatisations n8n — Dérush vidéo: https://bastienlopez.fr/projets/automatisations-n8n-derush-video
-- Altme Wallet Platform: https://bastienlopez.fr/projets/altme-wallet-platform
-- Altme Documentation: https://bastienlopez.fr/projets/altme-documentation
-- Teams Bot & Mastra Agents: https://bastienlopez.fr/projets/teams-bot-mastra
-- SEO & optimisation GEO: https://bastienlopez.fr/projets/seo-geo-optimization
-- Eloi CoachStéo: https://bastienlopez.fr/projets/eloi-coachsteo
-- ERP Micro-Crèches: https://bastienlopez.fr/projets/erp-micro-creches
-- Luxury Auto Detailing (concept / demo, no client reference): https://bastienlopez.fr/projets/luxury-auto-detailing
-- Clé de Voûte: https://bastienlopez.fr/projets/cledevoute
-- Berserk Universe: https://bastienlopez.fr/projets/berserk-universe
-- Codex Limits Usage: https://bastienlopez.fr/projets/codex-limits-usage
-- Pokémon Binder: https://bastienlopez.fr/projets/pokemon-binder
-- IA Trading: https://bastienlopez.fr/projets/ia-trading
-- PatriPro: https://bastienlopez.fr/projets/patripro
-- ATS Filter Resume: https://bastienlopez.fr/projets/ats-filter-resume
-- NOVOTEL — Roue de la chance: https://bastienlopez.fr/projets/novotel-roue-chance
-- Aqualis: https://bastienlopez.fr/projets/aqualis
-- Nolvus Mod Automation: https://bastienlopez.fr/projets/nolvus-mod-automation
-- Bloodborne shadPS4: https://bastienlopez.fr/projets/bloodborne-shadps4
-- Demon’s Souls RPCS3: https://bastienlopez.fr/projets/demons-souls-rpcs3
+- [Altme Wallet Provider](https://bastienlopez.fr/projets/altme-wallet-provider)
+- [Automatisations n8n — Reporting](https://bastienlopez.fr/projets/automatisations-n8n-reporting)
+- [Automatisations n8n — Dérush vidéo](https://bastienlopez.fr/projets/automatisations-n8n-derush-video)
+- [Altme Wallet Platform](https://bastienlopez.fr/projets/altme-wallet-platform)
+- [Altme Documentation](https://bastienlopez.fr/projets/altme-documentation)
+- [Teams Bot & Mastra Agents](https://bastienlopez.fr/projets/teams-bot-mastra)
+- [SEO & optimisation GEO](https://bastienlopez.fr/projets/seo-geo-optimization)
+- [Eloi CoachStéo](https://bastienlopez.fr/projets/eloi-coachsteo)
+- [ERP Micro-Crèches](https://bastienlopez.fr/projets/erp-micro-creches)
+- [Luxury Auto Detailing (concept / demo, no client reference)](https://bastienlopez.fr/projets/luxury-auto-detailing)
+- [Clé de Voûte](https://bastienlopez.fr/projets/cledevoute)
+- [Berserk Universe](https://bastienlopez.fr/projets/berserk-universe)
+- [Codex Limits Usage](https://bastienlopez.fr/projets/codex-limits-usage)
+- [Pokémon Binder](https://bastienlopez.fr/projets/pokemon-binder)
+- [IA Trading](https://bastienlopez.fr/projets/ia-trading)
+- [PatriPro](https://bastienlopez.fr/projets/patripro)
+- [ATS Filter Resume](https://bastienlopez.fr/projets/ats-filter-resume)
+- [NOVOTEL — Roue de la chance](https://bastienlopez.fr/projets/novotel-roue-chance)
+- [Aqualis](https://bastienlopez.fr/projets/aqualis)
+- [Nolvus Mod Automation](https://bastienlopez.fr/projets/nolvus-mod-automation)
+- [Bloodborne shadPS4](https://bastienlopez.fr/projets/bloodborne-shadps4)
+- [Demon’s Souls RPCS3](https://bastienlopez.fr/projets/demons-souls-rpcs3)
 
 ## Dev Notes indexables
-- Point d’entrée thématique: https://bastienlopez.fr/#devnotes
+- [Point d’entrée thématique](https://bastienlopez.fr/#devnotes)
 - Culture & Méthodes: pratiques de collaboration, agilité et qualité du travail logiciel.
 - CI/CD & DevOps: intégration continue, déploiement, observabilité et automatisation.
 - Outils & Productivité: outils développeur, sécurité locale et organisation quotidienne.
 - Architecture & Bonnes pratiques: architecture logicielle, qualité du code et réduction de la dette technique.
 - Gestion de projet & freelance: cadrage, estimation, communication et livraison de missions.
-- Pipeline CI/CD GitHub Actions: https://bastienlopez.fr/notes/pipeline-ci-cd-github-actions
-- Docker pour débutants: https://bastienlopez.fr/notes/docker-pour-debutants
-- Monitoring après déploiement: https://bastienlopez.fr/notes/monitorer-une-application-apres-deploiement
-- Architecture hexagonale: https://bastienlopez.fr/notes/architecture-hexagonale
-- Check-list de déploiement en production: https://bastienlopez.fr/notes/deploiement-production-checklist
-- Secrets et clés API en local: https://bastienlopez.fr/notes/gerer-secrets-cles-api-local
-- Refactoring progressif: https://bastienlopez.fr/notes/refactoring-sans-tout-casser
-- Estimation d’un projet freelance: https://bastienlopez.fr/notes/estimer-un-projet-freelance
-- Créer un site internet pour son entreprise: https://bastienlopez.fr/notes/creer-site-internet-entreprise-cadrage
-- Automatiser un processus d’entreprise avec n8n: https://bastienlopez.fr/notes/automatiser-processus-entreprise-n8n-cadrage
+- [Pipeline CI/CD GitHub Actions](https://bastienlopez.fr/notes/pipeline-ci-cd-github-actions)
+- [Docker pour débutants](https://bastienlopez.fr/notes/docker-pour-debutants)
+- [Monitoring après déploiement](https://bastienlopez.fr/notes/monitorer-une-application-apres-deploiement)
+- [Architecture hexagonale](https://bastienlopez.fr/notes/architecture-hexagonale)
+- [Check-list de déploiement en production](https://bastienlopez.fr/notes/deploiement-production-checklist)
+- [Secrets et clés API en local](https://bastienlopez.fr/notes/gerer-secrets-cles-api-local)
+- [Refactoring progressif](https://bastienlopez.fr/notes/refactoring-sans-tout-casser)
+- [Estimation d’un projet freelance](https://bastienlopez.fr/notes/estimer-un-projet-freelance)
+- [Créer un site internet pour son entreprise](https://bastienlopez.fr/notes/creer-site-internet-entreprise-cadrage)
+- [Automatiser un processus d’entreprise avec n8n](https://bastienlopez.fr/notes/automatiser-processus-entreprise-n8n-cadrage)
 
 ## Contact et profils
 - Email: bastien.lopez40@gmail.com
-- GitHub: https://github.com/BastienLopez
-- LinkedIn: https://www.linkedin.com/in/bastien-lopez-fullstack/
+- [GitHub](https://github.com/BastienLopez)
+- [LinkedIn](https://www.linkedin.com/in/bastien-lopez-fullstack/)
 
 ## Notes
 - Langue principale: français
-- Site officiel: https://bastienlopez.fr/
-- Version étendue factuelle: https://bastienlopez.fr/llms-full.txt
+- [Site officiel](https://bastienlopez.fr/)
+- [Version étendue factuelle](https://bastienlopez.fr/llms-full.txt)

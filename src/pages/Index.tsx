@@ -13,6 +13,16 @@ import { SITE_ORIGIN, useLanguage, usePageMetadata } from "@/lib/i18n";
 const Projects = lazy(() => import("@/components/Projects"));
 const DevNotes = lazy(() => import("@/components/DevNotes"));
 
+const scheduleDeferredLoad = (callback: () => void, timeout: number) => {
+  if ("requestIdleCallback" in window) {
+    const idleId = window.requestIdleCallback(callback, { timeout });
+    return () => window.cancelIdleCallback(idleId);
+  }
+
+  const timer = window.setTimeout(callback, Math.min(timeout, 300));
+  return () => window.clearTimeout(timer);
+};
+
 const DeferredProjects = () => {
   const [shouldLoad, setShouldLoad] = useState(false);
 
@@ -20,8 +30,7 @@ const DeferredProjects = () => {
     // Keep the above-the-fold render focused on the hero and the first trust
     // signals. The prerenderer waits for the featured cards before serialising
     // the page, so the crawlable HTML remains complete.
-    const timer = window.setTimeout(() => setShouldLoad(true), 0);
-    return () => window.clearTimeout(timer);
+    return scheduleDeferredLoad(() => setShouldLoad(true), 800);
   }, []);
 
   if (!shouldLoad) return null;
@@ -39,8 +48,7 @@ const DeferredDevNotes = () => {
   useEffect(() => {
     // Keep the technical catalogue out of the initial JavaScript parse. The
     // prerenderer waits for #devnotes so the crawlable HTML remains complete.
-    const timer = window.setTimeout(() => setShouldLoad(true), 0);
-    return () => window.clearTimeout(timer);
+    return scheduleDeferredLoad(() => setShouldLoad(true), 1600);
   }, []);
 
   if (!shouldLoad) return null;

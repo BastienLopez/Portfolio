@@ -10,6 +10,7 @@ type TimelineSection = {
   id: string;
   label: string;
   element: HTMLElement;
+  top: number;
   scrollProgress: number;
   pointIndex: number;
 };
@@ -123,7 +124,7 @@ const getTimelineSections = (pathname: string, isEnglish: boolean): TimelineSect
     const pointIndex = getAvailablePointIndex(rawPointIndex, usedPointIndexes);
 
     usedPointIndexes.add(pointIndex);
-    sections.push({ id: element.id, label, element, scrollProgress, pointIndex });
+    sections.push({ id: element.id, label, element, top: sectionTop, scrollProgress, pointIndex });
     return sections;
   }, []);
 };
@@ -136,6 +137,8 @@ const sameSections = (previous: TimelineSection[], next: TimelineSection[]) =>
       section.id === nextSection.id &&
       section.label === nextSection.label &&
       section.element === nextSection.element &&
+      section.top === nextSection.top &&
+      section.scrollProgress === nextSection.scrollProgress &&
       section.pointIndex === nextSection.pointIndex
     );
   });
@@ -193,8 +196,7 @@ const SectionTimeline = () => {
       let currentSection = sections[0];
 
       for (const section of sections) {
-        const sectionTop = section.element.getBoundingClientRect().top + window.scrollY;
-        if (sectionTop <= markerPosition) currentSection = section;
+        if (section.top <= markerPosition) currentSection = section;
       }
 
       const timeline = timelineRef.current;

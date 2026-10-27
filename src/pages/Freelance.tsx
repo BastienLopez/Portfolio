@@ -1,9 +1,9 @@
 import { lazy } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FreelanceServices from "@/components/Freelance";
 import { useLanguage, usePageMetadata } from "@/lib/i18n";
 
-const FreelanceServices = lazy(() => import("@/components/Freelance"));
 const Projects = lazy(() => import("@/components/Projects"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 const FreelanceFaq = lazy(() => import("@/components/FreelanceFaq"));

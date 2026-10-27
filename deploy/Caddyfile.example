@@ -36,6 +36,21 @@ bastienlopez.fr {
 	import security_headers
 	encode zstd gzip
 
+	# Les assets Vite portent des noms fingerprintés : ils peuvent être
+	# conservés longtemps sans servir une version obsolète après un déploiement.
+	@immutableAssets path /assets/*
+	header @immutableAssets Cache-Control "public, max-age=31536000, immutable"
+
+	# Les images, polices et icônes publiques ne sont pas toutes fingerprintées;
+	# un cache long mais revalidable évite de figer une ancienne version.
+	@stableAssets path /fonts/* /img_optimized/* /img_clients/* /img_projects/* /favicon.ico /icon-192.png /icon-512.png /og-image.png /og-image.svg
+	header @stableAssets Cache-Control "public, max-age=604800"
+
+	# Les fichiers de découverte peuvent changer sans nécessiter un nouveau
+	# build des assets ; une revalidation horaire suffit.
+	@metadataFiles path /robots.txt /sitemap.xml /llms.txt /site.webmanifest
+	header @metadataFiles Cache-Control "public, max-age=3600"
+
 	@badmethod {
 		not method GET HEAD
 	}

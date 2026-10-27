@@ -62,6 +62,25 @@ test("la timeline suit la progression réelle et les sections de chaque page", a
   expect(await page.locator(".section-timeline-link.is-after-section .section-timeline-mark").count()).toBeGreaterThan(0);
   expect(await page.locator(".section-timeline-link.is-two-after-section .section-timeline-mark").count()).toBeGreaterThan(0);
 
+  await page.waitForFunction(() => {
+    const timeline = document.querySelector<HTMLElement>(".section-timeline");
+    if (!timeline) return false;
+
+    const getWidth = (selector: string) =>
+      timeline.querySelector<HTMLElement>(selector)?.getBoundingClientRect().width ?? 0;
+    const small = getWidth(".is-two-before-section .section-timeline-mark");
+    const medium = getWidth(".is-before-section .section-timeline-mark");
+    const section = getWidth(".section-timeline-link[data-section-id] .section-timeline-mark");
+
+    return (
+      small > 0 &&
+      medium > small * 1.8 &&
+      medium < small * 2.2 &&
+      section > medium * 1.8 &&
+      section < medium * 2.2
+    );
+  });
+
   const markerLengths = await page.locator(".section-timeline-link[data-section-id]").first().evaluate((element) => {
     const timeline = element.closest(".section-timeline");
     const getWidth = (selector: string) =>

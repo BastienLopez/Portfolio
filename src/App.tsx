@@ -1,11 +1,9 @@
 import { LanguageProvider } from "@/lib/i18n";
 import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import Index from "./pages/Index";
-import Legal from "./pages/Legal";
-import NotFound from "./pages/NotFound";
 import SectionTimeline from "./components/SectionTimeline";
 
+const IndexPage = lazy(() => import("./pages/Index"));
 const loadFreelancePage = () => import("./pages/Freelance");
 const loadLocalWebCreationPage = () => import("./pages/LocalWebCreation");
 const loadProjectCaseStudyPage = () => import("./pages/ProjectCaseStudy");
@@ -17,6 +15,8 @@ const LocalWebCreationPage = lazy(loadLocalWebCreationPage);
 const ProjectCaseStudyPage = lazy(loadProjectCaseStudyPage);
 const ServicePage = lazy(loadServicePage);
 const ArticlePage = lazy(loadArticlePage);
+const LegalPage = lazy(() => import("./pages/Legal"));
+const NotFoundPage = lazy(() => import("./pages/NotFound"));
 
 const scrollToTopInstant = () => {
   const root = document.documentElement;
@@ -119,16 +119,16 @@ const App = () => (
         }
       >
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<IndexPage />} />
           <Route path="/freelance" element={<FreelancePage />} />
           <Route path="/creation-site-internet-reims" element={<LocalWebCreationPage />} />
-          <Route path="/mentions-legales" element={<Legal />} />
+          <Route path="/mentions-legales" element={<LegalPage />} />
           <Route path="/projets/:slug" element={<ProjectCaseStudyPage />} />
           <Route path="/services/sites-vitrines" element={<Navigate to="/creation-site-internet-reims" replace />} />
           <Route path="/services/:slug" element={<ServicePage />} />
           <Route path="/notes/:slug" element={<ArticlePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
       <SectionTimeline />
