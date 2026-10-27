@@ -38,7 +38,7 @@
   display: flex;
   width: 4rem;
   height: 100%;
-  min-height: 24px;
+  min-height: 0;
   align-items: center;
   justify-content: flex-end;
   align-self: center;
@@ -50,6 +50,14 @@
   cursor: pointer;
   pointer-events: auto;
   touch-action: manipulation;
+}
+
+/* Only section anchors need an accessible focus target. The other 44 points
+   remain mouse click targets, so 50 points can stay evenly distributed
+   without overlapping 24 px interactive boxes. */
+.section-timeline-link[data-section-id] {
+  height: 24px;
+  min-height: 24px;
 }
 
 .section-timeline-link-label {

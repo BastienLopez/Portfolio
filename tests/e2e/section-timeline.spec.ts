@@ -57,6 +57,15 @@ test("la timeline suit la progression réelle et les sections de chaque page", a
   expect(sectionMarkerMetrics.every(({ markerWidth }) => markerWidth >= 22 && markerWidth <= 26)).toBe(true);
   expect(sectionMarkerMetrics.every(({ labelOpacity }) => labelOpacity > 0)).toBe(true);
   expect(sectionMarkerMetrics.every(({ labelTextAlign }) => labelTextAlign === "center")).toBe(true);
+
+  const sectionTargetSizes = await page.locator(".section-timeline-link[data-section-id]").evaluateAll((elements) =>
+    elements.map((element) => {
+      const { width, height } = element.getBoundingClientRect();
+      return { width, height };
+    }),
+  );
+  expect(sectionTargetSizes.every(({ width, height }) => width >= 24 && height >= 24)).toBe(true);
+  await expect(page.locator('.section-timeline-link:not([data-section-id])').first()).toHaveAttribute("aria-hidden", "true");
   expect(await page.locator(".section-timeline-link.is-two-before-section .section-timeline-mark").count()).toBeGreaterThan(0);
   expect(await page.locator(".section-timeline-link.is-before-section .section-timeline-mark").count()).toBeGreaterThan(0);
   expect(await page.locator(".section-timeline-link.is-after-section .section-timeline-mark").count()).toBeGreaterThan(0);

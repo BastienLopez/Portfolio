@@ -246,7 +246,7 @@ const SectionTimeline = () => {
     window.history.replaceState(null, "", window.location.pathname + window.location.search + "#" + id);
   };
 
-  const navigateToProgress = (event: MouseEvent<HTMLButtonElement>, progress: number) => {
+  const navigateToProgress = (event: MouseEvent<HTMLElement>, progress: number) => {
     event.preventDefault();
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -255,6 +255,13 @@ const SectionTimeline = () => {
       behavior: reducedMotion ? "auto" : "smooth",
     });
     window.history.replaceState(null, "", pathname + search);
+  };
+
+  const navigateToPoint = (event: MouseEvent<HTMLElement>) => {
+    const progress = Number(event.currentTarget.dataset.pointProgress);
+    if (!Number.isFinite(progress)) return;
+
+    navigateToProgress(event, progress);
   };
 
   if (sections.length === 0) return null;
@@ -324,18 +331,17 @@ const SectionTimeline = () => {
           }
 
           return (
-            <button
+            <span
               key={point.index}
               className={className}
-              type="button"
-              aria-label={label}
+              aria-hidden="true"
               data-point-index={point.index}
               data-point-progress={point.progress.toFixed(4)}
               style={{ zIndex: timelinePoints.length - point.index }}
-              onClick={(event) => navigateToProgress(event, point.progress)}
+              onClick={navigateToPoint}
             >
               <span className="section-timeline-mark" aria-hidden="true" />
-            </button>
+            </span>
           );
         })}
       </div>
