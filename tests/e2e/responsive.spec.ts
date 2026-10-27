@@ -125,6 +125,7 @@ for (const language of ["fr", "en"] as const) {
           const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
           expect(overflow, `${route} at ${width}px`).toBeLessThanOrEqual(1);
           const elements = page.locator("#projects-list button, .project-detail-hero h1, [data-contextual-cta] a");
+          await expect(elements.first(), route).toBeAttached();
           expect(await elements.count(), route).toBeGreaterThan(0);
           const clipped = await elements.evaluateAll((items) => items.filter((item) => item.scrollWidth > item.clientWidth + 1).map((item) => item.textContent));
           expect(clipped, `${route} at ${width}px`).toEqual([]);
