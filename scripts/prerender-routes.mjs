@@ -149,8 +149,8 @@ const waitForStablePage = async (page, expectedCanonical, requiredSelectors = []
   await sleep(250);
 };
 
-const normalizePrerenderRuntimeAssets = (html) =>
-  html
+const normalizePrerenderRuntimeAssets = (html, routePath) => {
+  const normalizedHtml = html
     .replace(
       /<link\s+rel="modulepreload"[^>]+href="http:\/\/127\.0\.0\.1:\d+\/[^"]+"\s*\/?>(?:<\/link>)?/gi,
       "",
@@ -170,6 +170,21 @@ const normalizePrerenderRuntimeAssets = (html) =>
           ? match
           : `<link rel="stylesheet"${attributes} media="(min-width: 768px)">`,
     );
+
+  if (routePath !== "/freelance") return normalizedHtml;
+
+  // Home-only, Article and Dev Notes styles are not used by the freelance
+  // landing page.
+  // Remove every generated variant from this route's static HTML so they do
+  // not become render-blocking resources. Client-side navigation still loads
+  // them normally when an article or the notes page is actually opened.
+  return normalizedHtml
+    .replace(
+      /(?:<noscript>\s*)?<link\b[^>]*href="\/assets\/(?:Article|DevNotes|Index)-[^"]+\.css"[^>]*>\s*(?:<\/noscript>)?/g,
+      "",
+    )
+    .replace(/<\/noscript>/gi, "");
+};
 
 const prerender = async () => {
   const port = await findAvailablePort(preferredPort);
@@ -210,7 +225,7 @@ const prerender = async () => {
         await waitForStablePage(page, expectedCanonical, route.requiredSelectors ?? []);
         const outputPath = path.join(distRoot, route.output);
         await mkdir(path.dirname(outputPath), { recursive: true });
-        const renderedHtml = normalizePrerenderRuntimeAssets(await page.content());
+        const renderedHtml = normalizePrerenderRuntimeAssets(await page.content(), route.path);
         if (expectedCanonical && !renderedHtml.includes(`rel="canonical" href="${expectedCanonical}"`)) {
           throw new Error(`Prerendered ${route.path} does not contain canonical ${expectedCanonical}`);
         }

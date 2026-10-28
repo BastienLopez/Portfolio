@@ -273,6 +273,12 @@ for (const route of prerenderedRoutes) {
     if (!html.includes('href="/creation-site-internet-reims"')) {
       failures.push("Prerendered freelance page does not link its local website-creation page.");
     }
+    if (!/<link\b[^>]*href="\/assets\/index-[^\"]+\.css"/.test(html)) {
+      failures.push("Prerendered freelance page is missing the global stylesheet.");
+    }
+    if (/<link\b[^>]*href="\/assets\/(?:Index|Article|DevNotes)-[^\"]+\.css"/.test(html)) {
+      failures.push("Prerendered freelance page contains CSS reserved for another route.");
+    }
   }
 }
 
