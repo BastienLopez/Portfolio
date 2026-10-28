@@ -407,7 +407,7 @@ const Service = () => {
 
             <div className="mt-16 flex flex-wrap items-center justify-center gap-4 border-t border-border pt-8">
               <Button asChild size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90">
-                <Link to="/freelance#contact">
+                <Link to="/freelance?project=business-tool#contact">
                   {isEnglish ? "Discuss your project" : "Parler de votre projet"}
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Link>

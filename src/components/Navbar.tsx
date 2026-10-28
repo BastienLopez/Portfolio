@@ -3,6 +3,7 @@ import { ChevronDown, Languages, Menu, X, Github, Linkedin, Mail } from "lucide-
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
+import { createGmailComposeUrl } from "./conversationBriefData";
 
 const LanguageSelector = () => {
   const { locale, setLocale, isEnglish } = useLanguage();
@@ -180,7 +181,7 @@ const Navbar = () => {
   const socialLinks = [
     { href: "https://github.com/BastienLopez", icon: Github, label: "GitHub" },
     { href: "https://www.linkedin.com/in/bastien-lopez-fullstack/", icon: Linkedin, label: "LinkedIn" },
-    { href: "mailto:bastien.lopez40@gmail.com", icon: Mail, label: "Email" },
+    { href: createGmailComposeUrl({ subject: isEnglish ? "Contact - freelance project" : "Contact - projet freelance" }), icon: Mail, label: "Email" },
   ];
 
   return (

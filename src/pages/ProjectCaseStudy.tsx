@@ -21,6 +21,13 @@ import { SITE_ORIGIN, useLanguage, useRouteMetadata, type PageMetadata } from "@
 
 type EnglishProjectCopy = Pick<Project, "title" | "description">;
 
+const getProjectContactHref = (projectId: string) => {
+  const service = getServiceForProject(projectId);
+  if (!service) return "/freelance#contact";
+  const projectType = service.slug === "sites-vitrines" ? "website" : "business-tool";
+  return `/freelance?project=${projectType}#contact`;
+};
+
 const englishProjectCopy: Record<string, EnglishProjectCopy> = {
   "wallet-provider": {
     title: "Altme Wallet Provider",
@@ -283,7 +290,7 @@ const ProjectCaseStudy = () => {
                     />
                     <div className="mx-auto mt-5 flex w-full max-w-5xl flex-wrap items-center gap-3 border-t border-border pt-5" data-contextual-cta>
                       <Button asChild className="h-auto min-h-10 max-w-full whitespace-normal bg-cta text-center text-cta-foreground hover:bg-cta/90">
-                        <Link to="/freelance#contact">
+                        <Link to={getProjectContactHref(project.id)}>
                           {isEnglish ? definition.cta.en : definition.cta.fr}
                           <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                         </Link>

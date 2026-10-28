@@ -54,9 +54,9 @@ for (const language of ["fr", "en"] as const) {
           await expect(form).toBeVisible();
           await page.evaluate(() => document.fonts.ready);
           const formBox = (await form.boundingBox())!;
-          const submitBox = (await form.locator('button[type="submit"]').boundingBox())!;
-          expect(Math.abs(submitBox.x - formBox.x), `${route} at ${width}px`).toBeLessThan(1);
-          expect(Math.abs(submitBox.width - formBox.width), `${route} at ${width}px`).toBeLessThan(1);
+          const panelBox = (await form.locator(".conversation-panel").boundingBox())!;
+          expect(Math.abs(panelBox.x - formBox.x), `${route} at ${width}px`).toBeLessThan(1);
+          expect(Math.abs(panelBox.width - formBox.width), `${route} at ${width}px`).toBeLessThan(1);
           if (route !== "/") continue;
           const contacts = page.locator(".contact-actions a");
           await expect(contacts).toHaveCount(3);

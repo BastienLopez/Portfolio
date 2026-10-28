@@ -59,36 +59,14 @@ test("presents two offers, three contextualised client quotes and consistent Eng
   await expect(page.locator("#testimonials [data-testimonial-context]")).toHaveCount(3);
 });
 
-test("prepares a qualified email without a request or persisted prospect data", async ({ page }) => {
+test("starts the conversational brief without exposing every field at once", async ({ page }) => {
   await page.goto("/freelance#contact");
-  const form = page.getByRole("form", { name: "Brief de projet" });
-  await form.getByRole("button", { name: "Préparer mon email" }).click();
-  await expect(form.getByLabel(/Type de projet/)).toBeFocused();
-  await expect(form.getByLabel(/Votre email/)).toHaveAttribute("aria-invalid", "true");
-  const submissions: string[] = [];
-  page.on("request", (request) => { if (request.method() !== "GET") submissions.push(request.url()); });
-  await form.getByLabel(/Type de projet/).selectOption("business-tool");
-  await form.getByLabel(/Votre entreprise/).fill("Atelier témoin");
-  await form.getByLabel(/Votre nom/).fill("Camille");
-  await form.getByLabel(/Votre email/).fill("camille@example.com");
-  await form.getByLabel(/Problème actuel/).fill("Suivi & ressaisies à simplifier");
-  await form.getByLabel(/Lien vers le site existant/).fill("siteweb.com");
-  await form.getByRole("button", { name: "Préparer mon email" }).click();
-  const emailLink = page.getByRole("link", { name: "Ouvrir ma messagerie" });
-  await expect(emailLink).toBeVisible();
-  const url = new URL((await emailLink.getAttribute("href"))!);
-  const body = url.searchParams.get("body")!;
-  expect(body).toContain("Suivi & ressaisies à simplifier");
-  expect(body).toContain("Outil métier / automatisation");
-  expect(body).toContain("Brief de projet freelance\n\nType de projet : Outil métier / automatisation\n\nCamille — Atelier témoin — camille@example.com");
-  expect(body).toContain("Lien vers le site existant : https://siteweb.com");
-  expect(body).not.toContain("\n\n\n");
-  expect(body).not.toContain("Votre entreprise / activité :");
-  await expect(page.getByText("Brief prêt. Il reste à envoyer votre email.")).toBeVisible();
-  expect(submissions).toEqual([]);
-  const persisted = await page.evaluate(() => JSON.stringify({ local: { ...localStorage }, session: { ...sessionStorage }, events: window.dataLayer }));
-  expect(persisted).not.toContain("camille@example.com");
-  expect(persisted).not.toContain("Atelier témoin");
+  const form = page.getByRole("form", { name: "Parlons de votre projet" });
+  await expect(form).toBeVisible();
+  await expect(form.getByRole("heading", { name: "Quel type de projet avez-vous en tête ?" })).toBeVisible();
+  await expect(form.locator('[data-choice-group="project-type"]')).toHaveCount(3);
+  await expect(form.getByLabel("Votre nom")).not.toBeAttached();
+  await expect(form.getByLabel("Votre adresse email")).not.toBeAttached();
 });
 
 test("keeps landing actions inside their visible container at mobile and tablet breakpoints", async ({ page }) => {

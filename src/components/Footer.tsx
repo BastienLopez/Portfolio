@@ -1,6 +1,7 @@
 import { Github, Linkedin, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/lib/i18n";
+import { createGmailComposeUrl } from "./conversationBriefData";
 
 const Footer = () => {
   const { isEnglish } = useLanguage();
@@ -8,7 +9,7 @@ const Footer = () => {
   const socialLinks = [
     { href: "https://github.com/BastienLopez", icon: Github, label: "GitHub" },
     { href: "https://www.linkedin.com/in/bastien-lopez-fullstack/", icon: Linkedin, label: "LinkedIn" },
-    { href: "mailto:bastien.lopez40@gmail.com", icon: Mail, label: "Email" },
+    { href: createGmailComposeUrl({ subject: isEnglish ? "Contact - freelance project" : "Contact - projet freelance" }), icon: Mail, label: "Email" },
   ];
 
   return (

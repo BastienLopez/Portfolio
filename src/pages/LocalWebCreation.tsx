@@ -244,7 +244,7 @@ const LocalWebCreation = () => {
                 <p className="mt-4 max-w-3xl text-base leading-7 text-muted-foreground">{copy.note}</p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Button asChild size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90">
-                    <Link to="/freelance#contact">
+                    <Link to="/freelance?project=website#contact">
                       {copy.primaryCta}
                       <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                     </Link>
@@ -388,7 +388,7 @@ const LocalWebCreation = () => {
 
             <div className="mt-16 flex flex-wrap items-center justify-center gap-4 border-t border-border pt-8">
               <Button asChild size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90">
-                <Link to="/freelance#contact">
+                <Link to="/freelance?project=website#contact">
                   {copy.contact}
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Link>

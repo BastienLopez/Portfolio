@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { createGmailComposeUrl } from "@/components/conversationBriefData";
 import { SITE_ORIGIN, useLanguage, usePageMetadata } from "@/lib/i18n";
 
 const legalSchema = (isEnglish: boolean) => {
@@ -94,7 +95,7 @@ const Legal = () => {
                     <dd>{isEnglish ? "Reims, France · remote work" : "Reims, France · interventions à distance"}</dd>
                     <dt className="font-medium text-foreground">Email</dt>
                     <dd>
-                      <a className="text-primary underline-offset-4 hover:underline" href="mailto:bastien.lopez40@gmail.com">
+                      <a className="text-primary underline-offset-4 hover:underline" href={createGmailComposeUrl({ subject: isEnglish ? "Contact - legal notice" : "Contact - mentions légales" })} target="_blank" rel="noopener noreferrer">
                         bastien.lopez40@gmail.com
                       </a>
                     </dd>
