@@ -8,6 +8,7 @@ import {
   isExcludedHost,
   isFirstPartyHost,
   MAX_REDIRECTS,
+  isUnknownExternalStatus,
   parseApprovedUrl,
   validatePublicUrl,
 } from "./critical-link-policy.mjs";
@@ -154,7 +155,7 @@ for (const url of [...urls].sort()) {
       outcome = { url, status: "failed", code: response.status ?? null, reason: response.reason };
       break;
     }
-    if ([403, 405, 408, 429, 999].includes(response.status) || response.error) {
+    if (isUnknownExternalStatus(response.status) || response.error) {
       outcome = { url, status: "unknown", code: response.status ?? null, reason: response.error ?? "external server response" };
     } else {
       outcome = { url, status: "failed", code: response.status ?? null, reason: response.error ?? "unexpected HTTP response" };

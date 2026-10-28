@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   isApprovedHost,
   isBlockedAddress,
+  isUnknownExternalStatus,
   parseApprovedUrl,
 } from "../../scripts/critical-link-policy.mjs";
 
@@ -37,5 +38,12 @@ describe("critical link security policy", () => {
     expect(isBlockedAddress("fe80::1")).toBe(true);
     expect(isBlockedAddress("2001:db8::1")).toBe(true);
     expect(isBlockedAddress("93.184.216.34")).toBe(false);
+  });
+
+  it("treats transient external server responses as unknown, not broken", () => {
+    expect(isUnknownExternalStatus(503)).toBe(true);
+    expect(isUnknownExternalStatus(502)).toBe(true);
+    expect(isUnknownExternalStatus(429)).toBe(true);
+    expect(isUnknownExternalStatus(404)).toBe(false);
   });
 });

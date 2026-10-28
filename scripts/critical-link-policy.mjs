@@ -57,6 +57,12 @@ const approvedExternalHosts = new Set([
 
 export const MAX_REDIRECTS = 3;
 
+// A server-side 5xx response from an external host is not enough evidence to
+// declare the link broken: the outage can be transient or specific to the CI
+// runner. The checker reports these responses as unknown after its retries.
+export const isUnknownExternalStatus = (status) =>
+  [403, 405, 408, 429, 999].includes(status) || (status >= 500 && status <= 599);
+
 const normalizeHostname = (hostname) => hostname.toLowerCase().replace(/^\[|\]$/g, "").replace(/\.$/, "");
 
 export const isExcludedHost = (hostname) => excludedHosts.has(normalizeHostname(hostname));
