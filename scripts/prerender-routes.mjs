@@ -162,6 +162,13 @@ const normalizePrerenderRuntimeAssets = (html) =>
     .replace(
       /<link\s+rel="stylesheet"([^>]*href="\/assets\/(?:Article|DevNotes)-[^"]+\.css"[^>]*)>/gi,
       '<link rel="preload" as="style"$1><link rel="stylesheet"$1 media="print" data-deferred-style><noscript><link rel="stylesheet"$1></noscript>',
+    )
+    .replace(
+      /<link\s+rel="stylesheet"([^>]*href="\/assets\/SectionTimeline-[^"]+\.css"[^>]*)>/gi,
+      (match, attributes) =>
+        attributes.includes('media=')
+          ? match
+          : `<link rel="stylesheet"${attributes} media="(min-width: 768px)">`,
     );
 
 const prerender = async () => {
